@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>（三）OI的奋进之路 | Xorex</title><meta name="keywords" content="Java Blog Xorex Development"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="我的高中生活第三篇。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="（三）OI的奋进之路">
+<meta property="og:url" content="https://xorex.space/0x9F86FF9E/%EF%BC%88%E4%B8%89%EF%BC%89OI%E7%9A%84%E5%A5%8B%E8%BF%9B%E4%B9%8B%E8%B7%AF.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="我的高中生活第三篇。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-07-18T08:46:25.000Z">
+<meta property="article:modified_time" content="2020-12-09T09:34:49.756Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="Java Blog Xorex Development">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/0x9F86FF9E/%EF%BC%88%E4%B8%89%EF%BC%89OI%E7%9A%84%E5%A5%8B%E8%BF%9B%E4%B9%8B%E8%B7%AF"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2020-12-09 17:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url('/img/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">（三）OI的奋进之路</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><h2 id="学习？学个屁！"><a href="#学习？学个屁！" class="headerlink" title="学习？学个屁！"></a>学习？学个屁！</h2><ul>
+<li><p>自从我高一上学期同时学习计算机和文化课，一样也在期末考试中取得了良好的成绩之后，我就似乎有点自负了。哈，你看我还是能够认真的处理竞赛和文化课的关系的，所以说下学期只要稍微学学也能考得不错吧。抱着这样的想法，下学期的我战略就是稍微学一下文化课，努力追OI的进度，毕竟因为整个寒假基本上就没有认真的学习竞赛知识，已经和机房里面的其他同学有了不小的差距。</p>
+</li>
+<li><p>而且可能是我上学期的考试成绩还不错的原因，欢欢已经不太阻止我去机房了，或者换句话来说，她也没法阻止我去机房（毕竟我自习课跑的比香港记者还快）。所有的复课（音乐体育美术），所有的文科课（政治历史地理），所有的语文和英语课，以及几乎所有的自习课，都被我用来去机房搞竞赛了。至于学习，刚开始真的是执行了学习一点的策略，然而到了后面，由于过于沉迷计算机，就一点也不学了。</p>
+</li>
+<li><p>由于学习计算机的时间大大的增加，所以OI学习的进度就加快了不少，我也很开心的在机房里开始了我的编程生活。随着在机房的时间呆的时间越来越长，我的胆子也越来越大，什么和卢欢欢老师对着干，什么哪节课不想听了就跑路，对我来说真的就是家常便饭了。而且不好好学习这件事，是一个正反馈循环，越不好好学习，学习成绩就越差，就越跟不上，越跟不上，就越不想学习，导致我的成绩就越来越差。</p>
+</li>
+<li><p>我逃课最厉害的时候，就是上化学课了，有一次老师正在处理习题，我啥都没学过，习题也都没写，听课就跟听天书一样。那我就不干了啊，非常后悔，我为啥不去机房呢？为啥要在这里浪费时间，听我根本听不懂的东西啊！！！ 于是怀疑了一会人生之后，我决定放手一搏，趁着老师在讲台上画原电池的时候，我开始逐渐转移我的座位，向着班里靠着后门的座位靠近。最后抓住老师扭头的瞬间，从后门溜了出来，成功逃到了机房里面。整个过程应该没有被老师发现（因为我已经出教室了，所以也不知道老师到底看到我出来了没），然后在机房里面划水了半节课之后提前去餐厅吃饭了，真的是爽到爆炸！！！</p>
+</li>
+<li><p>当然任何事情都是有代价的，这样不好好学习的代价就是我的成绩越来越差，从年纪800多名一路滑倒年纪1000多名，为啥只滑倒了年纪1000多名呢，那当然是因为年纪里面只有1000多个学生啦。记得到了期中考试的时候，我数学一卷选择填空蒙了35分（满分80分），二卷瞎写拿了9分（满分70分），最后以44分的成绩成功稳坐全班倒数第一名！！！ 卢欢欢老师看到我这少得可怜的成绩，把我单独叫了出来：“挺厉害的啊你，二卷能拿个位数，我都佩服你！” 这有点刺耳讽刺根本叫不醒正在沉迷于计算机的我，只记得当时的我是这样想的：“和她对视让她尴尬！” 然后任由欢欢数落我，我只管面无表情地盯着她看，发现她脸上的痘痘和坑坑好多啊，远看的时候根本注意不到，看来化妆对于提升颜值还是非常有用的。</p>
+</li>
+<li><p>当然欢欢看着我死猪不怕开水烫的心态也很无奈，大概说教完之后，最后开始做总结：“我现在看你每天跑去机房就是在玩游戏，你这样下去是不行的！成绩这么差，以后怎么考大学，我还是劝你赶快别去机房了，回来认真学习文化课吧。” 但是这种建议我怎么可能接受呢，当然还是和往常一样，机房冲冲冲啊。</p>
+</li>
+</ul>
+<h2 id="OI进度疯狂冲刺"><a href="#OI进度疯狂冲刺" class="headerlink" title="OI进度疯狂冲刺"></a>OI进度疯狂冲刺</h2><ul>
+<li><p>当时的我学习OI正处于疯狂的时候，由于寒假的时候偷懒了一点，所以导致我的进度和别人都差了不少，于是开始疯狂的追OI的进度。只记得当时搜索已经结束了，开始了图论和DP，这两个学习板块是我进度最快的时候，可以说基本上能做到一天可以结束一个知识模块，一天可以刷上5到6道题目。原因不止是当时的我正在处于学习的最激情的时候，而且当时的我由于执行了贯彻到底的逃课计划，也有了充足的时间去完成这件事情。</p>
+</li>
+<li><p>引用当时我写在博客里的话来印证这一点：“今天花了一天的时间终于搞定了多进程类型的DP了” “今天谜一样的把区间动态规划给敲完了QAQ，好累……特地来总结一下！” “一天前：两天啃完吧，重要的是真正学会这个知识点，特意放慢脚步……前两天一天一个小专题真是搞得太紧张，好多都没有弄太懂，一天后：说好的两天搞完，结果怎么一天就搞完了啊！”</p>
+</li>
+<li><p>但是当时的自己真的是非常非常的开心啊，从最短路算法到动态规划，从二分图匹配再到斜率优化，从并查集到强连通分量，从线段树到树状数组，从字符串到网络流。可以说这段时间是我OI生涯中最主要的收获的时间，各种算法，各种数据结构，各种奇奇怪怪的题目，占据了当时我大部分的时间。每天要考虑的事情就是昨天还没有AC的题目，真的是一段纯粹而又美好的时间啊。</p>
+</li>
+<li><p>当时我的刷题量和尧神非常接近，我们两个人就暗地里开始较劲了起来，今天我写三道题超过你，明天你写四道题反超，就这样我们两个每天都花大把的时间来提高刷题量。但是我毕竟和尧神不是一个级别，尧神的学习能力可是远远超过我的（毕竟文化课是年纪前十的大佬）所以我必须花费比他更多的时间来维持不落后的位次。这个时候也是真正感受到了来自于智商的降维打击，他们能用比你更短的时间完成比你更多更好的任务。</p>
+</li>
+<li><p>得益于我的刷题量的飞速提升，我在OI方面的自信程度也越来越大，最终开始有了想要去 <code>NOI</code> 的想法，<code>NOI</code>（National Olympic of Information），信息学奥赛的全国决赛。想要参加个比赛就需要进入当地的省队，进入省队就需要参加省队选拔赛。我所在的河南省省队选拔赛 <code>HAOI</code> 每年的四月份会举办一次，最终会在全省所有的 <code>OIer</code> 中选拔出来7到8名选手来代表河南省参加全国决赛。这场比赛极为残酷，因为争夺省队名额的选手远多于实际名额，这就意味着有很多选手一开始就是注定要失败的，只有少数几个人会成功。</p>
+</li>
+<li><p>但 <code>NOI</code> 毕竟是 <code>OIer</code> 们心目中最重要比赛之一，一旦能够获得资格参加这场比赛，那么就意味着半只脚踏入了顶尖大学。NOI的比赛结束之后，会专门有一场学校签约会，大部分参赛选手都能参加并且获得中国最顶尖大学的降分乃至保送协议，作为这两年甚至多年来认真学习奥赛并从大量选手中脱颖而出的奖励。这些对于任何一个学生来说，都是极为诱人的回报，对于当时的我也是如此。可是进入这场比赛的难度真的是太大了，想想当时我因为知识点学习进度提高就诞生了这样的想法，真的是 <code>Native</code> 啊。</p>
+</li>
+</ul>
+<h2 id="快乐的机房生活"><a href="#快乐的机房生活" class="headerlink" title="快乐的机房生活"></a>快乐的机房生活</h2><ul>
+<li><p>随着小伙伴们在机呆的时间越来越长，机房的生活也越来越惬意了。无论是集体提前去餐厅吃饭，还是一起闲暇时光一起打游戏开黑，都是只有OIer们才能体验到的。每天早上翘掉第一节的语文英语课，来到机房，打开电脑，看看空间，刷刷b站，然后开始解决昨天没有AC的题目。旁边的郭老师不停地翻阅着各种专业名词的 <code>wikipedia</code> 页面，或是刷着 <code>Twitter</code> 上面更新的各种信息。从日语罗马音到 <code>TCP/TP</code> 协议，郭老师都能说上一些出来，可以说是上知天文，下知地理。</p>
+</li>
+<li><p>后来机房又来了一位小伙子，他就是PYT同学，PYT精通并且喜爱各种数码产品。在他的推荐之下，我购买了我人生中第一部智能手机——二手iPhone4 白色 16GB，花费了我169块人民币 。记得当时拿到手的时候真的是充满着无法抑制的喜悦，机身优秀的工业设计，IOS7精美的图标和动画，以及我最最最爱的白色，可以说这是迄今为止我第二喜欢的手机（当然第一以后会讲到）。虽然它年老的A4芯片来带动大量动画和扁平化设计的IOS7实属有点困难（打开个 <code>Safari</code> 都需要等上两秒钟），但是它陪伴了我整整一个学期，我用这部小小的iPhone看完了刀剑神域的各种小说以及动漫，用它干了各种各样的有趣的事情。更多意义上，在当时非常渴望拥有手机的中学阶段，这部 iPhone4第一次满足了我对智能手机的各种需求，可能和初恋的意义差不多？？？ 总之让我一直难以忘怀拥有它时那甜美而又快乐的时光。</p>
+</li>
+<li><p>为什么说是陪伴了我一个学期呢，因为它在高一下学期快要结束的时候，被我从床铺上摔了下来。当时的我正在床上补作业，因为没有台灯，所以我就把手机的闪光灯打开，然后把手机放在领口，半悬空的充当台灯使用。万万不幸的是，我那时正在和同学们一边聊天一边做作业，由于聊天过于火热，导致我完全忘记了领口的手机，一个侧身之后，可怜弱小又无助的iPhone4从2.5米高的高度经过480°的翻转之后啪的一声屏幕朝地的掉在了地板上，当时的我瞬间蒙掉了，根本没有反应过来，就看见手机屏幕朝下的躺在地上，甚至连弹起来都没有。于是我就赶快下床去看看我可怜弱小又无助的小iPhone4，手机屏幕已经完全碎掉了，闪光灯还在运行。我小心翼翼的点开屏幕，发现能亮屏，但是触控已不良了，可以说已经不能用了。</p>
+</li>
+<li><p>于是年仅4个月的iPhone4命丧地心引力，我就拿着这台机器开始了我的第一次计算机组成原理的实操课。“使用风枪调整150℃加热五分钟，然后用翘片找到突破口，向下滑动将屏幕和中框分离，小心屏幕的BTB连线……” 不对不对，我真实的拆解根本没有这么正规，而是非常暴力的直接干了，分离了屏幕，电池，马达，主板，摄像头，把它拆了个七零八碎之后，才最终放过，只是遗憾主板上的A4芯片花了两天都没能取下来，富士康焊的还真是紧啊。之后就是小iPhone4的葬礼了，我把它埋藏在了一楼的垃圾房里面，愿天堂没有地心引力。</p>
+</li>
+</ul>
+<h2 id="欢欢欢欢欢欢！"><a href="#欢欢欢欢欢欢！" class="headerlink" title="欢欢欢欢欢欢！"></a>欢欢欢欢欢欢！</h2><ul>
+<li><p>欢欢也是越来越可爱了，有一次中午同学们起晚的人有点多，很多人都迟到了，正巧第一节课是欢欢的数学课，她就在班级门口蹲我们，把迟到的同学一个一个都拦在外面。经过了五分钟的风干罚站之后。她一个一个开始教育：“啊，你不要每天一副你自己很厉害的样子，感觉别人都不懂，啊，你这样只是你不懂而已，很可笑的知道吗？” “还有你，整天往机房跑，我都不想说你，看看你考试考的是啥？我怀疑你去机房都是去打游戏了，整天也不好好学习，以后迟早会后悔的。” “你别笑，整天和那几个学习不好的混在一起，天天躲在角落里说小话，别以为我发现不了你们，说话就那么有意思？” …… 一个一个的都教育一遍之后，欢欢终于心满意足的开始了最后总结：“好了，以后中午起床都早一点，你看看你们慌乱成什么样子，下次不能再迟到了，听到没有？” 我们点点头，排着队进了班。（真是可爱呢）</p>
+</li>
+<li><p>还有一次课间操我像往常一样翘掉去餐厅吃午饭，结果正巧年级主任带人蹲点抓人，趁着我们吃的正香，带着学生会的小走狗们封锁了餐厅，吃完饭的我心满意足的准备去机房刷题，结果被学生会的小走狗们拦住了，说是禁止出餐厅。然后就被年纪主任给带到了餐厅门口，就差斩首示众了。经过一批分流之后，把不同年纪的学生交给了不同年纪的负责人处理，我就被分到了高一年纪的处理处。经过一番教育之后，我和剩下的小伙伴们被拍照发到了班主任群里，准备回到班级里面之后接受第二次教育。不过由于我跑去机房的速度真的是太快了，导致卢欢欢老师隔了好久才给我说上这件事，也正是因为时间隔的比较久，所以只是轻描淡写的说了我两句而已，还好还好。</p>
+</li>
+<li><p>说起到这个时候就不得不提足球比赛了，我们班足球比赛从最不看好的班级一路踢到全校第二，真的是非常不容易。最开始由于守门员过于拉跨被对方球员进了两个非常无脑的球，任凭我们的小将们如何努力反击，在对方的严防死守下，我们第一场比赛就输掉了。经过紧密的讨论之后，我们决定让大胖同学成为守门员，这成为了我们班足球比赛逆袭的关键，从此之后想要在大胖的防御下进球便成了球场最难成功的事情。我们也因此一路晋级，未尝败绩，最终到达了冠军争夺赛。可惜的是敌方队伍实力真的是太强了，最终惜败，只拿到了亚军，整个比赛进程也是我为数不多全程关注的班级活动，算是高中生涯非常值得回忆的事情了。</p>
+</li>
+<li><p>欢欢老师对于我们拿到比赛的第二名也非常的兴奋，在我们班用语文晚自习给我们开了一个庆功会。让各位队员都发了言，大家一起感谢了他们，现场的气氛非常的活跃。最后欢欢和语文老师一起做了总结，告诉了大家团结一致的重要性，然后升华主题到学习上面的互帮互助方面，鼓励大家好好学习天天向上。（真是一位尽职尽责的班主任啊）</p>
+</li>
+</ul>
+<h2 id="和OI一起的碎碎念"><a href="#和OI一起的碎碎念" class="headerlink" title="和OI一起的碎碎念"></a>和OI一起的碎碎念</h2><ul>
+<li><p>经过了半个学期的努力学习竞赛，我的实力也有所提升，而且单调的刷题生活终于迎来了一丝丝改变，那就是来自于郑州轻工业大学ACM校赛的邀请。这场比赛由郑州轻工业大学承办，由郑州玲珑科技有限公司赞助，河南省的各大高校的学员们都会赶来，还有各种丰厚的奖金，非常吸引人。而我们高一的同学们组成了两个小队，我所在的队伍名称使用了当时流行的震惊体:「震惊！没想到校队名字可以起的这么长！」这是我第一次接触ACM赛制的比赛，经过紧张的参赛之后，我们成功AC掉了三道题目，大概排名中游的样子，这场比赛对我来说体验非常棒，感觉到了就算是比赛也可以这么有趣。</p>
+</li>
+<li><p>HAOI 河南省信息学奥林匹克竞赛，也就是大家口中常说的河南省省队选拔赛，也终于要来了。这场比赛题目难度非常高，题目的锅也非常大，有一位非常厉害的学长因为题目数据的原因痛失省队名额，另一位学长也因为实力不足而没有进入省队。高二的四个人都在信息学上花费了很大很大的努力，但是只有两位学长成功了。看着他们失落的样子，我也再次感受到了信息学奥赛的残酷。</p>
+</li>
+<li><p>这里面的两位学长都很值得单独说说，一个是Cdcq，一个就是Cydiater，他们两个人选择了购买D类的名额留下来备战NOI，为自己的OI生涯继续延续一段时间。他们两个人的经历也可以说是传奇了，这些故事会在后面慢慢讲述的。</p>
+</li>
+<li><p>后面发生的事情就是郭老师有一天突然不见了，大概等了好几天也没有等到他来上学，在 QQ 上询问之后，他说自己生病了，需要治好病才能来上学。当时的我自然相信的了他这套说辞，只是没有想到这一等就没有结果了，之后，郭老师再也没有来上学过了。具体发生了什么我也不太清楚，最后从各种零零散散的消息可以得知，郭老师后来一直呆在家里不出来，她的妈妈也很担心他，最后他选择去了日本留学。至于有没有考上东京大学，我也不得而知，只是觉得这样消失的也太突然了，连告别也没有。</p>
+</li>
+<li><p>在这期间，我因为看到了Cydiater和Chty两位学长搭建了一个属于自己的个人博客，我就也非常想要搭建一个自己的博客，正巧Cdcq学长给我转发了一篇搭建个人博客的博文，于是就开始了自己的博客搭建之旅。可以说这是我经历的第一次尝试通过网上的教程完成一样东西，所以整个过程十分坎坷，经过自己的九牛二虎之力，大概花了好几天完成了整个博客的各种美化操作以及过去的博文转移。做出来这个博客过程的成就感十足，自己最后还花费六十多块买了三年的域名 xorex.top 来绑定到自己的博客上面（虽说最后这个域名已经弃用了。）</p>
+</li>
+<li><p>这个时间段是我最享受学习算法和数据结构的时候，每天都又很多很多的收获，能够了解到很多神奇的算法来解决很多问题，这极大地满足了我的求知欲。也正是那个时间，我可以自豪的说：我喜欢Coding！也正是这段时间的经历，让我有了以后将程序员作为自己职业的规划。其实我还挺适合这个职业的，收入还比较可观，不需要做体力活，每天只要坐在办公室完成任务就可以了。（除此之外就是虽说卷，虽说青春饭，但是至少自己可以从中找到乐趣），这大概是当时我对未来的最大期待吧。</p>
+</li>
+</ul>
+</div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">信息安全</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/"><span class="card-category-list-name">开发知识</span><span class="card-category-list-count">27</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/"><span class="card-category-list-name">杂七杂八</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/"><span class="card-category-list-name">算法竞赛</span><span class="card-category-list-count">70</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB/"><span class="card-category-list-name">计算机体系</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"><span class="card-category-list-name">阶段性总结</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BD%95/"><span class="card-category-list-name">项目记录</span><span class="card-category-list-count">2</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 1.1em; color: #999">AC自动机</a> <a href="/tags/AI/" style="font-size: 1.1em; color: #999">AI</a> <a href="/tags/BFS/" style="font-size: 1.17em; color: #999c9f">BFS</a> <a href="/tags/C/" style="font-size: 1.1em; color: #999">C++</a> <a href="/tags/CMD/" style="font-size: 1.1em; color: #999">CMD</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.17em; color: #999c9f">C语言</a> <a href="/tags/DFS/" style="font-size: 1.1em; color: #999">DFS</a> <a href="/tags/DP/" style="font-size: 1.43em; color: #99a6b9">DP</a> <a href="/tags/Dijkstra/" style="font-size: 1.1em; color: #999">Dijkstra</a> <a href="/tags/EXGCD/" style="font-size: 1.1em; color: #999">EXGCD</a> <a href="/tags/Floyed/" style="font-size: 1.1em; color: #999">Floyed</a> <a href="/tags/GCD/" style="font-size: 1.1em; color: #999">GCD</a> <a href="/tags/HAOI/" style="font-size: 1.1em; color: #999">HAOI</a> <a href="/tags/IO/" style="font-size: 1.17em; color: #999c9f">IO</a> <a href="/tags/JSON/" style="font-size: 1.1em; color: #999">JSON</a> <a href="/tags/Java/" style="font-size: 1.5em; color: #99a9bf">Java</a> <a href="/tags/JavaScript/" style="font-size: 1.1em; color: #999">JavaScript</a> <a href="/tags/KMP/" style="font-size: 1.1em; color: #999">KMP</a> <a href="/tags/LCA/" style="font-size: 1.1em; color: #999">LCA</a> <a href="/tags/LCM/" style="font-size: 1.1em; color: #999">LCM</a> <a href="/tags/Linux/" style="font-size: 1.1em; color: #999">Linux</a> <a href="/tags/ML/" style="font-size: 1.1em; color: #999">ML</a> <a href="/tags/Maven/" style="font-size: 1.1em; color: #999">Maven</a> <a href="/tags/MySQL/" style="font-size: 1.1em; color: #999">MySQL</a> <a href="/tags/NOIP/" style="font-size: 1.3em; color: #99a1ac">NOIP</a> <a href="/tags/PHP/" style="font-size: 1.23em; color: #999ea6">PHP</a> <a href="/tags/Python/" style="font-size: 1.37em; color: #99a4b2">Python</a> <a href="/tags/SPFA/" style="font-size: 1.17em; color: #999c9f">SPFA</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 1.1em; color: #999">SQL注入</a> <a href="/tags/SSH/" style="font-size: 1.1em; color: #999">SSH</a> <a href="/tags/SSTI/" style="font-size: 1.1em; color: #999">SSTI</a> <a href="/tags/Trie%E6%A0%91/" style="font-size: 1.1em; color: #999">Trie树</a> <a href="/tags/WriteUp/" style="font-size: 1.1em; color: #999">WriteUp</a> <a href="/tags/XML/" style="font-size: 1.1em; color: #999">XML</a> <a href="/tags/XSS/" style="font-size: 1.1em; color: #999">XSS</a> <a href="/tags/XXE/" style="font-size: 1.1em; color: #999">XXE</a> <a href="/tags/bug/" style="font-size: 1.1em; color: #999">bug</a> <a href="/tags/tarjan/" style="font-size: 1.17em; color: #999c9f">tarjan</a> <a href="/tags/%E4%BA%8C%E5%88%86/" style="font-size: 1.17em; color: #999c9f">二分</a> <a href="/tags/%E4%BA%8C%E5%88%86%E5%9B%BE%E5%8C%B9%E9%85%8D/" style="font-size: 1.17em; color: #999c9f">二分图匹配</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/02/"><span class="card-archive-list-date">二月 2021</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/01/"><span class="card-archive-list-date">一月 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/12/"><span class="card-archive-list-date">十二月 2020</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/11/"><span class="card-archive-list-date">十一月 2020</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/10/"><span class="card-archive-list-date">十月 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">八月 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/03/"><span class="card-archive-list-date">三月 2020</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">119</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2016-08-17T03:11:11.000Z"></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">226k</div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-02-21T11:14:27.082Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

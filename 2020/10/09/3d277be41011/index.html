@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C语言题库 | Xorex</title><meta name="keywords" content="题解,C语言"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="C语言是一门面向过程的、抽象化的通用程序设计语言，广泛应用于底层开发。C语言能以简易的方式编译、处理低级存储器。C语言是仅产生少量的机器语言以及不需要任何运行环境支持便能运行的高效率程序设计语言。尽管C语言提供了许多低级处理的功能，但仍然保持着跨平台的特性，以一个标准规格写出的C语言程序可在包括类似嵌入式处理器以及超级计算机等作业平台的许多计算机平台上进行编译。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言题库">
+<meta property="og:url" content="https://xorex.space/2020/10/09/3d277be41011/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="C语言是一门面向过程的、抽象化的通用程序设计语言，广泛应用于底层开发。C语言能以简易的方式编译、处理低级存储器。C语言是仅产生少量的机器语言以及不需要任何运行环境支持便能运行的高效率程序设计语言。尽管C语言提供了许多低级处理的功能，但仍然保持着跨平台的特性，以一个标准规格写出的C语言程序可在包括类似嵌入式处理器以及超级计算机等作业平台的许多计算机平台上进行编译。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/007.jpg">
+<meta property="article:published_time" content="2020-10-09T01:20:24.000Z">
+<meta property="article:modified_time" content="2021-02-20T13:38:58.427Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="C语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/007.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2020/10/09/3d277be41011/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-20 21:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">C语言题库</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-10-09T01:20:24.000Z" title="undefined 2020-10-09 09:20">2020-10-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>啊啊啊啊，即使写了两年的C++代码也免不了刷题的痛苦，而且还是语言题，但是这样也能学到不少知识呢。</p>
+</blockquote>
+<h2 id="一阶段"><a href="#一阶段" class="headerlink" title="一阶段"></a>一阶段</h2><ol>
+<li><p>一个C语言源程序是由（<strong>函数组成</strong>）</p>
+</li>
+<li><p>C语言规定，在一个源程序中，main函数的位置（<strong>可以任意</strong>）</p>
+</li>
+<li><p>在C语言中，一个函数的函数体一般包括 （<strong>参数</strong>）和 （<strong>返回值</strong>）</p>
+</li>
+<li><p>上机运行C源程序过程：</p>
+<p> <strong>编辑</strong>：输入源程序并存盘(.C)</p>
+<p> <strong>编译</strong>：将源程序翻译为目标文件(.OBJ)</p>
+<p> <strong>链接</strong>：将目标文件生成可执行文件( .EXE)</p>
+<p> <strong>运行</strong>：执行.EXE文件,得到运行结果。</p>
+</li>
+<li><p>一个函数是由两部分组成的，它们分别是（<strong>函数头</strong>） 和（<strong>函数体</strong>）。</p>
+</li>
+<li><p><code>\</code> 是个转义字符，比如 <code>\x</code> 表示的是十六进制的数字，而 <code>\0</code> 表示的是一个八进制数字。  </p>
+</li>
+<li><p>十六位PC机中：<strong>char&lt;int&lt;long int&lt;=float&lt;double</strong></p>
+</li>
+<li><p><strong>实型</strong> 数据就是 <strong>浮点型</strong></p>
+</li>
+<li><p>不同类型数据经过表达式计算之后，最后的结果是 <strong>表达范围最大</strong> 的类型。</p>
+</li>
+<li><p>C语言中 <code>.1</code>  表示的是 <code>0.1</code> ，<code>1.</code>表示的是 <code>1.0</code></p>
+</li>
+<li><p>像 <code>printf</code> 和 <code>main</code> 这些 <strong>非关键字</strong> 可以作为变量名使用！</p>
+</li>
+<li><p>逗号表达式整体的值为 <strong>最后</strong> 一个表达式的值。</p>
+</li>
+<li><p>只要句子里面包含 <code>,</code> 那么这个语句就是逗号表达式，<strong>不属于</strong> 各种其他语句如 循环语句、赋值语句等等。</p>
+</li>
+<li><p>复合运算语句 如 ：<code>A+=B+C</code> 和<code>A*=C-D</code> 这些，<strong>先计算等号后面的</strong> 语句 <code>B+C</code> 和 <code>C-D</code> <strong>然后再进行</strong> 复合运算。</p>
+</li>
+</ol>
+<h2 id="二阶段"><a href="#二阶段" class="headerlink" title="二阶段"></a>二阶段</h2><ol>
+<li><p><code>if(10&lt;=x&lt;=20)</code> 是一个合法的语句，表示的意思是 <code>if((10&lt;=x)&lt;=20)</code> 先计算 <code>10&lt;+x</code> 的值的真假，比较 true 或者 false 是否 <code>&lt;=20</code> 最后返回比较的真假。</p>
+</li>
+<li><p><code>switch-case</code> 语句：</p>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(Value/Expression)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> Value1:</span><br><span class="line">        Expression1;</span><br><span class="line">        Expression2;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> Value2:</span><br><span class="line">        Expression3;</span><br><span class="line">        Expression4;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        Expression5;</span><br><span class="line">        Expression6;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意这里Value只能是<strong>整形</strong>和<strong>字符型</strong> ，Value1/2 里面只能填写一个值，可以使用表达式（除了逗号表达式），default 可以不写。</li>
+</ul>
+<ol start="3">
+<li><p>两个case里面的字符常量不可以相等。</p>
+</li>
+<li><p>逻辑运算符优先级<code>&amp;&amp;</code> 高于 <code>||</code>，所以 <code>||</code> 都是最后再运算的。</p>
+</li>
+<li><p>关系运算符 <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code> 的优先级比 <code>==</code> 和 <code>!=</code> 要高！</p>
+</li>
+</ol>
+<h2 id="三阶段"><a href="#三阶段" class="headerlink" title="三阶段"></a>三阶段</h2><ol>
+<li>do{xxx;}while(xxx); 记得 while 后面有分号</li>
+</ol>
+<h2 id="四阶段"><a href="#四阶段" class="headerlink" title="四阶段"></a>四阶段</h2><ol>
+<li><p><code>a[2][4]=&#123;0&#125;</code> 会把数组里面的所有空间都初始化为 0</p>
+</li>
+<li><p>使用字符数组来输入字符串的时候：scanf(“%s%s”, a, b);  a 和 b 就已经是地址了，不需要 &amp; 运算。</p>
+</li>
+<li><p>字符串大小判断是 ASCII  一位一位去比较。That &lt; The</p>
+</li>
+</ol>
+<h2 id="五阶段"><a href="#五阶段" class="headerlink" title="五阶段"></a>五阶段</h2><ol>
+<li><p>凡是函数中未指定存储类别的局部变量都为 auto 自动。</p>
+</li>
+<li><p>在函数内的复合语句中定义的变量在本函数范围内有效 是错误的，只在复合语句中有效。比如这个变量是在while语句中定义的，那么只能在while语句括号里面调用，出了while就失效了。</p>
+</li>
+<li><p><code>func((exp1, exp2), (exp3, exp4, exp5));</code> 里面只有两个实参，就是exp2，和exp5 ，这是执行了两个逗号表达式。</p>
+</li>
+<li><p>main() 里面可以说明一个函数，但是不可以定义一个函数。</p>
+</li>
+<li><p>函数的定义不可以嵌套，但函数的调用可以嵌套。 （因为不能在一个函数里面定义另外一个函数啊，只能说明。）</p>
+</li>
+<li><p>当用二维数组作为形参时，第一维的大小可以省略，但第二维的大小不能。因为传进来的实参是一个数组的第一位地址，然后实参的所有元素依次填充到形参定义的数组里面，如果第二维省略，就无法填充（毕竟列可以无限嘛），但是如果列确定，就可以根据除法确定行数。</p>
+</li>
+<li><p>数组传参的同时，会退化成为指针，所以在操作的时候要小心越界。</p>
+</li>
+</ol>
+<h2 id="六阶段"><a href="#六阶段" class="headerlink" title="六阶段"></a>六阶段</h2><ol>
+<li><p>C语言中mian函数正确的声明应该是： main(int abc, char **abv)，参数后者等价与  *abv[] ，这个东西在使用命令行执行的时候会用到，<a target="_blank" rel="noopener" href="https://my.oschina.net/u/231848/blog/277932">详细解释博客</a> 主要是来传入命令行输入的参数，abc为参数数量，abv是一个字符串指针数组，存储命令。</p>
+</li>
+<li><p>两个不同类型的指针相互赋值地址会警告。</p>
+</li>
+<li><p>如果要对指针进行自加自减运算，那么必须是一个数组指针，并且进行了自加自减运算之后不会越界。</p>
+</li>
+<li><p>函数名保存的也是一个地址，可以声明一个函数指针，然后把函数地址给它，它就可以当作函数来使用。<code>int(*Pointer)(int,int);</code> 其中第一个 int 表示的是函数返回值类型，后面的是参数的类型。调用的时候可以 <code>Pointer(x,y);</code> 或者  <code>(*Pointer)(x,y);</code></p>
+</li>
+<li><p>一个数组名，函数名，可以看作是一个常量指针，里面保存的是地址。</p>
+</li>
+<li><p><code>*p[3]</code> p是一个指针数组，<code>(*p)[3]</code> 中 p 是一个指向数组的指针。</p>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2020/10/09/3d277be41011/">https://xorex.space/2020/10/09/3d277be41011/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%A2%98%E8%A7%A3/">题解</a><a class="post-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a></div><div class="post_share"><div class="social-share" data-image="/waifus/007.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/11/16/51638a233821/"><img class="prev-cover" src="/waifus/016.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JavaScript学习笔记</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/29/88da8982a4e7/"><img class="next-cover" src="/waifus/049.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Web小组报告（二）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%98%B6%E6%AE%B5"><span class="toc-number">1.</span> <span class="toc-text">一阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E9%98%B6%E6%AE%B5"><span class="toc-number">2.</span> <span class="toc-text">二阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E9%98%B6%E6%AE%B5"><span class="toc-number">3.</span> <span class="toc-text">三阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E9%98%B6%E6%AE%B5"><span class="toc-number">4.</span> <span class="toc-text">四阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E9%98%B6%E6%AE%B5"><span class="toc-number">5.</span> <span class="toc-text">五阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E9%98%B6%E6%AE%B5"><span class="toc-number">6.</span> <span class="toc-text">六阶段</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

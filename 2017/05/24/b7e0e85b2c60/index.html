@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>网络流-最大流求解 | Xorex</title><meta name="keywords" content="题解,总结,网络流"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="网络流(network-flows)是一种类比水流的解决问题方法，与线性规划密切相关。网络流的理论和应用在不断发展，出现了具有增益的流、多终端流、多商品流以及网络流的分解与合成等新课题。网络流的应用已遍及通讯、运输、电力、工程规划、任务分派、设备更新以及计算机辅助设计等众多领域。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络流-最大流求解">
+<meta property="og:url" content="https://xorex.space/2017/05/24/b7e0e85b2c60/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="网络流(network-flows)是一种类比水流的解决问题方法，与线性规划密切相关。网络流的理论和应用在不断发展，出现了具有增益的流、多终端流、多商品流以及网络流的分解与合成等新课题。网络流的应用已遍及通讯、运输、电力、工程规划、任务分派、设备更新以及计算机辅助设计等众多领域。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/097.jpg">
+<meta property="article:published_time" content="2017-05-24T13:18:21.000Z">
+<meta property="article:modified_time" content="2021-02-20T14:27:32.248Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="网络流">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/097.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2017/05/24/b7e0e85b2c60/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-20 22:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">网络流-最大流求解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2017-05-24T13:18:21.000Z" title="undefined 2017-05-24 21:18">2017-05-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/">算法竞赛</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h1><blockquote>
+<p>其实很早以前就知道有这个网络流算法了，而且据说是特别难的（毕竟当时我连DP和图论都在仰望中）现在接触到了，很神奇，但是并没有想象中的那么难 <del>（毕竟可以背模板）</del></p>
+</blockquote>
+<p>这一篇主要是我最网络流的最大流的理解以及在求最大流的时候的Ford-Fulkerson算和Dinic算法。</p>
+<h1 id="网络流"><a href="#网络流" class="headerlink" title="网络流"></a>网络流</h1><h2 id="网络流概念："><a href="#网络流概念：" class="headerlink" title="网络流概念："></a>网络流概念：</h2><blockquote>
+<p>什么是网络？网络其实就是有向带权图。为什么要叫网络，是因为权值是容量，容量意味着可以在单位时间内经过的上限，但是可以比上限小。比如说我们一个运输的管道，每段管道都有一个最大水量，如果超出了这个最大水量，就会爆开水管，而这个运输管道系统就是一个网络流。</p>
+</blockquote>
+<h2 id="最大流："><a href="#最大流：" class="headerlink" title="最大流："></a>最大流：</h2><blockquote>
+<p>寻找网络G上可能的最大流量(和一个有最大流量的可行流方案)，即为网络G上的最大流问题。</p>
+</blockquote>
+<h2 id="增广路径"><a href="#增广路径" class="headerlink" title="增广路径"></a>增广路径</h2><p>增广路径(可改进路径)的定义：</p>
+<blockquote>
+<p>若P是网络中连结源点s和汇点t的一条路，我们定义路的方向是从s到t，则路上的弧有两种：</p>
+</blockquote>
+<ul>
+<li>前向弧—弧的方向与路的方向一致。前向弧的全体记为P+；</li>
+<li>后向弧—弧的方向与路的方向相反。后向弧的全体记为P-；</li>
+</ul>
+<p>设F是一个可行流，P 是从s到t的一条路，若P满足下列条件：</p>
+<blockquote>
+<ul>
+<li>在P+的所有前向弧(u,v)上，0≦f(u,v) &lt; C(u,v);</li>
+</ul>
+</blockquote>
+<ul>
+<li>在P-的所有后向弧(u,v)上，0&lt;f(u,v) ≦C(u,v);</li>
+</ul>
+<p>则称P是关于可行流F的一条可增广路径。</p>
+<p><img src="https://xorex.space/image/052.png"></p>
+<p>上图中的S-A-C-B-D-E-T 为一增广路径。其中(C,B)为后向弧，其它为前向弧。</p>
+<h2 id="残留网络"><a href="#残留网络" class="headerlink" title="残留网络"></a>残留网络</h2><blockquote>
+<p>由于要考虑前向弧、后向弧，分析、描述时不简洁，在图上直观看也不容易看出增广路径。因此我们把已经有的流量从容量中分离出来表示，引入一个与原问题等价的附加网络：残留网络。</p>
+</blockquote>
+<p>那么我们就可以将图进行一下改进：</p>
+<p><img src="https://xorex.space/image/053.png"></p>
+<p>在这张图上，我们找增广路径显的非常直观了!</p>
+<h2 id="最大流求解"><a href="#最大流求解" class="headerlink" title="最大流求解"></a>最大流求解</h2><p>最大流定理：<br>如果残留网络上找不到增广路径，则当前流为最大流；反之，如果当前流不为最大流，则一定有增广路径。</p>
+<h1 id="Ford-Fulkerson算法"><a href="#Ford-Fulkerson算法" class="headerlink" title="Ford-Fulkerson算法"></a>Ford-Fulkerson算法</h1><h2 id="算法讲解："><a href="#算法讲解：" class="headerlink" title="算法讲解："></a>算法讲解：</h2><p>对于Ford-Fulkerson算法来说无论是理解方面还是代码实现，都是非常简单的，但是这种简单也决定了它效率并不是很高，至少是要比Dinic要低一些的。所以说还是要练习好Dinic算法。</p>
+<p>Ford-Fulkerson算法核心就是不听的寻找增广路径，不过然后利用一个Forward来记录下来这个路径的最小增加流，然后加到最终答案all中，并且利用这个Forward来更新路上的所有路径的值，也就是一个前向弧和一个后向弧（一个减，一个加）。这样不停地找直到没有办法找到增广路径为止。</p>
+<p>Ford-Fulkerson用邻接矩阵的代码是非常少的，但是相对应的空间和时间的复杂度都会提高（指的是常数），所以最好还是用邻接表（QAQ如果数据的范围比较少的话直接上邻接矩阵的Ford-Fulkerson）</p>
+<p>更重要的是，Ford-Fulkerson算法可能会被某些丧心病狂的老师卡掉（毕竟简单好写），而Ford-Fulkerson算法就是通过边权进行修改的，那么如果构成一条路的边权非常大，而另外一条边比较小，则会更新非常多次，所以更加证明了要去学Dinic算法。</p>
+<p>比如下图：</p>
+<p><img src="https://xorex.space/image/054.jpg"></p>
+<p>我们知道，Ford-Fulkerson算法是每次找到一条增广路径，<br>这个图中如果用Ford-Fulkerson算法，b—c这条边的退流将会做1000次，极大的影响算法的效率。一定要提防某些丧心病狂的老师！！！具体为什么会退流1000次可以模拟计算一下；</p>
+<p>在读入数据的时候一定要记得可能会出现重边的现象，这就和图不一<br>定是联通的道理一样的。</p>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,dis[<span class="number">400</span>][<span class="number">400</span>];</span><br><span class="line"><span class="keyword">int</span> x,y,z,all,Forward;</span><br><span class="line"><span class="keyword">bool</span> Get=<span class="literal">true</span>,vis[<span class="number">400</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> Line)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vis[x]=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span>(x==n)</span><br><span class="line">    &#123;</span><br><span class="line">        Get=<span class="literal">true</span>;</span><br><span class="line">        all+=Line;</span><br><span class="line">        Forward=Line;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    <span class="keyword">if</span>(dis[x][i]&gt;<span class="number">0</span>&amp;&amp;!vis[i])</span><br><span class="line">    &#123;</span><br><span class="line">        DFS(i,min(dis[x][i],Line));</span><br><span class="line">        <span class="keyword">if</span>(Get)</span><br><span class="line">        &#123;</span><br><span class="line">            dis[x][i]-=Forward;</span><br><span class="line">            dis[i][x]+=Forward;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;m&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;x&gt;&gt;y&gt;&gt;z;</span><br><span class="line">        dis[x][y]+=z;<span class="comment">//有可能出现重边</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(Get)</span><br><span class="line">    &#123;</span><br><span class="line">        Get=<span class="literal">false</span>;</span><br><span class="line">        <span class="built_in">memset</span>(vis,<span class="literal">false</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">        DFS(<span class="number">1</span>,<span class="number">123456789</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;all&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Dinic算法"><a href="#Dinic算法" class="headerlink" title="Dinic算法"></a>Dinic算法</h1><h2 id="写在前面："><a href="#写在前面：" class="headerlink" title="写在前面："></a>写在前面：</h2><blockquote>
+<p>果然网络流不愧是高级算法啊，整整用了三节课，才弄懂Dinic算法，其实是讲稿写的并不清楚！！！</p>
+</blockquote>
+<blockquote>
+<p>网络流真的是很神奇啊 <del>（好像我每个算法都是这么说的）</del></p>
+</blockquote>
+<h2 id="算法讲解：-1"><a href="#算法讲解：-1" class="headerlink" title="算法讲解："></a>算法讲解：</h2><p>Dinic算分和Ford-Fulkerson的主要区别就是Dinic算法是在Ford-Fulkerson算法里面，是每次一单独进行寻找增广路的，但是在Dinic里面，因为需要进行将图中的所有增广路都跟新掉，所以是进行分层操作，然后将一张图根据访问时间进行区分层次。这里分层的目的有两个： <del>（以下为我的个人理解可能不对）</del></p>
+<p>第一个就是通过进行分层来查看是否还存在有增广路，其次就是通过分层来防止DFS的死循环。因为在Dinic算法里面，我们进行的DFS的过程中，是需要更新所有的增广路，所以就可以重复的访问某一条边，但如果出现环的情况，就会死循环，那么为了防止这种情况的产生就需要进行分层。而普通的进行bool类型的vis数组标记是没有办法实现的。</p>
+<p>我们进行分层之后，每次选择走的路都是一条最短的路，这样相对来说可以更新的流更大些，提高算法运行速度。</p>
+<p>然后就是进行DFS更新利用MAXFlow来记录下来自己这里可以通过流量的当前最大值，然后Flow是可以分给下一个人的最大流量，如果找到了汇总点，那么我们就求出了这条增广路所能增广的最大值，将它加到MaxFlow里面，如果自己能够提供的流量，也就是min(上一个人给自己的流量,自己本身最大的流量)等于了MaxFlow，我们就可以进行剪枝了，因为下面已经不可能再通过任何多余的流了。</p>
+<p>最后返回可增广的最大流的时候判断一下，如果为零，那么以后也不可能再增广了，就不需要访问他了，那么直接将分层标记改为-1，进行优化。</p>
+<p>网络流还需要多多联系！建图能力必须要上去！</p>
+<h2 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> Point;</span><br><span class="line">    <span class="keyword">int</span> Value;</span><br><span class="line">    <span class="keyword">int</span> Back;</span><br><span class="line">    <span class="keyword">int</span> Next;</span><br><span class="line">&#125;a[<span class="number">2000</span>];</span><br><span class="line"><span class="keyword">int</span> n,m,x,y,z,len,Queue[<span class="number">400</span>];</span><br><span class="line"><span class="keyword">int</span> Link[<span class="number">500</span>],Level[<span class="number">400</span>],all;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">GetLevel</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(Level,<span class="number">-1</span>,<span class="keyword">sizeof</span>(Level));</span><br><span class="line">    <span class="keyword">int</span> head=<span class="number">0</span>,tail=<span class="number">1</span>;</span><br><span class="line">    Queue[<span class="number">1</span>]=<span class="number">1</span>; Level[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(++head&lt;=tail)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=Link[Queue[head]];i;i=a[i].Next)</span><br><span class="line">        <span class="keyword">if</span>(Level[a[i].Point]&lt;<span class="number">0</span>&amp;&amp;a[i].Value)</span><br><span class="line">        &#123;</span><br><span class="line">            Queue[++tail]=a[i].Point;</span><br><span class="line">            Level[Queue[tail]]=Level[Queue[head]]+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Level[n]&gt;=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetMaxFlow</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> Flow)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x==n) <span class="keyword">return</span> Flow;</span><br><span class="line">    <span class="keyword">int</span> MaxFlow=<span class="number">0</span>,D=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=Link[x];i&amp;&amp;MaxFlow&lt;Flow;i=a[i].Next)</span><br><span class="line">    <span class="keyword">if</span>(a[i].Value&amp;&amp;Level[a[i].Point]==Level[x]+<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span>(D=GetMaxFlow(a[i].Point,min(Flow-MaxFlow,a[i].Value)))</span><br><span class="line">    &#123;</span><br><span class="line">        MaxFlow+=D;</span><br><span class="line">        a[i].Value-=D;</span><br><span class="line">        a[a[i].Back].Value+=D;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!MaxFlow) Level[x]=<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> MaxFlow;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Dinic</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ans;</span><br><span class="line">    <span class="keyword">while</span>(GetLevel())</span><br><span class="line">    <span class="keyword">while</span>(ans=GetMaxFlow(<span class="number">1</span>,<span class="number">123456789</span>)) all+=ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;m&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;x&gt;&gt;y&gt;&gt;z;</span><br><span class="line">        a[++len].Point=y;</span><br><span class="line">        a[len].Next=Link[x];</span><br><span class="line">        a[len].Back=len+<span class="number">1</span>;</span><br><span class="line">        a[len].Value=z;</span><br><span class="line">        Link[x]=len;</span><br><span class="line">        a[++len].Point=x;</span><br><span class="line">        a[len].Next=Link[y];</span><br><span class="line">        a[len].Back=len<span class="number">-1</span>;</span><br><span class="line">        a[len].Value=<span class="number">0</span>;</span><br><span class="line">        Link[y]=len;</span><br><span class="line">    &#125;</span><br><span class="line">    Dinic();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;all&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2017/05/24/b7e0e85b2c60/">https://xorex.space/2017/05/24/b7e0e85b2c60/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%A2%98%E8%A7%A3/">题解</a><a class="post-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/">网络流</a></div><div class="post_share"><div class="social-share" data-image="/waifus/097.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/05/25/bdbf76efec23/"><img class="prev-cover" src="/waifus/087.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">最大流的建图</div></div></a></div><div class="next-post pull-right"><a href="/2017/05/24/d1adae273bab/"><img class="next-cover" src="/waifus/055.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">二分图匹配题解</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B4%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">说在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%B5%81"><span class="toc-number">2.</span> <span class="toc-text">网络流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%B5%81%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">网络流概念：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">最大流：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E5%B9%BF%E8%B7%AF%E5%BE%84"><span class="toc-number">2.3.</span> <span class="toc-text">增广路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%8B%E7%95%99%E7%BD%91%E7%BB%9C"><span class="toc-number">2.4.</span> <span class="toc-text">残留网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%B1%82%E8%A7%A3"><span class="toc-number">2.5.</span> <span class="toc-text">最大流求解</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ford-Fulkerson%E7%AE%97%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">Ford-Fulkerson算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">算法讲解：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">代码：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dinic%E7%AE%97%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">Dinic算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%EF%BC%9A"><span class="toc-number">4.1.</span> <span class="toc-text">写在前面：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3%EF%BC%9A-1"><span class="toc-number">4.2.</span> <span class="toc-text">算法讲解：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-number">4.3.</span> <span class="toc-text">代码实现：</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

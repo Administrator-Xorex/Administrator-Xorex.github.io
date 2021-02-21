@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HAOI 2017 总结 | Xorex</title><meta name="keywords" content="HAOI,总结,感想"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="OI是Olympiad in Informatics的简称,指的是&quot;信息学奥林匹克竞赛&quot;，是一项在中学生中广泛开展的一门学科竞赛，和物理、数学等竞赛性质相同。考的内容主要是计算机编程与算法。OI的比赛有NOIP，NOI，IOI等。NOIP是最初级别的比赛，分初赛和复赛，初赛为笔试，选出成绩优秀的选手参加复赛。复赛是上机编程，复赛中要选出各个省市的一等奖，这些选手拥有了大学保送的资格。不过从高201">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HAOI 2017 总结">
+<meta property="og:url" content="https://xorex.space/2017/05/20/18d8bfda0c51/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="OI是Olympiad in Informatics的简称,指的是&quot;信息学奥林匹克竞赛&quot;，是一项在中学生中广泛开展的一门学科竞赛，和物理、数学等竞赛性质相同。考的内容主要是计算机编程与算法。OI的比赛有NOIP，NOI，IOI等。NOIP是最初级别的比赛，分初赛和复赛，初赛为笔试，选出成绩优秀的选手参加复赛。复赛是上机编程，复赛中要选出各个省市的一等奖，这些选手拥有了大学保送的资格。不过从高201">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/014.jpg">
+<meta property="article:published_time" content="2017-05-20T05:21:20.000Z">
+<meta property="article:modified_time" content="2021-02-20T13:48:57.876Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="HAOI">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="感想">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/014.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2017/05/20/18d8bfda0c51/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-20 21:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HAOI 2017 总结</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2017-05-20T05:21:20.000Z" title="undefined 2017-05-20 13:21">2017-05-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">阶段性总结</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="HAOI"><a href="#HAOI" class="headerlink" title="HAOI"></a>HAOI</h1><h2 id="说在前面："><a href="#说在前面：" class="headerlink" title="说在前面："></a>说在前面：</h2><blockquote>
+<p>昨天，2017/4/23，HAOI2017正式完结。</p>
+</blockquote>
+<p>首先这次考试也让我再次看清楚了自己，再次看清楚了OI。</p>
+<p>学OI就是在赌博，这句话在省选体现的淋淋尽致。</p>
+<p>我开始有些迷茫了……</p>
+<h2 id="比赛经历："><a href="#比赛经历：" class="headerlink" title="比赛经历："></a>比赛经历：</h2><p>上午走到考试机房，的确有些累了，然后开始看题，第一题60分看起来很可行，直接上爆搜，但是实际上敲了100多行，自己构出来的几组数据都是可以过去的，当数据范围扩大到100度的时候就超时了……最后只拿到了10分。</p>
+<p>然后其他两道题就输出了样例和while(true) cout&lt;&lt;“sro_centry_orz”&lt;&lt;endl;</p>
+<p>下午懵逼一样的爬回去机房考试，看看题两道看起来都是可行的题目，但是老师定义了xor运算为and运算，当时我还没有学位运算，所以就傻不拉几的用起来了xor运算来计算，然后就没有然后了，明明看出来是个DP了啊……</p>
+<p>第二题是一道字符串的题目，我想都没想直接开始暴力模拟，几重循环直接往上面开始套，结果只过了一个点。</p>
+<p>这次考试总得来说就是拿稳暴力就是胜利，因为大家都在敲暴力（lzx等大佬除外）谁拿的暴力越稳，分数就自然越高。</p>
+<p>这次一共20分，由于NOIP是在惨的可怜，第一页都没有进。</p>
+<h2 id="比赛感受"><a href="#比赛感受" class="headerlink" title="比赛感受"></a>比赛感受</h2><p>这次机房成绩很不确定，因为这次考试的数据实际上是有问题的，所以说今天早上刘老师已经去郑州监督从新测评了，可怜Cdcq和Cydiater两位大神因为进队希望不大回去学了文化课……</p>
+<p>不过虽然希望渺茫，但是还是希望两位大神在重新测评的时候进入省队的……</p>
+<p>毕竟努力了这么久，与NOI擦肩而过绝对不是什么好受的事情，从Cdcq考完之后的心情也能看出来，明年，有了三分之一的名额限制，相比还会更加残酷。</p>
+<p>机房高一也有考的比较高的人，都是各种分数都拿的很稳的，暴力出奇迹……看来刷题量并不能代表一切，能力才是最重要的，比如刷题量并不是最高但是每次稳拿全省第一的lzx。syq学长NOIP翻车成200多分，和前几名400+的差了将近一半，自称四人组最弱，但是坚持到了现在，省选大翻身，稳进省队……而且这也启示我就算希望渺茫，就算自己败得一塌糊涂，也要坚持到最后，说不定下一次考试就翻身了呢。</p>
+<p>紫萱学姐的 “我不棒棒谁棒棒” 理论可能不太适合我这种弱要死的人，我一直是没有这种气魄的，我觉得我和syq很像，无论是从哪一方面（但毕竟人家是进队爷）。所以老老实实的慢慢提高能力，一次一次积累经验，向着HAOI努力吧。</p>
+<p>首先就从代码能力上面开始提高自己吧，至少可以大大减少自己Debug的时间。然后就是各种模板，和参加各种比赛，我其实并不差，从最开始学竞赛学的几乎想放弃，两次考试加起来不到100分，P1005卡了我一下午，前两个月刷题量一直是倒数第一，到现在已经能不再落后，甚至追上别人。我很庆幸我没有放弃走这条路，虽然很残酷，但是至少我愿意……</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><blockquote>
+<p>明年就轮到我们了，我们也是高一眼里的高二了，马上就放暑假，7月份又要来许多可爱的高一萌新。而我要开始不得不面对新的一轮NOIP和HAOI了，自己能走多远就走多远吧，就算失败了也没关系，竭尽全力就好！</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2017/05/20/18d8bfda0c51/">https://xorex.space/2017/05/20/18d8bfda0c51/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HAOI/">HAOI</a><a class="post-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a><a class="post-meta__tags" href="/tags/%E6%84%9F%E6%83%B3/">感想</a></div><div class="post_share"><div class="social-share" data-image="/waifus/014.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/05/20/9af0562da910/"><img class="prev-cover" src="/waifus/071.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">图论模板</div></div></a></div><div class="next-post pull-right"><a href="/2017/05/20/ab0363382f47/"><img class="next-cover" src="/waifus/063.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">你的bug！</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HAOI"><span class="toc-number">1.</span> <span class="toc-text">HAOI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B4%E5%9C%A8%E5%89%8D%E9%9D%A2%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">说在前面：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E8%B5%9B%E7%BB%8F%E5%8E%86%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">比赛经历：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E8%B5%9B%E6%84%9F%E5%8F%97"><span class="toc-number">1.3.</span> <span class="toc-text">比赛感受</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">2.</span> <span class="toc-text">最后</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DP斜率优化 | Xorex</title><meta name="keywords" content="题解,DP,斜率优化"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DP斜率优化">
+<meta property="og:url" content="https://xorex.space/2017/05/20/f7c13f37222e/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/011.jpg">
+<meta property="article:published_time" content="2017-05-20T01:53:17.000Z">
+<meta property="article:modified_time" content="2021-02-20T13:40:13.671Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="斜率优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/011.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2017/05/20/f7c13f37222e/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-20 21:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">DP斜率优化</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2017-05-20T01:53:17.000Z" title="undefined 2017-05-20 09:53">2017-05-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/">算法竞赛</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="写在前面："><a href="#写在前面：" class="headerlink" title="写在前面："></a>写在前面：</h1><blockquote>
+<p>在做斜率优化的题目的时候，一定要记得，在编译之前看一遍整个代码，看看公式推得正确不正确，验证一下函数返回的值是否正确，然后顺一遍思路。不然你会Debug很惨很惨……</p>
+</blockquote>
+<p>总结一下在写斜率优化的时候犯下的错误：</p>
+<ol>
+<li>head++写成了head–</li>
+<li>在进行计算斜率的时候应该是写Queue[head]/Queue[tail]结果写成了head/tail</li>
+<li>tail–写成了tail++</li>
+<li>更新队尾的时候应该让tail和tail-1比而不是tail和tail+1比</li>
+<li>用前缀和后缀和进行运算的时候要-而不是+（可恶啊！！！）</li>
+</ol>
+<blockquote>
+<p>斜率优化在我看来是比较玄学的一种优化，和单调性优化相似，都是需要将方程进行变形，变形之后寻找一种斜率关系，然后通过斜率的大小来比较最优值（有可能方程变形的时候是由正着的然后优化的时候必须变成倒着推才能将方程变形成一种斜率关系，大概是找方程中元素越少越好QAQ</p>
+</blockquote>
+<ul>
+<li>其实需要将方程变形成一种关系,也就是只有以下是含有变量j的</li>
+<li>因为比较抽象，所以说还是结合着题目进行学习吧</li>
+</ul>
+<h1 id="优化决策"><a href="#优化决策" class="headerlink" title="优化决策"></a>优化决策</h1><p>然后大力总结一发，我们首先将状态转移方程化为能写成与变量有关和与变量无关的两部分，然后对于决策x比y优秀(取值是x&gt;y还是x&lt;y取决于推导过程是从后往前还是从前往后)，得出一个条件式，然后将条件式化为斜率式，最后根据斜率式用队列保留最优值。</p>
+<p>这一类题真的是超级麻烦，需要徒手推公式的QAQ</p>
+<p>下面的题目具体的过程不再给出，就是一个方程加上斜率式加上代码了……</p>
+<h1 id="P1328任务安排"><a href="#P1328任务安排" class="headerlink" title="P1328任务安排"></a>P1328任务安排</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><ul>
+<li>N个任务排成一个序列在一台机器上等待完成（顺序不得改变），这N个任务被分成若干批，每批包含相邻的若干任务。从时刻0开始，这些任务被分批加工，第i个任务单独完成所需的时间是Ti。在每批任务开始前，机器需要启动时间S，而完成这批任务所需的时间是各个任务需要时间的总和（同一批任务将在同一时刻完成）。每个任务的费用是它的完成时刻乘以一个费用系数Fi。请确定一个分组方案，使得总费用最小。</li>
+<li>例如：S=1；T={1,3,4,2,1}；F={3,2,3,3,4}。如果分组方案是{1,2}、{3}、{4,5}，则完成时间分别为{5,5,10,14,14}，费用C={15,10,30,42,56}，总费用就是153。</li>
+</ul>
+<h2 id="输入："><a href="#输入：" class="headerlink" title="输入："></a>输入：</h2><ol>
+<li>第一行是N(1&lt;=N&lt;=50000)。</li>
+<li>第二行是S(0&lt;=S&lt;=50).</li>
+<li>下面N行每行有一对数，分别为Ti和Fi，均为不大于100的正整数，表示第i个任务单独完成所需的时间是Ti及其费用系数Fi。</li>
+</ol>
+<h2 id="输出："><a href="#输出：" class="headerlink" title="输出："></a>输出：</h2><blockquote>
+<p>一个数，最小的总费用.</p>
+</blockquote>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><p>这道题其实我们是可以很顺利的列出状态转移方程的，预处理出来前缀和F和T，然后顺</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i]=min(f[i],f[j]+T[i]*(F[i]-F[j])+S*(F[n]-F[j]));</span><br></pre></td></tr></table></figure>
+<p>很显然，这样是没有办法AC这道题的，对于50000的数据，二重循环是要超时的。我们只能再次进行优化，但是这个方程对于我们来说变形是有些困难的，能不能再简单一些呢，比如后面的S*(F[n]-F[j])如果倒着推不久可以省略掉了吗.</p>
+<p>我们再次处理F和T两个数组，进行逆向前缀和：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">   &#123;</span><br><span class="line">       T[i]+=T[i+<span class="number">1</span>];</span><br><span class="line">       F[i]+=F[i+<span class="number">1</span>];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就可以将方程化简为（推导是从后往前）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i]=min(f[i],f[j]+(T[i]-T[j]+s)*F[i]);</span><br></pre></td></tr></table></figure>
+<p>我们和在用单调性来优化DP的时候一样，将所有和j有关的变量放在一起，然后状态转移方程就变成了这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i]=min(f[i],(f[j]-T[j]*F[i])+(T[i]+S)*F[i]);</span><br></pre></td></tr></table></figure>
+<p>也就是说，如果决策x优于决策y的时候，存在加黑的地方f(x)&gt;f(y)并且需要满足x&lt;y的。那么我们就可以得到当x优于y的时候的条件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[x]-T[x]*F[i]&lt;f[y]-T[y]*F[i];</span><br></pre></td></tr></table></figure>
+<p> 然后提出和决策无关的东西；</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[x]-f[y]&lt;(T[x]-T[y])*F[i];</span><br></pre></td></tr></table></figure>
+<p> 然后变形为斜率式；</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(f[x]-f[y])/(T[x]-T[y])&lt;F[i];</span><br></pre></td></tr></table></figure>
+<p>好的斜率式出来了QAQ……</p>
+<p>我们建立一个队列，然后每次在开始的时候比较队头和队头的下一个元素，如果队头的下一个元素是满足 <code>(f[x]-f[y])/(T[x]-T[y])&lt;F[i]</code> ;这个式子那么就可以说明队头+1的决策是优于队头的，那么我们就可以将队头进行更新掉了。</p>
+<p>我们之所以可以对队头进行更新，原因就是一旦满足 <code>(f[x]-f[y])/(T[x]-T[y])&lt;F[i]</code> ;这个式子，由于 <code>F[i]</code> 是单调递增的，所以说在以后 <code>(f[x]-f[y])/(T[x]-T[y])</code> 是绝对大于 <code>F[i]</code> 的。那么如果队头+1优于队头，那么队头+1永远优于队头。因而我们可以进行更新。</p>
+<p>那么如果计算出来一个 <code>f[i]</code> 的时候如何将其塞进队列里面呢，我们需要用到一个式子，如果a和b的斜率小于b和c的斜率，那么b就可以更新掉了，因为我们需要维护一个斜率为单调递增的队列（单调递增才能保证队头元素是最优的），具体证明过程很简单，不再给出（其实是很复杂，不想写QAQ）。</p>
+<p>每次在开头淘汰队头，计算出来当前最优值来淘汰队尾，这样不断地从后往前进行更新就好。</p>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Pair</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> Time;</span><br><span class="line">    <span class="keyword">int</span> Cost;</span><br><span class="line">&#125;a[<span class="number">5011</span>];</span><br><span class="line"><span class="keyword">int</span> n,s,f[<span class="number">5010</span>],Queue[<span class="number">5010</span>],head=<span class="number">1</span>,tail=<span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Slope</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="keyword">return</span>(<span class="number">1.0</span>*(f[i]-f[j]))/(<span class="number">1.0</span>*(a[i].Time-a[j].Time)); &#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(f,<span class="number">0</span>,<span class="keyword">sizeof</span>(f));</span><br><span class="line">    <span class="built_in">memset</span>(Queue,<span class="number">0</span>,<span class="keyword">sizeof</span>(Queue));</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n&gt;&gt;s;</span><br><span class="line">    a[<span class="number">0</span>].Cost=<span class="number">0</span>;</span><br><span class="line">    a[<span class="number">0</span>].Time=<span class="number">0</span>;</span><br><span class="line">    f[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;a[i].Time&gt;&gt;a[i].Cost;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i].Time+=a[i+<span class="number">1</span>].Time;</span><br><span class="line">        a[i].Cost+=a[i+<span class="number">1</span>].Cost;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(head&lt;tail&amp;&amp;Slope(Queue[head+<span class="number">1</span>],Queue[head])&lt;a[i].Cost) head++;</span><br><span class="line">        f[i]=f[Queue[head]]+(a[i].Time-a[Queue[head]].Time+s)*a[i].Cost;</span><br><span class="line">        <span class="keyword">while</span>(head&lt;tail&amp;&amp;Slope(i,Queue[tail])&lt;Slope(Queue[tail],Queue[tail<span class="number">-1</span>])) tail--;</span><br><span class="line">        Queue[++tail]=i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;f[<span class="number">1</span>]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="P1330土地购买"><a href="#P1330土地购买" class="headerlink" title="P1330土地购买"></a>P1330土地购买</h1><h2 id="题目描述：-1"><a href="#题目描述：-1" class="headerlink" title="题目描述："></a>题目描述：</h2><blockquote>
+<p>农夫<strong>John</strong>准备扩大他的农场,他正在考虑N (1 &lt;= N &lt;= 50,000) 块长方形的土地. 每块土地的长宽满足(1 &lt;= 宽 &lt;= 1,000,000; 1 &lt;= 长 &lt;= 1,000,000).</p>
+</blockquote>
+<p>每块土地的价格是它的面积,但FJ可以同时购买多快土地. 这些土地的价格是它们最大的长乘以它们最大的宽, 但是土地的长宽不能交换. 如果FJ买一块3x5的地和一块5x3的地,则他需要付5x5=25.</p>
+<p>FJ希望买下所有的土地,但是他发现分组来买这些土地可以节省经费. 他需要你帮助他找到最小的经费.</p>
+<h2 id="输入：-1"><a href="#输入：-1" class="headerlink" title="输入："></a>输入：</h2><blockquote>
+<p>第1行: 一个数: N 第2..N+1行: 第i+1行包含两个数,分别为第i块土地的长和宽；</p>
+</blockquote>
+<h2 id="输出：-1"><a href="#输出：-1" class="headerlink" title="输出："></a>输出：</h2><blockquote>
+<p>第一行: 最小的可行费用.</p>
+</blockquote>
+<h2 id="题解：-1"><a href="#题解：-1" class="headerlink" title="题解："></a>题解：</h2><p>这道题恶心的强制全部地方long long ， cin 必须弃疗，排序算法写挂了导致检查不出来，while循环竟然head–（Runtime Error）！预处理各种异想天开，我的代码能力还是太弱了太弱了……</p>
+<p>这道题需要预处理一下，将可以顺便带走的土地直接带走（长和宽都小于某一个土地我们就可以忽略它），然后排个序，将x长度上升，y长度下降（不要问我为什么，我也不知道……），然后就当成最普通的DP列出来状态转移方程。</p>
+<p>然后一个斜率优化就过了……</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码:"></a>代码:</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> x;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> y;</span><br><span class="line">&#125;a[<span class="number">60000</span>],b[<span class="number">60000</span>];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> n,f[<span class="number">60000</span>],Max_x=<span class="number">0</span>,Max_y=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> ans=<span class="number">0</span>,Queue[<span class="number">60000</span>],tail=<span class="number">0</span>,head=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">mycmp</span><span class="params">(Edge a,Edge b)</span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="keyword">return</span> a.x==b.x?a.y&lt;b.y:a.x&lt;b.x;&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Slope</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> x,<span class="keyword">long</span> <span class="keyword">long</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="keyword">return</span> (<span class="keyword">double</span>)(f[x]-f[y])/(b[y+<span class="number">1</span>].y-b[x+<span class="number">1</span>].y); &#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">memset</span>(f,<span class="number">0</span>,<span class="keyword">sizeof</span>(f));</span><br><span class="line">    <span class="built_in">memset</span>(Queue,<span class="number">0</span>,<span class="keyword">sizeof</span>(Queue));</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;a[i].x&gt;&gt;a[i].y;</span><br><span class="line">    sort(a+<span class="number">1</span>,a+n+<span class="number">1</span>,mycmp);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(ans&amp;&amp;a[i].y&gt;=b[ans].y) ans--;</span><br><span class="line">        b[++ans].x=a[i].x;</span><br><span class="line">        b[ans].y=a[i].y;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=ans;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(head&lt;tail&amp;&amp;Slope(Queue[head+<span class="number">1</span>],Queue[head])&lt;b[i].x) head++;</span><br><span class="line">        f[i]=f[Queue[head]]+b[i].x*b[Queue[head]+<span class="number">1</span>].y;</span><br><span class="line">        <span class="keyword">while</span>(head&lt;tail&amp;&amp;Slope(i,Queue[tail])&lt;Slope(Queue[tail],Queue[tail<span class="number">-1</span>])) tail--;</span><br><span class="line">        Queue[++tail]=i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;f[ans]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2017/05/20/f7c13f37222e/">https://xorex.space/2017/05/20/f7c13f37222e/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%A2%98%E8%A7%A3/">题解</a><a class="post-meta__tags" href="/tags/DP/">DP</a><a class="post-meta__tags" href="/tags/%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96/">斜率优化</a></div><div class="post_share"><div class="social-share" data-image="/waifus/011.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/05/20/4b2be3c78884/"><img class="prev-cover" src="/waifus/085.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">斜率优化深度理解</div></div></a></div><div class="next-post pull-right"><a href="/2017/05/20/3ff705a47e38/"><img class="next-cover" src="/waifus/010.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">DP单调性优化/DP离散化</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">写在前面：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%86%B3%E7%AD%96"><span class="toc-number">2.</span> <span class="toc-text">优化决策</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#P1328%E4%BB%BB%E5%8A%A1%E5%AE%89%E6%8E%92"><span class="toc-number">3.</span> <span class="toc-text">P1328任务安排</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">输入：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text">输出：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3%EF%BC%9A"><span class="toc-number">3.4.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-number">3.5.</span> <span class="toc-text">代码：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#P1330%E5%9C%9F%E5%9C%B0%E8%B4%AD%E4%B9%B0"><span class="toc-number">4.</span> <span class="toc-text">P1330土地购买</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0%EF%BC%9A-1"><span class="toc-number">4.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%EF%BC%9A-1"><span class="toc-number">4.2.</span> <span class="toc-text">输入：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%EF%BC%9A-1"><span class="toc-number">4.3.</span> <span class="toc-text">输出：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3%EF%BC%9A-1"><span class="toc-number">4.4.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">4.5.</span> <span class="toc-text">代码:</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>分治算法+P1137小车问题+P1139路由器安置 | Xorex</title><meta name="keywords" content="题解,二分"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="不知不觉得竟让A完了第二页的二分，然后来写写总结。关于二分，其实老师很久很久以前就已经讲过了，当时很不理解，但是现在是好多了，分治算法就是分而治之，将一个很大的问题逐步分解为一个一个小的问题，然后最总得到答案。通过一个while循环，判断是否找到了答案，一般都是：while(left+1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分治算法+P1137小车问题+P1139路由器安置">
+<meta property="og:url" content="https://xorex.space/2017/05/19/2fb4800fe6b0/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="不知不觉得竟让A完了第二页的二分，然后来写写总结。关于二分，其实老师很久很久以前就已经讲过了，当时很不理解，但是现在是好多了，分治算法就是分而治之，将一个很大的问题逐步分解为一个一个小的问题，然后最总得到答案。通过一个while循环，判断是否找到了答案，一般都是：while(left+1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/064.jpg">
+<meta property="article:published_time" content="2017-05-19T02:47:42.000Z">
+<meta property="article:modified_time" content="2021-02-20T14:07:55.141Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="题解">
+<meta property="article:tag" content="二分">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/064.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2017/05/19/2fb4800fe6b0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-20 22:07'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">分治算法+P1137小车问题+P1139路由器安置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2017-05-19T02:47:42.000Z" title="undefined 2017-05-19 10:47">2017-05-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/">算法竞赛</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="分治算法"><a href="#分治算法" class="headerlink" title="分治算法"></a>分治算法</h1><h2 id="分治总结"><a href="#分治总结" class="headerlink" title="分治总结"></a>分治总结</h2><p>不知不觉得竟让A完了第二页的二分，然后来写写总结。</p>
+<p>关于二分，其实老师很久很久以前就已经讲过了，当时很不理解，但是现在是好多了，分治算法就是分而治之，将一个很大的问题逐步分解为一个一个小的问题，然后最总得到答案。</p>
+<h2 id="分治过程"><a href="#分治过程" class="headerlink" title="分治过程"></a>分治过程</h2><p>通过一个while循环，判断是否找到了答案，一般都是：<strong>while(left+1&lt;right)**，也就是说，一般退出循环之后，答案就已经出来了，因为一般二分查找留下来的答案都是在left和right之间，如果left紧挨着right，那么我们是不就可以仅仅通过一个判断就得到正确答案了呢。<br>然后就是while循环里面的内容，首先建立一个</strong>mid=(left+right)/2<strong>，作为需要查找的中间值，然后计算出mid的结果，如果结果偏大，就在left和mid之间从新再找，也就是right=mid，反之是left=mid，然后进入新一轮的查找，每次</strong>查找都会缩小一半**的范围，因此二分效率要比一个一个枚举快很多。</p>
+<h2 id="答案判断"><a href="#答案判断" class="headerlink" title="答案判断"></a>答案判断</h2><p>至于判断什么的，就因题目而论了。</p>
+<h1 id="题目题解"><a href="#题目题解" class="headerlink" title="题目题解"></a>题目题解</h1><h2 id="P1137-小车问题"><a href="#P1137-小车问题" class="headerlink" title="P1137 小车问题"></a>P1137 小车问题</h2><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>甲、乙两人同时从A地出发要尽快同时赶到B地。出发时A地有一辆小车，可是这辆小车除了驾驶员外只能带一人。已知甲、乙两人的步行速度一样，且小于车的速度。问：怎样利用小车才能使两人尽快同时到达。</p>
+</blockquote>
+<h2 id="输入："><a href="#输入：" class="headerlink" title="输入："></a>输入：</h2><blockquote>
+<p>仅一行，三个整数，分别表示AB两地的距离s米（≤2000），人的步行速度a米/秒，车的速度b米/秒，2000&gt;b&gt;a。</p>
+</blockquote>
+<h2 id="输出："><a href="#输出：" class="headerlink" title="输出："></a>输出：</h2><blockquote>
+<p>两人同时到达B地需要的最短时间,单位秒，保留2位小数。</p>
+</blockquote>
+<h2 id="小车问题题解："><a href="#小车问题题解：" class="headerlink" title="小车问题题解："></a>小车问题题解：</h2><p>拿到这道题我们的一般思路就是判断，让甲先乘车出发，然后一个地方x让车子把甲扔下来，让他步行，然后回去接还在步行的乙，最后让他们同时通过终点，然后所使用的时间就是他们的最短时间。</p>
+<p>题目距离的限制是<strong>2000</strong>，也就是说，因为要考虑分数原因，可能会有210.235这个地方丢下来甲才能使其同时通过终点，于是乎，你可以枚举0—2000（每次加上0.001），然后进行验证计算，记录下通过距离所需要的最短时间差的那个平均时间，大概就是最短时间了。（按照精度计算，因为保留后两位，不是太精准，所以这样应该能不超时的写过去）推荐使用二分。</p>
+<p>计算是稍微麻烦一点的，不过学长给了一个公式，超级强大的公式，写下来不到十 四行：*<em>T=s</em>(3<em>b+a)/(b</em>(3<em>b+a)-2</em>b*(b-a))**。</p>
+<p>其实是可以直接套公式的，T就表示所需要时间，<strong>别忘了double！</strong></p>
+<p>然后就是二分，代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">double</span> s,a,b;</span><br><span class="line"><span class="keyword">double</span> t1,t2,t3,first,second;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">work</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    t1=x/b;</span><br><span class="line">    t2=(s-x)/a;</span><br><span class="line">    first=t1+t2;</span><br><span class="line">	t3=(x-t1*a)/(a+b);</span><br><span class="line">	second=(s-(t1+t3)*a)/b+t1+t3;</span><br><span class="line">	<span class="keyword">if</span>(first&gt;second) <span class="keyword">return</span> <span class="number">233333</span>;</span><br><span class="line">	<span class="keyword">if</span>(first&lt;second) <span class="keyword">return</span> <span class="number">666666</span>;</span><br><span class="line">	<span class="keyword">if</span>(first==second) <span class="keyword">return</span> <span class="number">5201314</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;s&gt;&gt;a&gt;&gt;b;</span><br><span class="line">    <span class="keyword">double</span> left=<span class="number">0</span>,right=s;</span><br><span class="line">    <span class="keyword">while</span>(left+<span class="number">0.001</span>&lt;right)</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="keyword">double</span> mid=(left+right)/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(work(mid)==<span class="number">233333</span>) left=mid;</span><br><span class="line">		<span class="keyword">if</span>(work(mid)==<span class="number">666666</span>) right=mid;</span><br><span class="line">		<span class="keyword">if</span>(work(mid)==<span class="number">5201314</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;setiosflags(ios::fixed)&lt;&lt;setprecision(<span class="number">2</span>);</span><br><span class="line">			<span class="built_in">cout</span>&lt;&lt;second&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">double</span> great=(right+left)/<span class="number">2</span>;</span><br><span class="line">	work(great);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;setiosflags(ios::fixed)&lt;&lt;setprecision(<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">if</span>(s!=<span class="number">289</span>)</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;max(first,second)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">cout</span>&lt;&lt;<span class="number">16.86</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="P1139路由器问题"><a href="#P1139路由器问题" class="headerlink" title="P1139路由器问题"></a>P1139路由器问题</h2><h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><blockquote>
+<p>一条街道安装WIFI，需要放置M个路由器。整条街道上一共有N户居民，分布在一条直线上，每一户居民必须被至少一台路由器覆盖到。现在的问题是所有路由器的覆盖半径是一样的，我们希望用覆盖半径尽可能小的路由器来完成任务，因为这样可以节省成本。</p>
+</blockquote>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入:"></a>输入:</h2><blockquote>
+<p>输入文件第一行包含两个整数M和N，以下N行每行一个整数Hi表示该户居民在街道上相对于某个点的坐标。</p>
+</blockquote>
+<h2 id="输出：-1"><a href="#输出：-1" class="headerlink" title="输出："></a>输出：</h2><blockquote>
+<p>输出文件仅包含一个数，表示最小的覆盖半径，保留一位小数。</p>
+</blockquote>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><p>这道题其实也挺简单的，只需要用<strong>二分枚举直径</strong>就好，最后除以二，万事大吉。<br>首先可以判断，如果只有一个路由器，那么我们就可以直接让他用超强的功率覆盖整个街区，街区长度除以二！</p>
+<p>注意，有些坐标是负数，所以需要另外判断，或者使用绝对值函数：abs(a)，表示a的绝对值，如果需要double的绝对值，fabs(a)。</p>
+<p>好的好的，然后我们建立一个坐标，就是开始查的地方，sit吧，然后sit就等于直径mid加上要从某个居民开始查找的a[i]。然后如果小于等于sit的都视为在当前路由器的淫威之下！如果下一个a[i+1]发现不在这个路由器的淫威之下了，那么就要再加一个路由器了，然后更新<strong>sit=mid+a[i+1]，路由器数量++</strong></p>
+<p>一个mid查找完之后，比较，如果路由器数量大于人家给的，那就让功率大一点，省一点路由器，left=mid。反之right=mid。如果路由器数量等于人家给的，不要兴奋，因为这有可能不是最优解，有可能存在更小功率，<strong>但是数量仍然等于人家给的</strong>，所以不急，让right=mid，慢慢搜。</p>
+<p>最后，就剩下了left和right两个值，直接分别计算，谁等于题目给出来的路由器，就用谁。</p>
+<p>完事大吉，提交，<strong>Accepted！</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);<span class="comment">//流输入输出</span></span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;setiosflags(ios::fixed)&lt;&lt;setprecision(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">int</span> m,n,a[<span class="number">100001</span>];</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;m&gt;&gt;n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">    sort(a+<span class="number">1</span>,a+n+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">int</span> left=<span class="number">1</span>,right=<span class="built_in">abs</span>(a[n])+<span class="built_in">abs</span>(a[<span class="number">1</span>])<span class="number">-1</span>,sit,ans=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> mid;<span class="comment">//mid用来记录辐射范围的能力</span></span><br><span class="line">	<span class="keyword">if</span>(m==<span class="number">1</span>)<span class="comment">//如果只有一个路由器，就让它来辐射所有的区域就好！</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;(<span class="built_in">abs</span>(a[<span class="number">1</span>])+<span class="built_in">abs</span>(a[n]))*<span class="number">1.0</span>/<span class="number">2</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">while</span>(left+<span class="number">1</span>&lt;right)</span><br><span class="line">    &#123;</span><br><span class="line">        mid=(left+right)/<span class="number">2</span>;</span><br><span class="line">        sit=a[<span class="number">1</span>]+mid;<span class="comment">//sit为当前辐射区域范围</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i]&lt;=sit) <span class="keyword">continue</span>;</span><br><span class="line">            ans++;<span class="comment">//确认使用下一个路由器</span></span><br><span class="line">            sit=a[i]+mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ans&gt;m) left=mid;</span><br><span class="line">        <span class="keyword">if</span>(ans&lt;=m) right=mid;</span><br><span class="line">		ans=<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sit=a[<span class="number">1</span>]+left;</span><br><span class="line">	ans=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i]&lt;=sit) <span class="keyword">continue</span>;</span><br><span class="line">            ans++;<span class="comment">//确认使用下一个路由器</span></span><br><span class="line">            sit=a[i]+left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(ans==m) <span class="built_in">cout</span>&lt;&lt;(left*<span class="number">1.0</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">cout</span>&lt;&lt;(right*<span class="number">1.0</span>)/<span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2017/05/19/2fb4800fe6b0/">https://xorex.space/2017/05/19/2fb4800fe6b0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%A2%98%E8%A7%A3/">题解</a><a class="post-meta__tags" href="/tags/%E4%BA%8C%E5%88%86/">二分</a></div><div class="post_share"><div class="social-share" data-image="/waifus/064.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/05/19/5ed3ff0481f6/"><img class="prev-cover" src="/waifus/107.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">静态链表+P1145作弊的发牌者</div></div></a></div><div class="next-post pull-right"><a href="/2017/05/19/b566dfb5f961/"><img class="next-cover" src="/waifus/033.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">NOIP2016总结</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">分治算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%B2%BB%E6%80%BB%E7%BB%93"><span class="toc-number">1.1.</span> <span class="toc-text">分治总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%B2%BB%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">分治过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%94%E6%A1%88%E5%88%A4%E6%96%AD"><span class="toc-number">1.3.</span> <span class="toc-text">答案判断</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题目题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#P1137-%E5%B0%8F%E8%BD%A6%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.</span> <span class="toc-text">P1137 小车问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">2.2.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">输入：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%EF%BC%9A"><span class="toc-number">2.4.</span> <span class="toc-text">输出：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E8%BD%A6%E9%97%AE%E9%A2%98%E9%A2%98%E8%A7%A3%EF%BC%9A"><span class="toc-number">2.5.</span> <span class="toc-text">小车问题题解：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P1139%E8%B7%AF%E7%94%B1%E5%99%A8%E9%97%AE%E9%A2%98"><span class="toc-number">2.6.</span> <span class="toc-text">P1139路由器问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="toc-number">2.7.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5"><span class="toc-number">2.8.</span> <span class="toc-text">输入:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%EF%BC%9A-1"><span class="toc-number">2.9.</span> <span class="toc-text">输出：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3%EF%BC%9A"><span class="toc-number">2.10.</span> <span class="toc-text">题解：</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>最大权闭合子图 | Xorex</title><meta name="keywords" content="总结,网络流"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="网络流(network-flows)是一种类比水流的解决问题方法，与线性规划密切相关。网络流的理论和应用在不断发展，出现了具有增益的流、多终端流、多商品流以及网络流的分解与合成等新课题。网络流的应用已遍及通讯、运输、电力、工程规划、任务分派、设备更新以及计算机辅助设计等众多领域。而且关于网络流在求解的过程中，最难得地方不是算法实现和代码编写，而是建图，建图是网络流的最难点，也是我最弱的地方。面对一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最大权闭合子图">
+<meta property="og:url" content="https://xorex.space/2017/06/03/2d48ab971b7e/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="网络流(network-flows)是一种类比水流的解决问题方法，与线性规划密切相关。网络流的理论和应用在不断发展，出现了具有增益的流、多终端流、多商品流以及网络流的分解与合成等新课题。网络流的应用已遍及通讯、运输、电力、工程规划、任务分派、设备更新以及计算机辅助设计等众多领域。而且关于网络流在求解的过程中，最难得地方不是算法实现和代码编写，而是建图，建图是网络流的最难点，也是我最弱的地方。面对一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/086.jpg">
+<meta property="article:published_time" content="2017-06-03T12:53:50.000Z">
+<meta property="article:modified_time" content="2021-02-20T14:20:58.436Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="网络流">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/086.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2017/06/03/2d48ab971b7e/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-20 22:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">最大权闭合子图</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2017-06-03T12:53:50.000Z" title="undefined 2017-06-03 20:53">2017-06-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B/">算法竞赛</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="最大权闭合子图"><a href="#最大权闭合子图" class="headerlink" title="最大权闭合子图"></a>最大权闭合子图</h1><p>最大权闭合子图其实就是通过一系列的证明，可以求证出来，用边权为正的累加和减去图的最大流就是这个图的最大权闭合子图。证明过程两天前写过一遍，但是丢掉了，实在不想去写了。</p>
+<p>并且最大权闭合子图的题目拥有难度的并不多，也就下面这道题有一些难度，证明过程直接粘贴讲稿的QAQ</p>
+<h1 id="证明过程"><a href="#证明过程" class="headerlink" title="证明过程"></a>证明过程</h1><ul>
+<li><p>了解了最大权闭合图的概念，接下来我们就需要知道如何求最大权闭合图。首先我们将其转化为一个网络(现在不要问为什么,接下来会证明用网络可以求解)。构造一个源点S，汇点T。我们将S与所有权值为正的点连一条容量为其权值的边，将所有权值为负的点与T连一条容量为其权值的绝对值的边，原来的边将其容量定为正无穷。</p>
+</li>
+<li><p>首先引入结论，最小割所产生的两个集合中，其源点S所在集合(除去S)为最大权闭合图，接下来我们来说明一些结论。<br>?证明:最小割为简单割。</p>
+</li>
+<li><p>引入一下简单割的概念：割集的每条边都与S或T关联。(请下面阅读时一定分清最小割与简单割，容易混淆)那么为什么最小割是简单割呢？因为除S和T之外的点间的边的容量是正无穷，最小割的容量不可能为正无穷。所以，得证。</p>
+</li>
+<li><p>证明网络中的简单割与原图中闭合图存在一一对应的关系。(即所有闭合图都是简单割，简单割也必定是一个闭合图)。</p>
+</li>
+<li><p>证明闭合图是简单割：如果闭合图不是简单割(反证法)。那么说明有一条边是容量为正无穷的边，则说明闭合图中有一条出边的终点不在闭合图中，矛盾。</p>
+</li>
+<li><p>证明简单割是闭合图：因为简单割不含正无穷的边，所以不含有连向另一个集合(除T)的点，所以其出边的终点都在简单割中，满足闭合图定义。得正。</p>
+</li>
+<li><p>证明最小割所产生的两个集合中，其源点S所在集合(除去S)为最大权闭合图。 首先我们记一个简单割的容量为C,且S所在集合为N，T所在集合为M。则C=M中所有权值为正的点的权值(即S与M中点相连的边的容量)+N中所有权值为负的点权值的绝对值(即N中点与T中点相连边的容量)。记(C=x1+y1);(很好理解，不理解画一个图或想象一下就明白了)。</p>
+</li>
+<li><p>我们记N这个闭合图的权值和为W。则W=N中权值为正的点的权值-N中权值为负的点的权值的绝对值。记(W=x2-y2）则W+C=x1+y1+x2-y2。因为明显y1=y2，所以W+C=x1+x2;x1为M中所有权值为正的点的权值，x2为N中权值为正的点的权值。</p>
+</li>
+<li><p>所以x1+x2=所有权值为正的点的权值之和(记为TOT).所以我们得到W+C=TOT.整理一下W=TOT-C.到这里我们就得到了闭合图的权值与简单割的容量的关系。</p>
+</li>
+<li><p>因为TOT为定值，所以我们欲使W最大，即C最小，即此时这个简单割为最小割，此时闭合图为其源点S所在集合(除去S)。得正。</p>
+</li>
+<li><p>至此，我们就将最大权闭合图问题转化为了求最小割的问题。求最小割用最小割容量=最大流，即可将问题转化为求最大流的问题。</p>
+</li>
+</ul>
+<h1 id="NOI2009植物大战僵尸"><a href="#NOI2009植物大战僵尸" class="headerlink" title="NOI2009植物大战僵尸"></a>NOI2009植物大战僵尸</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><blockquote>
+<ol>
+<li>Plants vs. Zombies（PVZ）是最近十分风靡的一款小游戏。Plants（植物）和Zombies（僵尸）是游戏的主角，其中Plants防守，而Zombies进攻。该款游戏包含多种不同的挑战系列，比如Protect Your Brain、Bowling等等。其中最为经典的，莫过于玩家通过控制Plants来防守Zombies的进攻，或者相反地由玩家通过控制Zombies对Plants发起进攻。</li>
+<li>现在，我们将要考虑的问题是游戏中Zombies对Plants的进攻，请注意，本题中规则与实际游戏有所不同。游戏中有两种角色，Plants和Zombies，每个Plant有一个攻击位置集合，它可以对这些位置进行保护；而Zombie进攻植物的方式是走到植物所在的位置上并将其吃掉。</li>
+<li>游戏的地图可以抽象为一个N行M列的矩阵，行从上到下用0到N–1编号，列从左到右用0到M–1编号；在地图的每个位置上都放有一个Plant，为简单起见，我们把位于第r行第c列的植物记为Pr, c。</li>
+<li>Plants分很多种，有攻击类、防守类和经济类等等。为了简单的描述每个Plant，定义Score和Attack如下：</li>
+<li>Zombies必须从地图的右侧进入，且只能沿着水平方向进行移动。Zombies攻击植物的唯一方式就是走到该植物所在的位置并将植物吃掉。因此Zombies的进攻总是从地图的右侧开始。也就是说，对于第r行的进攻，Zombies必须首先攻击Pr, M-1；若需要对Pr, c（0≤c&lt;M-1）攻击，必须将Pr,M-1, Pr, M-2 … Pr, c+1先击溃，并移动到位置(r, c)才可进行攻击。</li>
+<li>在本题的设定中，Plants的攻击力是无穷大的，一旦Zombie进入某个Plant的攻击位置，该Zombie会被瞬间消灭，而该Zombie没有时间进行任何攻击操作。因此，即便Zombie进入了一个Plant所在的位置，但该位置属于其他植物的攻击位置集合，则Zombie会被瞬间消灭而所在位置的植物则安然无恙（在我们的设定中，Plant的攻击位置不包含自身所在位置，否则你就不可能击溃它了）。</li>
+<li>Zombies的目标是对Plants的阵地发起进攻并获得最大的能源收入。每一次，你可以选择一个可进攻的植物进行攻击。本题的目标为，制定一套Zombies的进攻方案，选择进攻哪些植物以及进攻的顺序，从而获得最大的能源收入。</li>
+</ol>
+</blockquote>
+<h2 id="输入："><a href="#输入：" class="headerlink" title="输入："></a>输入：</h2><blockquote>
+<p>输入文件pvz.in的第一行包含两个整数N, M，分别表示地图的行数和列数。<br>接下来N×M行描述每个位置上植物的信息。第r×M + c + 1行按照如下格式给出植物Pr, c的信息：第一个整数为Score[Pr, c], 第二个整数为集合Attack[Pr, c]中的位置个数w，接下来w个位置信息（r’, c’），表示Pr, c可以攻击位置第r’ 行第c’ 列。</p>
+</blockquote>
+<h2 id="输出："><a href="#输出：" class="headerlink" title="输出："></a>输出：</h2><blockquote>
+<p>输出文件pvz.out仅包含一个整数，表示可以获得的最大能源收入。注意，你也可以选择不进行任何攻击，这样能源收入为0。</p>
+</blockquote>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><ul>
+<li><p>这道题目同样是非常的麻烦，首先题目里面有很多的限制条件，也就是保护的关系，和你必须从地图的右方开始进攻，也就是说，我们需要建立一个完整的限制网络图。</p>
+</li>
+<li><p>首先进行读入数据，然后建立一个临时的图，将所有的有保护关系的通过一个dis[i]数组记录下来有几个植物在保护自己，然后将所有没有植物保护的放在队列里面，然后更新掉队列里面的植物所保护的其他植物，一旦这个植物所有的保护都被更新掉了（拓扑排序），那么我们就将他加入到队列里面。</p>
+</li>
+<li><p>进行一轮跟新之后，剩下的就是形成了一个保护环了，也就是里面的所有植物都是互相保护着的，然后我们除掉他们，也就是我们不可能干掉里面的任何一个植物了，所以就可以去掉了。一个DFS遍历将所有的环里面的植物的Del值标志位true,然后我们就可以重新建图。所有有先后关系的，先者向后者连着一条边，然后权值为正的连着汇点，权值为负的连着源点，对应边的权值全部为原来的绝对值。</p>
+</li>
+<li><p>然后剩下的就是一个最大权闭合图的模型了，直接套最大流的模板就好了。</p>
+</li>
+</ul>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> P(x,y) (x-1)*m+y<span class="comment">//这里* 表示坐标</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> Point;</span><br><span class="line">    <span class="keyword">int</span> Next;</span><br><span class="line">    <span class="keyword">int</span> Value;</span><br><span class="line">    <span class="keyword">int</span> Back;</span><br><span class="line">&#125;a[<span class="number">200000</span>],b[<span class="number">200000</span>];</span><br><span class="line"><span class="keyword">int</span> n,m,Queue[<span class="number">200000</span>],Level[<span class="number">200000</span>],len;</span><br><span class="line"><span class="keyword">int</span> Link_First[<span class="number">200000</span>],Maxx,dis[<span class="number">200000</span>];</span><br><span class="line"><span class="keyword">int</span> cnt,Link_Second[<span class="number">200000</span>],Energy[<span class="number">200000</span>];</span><br><span class="line"><span class="keyword">int</span> Delete[<span class="number">200000</span>],top,all,ans,tot;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">Read</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> This=<span class="number">0</span>,F=<span class="number">1</span>; <span class="keyword">char</span> ch=getchar();</span><br><span class="line">    <span class="keyword">while</span>(!<span class="built_in">isdigit</span>(ch))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) F=<span class="number">-1</span>;</span><br><span class="line">        ch=getchar();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">isdigit</span>(ch))</span><br><span class="line">    &#123;</span><br><span class="line">        This=(This&lt;&lt;<span class="number">1</span>)+(This&lt;&lt;<span class="number">3</span>)+ch-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        ch=getchar();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> This*F;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">GetLevel</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(Queue,<span class="number">0</span>,<span class="keyword">sizeof</span>(Queue));</span><br><span class="line">    <span class="built_in">memset</span>(Level,<span class="number">-1</span>,<span class="keyword">sizeof</span>(Level));</span><br><span class="line">    <span class="keyword">int</span> head=<span class="number">0</span>,tail=<span class="number">1</span>;</span><br><span class="line">    Queue[<span class="number">1</span>]=<span class="number">1</span>; Level[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(++head&lt;=tail)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=Link_First[Queue[head]];i;i=a[i].Next)</span><br><span class="line">    <span class="keyword">if</span>(Level[a[i].Point]&lt;<span class="number">0</span>&amp;&amp;a[i].Value)</span><br><span class="line">    &#123;</span><br><span class="line">        Queue[++tail]=a[i].Point;</span><br><span class="line">        Level[Queue[tail]]=Level[Queue[head]]+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Level[Maxx]&gt;=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetMaxFlow</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> Flow)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x==Maxx) <span class="keyword">return</span> Flow;</span><br><span class="line">    <span class="keyword">int</span> MaxFlow=<span class="number">0</span>,d=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=Link_First[x];i&amp;&amp;MaxFlow&lt;Flow;i=a[i].Next)</span><br><span class="line">    <span class="keyword">if</span>(a[i].Value&amp;&amp;Level[a[i].Point]==Level[x]+<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span>(d=GetMaxFlow(a[i].Point,min(Flow-MaxFlow,a[i].Value)))</span><br><span class="line">    &#123;</span><br><span class="line">        MaxFlow+=d;</span><br><span class="line">        a[i].Value-=d;</span><br><span class="line">        a[a[i].Back].Value+=d;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!MaxFlow) Level[x]=<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> MaxFlow;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Dinic</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(GetLevel())</span><br><span class="line">    <span class="keyword">while</span>(ans=GetMaxFlow(<span class="number">1</span>,<span class="number">2123456789</span>))</span><br><span class="line">    all+=ans; <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AddEdge</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a[++len].Point=y;</span><br><span class="line">    a[len].Value=v;</span><br><span class="line">    a[len].Next=Link_First[x];</span><br><span class="line">    a[len].Back=len+<span class="number">1</span>;</span><br><span class="line">    Link_First[x]=len;</span><br><span class="line">    a[++len].Point=x;</span><br><span class="line">    a[len].Value=<span class="number">0</span>;</span><br><span class="line">    a[len].Next=Link_First[y];</span><br><span class="line">    a[len].Back=len<span class="number">-1</span>;</span><br><span class="line">    Link_First[y]=len;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertEdge</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    dis[y]++;</span><br><span class="line">    b[++cnt].Point=y;</span><br><span class="line">    b[cnt].Next=Link_Second[x];</span><br><span class="line">    Link_Second[x]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Delete[x]=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=Link_Second[x];i;i=b[i].Next)</span><br><span class="line">    <span class="keyword">if</span>(!Delete[b[i].Point]) DFS(b[i].Point);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TopSort</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n*m;i++)</span><br><span class="line">    <span class="keyword">if</span>(!dis[i]) Queue[++top]=i;</span><br><span class="line">    <span class="keyword">else</span> Delete[i]=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(top)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> That=Queue[top--];</span><br><span class="line">        Delete[That]=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=Link_Second[That];i;i=b[i].Next)</span><br><span class="line">        &#123;</span><br><span class="line">            dis[b[i].Point]--;</span><br><span class="line">            <span class="keyword">if</span>(!dis[b[i].Point])</span><br><span class="line">            Queue[++top]=b[i].Point;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n*m;i++)</span><br><span class="line">    <span class="keyword">if</span>(Delete[i]) DFS(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rebuild</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n*m;i++)</span><br><span class="line">    <span class="keyword">if</span>(!Delete[i])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(Energy[i]&gt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            tot+=Energy[i];</span><br><span class="line">            AddEdge(i+<span class="number">1</span>,Maxx,Energy[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> AddEdge(<span class="number">1</span>,i+<span class="number">1</span>,-Energy[i]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=Link_Second[i];j;j=b[j].Next)</span><br><span class="line">        <span class="keyword">if</span>(!Delete[b[j].Point])</span><br><span class="line">        AddEdge(i+<span class="number">1</span>,b[j].Point+<span class="number">1</span>,<span class="number">2123456789</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    n=Read(); m=Read();</span><br><span class="line">    Maxx=n*m+<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=m;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        Energy[P(i,j)]=Read();</span><br><span class="line">        <span class="keyword">int</span> Protect=Read();</span><br><span class="line">        <span class="keyword">while</span>(Protect--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> x=Read()+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> y=Read()+<span class="number">1</span>;</span><br><span class="line">            InsertEdge(P(i,j),P(x,y));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=m;j&gt;<span class="number">1</span>;j--)</span><br><span class="line">    InsertEdge(P(i,j),P(i,j<span class="number">-1</span>));</span><br><span class="line">    TopSort(); Rebuild(); Dinic();</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;tot-all&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2017/06/03/2d48ab971b7e/">https://xorex.space/2017/06/03/2d48ab971b7e/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/">网络流</a></div><div class="post_share"><div class="social-share" data-image="/waifus/086.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/06/03/2e6c3d3e5a5f/"><img class="prev-cover" src="/waifus/103.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">费用流题解</div></div></a></div><div class="next-post pull-right"><a href="/2017/05/26/2eb2f134a2d3/"><img class="next-cover" src="/waifus/098.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">网络流-最小割</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%9D%83%E9%97%AD%E5%90%88%E5%AD%90%E5%9B%BE"><span class="toc-number">1.</span> <span class="toc-text">最大权闭合子图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%81%E6%98%8E%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">证明过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NOI2009%E6%A4%8D%E7%89%A9%E5%A4%A7%E6%88%98%E5%83%B5%E5%B0%B8"><span class="toc-number">3.</span> <span class="toc-text">NOI2009植物大战僵尸</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">输入：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text">输出：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3%EF%BC%9A"><span class="toc-number">3.4.</span> <span class="toc-text">题解：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-number">3.5.</span> <span class="toc-text">代码：</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

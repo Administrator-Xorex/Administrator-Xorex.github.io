@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python赋值逻辑 | Xorex</title><meta name="keywords" content="总结,Python"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Python具有丰富和强大的库。它常被昵称为胶水语言，能够把用其他语言制作的各种模块（尤其是C&#x2F;C++）很轻松地联结在一起。常见的一种应用情形是，使用Python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中[3]  有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，性能要求特别高，就可以用C&#x2F;C++重写，而后封装为Python可以调用的扩展类库。需要注意的是在您使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python赋值逻辑">
+<meta property="og:url" content="https://xorex.space/2019/07/14/31e4adf711f9/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="Python具有丰富和强大的库。它常被昵称为胶水语言，能够把用其他语言制作的各种模块（尤其是C&#x2F;C++）很轻松地联结在一起。常见的一种应用情形是，使用Python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中[3]  有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，性能要求特别高，就可以用C&#x2F;C++重写，而后封装为Python可以调用的扩展类库。需要注意的是在您使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/045.jpg">
+<meta property="article:published_time" content="2019-07-14T05:19:23.000Z">
+<meta property="article:modified_time" content="2021-02-20T13:55:45.217Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/045.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2019/07/14/31e4adf711f9/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-20 21:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment-dots"></i><span> 说说</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python赋值逻辑</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-07-14T05:19:23.000Z" title="undefined 2019-07-14 13:19">2019-07-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/">开发知识</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
+<p>在进行<code>Python</code>的代码训练计划之中，自己出现了一些莫名其妙的<code>bug</code>，经过上网一番查询发现，是因为<code>Python</code>的赋值逻辑不同于C++，而我并没有意识到这些不同，所以特意总结下来，接下来的<code>blog</code>为搬运，原文链接在文章最后。</p>
+</blockquote>
+<h1 id="引例："><a href="#引例：" class="headerlink" title="引例："></a>引例：</h1><p>先来看一组似乎矛盾的代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = <span class="number">5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>这看上去似乎很好理解。第二步中， a 只是把值复制给 b，然后 b 又被更新为 5，a 和 b 是两个独立的变量，那么 a 的值当然不会受到影响。</p>
+<p>真的是这样吗？</p>
+<p>再来看一段代码：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">0</span>] = <span class="number">1024</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">[<span class="number">1024</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<p>第二步中，a 只是复制把列表复制给 b，然后更新 b[0] 的值，最后输出 a，可是 a 竟然也被改变了。</p>
+<p>按照代码 1 的逻辑（即变量之间独立），代码 2 的中的 a 不应该受到影响。</p>
+<p>为什么出现了这样的差异？</p>
+<h1 id="Python的反直觉"><a href="#Python的反直觉" class="headerlink" title="Python的反直觉"></a>Python的反直觉</h1><p>先不解释上面那个“看似矛盾”的问题。</p>
+<p>先来看看另一组简单的 Python 代码在内存中是什么样子的：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = <span class="number">3</span></span><br><span class="line">b = b + <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>它在内存中的操作示意图是这样的：</p>
+<p><img src="https://xorex.space/image/105.png"></p>
+<p>然而，从代码的的字面意思上看，“把 3 赋给 b，把 b 加 5 之后再赋给 b。”</p>
+<p>也就是把代码看成这个样子：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b ← <span class="number">3</span></span><br><span class="line">b ← b + <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>所以下面这张在内存中的操作图可能更符合我们的直觉：</p>
+<p><img src="https://xorex.space/image/106.png"></p>
+<p>也即 b + 5 的值又写回到 b 中。典型的 C 程序就是这样的。为变量 b 分配一个 int 型的内存单元，然后将整数 3 存放在该内存单元中。b 就代表了该块内存空间，不再移动，可以更新 b 的值，但 b 在内存中的地址就不再变化了。所以我们说 b = b + 5，就等于 b ← b + 5，把 b 的值加 5 之后还依然放入 b 中。 变量 b 和它所在内存空间紧紧绑定在一起，人形合一。</p>
+<p>而再看看上面 Python 中的内存示意图，b + 5 得到了一个新值，然后令 b 指向了这个新值。换句话说，它做的是事情是这样的：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b → <span class="number">3</span></span><br><span class="line">b → b + <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>先令 b 指向 3，再令 b 指向 b + 5 这个新值。</p>
+<p>C 程序更新的是内存单元中存放的值，而 Python 更新的是变量的指向。<br>C 程序中变量保存了一个值，而 Python 中的变量指向一个值。</p>
+<p>如果说 C 程序是通过操纵内存地址而间接操作数据(每个变量固定对应一个内存地址，所以说操纵变量就是操纵内存地址），数据处于被动地位，那么 Python 则是直接操纵数据，数据处于主动地位，变量只是作为一种引用关系而存在，而不再拥有存储功能。</p>
+<p>在 Python 中，每一个数据都会占用一个内存空间，如 b + 5 这个新的数据也占用了一个全新的内存空间。</p>
+<p>Python 的这种操作让数据成为主体，数据与数据之间直接进行交互。</p>
+<p>一个整数 3 是一个 int 型对象，一个 ‘hello’ 是一个字符串对象，一个 [1, 2, 3] 是一个列表对象。</p>
+<p>Python 把一切数据都看成「对象」。它为每一个对象分配一个内存空间。 一个对象被创建后，它的 id 就不再发生变化。</p>
+<p>id 是 identity 的缩写。意为“身份；标识”。<br>在 Python 中，可以使用 id()，来获得一个对象的 id，可以看作是该对象在内存中的地址。</p>
+<p>一个对象被创建后，它不能被直接销毁。因此，在上个例子中，变量 b 首先指向了对象 3，然后继续执行 b + 5，b + 5 产生了一个新的对象 8，由于对象 3 不能被销毁，则令 b 指向新的对象 8，而不是用对象 8 去覆盖对象 3。在代码执行完成后，内存中依然有对象 3，也有对象 8，变量 b 指向了对象 8。</p>
+<p>如果没有变量指向对象 3（即无法引用它了），Python 会使用垃圾回收算法来决定是否回收它（这是自动的，不需要程序编写者操心）。</p>
+<p>一个旧的对象不能被覆盖，因旧的对象交互而新产生的数据会放在新的对象中。也就是说每个对象是一个独立的个体，每个对象都有自己的“主权”。因此，两个对象的交互可以产生一个新的对象，而不会对原对象产生影响。在大型程序中，各个对象之间的交互错综复杂，这种独立性则使得这些交互足够安全。</p>
+<p>C 程序为每个变量都分配一个了固定的内存地址，这保证了 C 变量之间的独立性。</p>
+<p>C 语言是变量（也即内存地址）之间的交互，Python 是对象（数据）之间的交互。这是两种不同的交互方式。</p>
+<p>那么，Python 这种数据之间直接进行交互的好处体现在哪里？</p>
+<p>很遗憾，这并不是本文所要讨论的内容，该部分属于面向对象设计的核心内容。本文只是对 Python 的这种交互方式与 C 语言的交互方式做了一些比较，以区分两者在逻辑与物理上的差异所在。</p>
+<p>相信这种逻辑会帮助你更好地编写 Python 程序，并且帮助你在日后更加深入地理解面向对象的程序设计。</p>
+<p>Python 的赋值更改的是变量的指向关系，因此，对于 Python，从前向后阅读一个赋值表达式会更加容易理解。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; C 语言</span><br><span class="line">b ← b + 5   &#x2F;&#x2F; 把 b+5 的值赋给 b</span><br><span class="line"></span><br><span class="line"># Python</span><br><span class="line">b → b + 5   # 令 b 指向 b + 5</span><br></pre></td></tr></table></figure>
+<h1 id="最开始的疑问"><a href="#最开始的疑问" class="headerlink" title="最开始的疑问"></a>最开始的疑问</h1><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = <span class="number">5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>Python 中所有的数据都是对象，数字类型也不例外。3 是一个 int 类型的对象，5 也是一个 int 型的对象。<br>第一行，a 指向对象 3。<br>第二行，令 b 也指向 a 所指向的对象 3。<br>第三行，因为对象不可被覆盖（销毁），令 b 指向新对象 5，则只剩下 a 指向对象 3。<br>第四行，输出 a，得到 3。</p>
+<p>在内存中的操作示意图 (Python)：</p>
+<p><img src="https://xorex.space/image/107.png"></p>
+<p>这与第一章中的解释完全不同，第一章中的解释是用 C 语言解释的：</p>
+<p><img src="https://xorex.space/image/108.png"></p>
+<p>这是两种完全不一样的机制。</p>
+<p>Python 中 b 首先指向了对象 3，然而因为对象之间的独立性，一个对象不能去覆盖另一个对象，则令 b 指向对象 5，而不是将对象 3 在内存中替换为对象 5。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b[<span class="number">0</span>] = <span class="number">1024</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">[<span class="number">1024</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<p>第一行，令 a 指向一个列表 [1, 2, 3]；<br>第二行，令 b 也指向 a 所指向的列表；<br>第三行，令 b[0] = 1024，1024 虽然是一个对象，但它并没有试图覆盖b所指向的对象，而是对该对象的第一个元素进行修改。修改，而不是覆盖，所以它可以原对象进行操作，而不是令 b 指向修改后的对象。<br>所在第四行输出的 a 所指向的列表也发生了变化。</p>
+<p>在内存中的操作示意图 (Python)：</p>
+<p><img src="https://xorex.space/image/109.png"></p>
+<p>这种对象的值可以修改的对象被称为可变对象 (immutable object)。常见的列表、字典为可变对象。</p>
+<p>因为它的值可以被修改，因此如果有多个变量指向该列表：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">b = a</span><br><span class="line">c = a</span><br><span class="line">d = a</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>那么使用 b, c, d, … 的任何一个变量都能访问该对象并修改其中的内容。这种特性常常被我们用于函数的参数传递，如果函数的参数是可变对象，那么函数可以对“实参”中的内容进行修改：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">change</span>(<span class="params">t</span>):</span></span><br><span class="line">        t[<span class="number">0</span>] = <span class="number">1024</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>change(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">[<span class="number">1024</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span> </span><br></pre></td></tr></table></figure>
+<p>调用函数 change 时，令 t 也指向了 a 所指向的列表，然后使用 t 更改了列表中的第一个元素，更改，而不是覆盖，因此对 t 所指向的对象的更改也改变了“实参” a 所指向的对象。而 C 语言则因为实参到形参是值传递，则无法改变实参的内容（虽然借助指针可以实现，但这里只说一般情况下）。</p>
+<p>但在函数以外的区域，我们要尽量避免这样使用，这很容易导致出错（当然，有时候会很有用，这取决于你的程序）。比如，在多人协作编程时，如果甲不小心修改了某可变对象，那么乙、丙、丁等用到该对象的人都会受到影响。</p>
+<p>而对于不可变对象 (immutable object)，即其值无法更改的对象，传入函数时则不会影响“实参”的值：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">n</span>):</span></span><br><span class="line">        n = n + <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>add(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line"><span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>调用函数 add 时，令 n 也指向了 a 所指向的对象 5, 再执行 n = n + 2，n 所指向的对象 5 与对象 2 相加得到了一个新的对象 7，由于一个对象不能覆盖另一个对象，则 n 指向新的对象 7，而没有改变原对象。因此 a 的值未发生变化。虽然与 C 程序的结果一致，但与 C 程序的机制完全不同，C 程序之所以没改变 a，是因为调用函数时只发生了值传递，即只把 a 的值复制给了 n。</p>
+<p>不要混淆这两种赋值逻辑，它们有着完全不同的物理实现方式。</p>
+<p>不同的思维逻辑会导致不同的编写逻辑。尽管这两种逻辑在很多情况下的结果是一致的，但并不能就简单地认为它们是一致的。否则在一些小的细节方面出了错误，就会难以理解。只能死记硬背，把一些东西当作 Python 的特例来记，虽然「唯手熟尔」也可以让你走得很远，但思维正确时，不仅可以走得更远，也会走得更加轻松。</p>
+<p>比如，当你的思维清晰时，以下问题的答案自然也就水落石出了：</p>
+<p>为什么列表的方法的返回值大多是 None？<br>为什么字符串的方法的返回值大多是一个新的对象？<br>为什么 Python 中没有自增/自减运算符？<br>为什么有的可变对象传入函数之后，却不能被函数修改“实参”的值？<br>（比如将上面的 change 函数的主体改成 t = t[1:]。调用函数之后，a 所指向的对象并没有发生改变。）<br>……<br>这些内容与本文主题不大相关，所以不再列出答案。</p>
+<h1 id="有趣的补充"><a href="#有趣的补充" class="headerlink" title="有趣的补充"></a>有趣的补充</h1><ol>
+<li><p>数字是一个天然的不可变对象(immutable object)。<br>对于 n = n + 2，有人可能会说，为什么不能把它看成像列表那样的修改，修改后 n 依然指向的是原对象，这样的话执行 add(a) 之后，a 就会变成 7 了，可为什么不是这样？<br>因为每一个数字都是一个单个的对象，而对象不能覆盖对象。所以该句实际上是： a 指向的对象加上对象 2，产生了一个新的对象，然后令 a 指向了新对象 a + 2。<br>因此，数字类型并不存在修改这一说，它是一个天然的不可变对象。</p>
+</li>
+<li><p>为什么 Python 中没有自增(++)、自减(–)运算符？<br>自增或自减运算符，在 C 语言中很常用，简洁实用。但在 Python 中却一定不会有。上节说到，数字是天然的不可变对象，所谓自增就是自身增加，所以它无法自增。它只能从一个对象指向下一个对象。可以这样写 a += 1。</p>
+</li>
+<li><p>既然 Python 更改的只是引用关系，那么如何复制一个列表？</p>
+</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">b = a</span><br><span class="line"><span class="comment"># 这样做不能复制一个列表，a 和 b 指向的都是列表 [1, 2, 3]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 答案：</span></span><br><span class="line"><span class="comment">## 1. 使用 list 的 copy 方法</span></span><br><span class="line">b = a.copy()</span><br><span class="line"><span class="comment">## 2. 使用 slice 操作</span></span><br><span class="line">b = a[:]    <span class="comment"># slice 操作返回一个新的对象</span></span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文的章节安排是基于便于讲解的内容逻辑。这里给出文章的思维逻辑，以便回顾：</p>
+<ol>
+<li>Python 与 C 语言的赋值逻辑差异</li>
+</ol>
+<ul>
+<li>一个直接操纵数据，一个间接操纵数据</li>
+</ul>
+<ol start="2">
+<li>为什么需要这种赋值逻辑</li>
+</ol>
+<ul>
+<li><p>帮助实现对象之间的交互</p>
+</li>
+<li><p>对象不可被直接摧毁（覆盖）</p>
+</li>
+<li><p>可以修改可变对象的值</p>
+</li>
+</ul>
+<h1 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a>原文地址</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/andywenzhi/p/7453374.html">如何理解 Python 的赋值逻辑</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2019/07/14/31e4adf711f9/">https://xorex.space/2019/07/14/31e4adf711f9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="/waifus/045.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/07/18/d04103d4c4c1/"><img class="prev-cover" src="/waifus/078.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">引用reference</div></div></a></div><div class="next-post pull-right"><a href="/2019/07/06/6d2274b814c9/"><img class="next-cover" src="/waifus/040.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python-爬虫元尊小说</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">热爱每一天的生活！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">119</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">95</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E4%BE%8B%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">引例：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python%E7%9A%84%E5%8F%8D%E7%9B%B4%E8%A7%89"><span class="toc-number">3.</span> <span class="toc-text">Python的反直觉</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%BC%80%E5%A7%8B%E7%9A%84%E7%96%91%E9%97%AE"><span class="toc-number">4.</span> <span class="toc-text">最开始的疑问</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%89%E8%B6%A3%E7%9A%84%E8%A1%A5%E5%85%85"><span class="toc-number">5.</span> <span class="toc-text">有趣的补充</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8E%9F%E6%96%87%E5%9C%B0%E5%9D%80"><span class="toc-number">7.</span> <span class="toc-text">原文地址</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
