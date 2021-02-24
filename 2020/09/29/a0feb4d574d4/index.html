@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xorex.space/waifus/047.jpg">
 <meta property="article:published_time" content="2020-09-29T12:50:58.000Z">
-<meta property="article:modified_time" content="2021-02-20T13:56:31.414Z">
+<meta property="article:modified_time" content="2021-02-24T05:57:12.724Z">
 <meta property="article:author" content="Xorex">
 <meta property="article:tag" content="WriteUp">
 <meta property="article:tag" content="SQL注入">
@@ -58,7 +58,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2021-02-20 21:56'
+  postUpdate: '2021-02-24 13:57'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -150,12 +150,12 @@
 <p>这是一个印度小哥写的SQL注入漏洞复现的实验平台，用来练习一些基本的SQL注入技巧。在Github上面可以自由下载，搭建过相关的环境之后就可以使用了。</p>
 </blockquote>
 <h2 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h2><p>进来之后的页面显示让你输入一个值。</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003204150484.png" alt="image-20201003204150484"></p>
+<p><img src="https://xorex.space/image/158.png" alt="image-20201003204150484"></p>
 <p>url中get让id=1之后返回了一个账号的名字和密码。猜测这里直接用了ID加入了SQL查询的语言，然后返回SQL查询之后的结果显示。</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003204224823.png" alt="image-20201003204224823"></p>
+<p><img src="https://xorex.space/image/159.png" alt="image-20201003204224823"></p>
 <p>这个负责构造时传入ID值的变量可能是需要闭合的，比如这个变量可能会用 <code>&#39;&#39; &quot;&quot; (&quot;&quot;) (&#39;&#39;)</code> 这一类的符号把这个变量给闭合，当然也有可能什么都不加入，也就是不构造闭合。</p>
 <p>那么我们需要确定这是哪一种情况方法很简单，就是在Get传入参数的时候，后面加入对应的符号，如果使用 <code>&quot;&quot;</code> 来闭合，那么我们后面加上 <code>&#39;</code> 符号就不会报错，如果加入 <code>&quot;</code> 符号就会报错， 也就是 <code>&#39;id=$id&quot;&#39;</code> 没问题，但是 <code>&quot;id=$id&quot;&quot;</code> 就会有问题，因为这里多出了一个 <code>&quot;</code> 这个符号使得双引号无法闭合，所以就会报错。</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003204309534.png" alt="image-20201003204309534"></p>
+<p><img src="https://xorex.space/image/160.png" alt="image-20201003204309534"></p>
 <p>通过尝试，我们发现是通过单引号闭合的，因为加入 <code>&quot;</code> 和其他符号是没有问题，但是加入单引号 <code>&#39;</code> 就会报错，说明这个负责存储ID的值的变量是通过单引号闭合。</p>
 <p>好了，那么现在我们就可以往里面注入一些其他的命令了。我们的目标是一次性拿到所有的账号名和密码！</p>
 <p>上面输出的账号密码肯定是那个SQL表单里面的某两列的数据，我们现在需要确定到底是哪两列，使用的方法就是联合查询，也就是 <code>union</code> 语句，这个是用来合并两个查询语句的数据然后再输出的，但是我们可以利用它将题目代码不输出（让ID=-1，因为没有ID=-1的数据，那么它就不会输出），而后面我们联合查询的数据却可以输出，这样我们就可以看到我们想要的数据了。我们最后需要加入注释符 <code>--</code> 这样可以注释掉后面它本身的SQL语句，不干扰我们注入的语句的执行。</p>
@@ -164,22 +164,22 @@
 <p>然后再加数字：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,2,3 --</span></span><br></pre></td></tr></table></figure>
 <p>这次成功了：</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003205626333.png" alt="image-20201003205626333"></p>
+<p><img src="https://xorex.space/image/161.png" alt="image-20201003205626333"></p>
 <p>在账号名这里输出了2，在密码这里输出了3，说明用户名保存在表单的第二列，而密码保存在表单的第三列。通过上面的联合查询，我们就可以在第二列通道和第三列通道里面通过我们精心构造的SQL语句输出我们想要的数据了。</p>
 <p>我们想要在一行输出所有的账号或者密码，就需要使用 group_concat()函数，作用是将分到一组的数据变成一行字符串，所以我们就可以把所有的用户名变成一行字符串，所有的密码变成一行字符串。</p>
 <p>我们首先需要用database()来知道当前这个表单所在的数据库的名字，放到第二通道或者第三通道任意一个输出即可。</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003210340389.png" alt="image-20201003210340389"></p>
+<p><img src="https://xorex.space/image/162.png" alt="image-20201003210340389"></p>
 <p>发现现在所在的数据库叫作 <code>security</code> ，然后我们就可以通过information_schema 这个库里面存储着整个数据库所有的信息，来定位存储着账号密码的表单的名称以及账号列和密码列的列名了。</p>
 <p>首先这个库里面保存数据库的表单的信息是 <code>tables</code> 这个库，里面 <code>table_schema</code> 这一列里面存储着某一个表单所属的数据库的名称，然后我们就可以通过查询这个库并且筛选所属数据库名称来确定 <code>security</code> 这个库里面的所有表单的名字了。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=&#x27;</span>security<span class="string">&#x27; --</span></span><br></pre></td></tr></table></figure>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003211807055.png" alt="image-20201003211807055"></p>
+<p><img src="https://xorex.space/image/163.png" alt="image-20201003211807055"></p>
 <p>这想想就知道肯定在 users 这个表单里面了啊，剩下的就好办了，下一步就是获取users表单里面的列名。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,2,group_concat(column_name) from information_schema.columns where table_schema=&#x27;</span>security<span class="string">&#x27; and table_name=&#x27;</span>users<span class="string">&#x27; --</span></span><br></pre></td></tr></table></figure>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003212501659.png" alt="image-20201003212501659"></p>
+<p><img src="https://xorex.space/image/164.png" alt="image-20201003212501659"></p>
 <p>好的，现在我们已经成功的拿到了列名，显然我们比较关注的是 <code>username</code> 和 <code>password</code> 两个列，那么我们就让他们分别在2、3通道里面显示吧。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,group_concat(username),group_concat(password) from users --</span></span><br></pre></td></tr></table></figure>
 <p>然后就成功拿到了所有的数据：</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003213006957.png" alt="image-20201003213006957"></p>
+<p><img src="https://xorex.space/image/165.png" alt="image-20201003213006957"></p>
 <blockquote>
 <p>大概就写一下第一关的思路，用来快速上手以应对遗忘。</p>
 </blockquote>

@@ -7,6 +7,11 @@
 <p>因为想了想自己好像年后基本上就没怎么学东西了，即使看上去学习时间很长，但是效率真的是有些惨不忍睹，所以想了想还是需要努力提高自己的效率问题。那么大概总结了以后在学习的过程中，一些需要注意的方面。而每天结束的时候，都要看一看自己是否做到了下面的注意事项，最后将一天的学习内容和完成度记录下来，不断的提高自己的学习能力。加油，要成为一名优秀的软件工程师啊！</p>
 </blockquote>
 <ol>
+<li><p>保证清醒的时间</p>
+<ul>
+<li>寒假光睡觉估计快把自己给睡傻了。所以以后作息必须严格要求自己，晚上 12:00 必须准时睡觉，寝室里小伙伴们在打游戏的话那可以适当的推迟睡觉的时间，然后按照保证大概 7.5 小时的晚上睡眠时间来规划早上起床的时间，保证不赖床！！！</li>
+</ul>
+</li>
 <li><p>要有足够的休息。</p>
 <ul>
 <li>因为常常因为在出现问题的时候，会忍不住尝试一口气解决它，然后就会盯着屏幕看好几个小时，眼睛感到酸涩，头晕脑胀也舍不得停下来。但这实际上是降低了解决问题的效率的，还会有损身体健康，所以必须在软件绿屏的时候，停下来自己手头正在做的事情，去休息一小段时间。(刚刚在写下这段文字的时候就做到了，好耶！)</li>
@@ -22,11 +27,6 @@
 <li>完全封禁 <code>weibo.com</code> <code>bilibili.com</code> <code>zhihu.com</code> 三个网站，只要坐在电脑面前，需要保证<strong>只能学习</strong>，绝对<strong>不做摸鱼</strong>的事情，而拿到手机，也不要漫无目的的刷新信息流，去看 bilibili 里面缓存的各种技术教程啊。以及 <a href="http://www.ruanyifeng.com/blog/">阮一峰</a> 博客上面的一些技术文章，闲暇的时候多看看嘛！</li>
 </ul>
 </li>
-<li><p>保证清醒的时间</p>
-<ul>
-<li>寒假光睡觉估计快把自己给睡傻了。所以以后作息必须严格要求自己，晚上 12:00 必须准时睡觉，寝室里小伙伴们在打游戏的话那可以适当的推迟睡觉的时间，然后按照保证大概 7.5 小时的晚上睡眠时间来规划早上起床的时间，保证不赖床！！！</li>
-</ul>
-</li>
 <li><p>每天一定量的运动</p>
 <ul>
 <li>运动是必不可少的，在学校规划到晚自习下课和 rfy 一起去操场跑步运动，在家的话早上起床之后去楼下跑步，在家休息时间要做俯卧撑。要记住身体是革命的本钱哇。</li>
@@ -38,23 +38,41 @@
 </ul>
 </li>
 </ol>
-<h2 id="关于我接下来学习方向的问题"><a href="#关于我接下来学习方向的问题" class="headerlink" title="关于我接下来学习方向的问题"></a>关于我接下来学习方向的问题</h2><ol>
-<li><p>SQL 数据库的各种命令复习，搞一个思维导图出来。</p>
+<h2 id="关于我接下来学习方向的问题"><a href="#关于我接下来学习方向的问题" class="headerlink" title="关于我接下来学习方向的问题"></a>关于我接下来学习方向的问题</h2><blockquote>
+<p>将接下来需要学习的知识点列一下，完成了就划掉。</p>
+</blockquote>
+<h3 id="大型阶段性目标"><a href="#大型阶段性目标" class="headerlink" title="大型阶段性目标"></a>大型阶段性目标</h3><ul>
+<li><p> SQL 数据库的各种命令复习，搞一个思维导图出来。</p>
 </li>
-<li><p>JDBC 内容的学习，同样搞一个思维导图出来。</p>
+<li><p> JDBC 内容的学习，同样搞一个思维导图出来。</p>
 </li>
-<li><p>函数式编程</p>
+<li><p> 函数式编程</p>
 </li>
-<li><p>Java 设计模式</p>
+<li><p> Java 设计模式</p>
 </li>
-<li><p>Java Web 开发</p>
+<li><p> Java Web 开发</p>
 </li>
-<li><p>Spring Boot 开发</p>
+</ul>
+<ul>
+<li><p> Spring Boot 开发</p>
 </li>
-<li><p>Spring Cloud 开发</p>
+<li><p> Spring Cloud 开发</p>
 </li>
-</ol>
-<h2 id="每日进度记录"><a href="#每日进度记录" class="headerlink" title="每日进度记录"></a>每日进度记录</h2><h3 id="02-24"><a href="#02-24" class="headerlink" title="02-24"></a>02-24</h3>]]></content>
+</ul>
+<h3 id="小型随意目标"><a href="#小型随意目标" class="headerlink" title="小型随意目标"></a>小型随意目标</h3><ul>
+<li><p>Windows10 C盘目录</p>
+</li>
+<li></li>
+</ul>
+<h2 id="每日进度记录"><a href="#每日进度记录" class="headerlink" title="每日进度记录"></a>每日进度记录</h2><h3 id="02-24"><a href="#02-24" class="headerlink" title="02-24"></a>02-24</h3><ul>
+<li><p>可能是因为咖啡的原因，直接导致了接近凌晨五点才睡着觉，早上就适当的拖延到了 9 点才起来。第一条直接完蛋 QAQ ，不过好在起床之后一整天都不怎么困，而且午休压缩到了半个小时，希望第二天能完成早上 7 点半起床的目标！学习间期休息做的很好，只要间隔一定的时间我就会放下手头正在做的事情去休息眼睛和大脑，基本不会产生眼睛和大脑疲劳，好耶！休息的时候还顺手坐了坐俯卧撑锻炼身体。</p>
+</li>
+<li><p>今天认真学习了数据库基本概念，复习了 SQL 语句，并且也有做思维导图。随手看的技术文章，实现一个最简单的数据库，我也有添加到数据库的思维导图里面。但是对效率还是不满意，虽有提高，但是还是没有打到高度集中注意力，不间断思考的地步。希望可以持续改善。摸鱼还是摸了一点，但是频率和时长已经大大减少了，希望能完全杜绝学习时间摸鱼，冲啊！！！</p>
+</li>
+<li><p>今天执行成果一般满意吧，所以明天一定要加油啊！</p>
+</li>
+</ul>
+<h3 id="02-25"><a href="#02-25" class="headerlink" title="02-25"></a>02-25</h3>]]></content>
       <categories>
         <category>阶段性总结</category>
       </categories>
@@ -312,9 +330,9 @@
         <category>开发知识</category>
       </categories>
       <tags>
+        <tag>笔记</tag>
         <tag>Java</tag>
         <tag>思维导图</tag>
-        <tag>笔记</tag>
         <tag>多线程</tag>
       </tags>
   </entry>
@@ -370,9 +388,9 @@
         <category>开发知识</category>
       </categories>
       <tags>
+        <tag>笔记</tag>
         <tag>Java</tag>
         <tag>思维导图</tag>
-        <tag>笔记</tag>
         <tag>IO</tag>
       </tags>
   </entry>
@@ -440,8 +458,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>集合</tag>
       </tags>
   </entry>
@@ -609,8 +627,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>集合</tag>
       </tags>
   </entry>
@@ -683,8 +701,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>泛型</tag>
       </tags>
   </entry>
@@ -788,8 +806,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>注解</tag>
       </tags>
   </entry>
@@ -1045,8 +1063,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>反射</tag>
       </tags>
   </entry>
@@ -1170,8 +1188,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>异常</tag>
       </tags>
   </entry>
@@ -1371,8 +1389,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>核心类</tag>
       </tags>
   </entry>
@@ -1605,8 +1623,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>面向对象</tag>
       </tags>
   </entry>
@@ -1799,8 +1817,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -2463,7 +2481,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#101;&#x6f;&#110;&#x65;&#x40;&#114;&#x75;&#x6e;&#111;&#111;&#98;&#46;&#99;&#111;&#x6d;">&#x73;&#111;&#x6d;&#101;&#x6f;&#110;&#x65;&#x40;&#114;&#x75;&#x6e;&#111;&#111;&#98;&#46;&#99;&#111;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#x6d;&#101;&#111;&#x6e;&#101;&#x40;&#x72;&#117;&#110;&#111;&#111;&#x62;&#x2e;&#99;&#x6f;&#109;">&#115;&#111;&#x6d;&#101;&#111;&#x6e;&#101;&#x40;&#x72;&#117;&#110;&#111;&#111;&#x62;&#x2e;&#99;&#x6f;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -2939,12 +2957,12 @@
 <p>这是一个印度小哥写的SQL注入漏洞复现的实验平台，用来练习一些基本的SQL注入技巧。在Github上面可以自由下载，搭建过相关的环境之后就可以使用了。</p>
 </blockquote>
 <h2 id="Less-1"><a href="#Less-1" class="headerlink" title="Less-1"></a>Less-1</h2><p>进来之后的页面显示让你输入一个值。</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003204150484.png" alt="image-20201003204150484"></p>
+<p><img src="https://xorex.space/image/158.png" alt="image-20201003204150484"></p>
 <p>url中get让id=1之后返回了一个账号的名字和密码。猜测这里直接用了ID加入了SQL查询的语言，然后返回SQL查询之后的结果显示。</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003204224823.png" alt="image-20201003204224823"></p>
+<p><img src="https://xorex.space/image/159.png" alt="image-20201003204224823"></p>
 <p>这个负责构造时传入ID值的变量可能是需要闭合的，比如这个变量可能会用 <code>&#39;&#39; &quot;&quot; (&quot;&quot;) (&#39;&#39;)</code> 这一类的符号把这个变量给闭合，当然也有可能什么都不加入，也就是不构造闭合。</p>
 <p>那么我们需要确定这是哪一种情况方法很简单，就是在Get传入参数的时候，后面加入对应的符号，如果使用 <code>&quot;&quot;</code> 来闭合，那么我们后面加上 <code>&#39;</code> 符号就不会报错，如果加入 <code>&quot;</code> 符号就会报错， 也就是 <code>&#39;id=$id&quot;&#39;</code> 没问题，但是 <code>&quot;id=$id&quot;&quot;</code> 就会有问题，因为这里多出了一个 <code>&quot;</code> 这个符号使得双引号无法闭合，所以就会报错。</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003204309534.png" alt="image-20201003204309534"></p>
+<p><img src="https://xorex.space/image/160.png" alt="image-20201003204309534"></p>
 <p>通过尝试，我们发现是通过单引号闭合的，因为加入 <code>&quot;</code> 和其他符号是没有问题，但是加入单引号 <code>&#39;</code> 就会报错，说明这个负责存储ID的值的变量是通过单引号闭合。</p>
 <p>好了，那么现在我们就可以往里面注入一些其他的命令了。我们的目标是一次性拿到所有的账号名和密码！</p>
 <p>上面输出的账号密码肯定是那个SQL表单里面的某两列的数据，我们现在需要确定到底是哪两列，使用的方法就是联合查询，也就是 <code>union</code> 语句，这个是用来合并两个查询语句的数据然后再输出的，但是我们可以利用它将题目代码不输出（让ID=-1，因为没有ID=-1的数据，那么它就不会输出），而后面我们联合查询的数据却可以输出，这样我们就可以看到我们想要的数据了。我们最后需要加入注释符 <code>--</code> 这样可以注释掉后面它本身的SQL语句，不干扰我们注入的语句的执行。</p>
@@ -2953,22 +2971,22 @@
 <p>然后再加数字：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,2,3 --</span></span><br></pre></td></tr></table></figure>
 <p>这次成功了：</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003205626333.png" alt="image-20201003205626333"></p>
+<p><img src="https://xorex.space/image/161.png" alt="image-20201003205626333"></p>
 <p>在账号名这里输出了2，在密码这里输出了3，说明用户名保存在表单的第二列，而密码保存在表单的第三列。通过上面的联合查询，我们就可以在第二列通道和第三列通道里面通过我们精心构造的SQL语句输出我们想要的数据了。</p>
 <p>我们想要在一行输出所有的账号或者密码，就需要使用 group_concat()函数，作用是将分到一组的数据变成一行字符串，所以我们就可以把所有的用户名变成一行字符串，所有的密码变成一行字符串。</p>
 <p>我们首先需要用database()来知道当前这个表单所在的数据库的名字，放到第二通道或者第三通道任意一个输出即可。</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003210340389.png" alt="image-20201003210340389"></p>
+<p><img src="https://xorex.space/image/162.png" alt="image-20201003210340389"></p>
 <p>发现现在所在的数据库叫作 <code>security</code> ，然后我们就可以通过information_schema 这个库里面存储着整个数据库所有的信息，来定位存储着账号密码的表单的名称以及账号列和密码列的列名了。</p>
 <p>首先这个库里面保存数据库的表单的信息是 <code>tables</code> 这个库，里面 <code>table_schema</code> 这一列里面存储着某一个表单所属的数据库的名称，然后我们就可以通过查询这个库并且筛选所属数据库名称来确定 <code>security</code> 这个库里面的所有表单的名字了。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,2,group_concat(table_name) from information_schema.tables where table_schema=&#x27;</span>security<span class="string">&#x27; --</span></span><br></pre></td></tr></table></figure>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003211807055.png" alt="image-20201003211807055"></p>
+<p><img src="https://xorex.space/image/163.png" alt="image-20201003211807055"></p>
 <p>这想想就知道肯定在 users 这个表单里面了啊，剩下的就好办了，下一步就是获取users表单里面的列名。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,2,group_concat(column_name) from information_schema.columns where table_schema=&#x27;</span>security<span class="string">&#x27; and table_name=&#x27;</span>users<span class="string">&#x27; --</span></span><br></pre></td></tr></table></figure>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003212501659.png" alt="image-20201003212501659"></p>
+<p><img src="https://xorex.space/image/164.png" alt="image-20201003212501659"></p>
 <p>好的，现在我们已经成功的拿到了列名，显然我们比较关注的是 <code>username</code> 和 <code>password</code> 两个列，那么我们就让他们分别在2、3通道里面显示吧。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">?id<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27; union select 1,group_concat(username),group_concat(password) from users --</span></span><br></pre></td></tr></table></figure>
 <p>然后就成功拿到了所有的数据：</p>
-<p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201003213006957.png" alt="image-20201003213006957"></p>
+<p><img src="https://xorex.space/image/165.png" alt="image-20201003213006957"></p>
 <blockquote>
 <p>大概就写一下第一关的思路，用来快速上手以应对遗忘。</p>
 </blockquote>
@@ -3140,14 +3158,14 @@
   <entry>
     <title>MySQL命令学习</title>
     <url>/2020/08/27/94fe7c823089/</url>
-    <content><![CDATA[<h1 id="《关于我高考分数太低不得不去转行搞信息安全这件事》"><a href="#《关于我高考分数太低不得不去转行搞信息安全这件事》" class="headerlink" title="《关于我高考分数太低不得不去转行搞信息安全这件事》"></a>《关于我高考分数太低不得不去转行搞信息安全这件事》</h1><ul>
+    <content><![CDATA[<h2 id="《关于我高考分数太低不得不去转行搞信息安全这件事》"><a href="#《关于我高考分数太低不得不去转行搞信息安全这件事》" class="headerlink" title="《关于我高考分数太低不得不去转行搞信息安全这件事》"></a>《关于我高考分数太低不得不去转行搞信息安全这件事》</h2><ul>
 <li>为什么随便什么事情加上书名号都能成为轻小说啊？？？</li>
 </ul>
 <p>emmmmm，最开始其实是有点遗憾的，因为我原本以为我可以稳的不能再稳地进入CUIT的软件工程专业的，毕竟我比去年的软工最低分数线高了5000名，比CUIT最低分数线高了12000名，这还录不上就过分了！结果就真的很过分了，河南省的117w考生中还真的出了4个头比我还铁的人，然后我就来了CUIT的信息安全专业。</p>
 <p>但是俗话说既来之则安之，都是IT类的专业，只要自己好好学，就肯定有出路的。再说这些东西其实都是靠自学，只要自学能力够了，转什么方向都很轻松，抱着这样的想法，我就来到了CUIT。</p>
 <p>然后在网上开始搜索各种关于CUIT信息安全的信息，因为当时在报考志愿的时候根本就没有考虑过CUIT的信息安全专业（我真的还是太自信了QAQ），然后在知乎中了解到了CUIT的三叶草社团非常非常厉害，还找到了三叶草的招新QQ群，于是我就加了进去。</p>
 <p>里面的学长非常热情，其中有学长在群里面问有人想要学Web吗，我回了一句我想学，然后就收到了学长的QQ好友申请，然后他就推荐了我看图解HTTP和了解HTML相关的知识。几天过后，他有把我拉进了一个Web的学习小组，布置了第一次的任务，这也是这篇MySQL命令文章的来源。来吧少年，努力成为一名优秀的安全工程师吧！</p>
-<h1 id="MySQL-增加系列"><a href="#MySQL-增加系列" class="headerlink" title="MySQL    增加系列"></a>MySQL    增加系列</h1><h2 id="CREATE"><a href="#CREATE" class="headerlink" title="CREATE:"></a>CREATE:</h2><ol>
+<h2 id="MySQL增加系列"><a href="#MySQL增加系列" class="headerlink" title="MySQL增加系列"></a>MySQL增加系列</h2><h3 id="CREATE"><a href="#CREATE" class="headerlink" title="CREATE:"></a>CREATE:</h3><ol>
 <li><strong>create database</strong></li>
 </ol>
 <p>创造一个名字叫name的数据库：</p>
@@ -3158,14 +3176,14 @@
 <p>创造一个名字叫name的表单：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> &quot;name&quot;</span><br><span class="line">(</span><br><span class="line">    column1 datatype1(size),</span><br><span class="line">    column2 datatype2(size),</span><br><span class="line">    column3 datatype3(size)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>这里要注意的是如果不在想要加入表单的数据库中，可以在创建表单的同时，把表单直接加入想要加入的数据库中，具体的写法是把上面语句中的”name”代替为：database_name.table_name 这样就直接把表单加入到了指定的database_name里面了。</p>
-<h2 id="SOURCE"><a href="#SOURCE" class="headerlink" title="SOURCE:"></a>SOURCE:</h2><p>在数据库中加入SQL表单，一般为后缀<code>.sql</code>的文件。</p>
+<h3 id="SOURCE"><a href="#SOURCE" class="headerlink" title="SOURCE:"></a>SOURCE:</h3><p>在数据库中加入SQL表单，一般为后缀<code>.sql</code>的文件。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">source D:<span class="operator">/</span>downlaod<span class="operator">/</span>websites.sql;</span><br></pre></td></tr></table></figure>
-<h2 id="USE："><a href="#USE：" class="headerlink" title="USE："></a><strong>USE</strong>：</h2><p>使用语句，用来选择数据库。</p>
+<h3 id="USE："><a href="#USE：" class="headerlink" title="USE："></a><strong>USE</strong>：</h3><p>使用语句，用来选择数据库。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">use &quot;DATABASE&quot;; </span><br></pre></td></tr></table></figure>
 <p> 使用名为DATABASE的数据库。</p>
-<h2 id="SET："><a href="#SET：" class="headerlink" title="SET："></a><strong>SET</strong>：</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> &quot;column&quot; utf8; </span><br></pre></td></tr></table></figure>
+<h3 id="SET："><a href="#SET：" class="headerlink" title="SET："></a><strong>SET</strong>：</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> &quot;column&quot; utf8; </span><br></pre></td></tr></table></figure>
 <p>将列column使用utf8编码 （防乱码）</p>
-<h2 id="DROP"><a href="#DROP" class="headerlink" title="DROP:"></a>DROP:</h2><ol>
+<h3 id="DROP"><a href="#DROP" class="headerlink" title="DROP:"></a>DROP:</h3><ol>
 <li>drop table 语句 删除表</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> &quot;table_name&quot;;</span><br></pre></td></tr></table></figure>
@@ -3177,39 +3195,39 @@
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> database &quot;database_name&quot;;</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="Truncate："><a href="#Truncate：" class="headerlink" title="Truncate："></a>Truncate：</h2><p>用来删除一个表的数据，但是不删除这个表。</p>
+<h3 id="Truncate："><a href="#Truncate：" class="headerlink" title="Truncate："></a>Truncate：</h3><p>用来删除一个表的数据，但是不删除这个表。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> &quot;table_name&quot;;</span><br></pre></td></tr></table></figure>
 
 
-<h1 id="SQL查看系列"><a href="#SQL查看系列" class="headerlink" title="SQL查看系列"></a>SQL查看系列</h1><h2 id="VERSION"><a href="#VERSION" class="headerlink" title="VERSION:"></a>VERSION:</h2><p>用来返回数据库的版本信息。</p>
+<h2 id="SQL查看系列"><a href="#SQL查看系列" class="headerlink" title="SQL查看系列"></a>SQL查看系列</h2><h3 id="VERSION"><a href="#VERSION" class="headerlink" title="VERSION:"></a>VERSION:</h3><p>用来返回数据库的版本信息。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> version();</span><br></pre></td></tr></table></figure>
-<h2 id="SHOW："><a href="#SHOW：" class="headerlink" title="SHOW："></a>SHOW：</h2><p>用来显示所有的数据库或者表。</p>
+<h3 id="SHOW："><a href="#SHOW：" class="headerlink" title="SHOW："></a>SHOW：</h3><p>用来显示所有的数据库或者表。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> databases;</span><br><span class="line"><span class="keyword">show</span> tablse;</span><br></pre></td></tr></table></figure>
-<h2 id="SELECT："><a href="#SELECT：" class="headerlink" title="SELECT："></a><strong>SELECT</strong>：</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> &quot;*/column&quot;  <span class="keyword">from</span> &quot;table&quot;; </span><br></pre></td></tr></table></figure>
+<h3 id="SELECT："><a href="#SELECT：" class="headerlink" title="SELECT："></a><strong>SELECT</strong>：</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> &quot;*/column&quot;  <span class="keyword">from</span> &quot;table&quot;; </span><br></pre></td></tr></table></figure>
 <p>显示table表里面的所有列或者column列。</p>
-<h2 id="DATABASE"><a href="#DATABASE" class="headerlink" title="DATABASE()"></a>DATABASE()</h2><p>配合着select食用，用来返回当前使用的数据库名字。</p>
+<h3 id="DATABASE"><a href="#DATABASE" class="headerlink" title="DATABASE()"></a>DATABASE()</h3><p>配合着select食用，用来返回当前使用的数据库名字。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> database();</span><br></pre></td></tr></table></figure>
-<h2 id="DISTINCT："><a href="#DISTINCT：" class="headerlink" title="DISTINCT："></a><strong>DISTINCT</strong>：</h2><p>distinct 不同，相异。</p>
+<h3 id="DISTINCT："><a href="#DISTINCT：" class="headerlink" title="DISTINCT："></a><strong>DISTINCT</strong>：</h3><p>distinct 不同，相异。</p>
 <p>显示table表里的所有<strong>不重复</strong>的column列，加在column名称之前。（用于数据的去重）</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> &quot;column&quot; <span class="keyword">from</span> &quot;table&quot;;</span><br></pre></td></tr></table></figure>
-<h2 id="WHERE："><a href="#WHERE：" class="headerlink" title="WHERE："></a><strong>WHERE</strong>：</h2><p>条件语句，显示出当column列里值等于0的数据，用于数据的过滤。</p>
+<h3 id="WHERE："><a href="#WHERE：" class="headerlink" title="WHERE："></a><strong>WHERE</strong>：</h3><p>条件语句，显示出当column列里值等于0的数据，用于数据的过滤。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot; <span class="keyword">where</span> &quot;column=0&quot;;</span><br></pre></td></tr></table></figure>
-<h2 id="LIMIT-："><a href="#LIMIT-：" class="headerlink" title="LIMIT ："></a><strong>LIMIT</strong> ：</h2><p>只显示出来column!=0的时候，前2行的数据。等价于[1,2]的数据。</p>
+<h3 id="LIMIT-："><a href="#LIMIT-：" class="headerlink" title="LIMIT ："></a><strong>LIMIT</strong> ：</h3><p>只显示出来column!=0的时候，前2行的数据。等价于[1,2]的数据。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot; <span class="keyword">where</span> &quot;column!=0&quot;</span><br><span class="line">limit <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 <p>只显示出来column!=0的时候，第2行之后的2行数据，即第3，4行数据。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot; <span class="keyword">where</span> &quot;column!=0&quot;</span><br><span class="line">limit <span class="number">2</span>,<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 <p>只显示出来column!=0的时候，第2行之后所有的数据。等价于[3,last]的数据。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot; <span class="keyword">where</span> &quot;column!=0&quot;</span><br><span class="line">limit <span class="number">2</span>,<span class="number">-1</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="AND-amp-OR："><a href="#AND-amp-OR：" class="headerlink" title="AND&amp;OR："></a>AND&amp;OR：</h2><p>主要运用在判断语句里面，作为增加判断复杂度的语句：</p>
+<h3 id="AND-amp-OR："><a href="#AND-amp-OR：" class="headerlink" title="AND&amp;OR："></a>AND&amp;OR：</h3><p>主要运用在判断语句里面，作为增加判断复杂度的语句：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot; </span><br><span class="line"><span class="keyword">where</span> &quot;column!=0&quot; <span class="keyword">or</span> &quot;column!=1&quot;</span><br></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">where</span> &quot;column1!=1&quot; <span class="keyword">and</span> &quot;column2!=2&quot;</span><br></pre></td></tr></table></figure>
 <p>上面就等同于if里面的&amp;&amp;和||啦。</p>
-<h2 id="ORDER-BY："><a href="#ORDER-BY：" class="headerlink" title="ORDER BY："></a>ORDER BY：</h2><p>排序语句，将要显示的数据按照自己要求的规则进行排序。</p>
+<h3 id="ORDER-BY："><a href="#ORDER-BY：" class="headerlink" title="ORDER BY："></a>ORDER BY：</h3><p>排序语句，将要显示的数据按照自己要求的规则进行排序。</p>
 <p>将table表里的数据，按照column列值进行排序，ASC为从小到大，DESC为从大到小，如果不写排序方式，则默认为ASC，从小到大。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">column</span> <span class="keyword">ASC</span><span class="operator">/</span><span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
 <p>ASC全称<strong>ascend</strong> ，为升序的意思，即从小到大。</p>
 <p>DESC全程<strong>descend</strong>，为降序的意思，即从大到小。</p>
-<h2 id="GROUP-BY："><a href="#GROUP-BY：" class="headerlink" title="GROUP BY："></a>GROUP BY：</h2><p>group by 语句用于结合聚合函数，根据一个或多个列对结果集进行分组。我们需要选择一个column列作为分组的依据，然后这个column中数值相同的数据将会被整合到一行数据中，被整合在一起的数据需要进行合并处理，不然就会报错。</p>
+<h3 id="GROUP-BY："><a href="#GROUP-BY：" class="headerlink" title="GROUP BY："></a>GROUP BY：</h3><p>group by 语句用于结合聚合函数，根据一个或多个列对结果集进行分组。我们需要选择一个column列作为分组的依据，然后这个column中数值相同的数据将会被整合到一行数据中，被整合在一起的数据需要进行合并处理，不然就会报错。</p>
 <p>也就是说，在SELECT语句中出现的元素要么为一个聚合函数的输入值，要么为GROUP BY语句的参数。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> column1, aggregate_function(column2)</span><br><span class="line"><span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">where</span> column1<span class="operator">&lt;=</span><span class="number">10</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> column1;</span><br><span class="line"><span class="keyword">having</span> column2<span class="operator">&lt;=</span><span class="number">10</span>;</span><br></pre></td></tr></table></figure>
 <p>这样，会返回一个列出所有不同column1的值为一行数据的表格，其中column1值相同的数据所拥有的column2的值会根据aggregate_function()的功能进行计算，然后出现在那行数据里。</p>
@@ -3217,29 +3235,29 @@
 <p>需要注意的是，这里where语句是没有办法将aggregate_function()返回的参数进行筛选的，因为在执行where的时候，聚合函数还没有工作，所以筛选只能使用在  group by 语句后面的having语句，通常来说having语句都处于命令的最后。</p>
 <p>having其实是可以代替where来使用的，它甚至可以使用where不能使用的别名，比如 column1+column2 as column3 ，那么having就可以使用column3来筛选，但是where不行，where只能只用column1+column2。</p>
 <p>但是有一点限制的是，对于select没有选中的数据，having是不能拿来用的，比如在语句 select column1,column2 from “table”; 中，后面的 having 语句就只能使用column1和column2来筛选数据，但是where可以使用没有被选中的column3来使用数据。</p>
-<h2 id="LIKE："><a href="#LIKE：" class="headerlink" title="LIKE："></a>LIKE：</h2><p>用于在where里面模糊匹配：</p>
+<h3 id="LIKE："><a href="#LIKE：" class="headerlink" title="LIKE："></a>LIKE：</h3><p>用于在where里面模糊匹配：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">column</span> <span class="keyword">like</span> &quot;%KeyWord%&quot;;</span><br></pre></td></tr></table></figure>
 <p>%这个符号非常有灵性，%在哪一边，哪一边就可以模糊处理，什么字符都可以，这个like简直就是搜索利器啊。直接搜搜column列里面的数据有没有和KeyWord相匹配的。</p>
 <p>同时Like语句 支持 or/and/ 逻辑哦！具体用法如下：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">where</span> column1 <span class="keyword">like</span> &quot;%KeyWord1%&quot; </span><br><span class="line"><span class="keyword">or</span> column1 <span class="keyword">like</span> &quot;%KeyWord2%&quot;;</span><br></pre></td></tr></table></figure>
 <p>Like除了可以用%来模糊任意个字符，还可以用 _ 下划线，来之模糊下划线部位的字符。</p>
-<h2 id="IN："><a href="#IN：" class="headerlink" title="IN："></a>IN：</h2><p>where会用到，等价于 =</p>
+<h3 id="IN："><a href="#IN：" class="headerlink" title="IN："></a>IN：</h3><p>where会用到，等价于 =</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">column</span> <span class="keyword">in</span> (value1,value2,value3)；</span><br></pre></td></tr></table></figure>
 <p>下面是等价的写法：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">column</span><span class="operator">=</span>value1 <span class="keyword">or</span> <span class="keyword">column</span><span class="operator">=</span>value2 <span class="keyword">or</span> <span class="keyword">column</span><span class="operator">=</span>value3;</span><br></pre></td></tr></table></figure>
-<h2 id="UNION："><a href="#UNION：" class="headerlink" title="UNION："></a>UNION：</h2><p>Union用于合并两个select所选中数据的值，必须是两个表，并去重，如果不想去重，就使用UNION ALL 语句；</p>
+<h3 id="UNION："><a href="#UNION：" class="headerlink" title="UNION："></a>UNION：</h3><p>Union用于合并两个select所选中数据的值，必须是两个表，并去重，如果不想去重，就使用UNION ALL 语句；</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> column1 <span class="keyword">from</span> &quot;table1&quot;</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> column2 <span class="keyword">from</span> &quot;table2&quot;; </span><br></pre></td></tr></table></figure>
 <p>这样就可以把table1和table2两个表中的column1列和column2列的数据进行合并，然后去重之后返回，大概就和并集概念是一样的，但是要注意这两个列中的数据类型必须相似，比如都是字符串连个列都应该是字符串，如果是整形，两个列都应该是整形。</p>
-<h2 id="BETWEEN："><a href="#BETWEEN：" class="headerlink" title="BETWEEN："></a>BETWEEN：</h2><p>between A and B 是用来来选取A到B范围内的元素，注意这个区间在不同的数据库中的开闭情况是不同的，在MySQL中，这个是两边都闭的区间。</p>
+<h3 id="BETWEEN："><a href="#BETWEEN：" class="headerlink" title="BETWEEN："></a>BETWEEN：</h3><p>between A and B 是用来来选取A到B范围内的元素，注意这个区间在不同的数据库中的开闭情况是不同的，在MySQL中，这个是两边都闭的区间。</p>
 <p>这条语句可以用在任何数据类型上面，如果所作用的数据是字符串，那么它筛选的区间是根据字符串的<strong>首字母</strong>进行筛选的。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">column</span> <span class="keyword">between</span> <span class="string">&#x27;A&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;B&#x27;</span>;</span><br></pre></td></tr></table></figure>
 <p>这个东西还能用来筛选日期，只要日期格式规范就行。</p>
-<h2 id="AS："><a href="#AS：" class="headerlink" title="AS："></a>AS：</h2><p>as是SQL语句中的别名，用来给原来的列或者由于运算新产生的列一个新的名字。</p>
+<h3 id="AS："><a href="#AS：" class="headerlink" title="AS："></a>AS：</h3><p>as是SQL语句中的别名，用来给原来的列或者由于运算新产生的列一个新的名字。</p>
 <p>比如把两个列相加产生的新数据重新命名为sum：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> column1<span class="operator">+</span>column2 <span class="keyword">as</span> sum <span class="keyword">from</span> &quot;table&quot;;</span><br></pre></td></tr></table></figure>
 <p>在比如把合并的几个字符串产生的新字符串命名为add:</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> comcat(column1,column2) <span class="keyword">as</span> <span class="keyword">add</span> <span class="keyword">from</span> &quot;table&quot;;</span><br></pre></td></tr></table></figure>
-<h1 id="SQL修改系列"><a href="#SQL修改系列" class="headerlink" title="SQL修改系列"></a>SQL修改系列</h1><h2 id="INSERT-INTO："><a href="#INSERT-INTO：" class="headerlink" title="INSERT INTO："></a>INSERT INTO：</h2><p>插入信息，insert into。</p>
+<h2 id="SQL修改系列"><a href="#SQL修改系列" class="headerlink" title="SQL修改系列"></a>SQL修改系列</h2><h3 id="INSERT-INTO："><a href="#INSERT-INTO：" class="headerlink" title="INSERT INTO："></a>INSERT INTO：</h3><p>插入信息，insert into。</p>
 <ol>
 <li>普通导入：第一行表名后面写列名，第二行Values后面写数据，注意如果要用单引号全用单引号，如果要用双引号全用双引号，需要保持一致性。</li>
 </ol>
@@ -3248,23 +3266,23 @@
 <li>批量导入：和上面一样，不过写多个括号，用逗号隔开。</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> &quot;table&quot; (column1,column2,column3)</span><br><span class="line"><span class="keyword">values</span> (&quot;values1&quot;,&quot;values2&quot;,&quot;values3&quot;),(&quot;values1&quot;,&quot;values2&quot;,&quot;values3&quot;),</span><br><span class="line">(&quot;values1&quot;,&quot;values2&quot;,&quot;values3&quot;),</span><br><span class="line">(&quot;values1&quot;,&quot;values2&quot;,&quot;values3&quot;);</span><br></pre></td></tr></table></figure>
-<h2 id="UPDATE："><a href="#UPDATE：" class="headerlink" title="UPDATE："></a>UPDATE：</h2><p>用于更新表中已经存在的数据：</p>
+<h3 id="UPDATE："><a href="#UPDATE：" class="headerlink" title="UPDATE："></a>UPDATE：</h3><p>用于更新表中已经存在的数据：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">update &quot;table&quot;</span><br><span class="line"><span class="keyword">set</span> column1<span class="operator">=</span>value1,column2<span class="operator">=</span>value2</span><br><span class="line"><span class="keyword">where</span> column0<span class="operator">=</span>value0;</span><br></pre></td></tr></table></figure>
 <p>当利用column0的值等于value0，来确定我们需要跟新的行，然后对这一行的column1和column2进行更新。</p>
 <p><strong>注意</strong> where语句的存在非常重要，如果没有where，那么将会把表中的所有数据都更改，而不是指定数据。</p>
-<h2 id="DELETE："><a href="#DELETE：" class="headerlink" title="DELETE："></a>DELETE：</h2><p>用于删除表中的行：</p>
+<h3 id="DELETE："><a href="#DELETE：" class="headerlink" title="DELETE："></a>DELETE：</h3><p>用于删除表中的行：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">column</span><span class="operator">=</span><span class="keyword">value</span>;</span><br></pre></td></tr></table></figure>
 <p>和上面的update一样，一定要注意where语句的存在，不然会把所有的行全部删掉，也就是删掉了整个表。注意Delete语句不支持单独删除某行某列的数据，只能删除整行数据。</p>
-<h2 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN:"></a>JOIN:</h2><p>连接函数，所谓连接函数，就是将两个不同表的数据连接在一起，输出一个新的表，这个表是两个表合并的结果，注意如果需要使用JOIN，尽可能让两个表的数据类型是一样的，这样可以很好的保证数据合并之后的效果。</p>
+<h3 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN:"></a>JOIN:</h3><p>连接函数，所谓连接函数，就是将两个不同表的数据连接在一起，输出一个新的表，这个表是两个表合并的结果，注意如果需要使用JOIN，尽可能让两个表的数据类型是一样的，这样可以很好的保证数据合并之后的效果。</p>
 <p>join的连接，需要一个桥梁，也就是两个表中，有一列的数据类型是相同的，我们就能通过column1的值和column2的值相同的两个表的数据合并成一行。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">table1 <span class="keyword">join</span> table2 <span class="keyword">on</span> table1.column1 <span class="operator">=</span> table2.column2;</span><br></pre></td></tr></table></figure>
 <p>下面的图真的就是JOIN的全部精髓了：</p>
 <p><img src="https://xorex.space/image/116.png"></p>
-<h2 id="INSERT-INTO-SELECT"><a href="#INSERT-INTO-SELECT" class="headerlink" title="INSERT INTO SELECT:"></a>INSERT INTO SELECT:</h2><p>这是MySQL数据库使用的命令，用来复制一个表单的完整数据加入到另外一个表单，但是需要注意的是，如果直接复制，那么需要两个表的每一列的数据类型必须完全的对应。</p>
+<h3 id="INSERT-INTO-SELECT"><a href="#INSERT-INTO-SELECT" class="headerlink" title="INSERT INTO SELECT:"></a>INSERT INTO SELECT:</h3><p>这是MySQL数据库使用的命令，用来复制一个表单的完整数据加入到另外一个表单，但是需要注意的是，如果直接复制，那么需要两个表的每一列的数据类型必须完全的对应。</p>
 <p>当然大部分情况两个表的数据类型当然不可能完全一样啦，所以我们就可以进行将指定列的数据进行复制，只要保证指定列的数据类型一样就可以了。</p>
 <p>如果想只复制一部分数据，那么和<strong>where</strong>语句进行搭配使用就可以了，具体的语法规则如下：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> &quot;table1&quot; (column1,column2)</span><br><span class="line"><span class="keyword">select</span> column_1,column_2 <span class="keyword">from</span> &quot;table2&quot;</span><br><span class="line"><span class="keyword">where</span> column_id<span class="operator">=</span>id;</span><br></pre></td></tr></table></figure>
-<h1 id="SQL函数"><a href="#SQL函数" class="headerlink" title="SQL函数"></a>SQL函数</h1><h2 id="concat"><a href="#concat" class="headerlink" title="concat()"></a>concat()</h2><ol>
+<h2 id="SQL函数"><a href="#SQL函数" class="headerlink" title="SQL函数"></a>SQL函数</h2><h3 id="concat"><a href="#concat" class="headerlink" title="concat()"></a>concat()</h3><ol>
 <li>concat()</li>
 </ol>
 <p>这个函数的作用就是将多个字符串连接成一个字符串，然后返回，如果里面有参数为NULL，那么返回的结果就是NULL。</p>
@@ -3281,7 +3299,7 @@
 <li>group_concat()</li>
 </ol>
 <p>这个就是concat()函数在group下面使用的函数了，当我们在使用group by 语句的时候，group_concat()就是一个聚合函数，作用就是把所有分到一组的数据聚合在一起，然后用逗号分隔开来。</p>
-<h2 id="截取字符串"><a href="#截取字符串" class="headerlink" title="截取字符串"></a>截取字符串</h2><ol>
+<h3 id="截取字符串"><a href="#截取字符串" class="headerlink" title="截取字符串"></a>截取字符串</h3><ol>
 <li><strong>left()</strong> </li>
 </ol>
 <p>这个函数是用来从左往右截取一定长度的字符串使用的，具体的用法就是left(string,length)，string代表字符串，length表使要截取的长度。</p>
