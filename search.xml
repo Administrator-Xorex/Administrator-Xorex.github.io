@@ -52,18 +52,12 @@
 </li>
 <li><p> Java Web 开发</p>
 </li>
-</ul>
-<ul>
 <li><p> Spring Boot 开发</p>
 </li>
 <li><p> Spring Cloud 开发</p>
 </li>
 </ul>
-<h3 id="小型随意目标"><a href="#小型随意目标" class="headerlink" title="小型随意目标"></a>小型随意目标</h3><ul>
-<li><p>Windows10 C盘目录</p>
-</li>
-<li></li>
-</ul>
+<h3 id="小型随意目标"><a href="#小型随意目标" class="headerlink" title="小型随意目标"></a>小型随意目标</h3><p>Windows10 C盘目录</p>
 <h2 id="每日进度记录"><a href="#每日进度记录" class="headerlink" title="每日进度记录"></a>每日进度记录</h2><h3 id="02-24"><a href="#02-24" class="headerlink" title="02-24"></a>02-24</h3><ul>
 <li><p>可能是因为咖啡的原因，直接导致了接近凌晨五点才睡着觉，早上就适当的拖延到了 9 点才起来。第一条直接完蛋 QAQ ，不过好在起床之后一整天都不怎么困，而且午休压缩到了半个小时，希望第二天能完成早上 7 点半起床的目标！学习间期休息做的很好，只要间隔一定的时间我就会放下手头正在做的事情去休息眼睛和大脑，基本不会产生眼睛和大脑疲劳，好耶！休息的时候还顺手坐了坐俯卧撑锻炼身体。</p>
 </li>
@@ -72,7 +66,13 @@
 <li><p>今天执行成果一般满意吧，所以明天一定要加油啊！</p>
 </li>
 </ul>
-<h3 id="02-25"><a href="#02-25" class="headerlink" title="02-25"></a>02-25</h3>]]></content>
+<h3 id="02-25"><a href="#02-25" class="headerlink" title="02-25"></a>02-25</h3><ul>
+<li><p>emmmm，今天是妹妹的生日，迎接了客人，吃了火锅，去修了电脑，下午则是帮韬师傅看了看 CTF 的题目，所以大概一天都没有学什么东西……</p>
+</li>
+<li><p>明天再努力学习吧 ╮(╯▽╰)╭</p>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>阶段性总结</category>
       </categories>
@@ -2481,7 +2481,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#x6d;&#101;&#111;&#x6e;&#101;&#x40;&#x72;&#117;&#110;&#111;&#111;&#x62;&#x2e;&#99;&#x6f;&#109;">&#115;&#111;&#x6d;&#101;&#111;&#x6e;&#101;&#x40;&#x72;&#117;&#110;&#111;&#111;&#x62;&#x2e;&#99;&#x6f;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#101;&#x6f;&#110;&#x65;&#x40;&#114;&#x75;&#x6e;&#x6f;&#x6f;&#x62;&#x2e;&#99;&#x6f;&#109;">&#x73;&#111;&#x6d;&#101;&#x6f;&#110;&#x65;&#x40;&#114;&#x75;&#x6e;&#x6f;&#x6f;&#x62;&#x2e;&#99;&#x6f;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
