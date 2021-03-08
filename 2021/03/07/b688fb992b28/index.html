@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>中文编码与开发 | Xorex</title><meta name="keywords" content="笔记,Java,中文编码"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 其实原本是想写一个 Java 脚本来帮我处理下载视频的名字更改，但是因为编码的问题让我非常生气，Windows 文件用 GBK 编码，再加上和 char 的 Unicode、String 的 byte[] 以及输入法输入的编码问题，直接把我搞蒙了，String 自带的一些方法用的云里雾里，能否正确全看玄学。为了能够一劳永逸的解决中文编码问题，于是此文就这样诞生了。  编码发展历史ASCII">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中文编码与开发">
+<meta property="og:url" content="https://xorex.space/2021/03/07/b688fb992b28/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="前言 其实原本是想写一个 Java 脚本来帮我处理下载视频的名字更改，但是因为编码的问题让我非常生气，Windows 文件用 GBK 编码，再加上和 char 的 Unicode、String 的 byte[] 以及输入法输入的编码问题，直接把我搞蒙了，String 自带的一些方法用的云里雾里，能否正确全看玄学。为了能够一劳永逸的解决中文编码问题，于是此文就这样诞生了。  编码发展历史ASCII">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/126.jpg">
+<meta property="article:published_time" content="2021-03-07T09:42:27.000Z">
+<meta property="article:modified_time" content="2021-03-08T09:26:00.550Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="中文编码">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/126.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2021/03/07/b688fb992b28/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-08 17:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">124</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">98</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">中文编码与开发</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-03-07T09:42:27.000Z" title="undefined 2021-03-07 17:42">2021-03-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/">开发知识</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>其实原本是想写一个 Java 脚本来帮我处理下载视频的名字更改，但是因为编码的问题让我非常生气，Windows 文件用 GBK 编码，再加上和 char 的 Unicode、String 的 byte[] 以及输入法输入的编码问题，直接把我搞蒙了，String 自带的一些方法用的云里雾里，能否正确全看玄学。为了能够一劳永逸的解决中文编码问题，于是此文就这样诞生了。</p>
+</blockquote>
+<h2 id="编码发展历史"><a href="#编码发展历史" class="headerlink" title="编码发展历史"></a>编码发展历史</h2><h3 id="ASCII-编码时代"><a href="#ASCII-编码时代" class="headerlink" title="ASCII 编码时代"></a>ASCII 编码时代</h3><p>最开始的开始，因为计算机发明在美国，所以计算机的字符是使用 ASCII 作为编码方式的，这让英语系国家们用的很开心，只需要 1 个字节就可以轻松的表示自己所有的字符，只占用 0-127，其中有 33 个控制字符，94 个可显字符。</p>
+<p>后来，为了加入一些其他必要的符号，比如带重音的字母（法国人狂喜），希腊字母（希腊人狂喜），特殊的拉丁符号（罗马人狂喜），特殊的计算符号（科学家狂喜）等等等等。欧洲的发达国家开始打 ASCII 没有使用到的 128-255 这个区间的主意，出现了一堆各种各样的 EASCII 编码方式，即拓展 ASCII，用的比较多的有两个：OEM EASCII 和 ANSI EASCII 。</p>
+<p>虽说扩展了整整一倍，但是因为所能表示的字符还是太少了，其他国家并不乐意，所以 EASCII 就很快的退出历史舞台，现在搜索 ASCII 一般搜索的都是 0-127 的初始版本。</p>
+<h3 id="ANSI-编码时代"><a href="#ANSI-编码时代" class="headerlink" title="ANSI 编码时代"></a>ANSI 编码时代</h3><p>而非英语国家的人们为了使用计算机，也纷纷开始开发自己本国的文字编码方式，在 ANSI (American National Standards Institute) 的牵头下，各国的文字编码方式被 ANSI 承认之后，会作为该国文字的国际标准编码，叫作 ANSI 编码。 ANSI 编码是一种基于 ASCII 的变长编码，而且是固定的两个字节大小，前 128 个是 ASCII ，后面的是本国的文字。</p>
+<p>虽然不同的国家都有了自己文字的编码方式也都快乐的用上了计算机，但各个文字的 ANSI 编码并不互通，导致了一种 ANSI 文字编码的文件里面不可以有其他国家的文字，否则就会乱码。</p>
+<h4 id="GB2312"><a href="#GB2312" class="headerlink" title="GB2312"></a>GB2312</h4><p>中国显然也参与了这个过程中来，在 1980 年的时候，中国指定了汉字的 ANSI 编码：GB2312 即国标 2312 ，一共收录了 6763 个汉字，一级汉字 3755 个，二级汉字 3008 个，同时收录了包括拉丁字母、希腊字母、日文平假名及片假名字母、俄语西里尔字母在内的 682 个字符。这个字符集基本上覆盖了中国大陆 99.75% 的使用频率（因为繁体中文不在里面）。而 GB2312 的编码方式如下：</p>
+<ul>
+<li><p>GB2312 将稀少的两个字节分为了区字节（0xB0-0xF7 87个区）和位字节（0xA1-0xFE 94个位），用一个区字节和一个位字节结合起来来表示一个汉字。</p>
+</li>
+<li><p>之所以从 0x80 128 和 0xA1 161 开始表示区字节和位字节，就是为了照顾 ASCII 字符可以被单个字节表示，只要检测到字符大小小于 128 ，那么这就是一个 ASCII 字符，读取一个字节即可。如果大于等于 128，那么就说明这是一个汉字，读取两个字节，并按照组合出来的编号显示汉字。</p>
+</li>
+</ul>
+<h4 id="GBK"><a href="#GBK" class="headerlink" title="GBK"></a>GBK</h4><p>但是，可怜的 GB2312 当时设置的比较草率，还有很多的空间没有使用，再加上 6763 个汉字真的是太少了，于是在 1995 年的时候，又搞了一个汉字的 ANSI 编码，叫作 GBK 编码，国(G)标(B)扩展(K)。这个 GBK 编码覆盖了 21886 个字符，增加了额外的汉字，繁体字，日文假名等等（但是不支持朝鲜字），现在还是 Windows 默认的文字编码方式。</p>
+<ul>
+<li>GBK 完全兼容 GB2312。并将位字节从 0x00 开始表示汉字，因为只要区字节大于 128 即可确定后面跟着的就是位字节而不是 ASCII，然后很好的利用了 GB2312 没有分配的空间，成功的容纳了绝大部分日常使用汉字。</li>
+</ul>
+<h4 id="GB18030"><a href="#GB18030" class="headerlink" title="GB18030"></a>GB18030</h4><p>但是，两个字节的极限就是容纳 2^16 个字符，是不可能容纳所有的汉字的，所以后来又改良 GBK 出来了一个 GB18030 ，这玩意终于将整个汉字+少数民族文字全部都编到了一起。</p>
+<ul>
+<li>GB18030 之所以能把中国所有的文字都搞到一起，是因为它最大长度是四个字节，其中一个字节和两个字节和 GBK 基本兼容。四个字节扩充了 6k+ 的字符，完成了汉字的所有收录（注意 GB18030 是没有三个字节的情况的）。</li>
+</ul>
+<h3 id="Unicode-时代"><a href="#Unicode-时代" class="headerlink" title="Unicode 时代"></a>Unicode 时代</h3><p>虽说 ANSI 解决了非英语国家使用计算机的问题，但是对于网上传输其他国家的文字，因为使用 ANSI 编码不同，会导致无法解析，比如韩国电脑解析不出来 GBK 编码的文字，打开直接乱码。</p>
+<p>随着计算机存储元器件价格的大幅度下降和全球互联网的快速发展，统一文字编码方式让不同文字的展现无障碍越来越重要。为了将所有的文字都制定一个标准之中，让所有人都能解析所有文字，Unicode 字符集就诞生了，立志于给所有文字都编上号。最初版本的 Unicode 只有两个字节，而分给 CJK 系列字符的只有两万个，导致只有最常用的 CJK 字符才能被编写到 Unicode 里面，后来经过一段曲折与斗争，Unicode 终于扩展字节，发展成为了真正的万国码。</p>
+<ul>
+<li><p>现在 Unicode 字符集的空间规划是按照空间平面的方式进行的，为 0-16 平面，每个平面占用两个字节，可以表示 2^16 个字符。其中最初版本的 Unicode 表示的字符为 0 号平面，被称为 BMP <code>Basic Multilingual Plane</code> 基本语言平面，表示范围为：U+0000 到 U+FFFF，可以省略最前面的平面编号，占用两个字节。而剩下的字符都在辅助平面 SMP 上面，从 U+010000 一直到 U+10FFFF，占用三个字节。</p>
+</li>
+<li><p>基本上 BMP 就覆盖了世界上大多数语言的绝大多数使用情景，但是要明白的是 SMP 的产生，对于 CJK 国家来说意义重大。这意味着在通用的语言字符集里面，东亚文化可以完整的保留下来，一个汉字的不同书写、演化方式，各种生僻字，这些都是绝对不允许被科技的发展而被忽略和抛弃的。</p>
+</li>
+</ul>
+<p>需要注意的是，Unicode 并不是一种编码方式，而是一个字符集，它只会给字符一个独一无二的编号，而不会规定这个字符如何在计算机种存储。规定如何在计算机中存储的是编码方式，如比较早的 UTF-16 编码，它使用两个字节或者四个字节来编码字符，对于 BMP 平面上的字符，使用两个字节，对于 SMP 平面上的字符，使用四个字节。</p>
+<ul>
+<li>UTF-16 中，两个字节和四个字节读取区分很简单，首先都按照两个字节读取，如果读取结果在 BMP 上面有实际的字符，那么就断定这是一个 BMP 字符。如果没有实际的字符，即 U+D800 到 U+DBFF（此区间为空区间），那么就四个字节连在一起读取，判断为 SMP 平面字符。四个字节一共保存了 2^20 位有效信息，对应着 16 个 2^16 个 SMP 字符。</li>
+</ul>
+<p>Unicode 并没有在英语系国家快速发展开来，因为他们的大量内容都是使用 ASCII 来编码的，UTF-16 不但不兼容 ASCII，还要让他们白白的多使用一个字节的空间来存储一个字符，于是基于 Unicode 字符集的新编码方式： UTF-8 就诞生了。</p>
+<p>UTF-8 的最大特性就是可变字符长度，对于 ASCII 的字符，编码方式和 ASCII 相同，都只占用一个字节的空间。非 ASCII 的字符也根据 Unicode 编码占用 2-4 个字符，这样就不但不需要改变原来使用 ASCII 编码的信息，还符合和其他文字一起用的标准，并且能节省大量的空间。由于这些优良的特性，使得 UTF-8 编码快速成为了互联网上最流行的文字编码形式。</p>
+<ul>
+<li>UTF-8 规定，对于 ASCII 的字符，占用一个字节，开头标识为 0，后面 7 位存储数据。对于非 ASCII 字符，占用几个字节，那么第一位字节开头就有几个 1，用 0 标识结束，后面跟着的字节开头设为 10。比如三字节的汉字：1110XXXX 10XXXXXX 10XXXXXX 。</li>
+</ul>
+<h2 id="Windows-编码"><a href="#Windows-编码" class="headerlink" title="Windows 编码"></a>Windows 编码</h2><p>因为计算机的内存中需要使用固定长度来保存字符，所以使用了 Unicode 字符集的 UTF-16 来编码存储数据，而对于内容的存储，则会将内存中的 UTF-16 转化为 GBK/UTF-8/GB18030 这些编码方式然后保存，使用 UTF-16 一是因为当时最新的 Unicode 标准就是 UTF-16 ，其次是当时 UTF-16 定长编码，无论是什么数字，都是两个字节，对于在内存中快速定位非常方便（当然现在随着 Unicode 的扩充，UTF-16 还有四个字节的），使用 GBK/UTF-8/GB18030 存储是为了节省存储空间和方便网上传输。</p>
+<p>在 Windows 里面，打开文档的时候，会将硬盘里面用 GBK/UTF-8/GB18030 存储的数据转化为 UTF-16 ，然后放进内存里。我们看到的东西其实都是存在于内存中的。互联网上的网页也是，返回请求的数据使用 UTF-8 编码，浏览器接收之后，会解码为 UTF-16 并放到内存中，然后才能展示给我们看。我们在复制显示的数据的时候，其实都是 UTF-16 编码，粘贴到文档里面的时候，也是将 UTF-16 编码转移到对应应用程序的内存区中，最后这个应用程序将数据保存到硬盘的时候，才会将内存的 UTF-16 数据转化为定义的保存编码格式。</p>
+<p>所以根本不需要担心复制粘贴的可以看见的数据的编码问题，只要我们能看见（打开到了内存中），不是乱码，就全部都是正确的 UTF-16。我们唯一需要担心的是保存在硬盘里面的数据，因为不知道保存的时候是按照 GBK/UTF-8/GB18030 等等的哪种编码方式保存，所以打开的时候选择的解码方式，<strong>复制</strong>的时候也需要注意前后文件存储编码是否相同（因为直接复制文本，没有经过内存的 UTF-16 转化）。</p>
+<h2 id="输入法原理"><a href="#输入法原理" class="headerlink" title="输入法原理"></a>输入法原理</h2><p>输入法作为一个应用程序，本质上还是向另外一个应用程序的内存中写入 UTF-16 编码，因为其他的应用程序用拿到的都是确定的 UTF-16 所以输入法输入时不需要担心编码问题的。</p>
+<h2 id="Java-中的编码"><a href="#Java-中的编码" class="headerlink" title="Java 中的编码"></a>Java 中的编码</h2><p>在创造 Java 的时候，当时最流行的 Unicode 编码就是两个字节的 UTF-16，所以就给 Java 的 char 类型设置了两字节的空间，并使用 UTF-16 作为 char 类型的存储方式，所以 Char 只能标识 BMP 范围里面的字符。</p>
+<p>对于 String 来说，同样是使用 UTF-16 作为编码方式，不过内部存储时使用 byte[] 而不是 char[]。这是因为以前使用 char[] 来实现 String 的时候，对于 BMP 的字符因为受 char 两个字节大小的制约而无法显示，改为 byte[] 之后，就没有这个问题了，对于四字节的 BMP 字符，一样可以很好的处理。</p>
+<p>而<strong>最需要注意</strong>的是，String 保存的 UTF-16 格式的开头，会有一个 BOM byte-order mark 字节顺序标记，用一 0xff 和 0xfe 的顺序标识。0xfe 0xff 标识大端序（位数大的在左边，适合人阅读），反之标识小端序（位数小的在左边，适合计算机阅读）。我们平时处理获取的 UTF-16 编码一般来说是大端序，直接忽略最前面返回的 0xfe 和 0xff 两个字符即可。</p>
+<p>而 JVM 打开 <code>.java</code> 文件进行编译运行的时候，会使用系统默认的编码方式打开文件，比如 Windows 存储中文到硬盘里面的默认编码方式就是 GBK，使用 Vscode 写的 UTF-8 编码的中文无法让 JVM 正确解码，就会出错。要么更改 VScode 保存编码为 GBK，要么编译加参数更改打开文件编码为 UTF-8。或者直接用 IDEA，保存打开方式都是 UTF-8，不存在编码问题。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2021/03/07/b688fb992b28/">https://xorex.space/2021/03/07/b688fb992b28/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81/">中文编码</a></div><div class="post_share"><div class="social-share" data-image="/waifus/126.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/05/728260c40cfe/"><img class="next-cover" src="/waifus/125.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java函数式编程</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">要去热爱每一天的生活啊！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">124</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">98</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E5%8F%91%E5%B1%95%E5%8E%86%E5%8F%B2"><span class="toc-number">2.</span> <span class="toc-text">编码发展历史</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ASCII-%E7%BC%96%E7%A0%81%E6%97%B6%E4%BB%A3"><span class="toc-number">2.1.</span> <span class="toc-text">ASCII 编码时代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ANSI-%E7%BC%96%E7%A0%81%E6%97%B6%E4%BB%A3"><span class="toc-number">2.2.</span> <span class="toc-text">ANSI 编码时代</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#GB2312"><span class="toc-number">2.2.1.</span> <span class="toc-text">GB2312</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GBK"><span class="toc-number">2.2.2.</span> <span class="toc-text">GBK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GB18030"><span class="toc-number">2.2.3.</span> <span class="toc-text">GB18030</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unicode-%E6%97%B6%E4%BB%A3"><span class="toc-number">2.3.</span> <span class="toc-text">Unicode 时代</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-%E7%BC%96%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">Windows 编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%B3%95%E5%8E%9F%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">输入法原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">Java 中的编码</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
