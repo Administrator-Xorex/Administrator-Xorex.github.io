@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>创建形模式笔记</title>
+    <url>/2021/03/09/6c55278fa9ef/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>新笔记计划</title>
+    <url>/2021/03/09/44081a19925f/</url>
+    <content><![CDATA[<h2 id="关于笔记记录的一点思考"><a href="#关于笔记记录的一点思考" class="headerlink" title="关于笔记记录的一点思考"></a>关于笔记记录的一点思考</h2><p>今天在记录创建型模式的时候发现这种需要大段文字描述的知识点并不适合使用思维导图，所以后面讲解设计模式具体的案例的时候，会重新回归笔记的方式，emmmm，或者说是，笔记+思维导图。</p>
+<p>自己以前好像一直在滥用思维导图，现在想想思维导图应该是为了帮助自己更加清晰的梳理关系，归纳知识点，而不是一味的将所有的学习内容都用思维导图罗列表示出来。</p>
+<p>所以应该两者一起使用，并再多学习一些 XMind 的模板，主要将思维导图作为关系展示图。而对于详细某些知识点的理解，应该还是要用文字和代码一起说明。</p>
+<p>新的笔记应该聚焦于一些核心知识点的记录，而不是用来引导萌新的新手教程，尽可能写的简练而又全面。笔记的目的是为了自己以后遗忘了某块知识，需要查阅的时候，可以快速定位并快速提取出来需要的信息。</p>
+<p>目前的打算是，对于一个全新的知识点，首先有一个概览笔记，主要是梳理所有内容的联系和一些基本名词的解释，然后再用若干篇小文章来分别阐述不同的具体知识。而对于一些类的方法的列出，或者命令的集合，还是使用思维导图比较合适归纳。</p>
+]]></content>
+      <categories>
+        <category>阶段性总结</category>
+      </categories>
+      <tags>
+        <tag>思维导图</tag>
+        <tag>笔记</tag>
+        <tag>规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式原则思维导图</title>
+    <url>/2021/03/09/ebff1b4e77e7/</url>
+    <content><![CDATA[<h2 id="设计模式原则思维导图"><a href="#设计模式原则思维导图" class="headerlink" title="设计模式原则思维导图"></a>设计模式原则思维导图</h2><iframe src="https://www.xmind.net/embed/73pZXu" width="800px" height="540px" frameborder="0" scrolling="no"></iframe>
+
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>思维导图</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>中文编码与开发</title>
     <url>/2021/03/07/b688fb992b28/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
@@ -48,7 +91,7 @@
 <p>所以根本不需要担心复制粘贴的可以看见的数据的编码问题，只要我们能看见（打开到了内存中），不是乱码，就全部都是正确的 UTF-16。我们唯一需要担心的是保存在硬盘里面的数据，因为不知道保存的时候是按照 GBK/UTF-8/GB18030 等等的哪种编码方式保存，所以打开的时候选择的解码方式，<strong>复制</strong>的时候也需要注意前后文件存储编码是否相同（因为直接复制文本，没有经过内存的 UTF-16 转化）。</p>
 <h2 id="输入法原理"><a href="#输入法原理" class="headerlink" title="输入法原理"></a>输入法原理</h2><p>输入法作为一个应用程序，本质上还是向另外一个应用程序的内存中写入 UTF-16 编码，因为其他的应用程序用拿到的都是确定的 UTF-16 所以输入法输入时不需要担心编码问题的。</p>
 <h2 id="Java-中的编码"><a href="#Java-中的编码" class="headerlink" title="Java 中的编码"></a>Java 中的编码</h2><p>在创造 Java 的时候，当时最流行的 Unicode 编码就是两个字节的 UTF-16，所以就给 Java 的 char 类型设置了两字节的空间，并使用 UTF-16 作为 char 类型的存储方式，所以 Char 只能标识 BMP 范围里面的字符。</p>
-<p>对于 String 来说，同样是使用 UTF-16 作为编码方式，不过内部存储时使用 byte[] 而不是 char[]。这是因为以前使用 char[] 来实现 String 的时候，对于 BMP 的字符因为受 char 两个字节大小的制约而无法显示，改为 byte[] 之后，就没有这个问题了，对于四字节的 BMP 字符，一样可以很好的处理。</p>
+<p>对于 String 来说，同样是使用 UTF-16 作为编码方式，不过内部存储时使用 byte[] 而不是 char[]。这是因为以前使用 char[] 来实现 String 的时候，对于 SMP 的字符因为受 char 两个字节大小的制约而部分四字节编码无法显示，改为 byte[] 之后，就没有这个问题了，即使是四字节的 SMP 字符，一样可以很好的处理。</p>
 <p>而<strong>最需要注意</strong>的是，String 保存的 UTF-16 格式的开头，会有一个 BOM byte-order mark 字节顺序标记，用一 0xff 和 0xfe 的顺序标识。0xfe 0xff 标识大端序（位数大的在左边，适合人阅读），反之标识小端序（位数小的在左边，适合计算机阅读）。我们平时处理获取的 UTF-16 编码一般来说是大端序，直接忽略最前面返回的 0xfe 和 0xff 两个字符即可。</p>
 <p>而 JVM 打开 <code>.java</code> 文件进行编译运行的时候，会使用系统默认的编码方式打开文件，比如 Windows 存储中文到硬盘里面的默认编码方式就是 GBK，使用 Vscode 写的 UTF-8 编码的中文无法让 JVM 正确解码，就会出错。要么更改 VScode 保存编码为 GBK，要么编译加参数更改打开文件编码为 UTF-8。或者直接用 IDEA，保存打开方式都是 UTF-8，不存在编码问题。</p>
 ]]></content>
@@ -56,8 +99,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>中文编码</tag>
       </tags>
   </entry>
@@ -316,7 +359,7 @@
     <content><![CDATA[<h2 id="正则表达式思维导图"><a href="#正则表达式思维导图" class="headerlink" title="正则表达式思维导图"></a>正则表达式思维导图</h2><blockquote>
 <p>思维导图主要记录了一下正则表达式的一些简单的使用方法。</p>
 </blockquote>
-<iframe src="https://www.xmind.net/embed/cFDKCv" width="900px" height="540px" frameborder="0" scrolling="no"></iframe>
+<iframe src="https://www.xmind.net/embed/cFDKCv" width="800px" height="540px" frameborder="0" scrolling="no"></iframe>
 ]]></content>
       <categories>
         <category>开发知识</category>
@@ -455,6 +498,7 @@
 <h3 id="产生死锁"><a href="#产生死锁" class="headerlink" title="产生死锁"></a>产生死锁</h3><p>死锁是因为两个线程在等待钥匙的时候，资源获取进入僵局，使得无法结束等待的情况称为死锁。</p>
 <p>比如：两个线程，分别持有钥匙1和钥匙2，有钥匙1的同时在请求钥匙2，有钥匙2的同时在请求钥匙1。两个线程都进入了等待钥匙的状态，而自己持有的钥匙无法释放，导致了对方也陷入僵局。</p>
 <p>一旦出现了死锁，只能停止执行代码，所以一定要尽力避免出现死锁的情况。</p>
+<h2 id="变量的多线程安全"><a href="#变量的多线程安全" class="headerlink" title="变量的多线程安全"></a>变量的多线程安全</h2><p>对于多个线程对同一个变量进行操作的时候，因为 CPU 缓存的原因，变量经过更改之后是放在缓存中的，从缓存写入到内存的时间是不确定的。所以可能一个线程更改了数据之后，另外一个线程从内存中读取的还是旧的信息。为了保证涉及到多线程的数据的安全，可以在声明变量的时候添加关键词 volatile 不稳定的。标志完之后，所有对此数据的修改都会立刻写入内存中，保证其他线程的读取正确。</p>
 <h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h3 id="普通线程池"><a href="#普通线程池" class="headerlink" title="普通线程池"></a>普通线程池</h3><p>线程池就是线程的集合体，通过将线程保存在线程池中来反复利用已经有的线程。因为单独的一个线程的新建和销毁都需要消耗很多资源，所以这样将线程集合在一起，需要了就给他分配任务执行的方式能很好的管理线程。</p>
 <p>新建线程池是通过 Executors 类的三个静态方法来返回一个 ExecutorService 接口的实现实例，一共有三种线程池：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">newFixedThreadPool(<span class="keyword">int</span> nThreads) <span class="comment">// 固定数量线程池需要输入参数线程数量</span></span><br><span class="line">newCachedThreadPool() <span class="comment">// 可变数量线程池，会自己根据任务调整</span></span><br><span class="line">newSingleThreadExecutor() <span class="comment">// 单线程线程执行器</span></span><br></pre></td></tr></table></figure>
@@ -475,9 +519,9 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
         <tag>思维导图</tag>
+        <tag>笔记</tag>
         <tag>多线程</tag>
       </tags>
   </entry>
@@ -533,9 +577,9 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
         <tag>思维导图</tag>
+        <tag>笔记</tag>
         <tag>IO</tag>
       </tags>
   </entry>
@@ -603,8 +647,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>集合</tag>
       </tags>
   </entry>
@@ -772,8 +816,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>集合</tag>
       </tags>
   </entry>
@@ -846,8 +890,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>泛型</tag>
       </tags>
   </entry>
@@ -951,8 +995,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>注解</tag>
       </tags>
   </entry>
@@ -1208,8 +1252,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>反射</tag>
       </tags>
   </entry>
@@ -1333,8 +1377,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>异常</tag>
       </tags>
   </entry>
@@ -1534,8 +1578,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>核心类</tag>
       </tags>
   </entry>
@@ -1768,8 +1812,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>面向对象</tag>
       </tags>
   </entry>
@@ -1962,8 +2006,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -2626,7 +2670,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#109;&#101;&#x6f;&#x6e;&#101;&#x40;&#114;&#117;&#110;&#111;&#111;&#x62;&#46;&#x63;&#111;&#x6d;">&#115;&#111;&#109;&#101;&#x6f;&#x6e;&#101;&#x40;&#114;&#117;&#110;&#111;&#111;&#x62;&#46;&#x63;&#111;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#x65;&#111;&#x6e;&#x65;&#64;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#46;&#x63;&#x6f;&#x6d;">&#x73;&#111;&#x6d;&#x65;&#111;&#x6e;&#x65;&#64;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#46;&#x63;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -3463,8 +3507,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>数据库</tag>
         <tag>MySQL</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -7081,8 +7125,8 @@
         <category>阶段性总结</category>
       </categories>
       <tags>
-        <tag>总结</tag>
         <tag>HAOI</tag>
+        <tag>总结</tag>
         <tag>感想</tag>
       </tags>
   </entry>
