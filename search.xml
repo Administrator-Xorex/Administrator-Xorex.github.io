@@ -122,6 +122,43 @@
       </tags>
   </entry>
   <entry>
+    <title>UML类图学习笔记</title>
+    <url>/2021/03/15/b583afde1613/</url>
+    <content><![CDATA[<h2 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h2><blockquote>
+<p>UML类图是用来描述在面向对象设计程序的时候，各种类，接口等本身的信息和之间的联系。</p>
+</blockquote>
+<p>一些快速参考的资料：<a href="http://c.biancheng.net/view/8374.html">UML类图及类图之间的关系</a>、<a href="http://c.biancheng.net/view/8375.html">UML理解记忆</a> 。</p>
+<h2 id="UML类之间的关系"><a href="#UML类之间的关系" class="headerlink" title="UML类之间的关系"></a>UML类之间的关系</h2><h3 id="依赖关系"><a href="#依赖关系" class="headerlink" title="依赖关系"></a>依赖关系</h3><p>A 类在代码内部临时调用 B 类（通过局部实例变量，方法参数传入，或者直接调用静态方法）这种不持有 B 类，但是需要用到 B 类的关系，称为依赖关系，A 类依赖于 B 类。而依赖是单方面的依赖，</p>
+<p>比如 Person 类中的 call(Phone phone) 方法需要传入 Phone 类的实例，然后内部调用实例 phone 的方法完成通话，那么就说 Person 类依赖于 Phone 类。</p>
+<p>依赖关系使用带箭头的虚线来表示，箭头从使用类指向被依赖的类，关系表示如下图（请勿参考图中例子）：</p>
+<p><a href="https://xorex.space/image/171.jpg"></a></p>
+<h3 id="关联关系"><a href="#关联关系" class="headerlink" title="关联关系"></a>关联关系</h3><p>关联关系表示两个类有一定的联系，比如 Person 和 Address 之间，人拥有自己的住址，住址地方有人的存在。两者就是相互关联的关系。关联可以是单方面的关联，也可也是互相关联。被关联的类会成为关联者的一个属性。</p>
+<p>单向的关联用带一个箭头的实线来表示，箭头从使用类指向被关联的类，而双向的关联可以用带两个箭头或者没有箭头的实线来表示。关系表示如下图（请勿参考图中例子）：</p>
+<p><a href="https://xorex.space/image/172.jpg"></a></p>
+<h3 id="聚合关系"><a href="#聚合关系" class="headerlink" title="聚合关系"></a>聚合关系</h3><p>当 A 类是由 B 类聚合而成的，并且 B 类可以独立于 A 类，那么称 A 和 B 的关系为聚合关系。比如雁群和大雁的关系，雁群由任意个大雁组成，而大雁可以独立于雁群，就成为大雁聚合成为了雁群。老师们聚合到了学校里面，即使学校倒闭，也可以独立存在，不会随着学校一起消亡。（被聚合个体实例创建在外部，聚合个体时通过外部传入被聚合实例，聚合体销毁的时候，被聚合体实例在外部仍然有引用，不会被回收）</p>
+<p>聚合关系可以用带空心菱形的实线来表示，菱形指向整体，关系表示如下图（请勿参考图中例子）：</p>
+<p><a href="https://xorex.space/image/173.jpg"></a></p>
+<h3 id="组合关系"><a href="#组合关系" class="headerlink" title="组合关系"></a>组合关系</h3><p>组合关系需要一个类由若干个类真正组合而成，比如人是由四肢、躯干、头组成的。少了头，人就不完整了，没有了人，头也无法单独存在。这种极为紧密的关系被称为组合关系，实现这样的部分对象不能脱离整体对象的存在实现方法就是在整体的内部创建部分。这样整体一旦被销毁，部分会因为没有外部引用指向它而也被销毁。</p>
+<p>组合关系用带实心菱形的实线来表示，菱形指向整体，关系表示如下图（请勿参考图中例子）：</p>
+<p><a href="https://xorex.space/image/174.jpg"></a></p>
+<h3 id="泛化关系"><a href="#泛化关系" class="headerlink" title="泛化关系"></a>泛化关系</h3><p>泛化：变得宽泛，指由个别到一般或由具体到抽象。</p>
+<p>也就是说，泛化关系指的是父类和子类之间的继承关系。</p>
+<p>泛化关系用带空心三角箭头的实线来表示，箭头从子类指向父类，关系表示如下图（请勿参考图中例子）：</p>
+<p><a href="https://xorex.space/image/175.jpg"></a></p>
+<h3 id="实现关系"><a href="#实现关系" class="headerlink" title="实现关系"></a>实现关系</h3><p>实现关系是接口和实现类的关系。</p>
+<p>实现关系使用带空心三角箭头的虚线来表示，箭头从实现类指向接口，关系表示如下图（请勿参考图中例子）：</p>
+<p><a href="https://xorex.space/image/176.jpg"></a></p>
+<h2 id="记忆理解图"><a href="#记忆理解图" class="headerlink" title="记忆理解图"></a>记忆理解图</h2><p><a href="https://xorex.space/image/177.jpg"></a></p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>UML</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>结构型模式笔记</title>
     <url>/2021/03/11/41a99764aa02/</url>
     <content><![CDATA[<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><h3 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h3><iframe src="https://www.xmind.net/embed/TT2ej6" width="800px" height="540px" frameborder="0" scrolling="no"></iframe>
@@ -199,7 +236,7 @@
 <p>因为：在用 Proxy.newInstaceProxy() 获取代理类的时候，传入的 this 为本 DynamicProxy 实例。本实例的属性 target 的内存地址是固定的，只能保存一个 target。所以生成的代理类调用的目标类 target 的时候，是一个 DynamicProxy 对应一个 target 的。<strong>不同的</strong>目标类<strong>同时</strong>使用需要声明不同的 DynamicProxy，不同的目标类依次使用只需要声明一个 DynamicProxy。</p>
 <p>下面表示用一个 DynamicProxy 生成器生成访问不同目标类的两种代理类，并同时使用的错误：（没错我就是刚犯！）</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 错误写法：</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BuyProduct</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MiPhoneFactory pf=<span class="keyword">new</span> MiPhoneFactory();</span><br><span class="line">        MiLapTopFactory lf=<span class="keyword">new</span> MiLapTopFactory();</span><br><span class="line"></span><br><span class="line">        DynamicProxy dp=<span class="keyword">new</span> DynamicProxy();</span><br><span class="line">        PhoneFactory phoneproxy=(PhoneFactory) dp.getProxy(pf); <span class="comment">// 在 target 属性内存中写入 pf</span></span><br><span class="line">        LapTopFactory laptopfactory=(LapTopFactory) dp.getProxy(lf); <span class="comment">// 在 target 属性内存中 覆盖 pf 写入 lf</span></span><br><span class="line">        phoneproxy.GetPhone(); <span class="comment">// 此时 dp 实例中 target 属性的内存中的实例为 lf，但 lf 为 LapTopFactory 没有 GEtPhone() 方法。</span></span><br><span class="line">        <span class="comment">// 就会抛出 object is not an instance of declaring class 这样的错误，毕竟 lf 的确不是 PhoneFactory 的实例，没有 GetPhone() 方法。</span></span><br><span class="line"></span><br><span class="line">        System.out.println();</span><br><span class="line">        laptopfactory.GetLapTop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
+<h2 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h2>]]></content>
       <categories>
         <category>开发知识</category>
       </categories>
@@ -2889,7 +2926,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#109;&#101;&#111;&#110;&#x65;&#64;&#114;&#117;&#110;&#111;&#111;&#x62;&#46;&#99;&#x6f;&#x6d;">&#115;&#x6f;&#109;&#101;&#111;&#110;&#x65;&#64;&#114;&#117;&#110;&#111;&#111;&#x62;&#46;&#99;&#x6f;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#x65;&#111;&#110;&#x65;&#64;&#114;&#117;&#110;&#x6f;&#111;&#x62;&#x2e;&#99;&#111;&#x6d;">&#x73;&#111;&#x6d;&#x65;&#111;&#110;&#x65;&#64;&#114;&#117;&#110;&#x6f;&#111;&#x62;&#x2e;&#99;&#111;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -7311,8 +7348,8 @@
         <category>算法竞赛</category>
       </categories>
       <tags>
-        <tag>图论</tag>
         <tag>总结</tag>
+        <tag>图论</tag>
       </tags>
   </entry>
   <entry>
