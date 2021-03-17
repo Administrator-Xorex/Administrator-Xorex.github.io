@@ -448,8 +448,8 @@
         <category>阶段性总结</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>思维导图</tag>
+        <tag>笔记</tag>
         <tag>规划</tag>
       </tags>
   </entry>
@@ -568,8 +568,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>中文编码</tag>
       </tags>
   </entry>
@@ -898,9 +898,9 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
         <tag>思维导图</tag>
+        <tag>笔记</tag>
         <tag>多线程</tag>
       </tags>
   </entry>
@@ -956,9 +956,9 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
         <tag>思维导图</tag>
+        <tag>笔记</tag>
         <tag>IO</tag>
       </tags>
   </entry>
@@ -1026,8 +1026,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>集合</tag>
       </tags>
   </entry>
@@ -1195,8 +1195,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>集合</tag>
       </tags>
   </entry>
@@ -1269,8 +1269,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>泛型</tag>
       </tags>
   </entry>
@@ -1374,8 +1374,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>注解</tag>
       </tags>
   </entry>
@@ -1635,8 +1635,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>反射</tag>
       </tags>
   </entry>
@@ -1760,8 +1760,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>异常</tag>
       </tags>
   </entry>
@@ -1961,8 +1961,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>核心类</tag>
       </tags>
   </entry>
@@ -2195,8 +2195,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
         <tag>面向对象</tag>
       </tags>
   </entry>
@@ -2389,8 +2389,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Java</tag>
+        <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -3053,7 +3053,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#101;&#x6f;&#x6e;&#x65;&#x40;&#x72;&#x75;&#x6e;&#111;&#111;&#x62;&#46;&#99;&#x6f;&#109;">&#x73;&#111;&#x6d;&#101;&#x6f;&#x6e;&#x65;&#x40;&#x72;&#x75;&#x6e;&#111;&#111;&#x62;&#46;&#99;&#x6f;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#109;&#101;&#x6f;&#x6e;&#101;&#x40;&#x72;&#117;&#x6e;&#111;&#111;&#98;&#x2e;&#99;&#111;&#109;">&#115;&#x6f;&#109;&#101;&#x6f;&#x6e;&#101;&#x40;&#x72;&#117;&#x6e;&#111;&#111;&#98;&#x2e;&#99;&#111;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -7508,8 +7508,8 @@
         <category>阶段性总结</category>
       </categories>
       <tags>
-        <tag>总结</tag>
         <tag>HAOI</tag>
+        <tag>总结</tag>
         <tag>感想</tag>
       </tags>
   </entry>
