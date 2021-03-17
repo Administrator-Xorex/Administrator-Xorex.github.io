@@ -155,13 +155,21 @@
 <p>使用小爱同学（中间件）来控制智能家居就是命令模式，小爱可以帮你传达控制智能家居的命令（红外 / wifi），还可以封装一些基本控制的组合为一个新的整体命令（小爱捷径），还可以在小爱执行列表里看到命令执行情况（中间件添加的日志系统）。</p>
 <h4 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h4><p>看看上面的 UML 图就行了，这个设计模式逻辑过于简单，就不写代码了。</p>
 <h2 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h2><p>责任链模式：使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。</p>
-<p>比如异常的处理机制，从出问题的地方抛出来，然后经过每一个 catch() 进行判断是否可以捕捉，如果可以捕捉，则捕捉异常并处理，如果不能，则传递给下一个 catch()，直到有人能处理异常或者直接抛到程序外面，终止程序的运行。 </p>
+<p>比如异常的处理机制，从出问题的地方抛出来，然后经过每一个 catch() 进行判断是否可以捕捉，如果可以捕捉，则捕捉异常并处理，如果不能，则传递给下一个 catch()，直到有人能处理异常或者直接抛到程序外面，终止程序的运行。</p>
 <p>责任链的实现也很简单，先建立一个抽象类规定处理者的公有属性和方法，（属性：下一个处理者）（方法：处理问题方法）。</p>
 <p>构建责任链有两种方式，一种是直接创造好所有责任链所拥有的实例，然后用内聚的方法在调用处构造好责任链，然后传入待处理对象处理。另外一种是在写具体处理者的时候，就定义好责任链的下一个处理者，下一个处理者的实例化交给当前处理者决定（如果自己能处理，就自己处理，如果不能，实例化下一个处理者，并交付给它。）</p>
 <p>下图是第一种责任链的构造方式：</p>
 <p><img src="https://xorex.space/image/182.jpg"></p>
-<h3 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h3><p>我们来写写第二种责任链的代码实现：</p>
-]]></content>
+<p>然后一步一步的去处理：</p>
+<p><img src="https://xorex.space/image/183.jpg"></p>
+<h3 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h3><p>我们来写写第二种责任链的代码实现，实现一个责任链给人穿衣服。</p>
+<p>定义被处理者 Person ，和处理者 Wearer：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    Person(String name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Wearer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> Person person;</span><br><span class="line">    </span><br><span class="line">    Wearer(Person person) &#123;</span><br><span class="line">        <span class="keyword">this</span>.person=person;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">wear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Wearer next=<span class="keyword">new</span> WearPants(person);</span><br><span class="line">        <span class="keyword">return</span> next.wear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义一下责任链里面的每一个单独处理者:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WearPants</span> <span class="keyword">extends</span> <span class="title">Wearer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    WearPants(Person person) &#123;</span><br><span class="line">        <span class="keyword">super</span>(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">wear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在给&quot;</span>+person.getName()+<span class="string">&quot;穿内裤&quot;</span>);</span><br><span class="line">        Wearer next=<span class="keyword">new</span> WearJacket(person);</span><br><span class="line">        <span class="keyword">return</span> next.wear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WearJacket</span> <span class="keyword">extends</span> <span class="title">Wearer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    WearJacket(Person person) &#123;</span><br><span class="line">        <span class="keyword">super</span>(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">wear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在给&quot;</span>+person.getName()+<span class="string">&quot;穿上衣&quot;</span>);</span><br><span class="line">        Wearer next=<span class="keyword">new</span> WearTrousers(person);</span><br><span class="line">        <span class="keyword">return</span> next.wear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WearTrousers</span> <span class="keyword">extends</span> <span class="title">Wearer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    WearTrousers(Person person) &#123;</span><br><span class="line">        <span class="keyword">super</span>(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">wear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在给&quot;</span>+person.getName()+<span class="string">&quot;穿裤子&quot;</span>);</span><br><span class="line">        Wearer next=<span class="keyword">new</span> WearShoes(person);</span><br><span class="line">        <span class="keyword">return</span> next.wear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WearShoes</span> <span class="keyword">extends</span> <span class="title">Wearer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    WearShoes(Person person) &#123;</span><br><span class="line">        <span class="keyword">super</span>(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">wear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;正在给&quot;</span>+person.getName()+<span class="string">&quot;穿鞋子&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;完成穿衣，准备出门!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后让 Xorex 小朋友被责任链一个接着一个穿衣服：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Chain</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person Xorex=<span class="keyword">new</span> Person(<span class="string">&quot;Xorex&quot;</span>);</span><br><span class="line">        Wearer wearer=<span class="keyword">new</span> Wearer(Xorex);</span><br><span class="line">        System.out.println(wearer.wear());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h2><h3 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h3><h3 id="代码实现-4"><a href="#代码实现-4" class="headerlink" title="代码实现"></a>代码实现</h3>]]></content>
       <categories>
         <category>开发知识</category>
       </categories>
@@ -440,8 +448,8 @@
         <category>阶段性总结</category>
       </categories>
       <tags>
-        <tag>思维导图</tag>
         <tag>笔记</tag>
+        <tag>思维导图</tag>
         <tag>规划</tag>
       </tags>
   </entry>
@@ -560,8 +568,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>中文编码</tag>
       </tags>
   </entry>
@@ -890,9 +898,9 @@
         <category>开发知识</category>
       </categories>
       <tags>
+        <tag>笔记</tag>
         <tag>Java</tag>
         <tag>思维导图</tag>
-        <tag>笔记</tag>
         <tag>多线程</tag>
       </tags>
   </entry>
@@ -948,9 +956,9 @@
         <category>开发知识</category>
       </categories>
       <tags>
+        <tag>笔记</tag>
         <tag>Java</tag>
         <tag>思维导图</tag>
-        <tag>笔记</tag>
         <tag>IO</tag>
       </tags>
   </entry>
@@ -1018,8 +1026,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>集合</tag>
       </tags>
   </entry>
@@ -1187,8 +1195,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>集合</tag>
       </tags>
   </entry>
@@ -1261,8 +1269,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>泛型</tag>
       </tags>
   </entry>
@@ -1366,8 +1374,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>注解</tag>
       </tags>
   </entry>
@@ -1627,8 +1635,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>反射</tag>
       </tags>
   </entry>
@@ -1752,8 +1760,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>异常</tag>
       </tags>
   </entry>
@@ -1953,8 +1961,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>核心类</tag>
       </tags>
   </entry>
@@ -2187,8 +2195,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
         <tag>面向对象</tag>
       </tags>
   </entry>
@@ -2381,8 +2389,8 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Java</tag>
         <tag>笔记</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -3045,7 +3053,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#109;&#x65;&#111;&#x6e;&#101;&#64;&#114;&#x75;&#110;&#x6f;&#x6f;&#98;&#x2e;&#99;&#x6f;&#109;">&#x73;&#x6f;&#109;&#x65;&#111;&#x6e;&#101;&#64;&#114;&#x75;&#110;&#x6f;&#x6f;&#98;&#x2e;&#99;&#x6f;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#101;&#x6f;&#x6e;&#x65;&#x40;&#x72;&#x75;&#x6e;&#111;&#111;&#x62;&#46;&#99;&#x6f;&#109;">&#x73;&#111;&#x6d;&#101;&#x6f;&#x6e;&#x65;&#x40;&#x72;&#x75;&#x6e;&#111;&#111;&#x62;&#46;&#99;&#x6f;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -7500,8 +7508,8 @@
         <category>阶段性总结</category>
       </categories>
       <tags>
-        <tag>HAOI</tag>
         <tag>总结</tag>
+        <tag>HAOI</tag>
         <tag>感想</tag>
       </tags>
   </entry>
