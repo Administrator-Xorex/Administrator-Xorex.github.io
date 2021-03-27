@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://xorex.space/2021/03/27/cddc0aa09cc2/</loc>
+    <loc>https://xorex.space/2021/03/27/b506191617ff/</loc>
     
     <lastmod>2021-03-27</lastmod>
     
@@ -1068,13 +1068,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E5%88%B7%E9%A2%98%E6%9F%B1/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/Web/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1083,6 +1076,13 @@
   
   <url>
     <loc>https://xorex.space/tags/CSS/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/%E5%88%B7%E9%A2%98%E6%9F%B1/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1103,20 +1103,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/XML/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xorex.space/tags/Java/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/DFS/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1125,6 +1111,20 @@
   
   <url>
     <loc>https://xorex.space/tags/BFS/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/XML/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/Java/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1173,13 +1173,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/Floyed/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/%E6%95%B0%E8%AE%BA/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1195,6 +1188,13 @@
   
   <url>
     <loc>https://xorex.space/tags/LCM/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/Floyed/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1223,6 +1223,20 @@
   
   <url>
     <loc>https://xorex.space/tags/HTML/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/Servlet/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/Tomcat/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1299,6 +1313,13 @@
   </url>
   
   <url>
+    <loc>https://xorex.space/tags/%E6%B3%9B%E5%9E%8B/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://xorex.space/tags/%E6%B3%A8%E8%A7%A3/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1306,7 +1327,7 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E6%B3%9B%E5%9E%8B/</loc>
+    <loc>https://xorex.space/tags/Maven/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1321,13 +1342,6 @@
   
   <url>
     <loc>https://xorex.space/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xorex.space/tags/Maven/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1376,20 +1390,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/ML/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xorex.space/tags/AI/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1398,6 +1398,20 @@
   
   <url>
     <loc>https://xorex.space/tags/MySQL/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/ML/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/AI/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1425,6 +1439,13 @@
   </url>
   
   <url>
+    <loc>https://xorex.space/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://xorex.space/tags/Python/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1439,28 +1460,7 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/SSTI/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xorex.space/tags/Servlet/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xorex.space/tags/Tomcat/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1509,13 +1509,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/SSH/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/XXE/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1530,7 +1523,7 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81/</loc>
+    <loc>https://xorex.space/tags/SSH/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1538,6 +1531,13 @@
   
   <url>
     <loc>https://xorex.space/tags/%E4%BA%8C%E5%88%86/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1684,13 +1684,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E7%9F%A9%E9%98%B5/</loc>
-    <lastmod>2021-03-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/CMD/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1712,7 +1705,7 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/</loc>
+    <loc>https://xorex.space/tags/%E7%9F%A9%E9%98%B5/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1720,6 +1713,13 @@
   
   <url>
     <loc>https://xorex.space/tags/EXGCD/</loc>
+    <lastmod>2021-03-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1740,14 +1740,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/</loc>
+    <loc>https://xorex.space/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
+    <loc>https://xorex.space/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1840,14 +1840,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/</loc>
+    <loc>https://xorex.space/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB/</loc>
+    <loc>https://xorex.space/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1861,14 +1861,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/categories/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BD%95/</loc>
+    <loc>https://xorex.space/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/</loc>
+    <loc>https://xorex.space/categories/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2021-03-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
