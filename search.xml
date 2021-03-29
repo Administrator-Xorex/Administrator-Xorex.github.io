@@ -1,6 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>HTTP 的请求与响应</title>
+    <url>/2021/03/29/9fe744b92f15/</url>
+    <content><![CDATA[<h2 id="HTTP-协议"><a href="#HTTP-协议" class="headerlink" title="HTTP 协议"></a>HTTP 协议</h2><h3 id="HTTP-版本"><a href="#HTTP-版本" class="headerlink" title="HTTP 版本"></a>HTTP 版本</h3><ol>
+<li><p>HTTP 1.0 一次连接只能获取一个资源</p>
+</li>
+<li><p>HTTP 1.1 一次连接可以获取多个资源</p>
+</li>
+</ol>
+<h3 id="HTTP-请求"><a href="#HTTP-请求" class="headerlink" title="HTTP 请求"></a>HTTP 请求</h3><p>请求的结构：</p>
+<p><img src="https://xorex.space/image/205.jpg"></p>
+<p>请求行包括：请求方式 请求资源名称 使用协议版本。注意这里的请求资源名称里面是会包含 <code>?XXX=XXX&amp;XXX=XXX</code> 这样的 GET 请求参数的。然后下面的请求实体会可能会包含 POST 请求参数 <code>XXX=XXX&amp;XXX=XXX</code> 。</p>
+<p>常用请求头：</p>
+<h4 id="Accetp"><a href="#Accetp" class="headerlink" title="Accetp"></a>Accetp</h4><p><code>Accept: text/html</code> 浏览器可以接受服务器回发的类型为 text/html。</p>
+<p><code>Accept: */*</code> 代表浏览器可以处理所有类型,(一般浏览器发给服务器都是发这个)。</p>
+<h4 id="Accept-Encoding"><a href="#Accept-Encoding" class="headerlink" title="Accept-Encoding"></a>Accept-Encoding</h4><p><code>Accept-Encoding: gzip, deflate</code> 浏览器申明自己接收的编码方法，通常指定压缩方法，是否支持压缩，支持什么压缩方法（gzip，deflate），注意：这不是只字符编码。</p>
+<h4 id="Accept-Language"><a href="#Accept-Language" class="headerlink" title="Accept-Language"></a>Accept-Language</h4><p><code>Accept-Language: zh-CN, zh; q=0.9</code>  浏览器申明自己接收的语言。</p>
+<h4 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h4><p><code>Connection: keep-alive</code> 当一个网页打开完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。</p>
+<p><code>Connection: close</code> 代表一个 Request 完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接会关闭， 当客户端再次发送 Request，需要重新建立 TCP 连接。</p>
+<h4 id="Host（发送请求时，该报头域是必需的）"><a href="#Host（发送请求时，该报头域是必需的）" class="headerlink" title="Host（发送请求时，该报头域是必需的）"></a>Host（发送请求时，该报头域是必需的）</h4><p><code>Host: www.baidu.com</code> 请求报头域主要用于指定被请求资源的 Internet 主机和端口号，它通常从HTTP URL中提取出来的。</p>
+<h4 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h4><p><code>Referer: https://www.baidu.com/?tn=62095104_8_oem_dg</code> 当浏览器向web服务器发送请求的时候，一般会带上 Referer，告诉服务器我是从哪个页面链接过来的，服务器籍此可以获得一些信息用于处理。</p>
+<h4 id="User-Agent"><a href="#User-Agent" class="headerlink" title="User-Agent"></a>User-Agent</h4><p><code>User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36</code> 告诉HTTP服务器，客户端使用的操作系统和浏览器的名称和版本。</p>
+<h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h4><p><code>Cache-Control: private</code> 默认为 private  响应只能够作为私有的缓存，不能再用户间共享。</p>
+<p><code>Cache-Control: public</code> 响应会被缓存，并且在多用户间共享。正常情况，如果要求 HTTP 认证，响应会自动设置为 private。</p>
+<p><code>Cache-Control: must-revalidate</code> 响应在特定条件下会被重用，以满足接下来的请求，但是它必须到服务器端去验证它是不是仍然是最新的。</p>
+<p><code>Cache-Control: no-cache</code> 响应不会被缓存，而是实时向服务器端请求资源。</p>
+<p><code>Cache-Control: max-age=10</code> 设置缓存最大的有效时间，但是这个参数定义的是时间大小（比如：60）而不是确定的时间点。单位是[秒 seconds]。</p>
+<p><code>Cache-Control: no-store</code> 在任何条件下，响应都不会被缓存，并且不会被写入到客户端的磁盘里，这也是基于安全考虑的某些敏感的响应才会使用这个。</p>
+<h4 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h4><p><code>Cookie: XXXXXXXXXXXXXXXXXXXXXXXXXXXX</code> 是用来存储一些用户信息以便让服务器辨别用户身份的（大多数需要登录的网站上面会比较常见），比如 cookie 会存储一些用户的用户名和密码，当用户登录后就会在客户端产生一个 cookie 来存储相关信息，这样浏览器通过读取 cookie 的信息去服务器上验证并通过后会判定你是合法用户，从而允许查看相应网页。当然 cookie 里面的数据不仅仅是上述范围，还有很多信息可以存储是 cookie 里面，比如 sessionid 等。</p>
+<h4 id="Range（用于断点续传）"><a href="#Range（用于断点续传）" class="headerlink" title="Range（用于断点续传）"></a>Range（用于断点续传）</h4><p><code>Range: bytes=0-5</code> 指定第一个字节的位置和最后一个字节的位置。用于告诉服务器自己想取对象的哪部分。</p>
+<h3 id="HTTP-响应"><a href="#HTTP-响应" class="headerlink" title="HTTP 响应"></a>HTTP 响应</h3><p><img src="https://xorex.space/image/206.jpg"></p>
+<p>状态行包括：通信协议 状态代码 状态信息</p>
+<p>常见状态代码和状态信息：<a href="https://www.w3school.com.cn/tags/html_ref_httpmessages.asp">响应代码和状态信息手册</a></p>
+<h4 id="Cache-Control（对应请求中的Cache-Control）"><a href="#Cache-Control（对应请求中的Cache-Control）" class="headerlink" title="Cache-Control（对应请求中的Cache-Control）"></a>Cache-Control（对应请求中的Cache-Control）</h4><p><code>Cache-Control: private</code> 默认为private  响应只能够作为私有的缓存，不能再用户间共享。</p>
+<p><code>Cache-Control: public</code> 浏览器和缓存服务器都可以缓存页面信息。</p>
+<p><code>Cache-Control: must-revalidate</code> 对于客户机的每次请求，代理服务器必须想服务器验证缓存是否过时。</p>
+<p><code>Cache-Control: no-cache</code> 浏览器和缓存服务器都不应该缓存页面信息。</p>
+<p><code>Cache-Control: max-age=10</code> 是通知浏览器10秒之内不要烦我，自己从缓冲区中刷新。</p>
+<p><code>Cache-Control: no-store</code> 请求和响应的信息都不应该被存储在对方的磁盘系统中。</p>
+<h4 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h4><p><code>Content-Type：text/html; charset=UTF-8</code> 告诉客户端，资源文件的类型，还有字符编码，客户端通过 UTF-8 对资源进行解码，然后对资源进行 HTML 解析。通常我们会看到有些网站是乱码的，往往就是服务器端没有返回正确的编码。</p>
+<h4 id="Content-Encoding"><a href="#Content-Encoding" class="headerlink" title="Content-Encoding"></a>Content-Encoding</h4><p><code>Content-Encoding: gzip</code> 告诉客户端，服务端发送的资源是采用 gzip 编码的，客户端看到这个信息后，应该采用 gzip 对资源进行解码。</p>
+<h4 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h4><p><code>Date: Tue, 03 Apr 2018 03:52:28 GMT</code> 这个是服务端发送资源时的服务器时间，GMT 是格林尼治所在地的标准时间。HTTP 协议中发送的时间都是 GMT 的，这主要是解决在互联网上，不同时区在相互请求资源的时候，时间混乱问题。</p>
+<h4 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h4><p><code>Server：Tengine/1.4.6</code>  这个是服务器和相对应的版本，只是告诉客户端服务器信息。</p>
+<h4 id="Transfer-Encoding"><a href="#Transfer-Encoding" class="headerlink" title="Transfer-Encoding"></a>Transfer-Encoding</h4><p><code>Transfer-Encoding：chunked</code> 这个响应头告诉客户端，服务器发送的资源的方式是分块发送的。一般分块发送的资源都是服务器动态生成的，在发送时还不知道发送资源的大小，所以采用分块发送，每一块都是独立的，独立的块都能标示自己的长度，最后一块是0长度的，当客户端读到这个0长度的块时，就可以确定资源已经传输完了。</p>
+<h4 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h4><p><code>Expires: Sun, 1 Jan 2000 01:00:00 GMT</code> 这个响应头也是跟缓存有关的，告诉客户端在这个时间前，可以直接访问缓存副本，很显然这个值会存在问题，因为客户端和服务器的时间不一定会都是相同的，如果时间不同就会导致问题。所以这个响应头是没有 <code>Cache-Control：max-age=*</code> 这个响应头准确的，因为 max-age=date 中的 date 是个相对时间，不仅更好理解，也更准确。</p>
+<h4 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h4><p><code>Last-Modified: Dec, 26 Dec 2015 17:30:00 GMT</code> 所请求的对象的最后修改日期(按照 RFC 7231 中定义的“超文本传输协议日期”格式来表示)</p>
+<h4 id="Connection-1"><a href="#Connection-1" class="headerlink" title="Connection"></a>Connection</h4><p><code>Connection：keep-alive</code> 这个字段作为回应客户端，告诉客户端服务器的 TCP 连接也是一个长连接，客户端可以继续使用这个 TCP 连接发送 HTTP 请求。</p>
+<h4 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h4><p><code>ETag: &quot;737060cd8c284d8af7ad3082f209582d&quot;</code> 就是一个对象（比如 URL ）的标志值，就一个对象而言，比如一个 HTML 文件，如果被修改了，其 Etag 也会别修改，所以，ETag 的作用跟 Last-Modified 的作用差不多，主要供 WEB 服务器判断一个对象是否改变了。比如前一次请求某个 HTML 文件时，获得了其 ETag，当这次又请求这个文件时，浏览器就会把先前获得 ETag 值发送给 WEB 服务器，然后 WEB 服务器会把这个 ETag 跟该文件的当前 ETag 进行对比，然后就知道这个文件有没有改变了。</p>
+<h4 id="Refresh"><a href="#Refresh" class="headerlink" title="Refresh"></a>Refresh</h4><p><code>Refresh: 5; url=http://baidu.com</code> 用于重定向，或者当一个新的资源被创建时。默认会在5秒后刷新重定向。</p>
+<h4 id="Access-Control-Allow-Origin"><a href="#Access-Control-Allow-Origin" class="headerlink" title="Access-Control-Allow-Origin"></a>Access-Control-Allow-Origin</h4><p><code>Access-Control-Allow-Origin: *</code> * 号代表所有网站可以跨域资源共享，如果当前字段为 * 那么 Access-Control-Allow-Credentials 就不能为 true。</p>
+<p><code>Access-Control-Allow-Origin: www.baidu.com</code> 指定哪些网站可以跨域资源共享</p>
+<h4 id="Access-Control-Allow-Methods"><a href="#Access-Control-Allow-Methods" class="headerlink" title="Access-Control-Allow-Methods"></a>Access-Control-Allow-Methods</h4><p><code>Access-Control-Allow-Methods：GET, POST, PUT, DELETE</code> 允许哪些方法来访问</p>
+<h4 id="Access-Control-Allow-Credentials"><a href="#Access-Control-Allow-Credentials" class="headerlink" title="Access-Control-Allow-Credentials"></a>Access-Control-Allow-Credentials</h4><p><code>Access-Control-Allow-Credentials: true</code> 是否允许发送 Cookie。默认情况下，Cookie 不包括在CORS 请求之中。设为 true，即表示服务器明确许可，Cookie 可以包含在请求中，一起发给服务器。这个值也只能设为 true，如果服务器不要浏览器发送 Cookie，删除该字段即可。如果 access-control-allow-origin 为 *，当前字段就不能为 true。</p>
+<h4 id="Content-Range"><a href="#Content-Range" class="headerlink" title="Content-Range"></a>Content-Range</h4><p><code>Content-Range: bytes 0-5/7877</code> 指定整个实体中的一部分的插入位置，他也指示了整个实体的长度。在服务器向客户返回一个部分响应，它必须描述响应覆盖的范围和整个实体长度。</p>
+<h2 id="路径解析问题"><a href="#路径解析问题" class="headerlink" title="路径解析问题"></a>路径解析问题</h2><h3 id="base-标签"><a href="#base-标签" class="headerlink" title="base 标签"></a>base 标签</h3><p>在 HTML 种，有一个 base 标签的：<code>&lt;base herf=&quot;http://localhost:8080/WebModule/&quot;&gt;</code> 它可以定义相对路径跳转的前面部分，然后页面里面所有使用相对路径的跳转，都会加上 base 里面设置的 herf 组成一个绝对路径。</p>
+<h3 id="的解析"><a href="#的解析" class="headerlink" title="/ 的解析"></a>/ 的解析</h3><p>对于服务器和客户端对相对路径的最前面的 <code>/</code> 解析是不同的，对于服务器来说这里会解析到当前 Servlet 所属的 Web 工程的目录，比如 <code>http://localhost:8080/WebModule/</code>，而对于客户端来说，会解析到当前主机的地址如 <code>http://localhost:8080/</code></p>
+<h2 id="请求-HttpServletResquest"><a href="#请求-HttpServletResquest" class="headerlink" title="请求 HttpServletResquest"></a>请求 HttpServletResquest</h2><p>Tomcat 回将请求封装到 HttpServletResquest 类的实例中，并传入 service() 方法中，然后分流到 doPost() 和 doGet()。我们可以通过 HttpServletRequest 获取大量请求的相关信息。</p>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><p>一般来说，互联网上发送的各种数据都是使用 <code>UTF-8</code> 来编码的，但因为 Tomcat7 及以下版本默认使用 <code>iso-8859-1</code> 来解码使用 URL 传输的文字，导致对于 Get 请求来的信息会乱码，那么为了解决这个问题，有两种方式：</p>
+<ol>
+<li><p>设置 Tomcat 的 URL 解码方式为 <code>UTF-8</code>，在 server.xml 里面的 HTTP/1.1 的 <code>&lt;Connector&gt;</code> 标签里面加入属性： <code>URIEncoding=&quot;UTF-8&quot;</code>。</p>
+</li>
+<li><p>在通过 HttpServletResquest 获取 URL 中的中文信息（GET 参数）的时候，将获取的字符串用 <code>iso-8859-1</code> 编码为原本的 <code>UTF-8</code> byte[] 信息，然后再用 <code>UTF-8</code> 编码解码这些 byte[] 为 String 即可。</p>
+</li>
+</ol>
+<p>对于 Post 比较简单，没有 Tomcat 乱解码，无脑标注使用 UTF-8 解码就可以了：<code>request.setCharacterEncoding(&quot;UTF-8&quot;);</code></p>
+<h3 id="请求信息"><a href="#请求信息" class="headerlink" title="请求信息"></a>请求信息</h3><p>getXXXX() 系列，可以获取各种请求头和 Get / Post 参数：</p>
+<p>其中对于一个 name 对应多个 value 的参数，需要使用 getgetParameterValues() 获取 String[]。</p>
+<h3 id="设置传递信息"><a href="#设置传递信息" class="headerlink" title="设置传递信息"></a>设置传递信息</h3><p>在进行信息转发的时候，因为整个过程传递的都是一个 HttpServletResquest 对象，所以可以在当前 Servlet 存储入一些信息，让其他的 Servlet 可以从这个对象中获取信息。</p>
+<p>具体的设置方法就是使用 <code>setAttribute(Name,Value)</code> 保存信息，然后在转发到的 Servlet使用 <code>getAttribute(Name)</code> 获取保存的信息。</p>
+<h2 id="响应-HttpServletResponse"><a href="#响应-HttpServletResponse" class="headerlink" title="响应 HttpServletResponse"></a>响应 HttpServletResponse</h2><h3 id="编码-1"><a href="#编码-1" class="headerlink" title="编码"></a>编码</h3><p>首先对于要操作 HttpServletResponse 之前，先设置好编码：</p>
+<ol>
+<li><p>无脑推荐版本：使用 <code>setContentType(&quot;UTF-8&quot;)</code> 来设置。这个方法不仅设置了输出信息使用 UTF-8 编码，还自动会添加响应头 <code>Content-Type: text/html; charset=UTF-8</code> ，一步解决全部问题。</p>
+</li>
+<li><p>自己手动全部设置：先设置信息编码格式： <code>setCharactorEncoding(&quot;UTF-8&quot;)</code> 然后设置响应头：<code>setHeader(&quot;Content-Type&quot;,&quot;text/html; charset=UTF-8&quot;)</code> 这个比较麻烦，还是无脑用第一个吧。</p>
+</li>
+</ol>
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><p>用一堆 set 方法设置响应头以外，就是输出响应体了。</p>
+<p>响应体有两种方式：<code>getWriter()</code> <code>getOutputStream()</code> 获取 Write 实例和 OutputStream 实例来写响应体。</p>
+<p>对于字符，可以使用 Write 来写，对于非字符（二进制文件）使用 OutputStream 来写。但是一定要注意的的是，这两个东西，只能同时持有一个实例，如果要用另一个，就需要 <code>close()</code> 关闭资源才可以。</p>
+<p>这是因为如果同时持有两个输出实例，那么两者的输出合并就会成为一个大问题，所以为了避免混乱，就设计成两者互斥，只能同时持有一个输出实例。</p>
+<h3 id="请求重定向"><a href="#请求重定向" class="headerlink" title="请求重定向"></a>请求重定向</h3><ol>
+<li><p>无脑推荐： <code>sendRedirect(/XXX/XX)</code> 里面填入重定向页面。（会自动设置响应代码和重定向响应头）</p>
+</li>
+<li><p>自己手动设置响应代码和重定向头： <code>setStatus(302)</code> <code>setHeader(&quot;Location&quot;,&quot;XXX/XX&quot;)</code></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>HTTP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Servlet 开发基础</title>
+    <url>/2021/03/28/1febb3ac708c/</url>
+    <content><![CDATA[<h2 id="Servlet-简介"><a href="#Servlet-简介" class="headerlink" title="Servlet 简介"></a>Servlet 简介</h2><p>狭义上的 Servlet 是一种接口，如果开发者想要开发一个动态的 Web 资源，只需要：</p>
+<ol>
+<li><p>编写一个实现了 Servlet 接口的类。</p>
+</li>
+<li><p>把开发好的 Java 类部署到服务器中。</p>
+</li>
+</ol>
+<p>广义上来讲，我们就把实现了 Servlet 接口的程序也称之为一个 Servlet。</p>
+<h2 id="Servlet-生命周期"><a href="#Servlet-生命周期" class="headerlink" title="Servlet 生命周期"></a>Servlet 生命周期</h2><p>当服务器接收到了某个 Servlet 程序的请求的时候，会执行以下过程：</p>
+<ol>
+<li><p>服务器会先判断是否拥有当前 Servlet 实例，如果有，跳到第四步。</p>
+</li>
+<li><p>调用 Servlet 的构造方法实例化 Servlet 获取对象。</p>
+</li>
+<li><p>调用 Servlet 实例的 init() 方法来初始化此对象。</p>
+</li>
+<li><p>创建此 HTTP 请求的 ServletRequest 和 ServletResponse 实例，并传入调用的 service(ServletRequest,ServletResponse) 方法。</p>
+</li>
+<li><p>当 Web 程序停止/重启，会调用对应实例的 destroy() 方法</p>
+</li>
+</ol>
+<h2 id="创建-Servlet"><a href="#创建-Servlet" class="headerlink" title="创建 Servlet"></a>创建 Servlet</h2><p>我们在创建一个 Servlet 类的时候，一般会直接继承 HttpServlet ，里面提供了很多强大的功能，它已经写好了 service() 方法，并对请求分流到 doGet() 和 doPost() 方法。所以我们只需要重写这两个方法来分别处理 Get 和 Post 请求即可。</p>
+<p>创建 Servlet 之后，需要进行 Servlet-URL 进行映射，来确定在访问哪些 URL 的时候，让对应的 Servlet 去处理。这里有两种方法，一种是在 IDEA 创建 Servlet 的 Java 文件的时候，勾选 <code>Create Java EE 6+ Annotated class</code> 选项使用注解来注册 Servlet ，然后生成的 Servlet 代码的类前面会有注解： <code>@WebServlet(name = &quot;XXXX&quot;, value = &quot;XXXX&quot;)</code> name 表示 Servlet 服务名称，value 表示对应映射的 URL。</p>
+<p>或者不勾选哪个选项，然后自己在 web.xml 配置文件中添加 servlet 信息：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span> <span class="comment">&lt;!-- 这里注册 servlet --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>MyServletName<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> <span class="comment">&lt;!-- 这里填写自己设置的 Servlet 名称 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>space.xorex.WebModule.MyServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span> <span class="comment">&lt;!-- 这里填写 Servlet 类的完整类名 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span> <span class="comment">&lt;!-- 这里映射 servlet --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>NewServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> <span class="comment">&lt;!-- 填写 servlet 名称，要和上面注册的相同 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/New<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> <span class="comment">&lt;!-- 这里填写映射的 URL --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里创建映射的时候，可以使用通配符 * ,比如 <code>/*</code> 和 <code>/XXXX/*.txt</code> 等等。而对于一个路径有多个 Servlet 对应，那么路径映射返回越大的 Servlet 优先级越低。</p>
+<hr>
+<p>如果有路径映射为 <code>/</code> 的 Servlet，那么这个 Servlet 就会成为默认 Servlet，所有找不到路径映射的访问都会指向这个 Servlet 去处理。</p>
+<h2 id="Servlet-线程安全"><a href="#Servlet-线程安全" class="headerlink" title="Servlet 线程安全"></a>Servlet 线程安全</h2><p>需要注意，一个 Servlet 程序在运行中只会创建一个实例，所以面对并发访问的时候，Tomcat 会创建新的线程去运行 service() 方法，但所有线程运行的 service() 都是属于同一个 Servlet 对象的。所以一旦涉及到非 service() 方法本地的访问与调用，就有可能牵扯到线程安全问题。</p>
+<p>所以一定要小心 service() doGet() doPost() 方法所有的外部调用，避免出现线程安全问题，</p>
+<h2 id="ServletConfig"><a href="#ServletConfig" class="headerlink" title="ServletConfig"></a>ServletConfig</h2><p>在 web.xml 文件的 servlet 标签下面可以设置此 Servlet 程序的初始化配置参数 <code>&lt;init-param&gt;</code>。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>Tempest<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>Xorex<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>Yukinoshita<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>Yukino<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后可以调用 父类 GenericServlet 的方法 getServletConfig() 获取一个 ServletConfig 实例，此实例的 getInitParameterNames() 和 getInitParameter() 可以获取 Servlet 配置里面的初始化参数。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showInitPara</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ServletConfig config=getServletConfig();</span><br><span class="line">    Enumeration&lt;String&gt; paras = config.getInitParameterNames();</span><br><span class="line">    <span class="keyword">while</span>(paras.hasMoreElements()) &#123;</span><br><span class="line">        String name=paras.nextElement();</span><br><span class="line">        System.out.println(name + <span class="string">&quot; : &quot;</span> + config.getInitParameter(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ServletContext"><a href="#ServletContext" class="headerlink" title="ServletContext"></a>ServletContext</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>ServletContext 对象是所有的 Web 应用都会有的一个单列实例，这个单列实例可以被这个 Web 应用的所有 Servlet 访问并修改内容，我们可以通过这个单列实例完成很多事情。</p>
+<h3 id="获取-Web-应用的初始化参数"><a href="#获取-Web-应用的初始化参数" class="headerlink" title="获取 Web 应用的初始化参数"></a>获取 Web 应用的初始化参数</h3><p>和 ServletConfig 可以访问到 Servlet 的配置信息 <code>&lt;init-param&gt;</code> 一样，对于 Web 应用级别的 ServletContext 对象可以访问 Web 应用的配置信息 <code>&lt;context-param&gt;</code>，这个标签在 web.xml 中和 <code>&lt;servlet&gt;</code> 同级别。我们可以设置一些这样的 Context 属性。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>Tempest<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>Xorex<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>Yukinoshita<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>Yukino<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    ....</span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>获取 ServletContext 除了调用父类的 getServletContext() 以外，还可以调用 ServletConfig 实例的 getServletContext() 方法（因为它内部封装了 ServletContext 的实例，可以调用出来）。然后剩下的步骤和 ServletConfig 读取初始化参数一样了。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    ServletContext context = getServletConfig().getServletContext();</span><br><span class="line">    Enumeration&lt;String&gt; iter = context.getInitParameterNames();</span><br><span class="line">    <span class="keyword">while</span>(iter.hasMoreElements()) &#123;</span><br><span class="line">        String name=iter.nextElement();</span><br><span class="line">        System.out.println(name+<span class="string">&quot; : &quot;</span>+context.getInitParameter(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Servlet-数据共享"><a href="#Servlet-数据共享" class="headerlink" title="Servlet 数据共享"></a>Servlet 数据共享</h3><p>因为 ServletContext 是所有 Servlet 都能能访问的单列实例，所以就可以利用这个实例才存储一些数据，从而使不同的 Servlet 之间可以共享这些数据。</p>
+<p>共享的方法就是将数据存储到实例的属性值中，使用方法 setAttribute(Name,Value) 和 getAttribute(Name) 来存取数据，实现不同 Servlet 之间的交流。</p>
+<h3 id="获取工程的绝对路径"><a href="#获取工程的绝对路径" class="headerlink" title="获取工程的绝对路径"></a>获取工程的绝对路径</h3><p>使用 ServletContext 的 getReadPath(String) 来返回路径字符串，其中参数填写相对路径即可，比如 <code>&quot;./&quot;</code> ，然后返回项目在电脑中的绝对路径。</p>
+<h2 id="Servlet-请求转发"><a href="#Servlet-请求转发" class="headerlink" title="Servlet 请求转发"></a>Servlet 请求转发</h2><p>请求转发使用的是一个请求调度器 RequestDispatcher 里面的 forward(resquest,response) 可以将信息转发。而获取请求调度器的方法有几种：</p>
+<ol>
+<li><p>通过 ServletContext 的 getRequestDispatcher(String) 获取</p>
+</li>
+<li><p>通过请求 HttpServletRequest 的 getRequestDispatcher(String) 获取</p>
+</li>
+</ol>
+<p>其中参数为目标 Servlet 的映射地址。</p>
+<p>获取 RequestDispatcher 之后，使用 forward() 转发请求即可：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    RequestDispatcher dispatcher=request.getRequestDispatcher(<span class="string">&quot;/hello-servlet&quot;</span>); <span class="comment">// 把 /New 的请求转发给 /hello-servlet</span></span><br><span class="line">    dispatcher.forward(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>Servlet</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Tomcat 服务器基础</title>
     <url>/2021/03/27/9234b0350059/</url>
     <content><![CDATA[<h2 id="Web-相关概念"><a href="#Web-相关概念" class="headerlink" title="Web 相关概念"></a>Web 相关概念</h2><h3 id="Web-资源"><a href="#Web-资源" class="headerlink" title="Web 资源"></a>Web 资源</h3><p>Web资源一般来说可以分为静态资源和动态资源：</p>
@@ -65,12 +221,11 @@
         <category>开发知识</category>
       </categories>
       <tags>
-        <tag>Servlet</tag>
         <tag>Tomcat</tag>
       </tags>
   </entry>
   <entry>
-    <title>DOM4j解析XML</title>
+    <title>DOM4j 解析 XML</title>
     <url>/2021/03/27/ea12aeb2606a/</url>
     <content><![CDATA[<h2 id="使用-DOM4j"><a href="#使用-DOM4j" class="headerlink" title="使用 DOM4j"></a>使用 DOM4j</h2><h3 id="XML-文件"><a href="#XML-文件" class="headerlink" title="XML 文件"></a>XML 文件</h3><p>首先拥有 xml 文件：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">breakfast_menu</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>Belgian Waffles<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$5.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Two of our famous Belgian Waffles with plenty of real maple syrup<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>650<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>Strawberry Belgian Waffles<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$7.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Light Belgian waffles covered with strawberries and whipped cream<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>900<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>Berry-Berry Belgian Waffles<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$8.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Light Belgian waffles covered with an assortment of fresh berries and whipped cream<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>900<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>French Toast<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$4.50<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Thick slices made from our homemade sourdough bread<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>600<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>Homestyle Breakfast<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$6.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Two eggs, bacon or sausage, toast, and our ever-popular hash browns<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>950<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">breakfast_menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -170,7 +325,7 @@
       </tags>
   </entry>
   <entry>
-    <title>jQuery入门demo</title>
+    <title>jQuery 入门 demo</title>
     <url>/2021/03/24/e648f6c6b7e6/</url>
     <content><![CDATA[<h2 id="jQurey-概述"><a href="#jQurey-概述" class="headerlink" title="jQurey 概述"></a>jQurey 概述</h2><p>jQuery 语法是为 HTML 元素的选取编制的，可以对元素执行某些操作。</p>
 <p>基础语法是：<code>$(selector).action()</code></p>
@@ -399,7 +554,7 @@
       </tags>
   </entry>
   <entry>
-    <title>笔记计划3.0</title>
+    <title>笔记计划 3.0</title>
     <url>/2021/03/23/baadfa83df79/</url>
     <content><![CDATA[<h2 id="关于我想要大幅度的减少知识类笔记这件事"><a href="#关于我想要大幅度的减少知识类笔记这件事" class="headerlink" title="关于我想要大幅度的减少知识类笔记这件事"></a>关于我想要大幅度的减少知识类笔记这件事</h2><p>今天我和陈思达同学在交流 Java 的学习过程的时候，大概询问了一下他的学习方法。</p>
 <p>按照他的方法，就是不记笔记，直接看视频，然后多敲代码。</p>
@@ -420,7 +575,7 @@
       </tags>
   </entry>
   <entry>
-    <title>JavaScript学习笔记</title>
+    <title>JavaScript 学习笔记</title>
     <url>/2021/03/23/487eab037aac/</url>
     <content><![CDATA[<h2 id="关于我第二次学习-JavaScript-这件事情"><a href="#关于我第二次学习-JavaScript-这件事情" class="headerlink" title="关于我第二次学习 JavaScript 这件事情"></a>关于我第二次学习 JavaScript 这件事情</h2><p>其实之前在学习安全的时候，面对 XSS 这种完全依托于 JavaScript 的漏洞，就大概也过了一边它的语法，但是非常粗略，所以现在学习 Java Web 的时候，还是觉得很有必要将 JavaScript 的各种语法都认真过一遍的。那么 JavaScript 学习笔记 2.0 开始吧！</p>
 <h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="嵌入位置"><a href="#嵌入位置" class="headerlink" title="嵌入位置"></a>嵌入位置</h3><ol>
@@ -568,7 +723,7 @@
       </tags>
   </entry>
   <entry>
-    <title>HTML学习笔记</title>
+    <title>HTML 学习笔记</title>
     <url>/2021/03/19/84e6977d90f9/</url>
     <content><![CDATA[<h2 id="HTML-基础"><a href="#HTML-基础" class="headerlink" title="HTML 基础"></a>HTML 基础</h2><p>HTML 网页的组成由 <code>&lt;html&gt;</code> 标签包围，里面有文件头和文件主体。文件头可以写网站的标题，以及一些元数据，这些在文件头的元数据一一般是服务器加到 http 协议文件头的东西，比如 set-cookie 设置 cookie，refresh 刷新页面并重定向网页地址。而 body 里面主要就是 网页文件主要显示的内容了。</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>This is the website title!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">set-cookie</span> <span class="attr">content</span>=<span class="string">&quot;Xorex is the best!&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">refresh</span> <span class="attr">content</span>=<span class="string">&quot;3;URL=https://xorex.space&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">auther</span> <span class="attr">content</span>=<span class="string">&quot;Xorex&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        Just wait 3 seconds.</span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            alert(<span class="string">&quot;Welcome,after 3 seconds you will jump to my blog!&quot;</span>);</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -1005,7 +1160,7 @@
       </tags>
   </entry>
   <entry>
-    <title>UML类图学习笔记</title>
+    <title>UML 类图学习笔记</title>
     <url>/2021/03/15/b583afde1613/</url>
     <content><![CDATA[<h2 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h2><blockquote>
 <p>UML类图是用来描述在面向对象设计程序的时候，各种类，接口等本身的信息和之间的联系。</p>
@@ -1272,7 +1427,7 @@
       </tags>
   </entry>
   <entry>
-    <title>笔记计划2.0</title>
+    <title>笔记计划 2.0</title>
     <url>/2021/03/09/f0796de4869b/</url>
     <content><![CDATA[<h2 id="关于笔记记录的一点思考"><a href="#关于笔记记录的一点思考" class="headerlink" title="关于笔记记录的一点思考"></a>关于笔记记录的一点思考</h2><p>今天在记录创建型模式的时候发现这种需要大段文字描述的知识点并不适合使用思维导图，所以后面讲解设计模式具体的案例的时候，会重新回归笔记的方式，emmmm，或者说是，笔记+思维导图。</p>
 <p>自己以前好像一直在滥用思维导图，现在想想思维导图应该是为了帮助自己更加清晰的梳理关系，归纳知识点，而不是一味的将所有的学习内容都用思维导图罗列表示出来。</p>
@@ -1410,7 +1565,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java函数式编程</title>
+    <title>Java 函数式编程</title>
     <url>/2021/03/05/728260c40cfe/</url>
     <content><![CDATA[<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><blockquote>
 <p>搞了两天的函数式编程终于弄完了，也明白了这种设计方法和理念，下一步，Java 设计模式！</p>
@@ -1429,7 +1584,7 @@
       </tags>
   </entry>
   <entry>
-    <title>JDBC思维导图</title>
+    <title>JDBC 思维导图</title>
     <url>/2021/03/02/9a53fb3643d5/</url>
     <content><![CDATA[<h2 id="JDBC-思维导图"><a href="#JDBC-思维导图" class="headerlink" title="JDBC 思维导图"></a>JDBC 思维导图</h2><blockquote>
 <p>在 JAVA 中，如何用代码和数据库进行交互呢？JDBC 告诉你答案！</p>
@@ -1448,7 +1603,7 @@
       </tags>
   </entry>
   <entry>
-    <title>SQL基本语句思维导图</title>
+    <title>SQL 基本语句思维导图</title>
     <url>/2021/03/02/726651d44320/</url>
     <content><![CDATA[<h2 id="SQL-基本语句思维导图"><a href="#SQL-基本语句思维导图" class="headerlink" title="SQL 基本语句思维导图"></a>SQL 基本语句思维导图</h2><blockquote>
 <p>其实暑假学习安全的时候，就学过一部分 SQL 的相关语句，但是都忘了，好在有了前面的基础，很快就复习好了，并且完成了这个思维导图，感觉更清晰了一点。</p>
@@ -1465,7 +1620,7 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL数据库概念思维导图</title>
+    <title>MySQL 数据库概念思维导图</title>
     <url>/2021/03/02/8adb5d7ef601/</url>
     <content><![CDATA[<h2 id="MySQL-数据库概念思维导图"><a href="#MySQL-数据库概念思维导图" class="headerlink" title="MySQL 数据库概念思维导图"></a>MySQL 数据库概念思维导图</h2><blockquote>
 <p>还是要了解一下什么是数据库才好啊！！！</p>
@@ -1623,7 +1778,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java的XML和JSON思维导图</title>
+    <title>Java 的 XML 和 JSON 思维导图</title>
     <url>/2021/02/21/ea621b64d07c/</url>
     <content><![CDATA[<h2 id="数据文档思维导图"><a href="#数据文档思维导图" class="headerlink" title="数据文档思维导图"></a>数据文档思维导图</h2><blockquote>
 <p>思维导图主要介绍了两种数据文档 XML 和 JSON 在 Java 中的数据解析方法。</p>
@@ -1642,7 +1797,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java网络编程思维导图</title>
+    <title>Java 网络编程思维导图</title>
     <url>/2021/02/21/4766679f53f7/</url>
     <content><![CDATA[<h2 id="网络编程思维导图"><a href="#网络编程思维导图" class="headerlink" title="网络编程思维导图"></a>网络编程思维导图</h2><blockquote>
 <p>主要记录了使用 Java 实现服务端和客户端之间进行 TCP 协议和 UDP 协议之间通信的方法。</p>
@@ -1659,7 +1814,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java的Maven基础思维导图</title>
+    <title>Java 的 Maven 基础思维导图</title>
     <url>/2021/02/21/21924715f1a8/</url>
     <content><![CDATA[<h2 id="Maven基础思维导图"><a href="#Maven基础思维导图" class="headerlink" title="Maven基础思维导图"></a>Maven基础思维导图</h2><blockquote>
 <p>思维导图主要介绍了 Maven 的一些基本使用方法。</p>
@@ -1675,7 +1830,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java加密与安全思维导图</title>
+    <title>Java 加密与安全思维导图</title>
     <url>/2021/02/21/1b4cc7a4e155/</url>
     <content><![CDATA[<h2 id="加密与安全思维导图"><a href="#加密与安全思维导图" class="headerlink" title="加密与安全思维导图"></a>加密与安全思维导图</h2><blockquote>
 <p>思维导图主要记录了使用 Java 对数据进行各种加密解密的方法。</p>
@@ -1691,7 +1846,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java正则表达式思维导图</title>
+    <title>Java 正则表达式思维导图</title>
     <url>/2021/02/21/1521f5df53d5/</url>
     <content><![CDATA[<h2 id="正则表达式思维导图"><a href="#正则表达式思维导图" class="headerlink" title="正则表达式思维导图"></a>正则表达式思维导图</h2><blockquote>
 <p>思维导图主要记录了一下正则表达式的一些简单的使用方法。</p>
@@ -1708,7 +1863,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java单元测试思维导图</title>
+    <title>Java 单元测试思维导图</title>
     <url>/2021/02/21/4555c3a37b23/</url>
     <content><![CDATA[<h2 id="单元测试思维导图"><a href="#单元测试思维导图" class="headerlink" title="单元测试思维导图"></a>单元测试思维导图</h2><blockquote>
 <p>思维导图主要介绍了如何使用 Junit 测试框架对代码进行测试。大概和 OI 中的测评差不多。</p>
@@ -1725,7 +1880,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java日期与时间思维导图</title>
+    <title>Java 日期与时间思维导图</title>
     <url>/2021/02/21/7e7fe64348b1/</url>
     <content><![CDATA[<h2 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h2><blockquote>
 <p>emmmm，因为自己是一只老懒狗了，发现完整的写博客真的是非常消耗时间的行为，所以想了想就改为只完成知识点的思维导图。这样的话花在记录的时间能减少很多，而且效果也非常接近，以后各种知识点大概都会以这样的方式来记录了！</p>
@@ -1747,7 +1902,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java多线程学习笔记</title>
+    <title>Java 多线程学习笔记</title>
     <url>/2021/02/21/575347381561/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="线程和进程"><a href="#线程和进程" class="headerlink" title="线程和进程"></a>线程和进程</h3><p><strong>线程</strong>：<code>Thread</code>，是操作系统中能够进行任务调度的最小单位，一般来说是一条单独的任务，比如 bilibili 的视频解码器是一个线程，音频解码器是一条线程，弹幕显示器是一条线程，它们被一起包装在 bilibili 这个进程中，作为正在运行的应用程序。因此线程指的是进程中的一个单一顺序的控制流，一个进程中可以有多条线程，每条线程执行不同的任务。</p>
 <p><strong>进程</strong>：<code>Process</code>， 是指计算机中运行的程序，直观体现是任务管理器中的一个个进程，进程本身不是基本运行单位，而是线程的容器，多个运行不同的线程组成了一个进程。而一个 Java 程序就是一个 JVM 进程，这个 JVM 进程中，主线程执行 main() 方法，而在 main() 线程中，又可以调用其他的线程实现多线程。</p>
@@ -1863,7 +2018,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java输入输出流学习笔记</title>
+    <title>Java 输入输出流学习笔记</title>
     <url>/2021/02/21/6b113700fd3d/</url>
     <content><![CDATA[<h2 id="文件-File-类"><a href="#文件-File-类" class="headerlink" title="文件 File 类"></a>文件 File 类</h2><h3 id="创建-File-实例"><a href="#创建-File-实例" class="headerlink" title="创建 File 实例"></a>创建 File 实例</h3><p>首先在进行输入输出处理之前，我们来看看数据的载体——文件。</p>
 <p>因为我们在内存中存储的数据都是暂时的，一旦断电，都会消失，所以通常我们会把数据以文件的形式存储到永久存储的硬盘中，可以说，数据的操作单位就是文件。而 Java 中的 File 类就是专门对文件进行概括的一个类，它能很好的控制一个类。</p>
@@ -1921,7 +2076,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java集合学习笔记【二】</title>
+    <title>Java 集合学习笔记【二】</title>
     <url>/2021/02/21/3fb2b83273fd/</url>
     <content><![CDATA[<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><p>因为这个和 IO 的流输入流输出有关，所以日后再来补坑。</p>
 <h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h2><p>首先来看看 Queue 接口：</p>
@@ -1990,7 +2145,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java集合学习笔记【一】</title>
+    <title>Java 集合学习笔记【一】</title>
     <url>/2021/02/21/ea646ab3cd00/</url>
     <content><![CDATA[<h2 id="集合导论"><a href="#集合导论" class="headerlink" title="集合导论"></a>集合导论</h2><p>集合 Collection</p>
 <p>用来存储数据使用，对应着不同类型的需求，拥有着不同的集合来处理它。Collection 是一个顶层接口，下面继承他的还有两个接口，分别是 List 接口和 Set 接口，其中 List 接口实现的是有序可重复的列表，Set 接口实现的是无序不可重复的列表。剩下的就是实现 List 和 Set 接口的各种类了，这些类五花八门，可以根据需要选择使用。</p>
@@ -2159,7 +2314,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java泛型学习笔记</title>
+    <title>Java 泛型学习笔记</title>
     <url>/2021/01/10/6303f95aef53/</url>
     <content><![CDATA[<h2 id="何为泛型"><a href="#何为泛型" class="headerlink" title="何为泛型"></a>何为泛型</h2><h3 id="泛型概念"><a href="#泛型概念" class="headerlink" title="泛型概念"></a>泛型概念</h3><p>泛型故名思意，就是广泛的类型，其本质就是参数化类型。在各种资料里面，泛型的概念都是通过 ArrayList 这个类来引入的，那么这里也用它来引入泛型的概念。</p>
 <p>ArrayList 我没有使用过，但是它是一个变长数组，可以通过方法 <code>.add()</code> 来不断增加元素，而不用担心空间大小不够的问题。这个类可以实现任意类型的可变数组，而实现的方法就是通过泛型来实现：</p>
@@ -2233,7 +2388,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java注解学习笔记</title>
+    <title>Java 注解学习笔记</title>
     <url>/2021/01/10/ea03bffbefdc/</url>
     <content><![CDATA[<h2 id="Java-注解"><a href="#Java-注解" class="headerlink" title="Java 注解"></a>Java 注解</h2><p>对于 Java 的注解，其实前面我们已经接触过了，在对接口或者抽象类的方法进行重写的时候，我们会在重写的方法的前面加上 <code>@Override</code> 这个注解，注意这个是注解不是注释，注释是完全被编译器忽略的东西，而注解并不会被忽视，是会被编译器处理的。这个注解的作用就是让编译器帮我们检查我们重写的方法是否正确。</p>
 <p>按照 Java 中一切皆为对象来看，注解也自然是对象了（其实准确的说，<strong>注解本质上是一个接口</strong>，继承于 java.lang.annotation.Annotation ），下面的代码就是 <code>@Override</code> 注解的声明：</p>
@@ -2338,7 +2493,7 @@
       </tags>
   </entry>
   <entry>
-    <title>我的2020年</title>
+    <title>我的 2020 年</title>
     <url>/2021/01/10/be626d8ced18/</url>
     <content><![CDATA[<h2 id="这神奇的一年"><a href="#这神奇的一年" class="headerlink" title="这神奇的一年"></a>这神奇的一年</h2><p>2020 年一直对于我来说都是一个很神奇的年份，可能是因为这是 21 世纪第二个十年的最后一年吧，各种宏伟的计划的实现时间都定在了 2020 年。出于对美好未来的向往，自然十分期待 2020 年的到来，而当我开始写下这篇回忆录的时候，2020 已经接近尾声了，站在年末，不得不说，2020 真的是一个很神奇的年份，无论是对于世界还是我。</p>
 <p>本来作为懒狗的我是不太想写这些东西的，但是想到自己差到爆炸的记忆力，觉得还是有必要把这些经历都记录下来，因为今年发生的事情还都是非常有纪念意义的，无论是好的方面还是差的方面，2020 年真的是让人又爱又恨啊。</p>
@@ -2457,7 +2612,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java反射学习笔记</title>
+    <title>Java 反射学习笔记</title>
     <url>/2020/12/28/1dd949f5ac1b/</url>
     <content><![CDATA[<h2 id="Class-类"><a href="#Class-类" class="headerlink" title="Class 类"></a>Class 类</h2><h3 id="JVM中保存类的Class"><a href="#JVM中保存类的Class" class="headerlink" title="JVM中保存类的Class"></a>JVM中保存类的Class</h3><p>在理解反射这个概念之前，我们要先理解一下 Class，Class 是一个 Java 自己带的类，注意这里的 Class 首字母是大写的，说明它是一个类的名字，而不是 类 的英文翻译，就像我们自己定义的一个类一样：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Xorex</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2599,7 +2754,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java异常学习笔记</title>
+    <title>Java 异常学习笔记</title>
     <url>/2020/12/28/3198a37cb267/</url>
     <content><![CDATA[<h2 id="Java的异常"><a href="#Java的异常" class="headerlink" title="Java的异常"></a>Java的异常</h2><h3 id="异常概念"><a href="#异常概念" class="headerlink" title="异常概念"></a>异常概念</h3><p>异常的概念，就是程序由于一些其他原因导致了它并没有按照我们想要的状态去运行。程序出现异常是很常见的一种情况，我们需要对可能出现的异常进行提前处理，保证程序即使遇到了异常，也能顺利地运行下去。</p>
 <p>对于访问文件不存在，用户输入错误，这些都属于异常，是程序可以自我拯救的，并不是非常严重的不同寻常。我们可以通过合理的异常处理机制来将这些不和谐的东西压制下来，让程序仍然快乐的运行。</p>
@@ -2724,7 +2879,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java核心类学习笔记</title>
+    <title>Java 核心类学习笔记</title>
     <url>/2020/12/24/f7ebd39770e8/</url>
     <content><![CDATA[<h2 id="String-相关"><a href="#String-相关" class="headerlink" title="String 相关"></a>String 相关</h2><h3 id="String-的实现"><a href="#String-的实现" class="headerlink" title="String 的实现"></a>String 的实现</h3><p>String 在老版本的 Java 中以 private final char[] 基本数据结构封装成为类，新版本则是换成了 private final byte[] （因为对于 ASCII 字符可以节省大量的空间）。里面封装了很多方法和属性可以使用。</p>
 <p>在 Java 的编译期，会自动地把所有的字符常量都放入一个常量池中，然后 String 类型的变量其 实就是引用了一个常量的地址。那么在判断两个字符串是否相同其实就是在判断它们对于常量池的地址引用是否相同。所以对于涉及到可变字符串的比较（在程序运行中会对字符串进行改变），是不可以使用 <code>==</code> 来判断两个字符是否相等，反而应该使用 String 类内置的方法 <code>String1.equals(String1)</code> 来进行比较。  如果要忽略大小写则可以使用 <code>equalsIgnoreCase()</code> 方法来比较忽略大小写之后是否相同。</p>
@@ -2925,7 +3080,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java面向对象学习笔记</title>
+    <title>Java 面向对象学习笔记</title>
     <url>/2020/12/24/c1b945298bef/</url>
     <content><![CDATA[<h2 id="类中的方法"><a href="#类中的方法" class="headerlink" title="类中的方法"></a>类中的方法</h2><h3 id="在方法中使用变量和属性"><a href="#在方法中使用变量和属性" class="headerlink" title="在方法中使用变量和属性"></a>在方法中使用变量和属性</h3><p>在 Java 类中的方法中，我们可以直接声明各种变量使用，但是如果需要使用这个类中的属性的时候，有两种方法可以调用这个属性。一种是使用 <code>this.field</code> 这个this 始终指向当前实例。另外一种就是比较简单的，如果<strong>不存在属性和变量名冲突</strong>的情况下，可以直接像调用变量一样调用这个类的属性（局部变量的优先级大于类属性）</p>
 <h3 id="方法也想要可变参数"><a href="#方法也想要可变参数" class="headerlink" title="方法也想要可变参数"></a>方法也想要可变参数</h3><p>一个类的方法可以设置输入的参数，调用的时候就严格的按照设置的参数进行输入就可以了，但是如果不确定调用方法的时候要输入的参数的时候该怎么办呢？这里就要说到可变参数了。</p>
@@ -3159,7 +3314,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Java基础学习笔记</title>
+    <title>Java 基础学习笔记</title>
     <url>/2020/12/24/72c67c684b4a/</url>
     <content><![CDATA[<blockquote>
 <p>安全学的真的是太菜了，所以不得已只能转了开发，emmmmm，打工人，努力去学习搬砖吧！</p>
@@ -3352,7 +3507,7 @@
       </tags>
   </entry>
   <entry>
-    <title>C语言指针初探</title>
+    <title>C 语言指针初探</title>
     <url>/2020/11/25/b1fae2529bd1/</url>
     <content><![CDATA[<h2 id="取地址运算"><a href="#取地址运算" class="headerlink" title="取地址运算"></a>取地址运算</h2><p>使用取地址符号 <code>&amp;</code> 来获取一个变量的地址。</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%x&quot;</span>,&amp;a);</span><br><span class="line"><span class="comment">// 结果输出 60fe9c 表示变量a的地址</span></span><br></pre></td></tr></table></figure>
@@ -3412,7 +3567,7 @@
       </tags>
   </entry>
   <entry>
-    <title>XSS的一些用法</title>
+    <title>XSS 的一些用法</title>
     <url>/2020/11/17/9e579c5f2933/</url>
     <content><![CDATA[<p>XSS漏洞是往网页里面注入JS代码，然后让浏览器执行</p>
 <h2 id="偷Cookie"><a href="#偷Cookie" class="headerlink" title="偷Cookie"></a>偷Cookie</h2><ol>
@@ -3439,7 +3594,7 @@
       </tags>
   </entry>
   <entry>
-    <title>XXE入门</title>
+    <title>XXE 入门</title>
     <url>/2020/11/17/07a4e06f68a0/</url>
     <content><![CDATA[<h1 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h1><h2 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h2><p>在XML中，实体相当于宏或者变量，可以自定义。ENTITY(独立存在物，实体)</p>
 <p><img src="C:\Users\Xorex\AppData\Roaming\Typora\typora-user-images\image-20201028142601038.png" alt="image-20201028142601038"></p>
@@ -3461,7 +3616,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Python和SSTI</title>
+    <title>Python 和 SSTI</title>
     <url>/2020/11/17/6ab47eb2796d/</url>
     <content><![CDATA[<p>Python 和 PHP 一样，也有很多系统定义属性和方法，这些属性和方法是不需要自己定义的，在Python里面系统自动拥有的属性和方法。</p>
 <p>这些方法和属性的访问方式是 <code>___XXX___</code> 。全部是基于类的调用。</p>
@@ -3518,7 +3673,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux学习笔记</title>
+    <title>Linux 学习笔记</title>
     <url>/2020/11/16/535e743e22ee/</url>
     <content><![CDATA[<h2 id="Linux-简介"><a href="#Linux-简介" class="headerlink" title="Linux 简介"></a>Linux 简介</h2><ul>
 <li><p>最早的操作系统相关是Unix操作系统，诞生与1970年，是一个比较完善的分时操作系统。（分时操作系统是使一台计算机采用时间片轮转的方式同时为几个、几十个甚至几百个用户服务的一种操作系统，用来降低使用计算机的成本）</p>
@@ -3682,7 +3837,7 @@
       </tags>
   </entry>
   <entry>
-    <title>PHP序列化和反序列化</title>
+    <title>PHP 序列化和反序列化</title>
     <url>/2020/11/16/5d3d41825fd8/</url>
     <content><![CDATA[<h2 id="serialize"><a href="#serialize" class="headerlink" title="serialize()"></a>serialize()</h2><p>php支持将一个数组或者类的<strong>属性</strong>序列化为一个字符串，使用的函数就是 <code>serialize()</code> 函数，如果想要复原可以使用 <code>unserialize()</code> 函数来将一个序列化的字符串还原成原来的类或者数组的状态。</p>
 <p>举个例子（来自与<a href="https://home.cnblogs.com/u/anbuxuan/">BuXuan</a>）：</p>
@@ -3739,7 +3894,7 @@
       </tags>
   </entry>
   <entry>
-    <title>PHP常用函数</title>
+    <title>PHP 常用函数</title>
     <url>/2020/11/16/6be5265b5249/</url>
     <content><![CDATA[<h2 id="PHP（可能）常用函数"><a href="#PHP（可能）常用函数" class="headerlink" title="PHP（可能）常用函数"></a>PHP（可能）常用函数</h2><ol>
 <li><code>dirname(filesource)</code></li>
@@ -3834,7 +3989,7 @@
       </tags>
   </entry>
   <entry>
-    <title>PHP学习笔记</title>
+    <title>PHP 学习笔记</title>
     <url>/2020/11/16/6373abc82f2a/</url>
     <content><![CDATA[<blockquote>
 <p>都说PHP是世界上最好的语言，我今天就要来领教一下，这篇文章主要记录PHP比较奇特的语法。</p>
@@ -4011,7 +4166,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#109;&#101;&#x6f;&#x6e;&#101;&#x40;&#114;&#117;&#110;&#111;&#x6f;&#98;&#x2e;&#99;&#x6f;&#109;">&#x73;&#111;&#109;&#101;&#x6f;&#x6e;&#101;&#x40;&#114;&#117;&#110;&#111;&#x6f;&#98;&#x2e;&#99;&#x6f;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#x65;&#x6f;&#x6e;&#x65;&#x40;&#x72;&#117;&#x6e;&#111;&#x6f;&#98;&#46;&#x63;&#x6f;&#109;">&#x73;&#111;&#x6d;&#x65;&#x6f;&#x6e;&#x65;&#x40;&#x72;&#117;&#x6e;&#111;&#x6f;&#98;&#46;&#x63;&#x6f;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -4079,7 +4234,7 @@
       </tags>
   </entry>
   <entry>
-    <title>C语言题库</title>
+    <title>C 语言题库</title>
     <url>/2020/10/09/3d277be41011/</url>
     <content><![CDATA[<blockquote>
 <p>啊啊啊啊，即使写了两年的C++代码也免不了刷题的痛苦，而且还是语言题，但是这样也能学到不少知识呢。</p>
@@ -4187,7 +4342,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Web小组报告（二）</title>
+    <title>Web 小组报告（二）</title>
     <url>/2020/09/29/88da8982a4e7/</url>
     <content><![CDATA[<h2 id="URL-HTTP请求方法相关："><a href="#URL-HTTP请求方法相关：" class="headerlink" title="URL/HTTP请求方法相关："></a>URL/HTTP请求方法相关：</h2><ol>
 <li><strong>请列举出4种常见URL协议：</strong></li>
@@ -4387,7 +4542,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Sql-libs注入WriteUp</title>
+    <title>Sql-libs 注入 WriteUp</title>
     <url>/2020/09/29/a0feb4d574d4/</url>
     <content><![CDATA[<h2 id="sqli-labs"><a href="#sqli-labs" class="headerlink" title="sqli-labs"></a>sqli-labs</h2><blockquote>
 <p>这是一个印度小哥写的SQL注入漏洞复现的实验平台，用来练习一些基本的SQL注入技巧。在Github上面可以自由下载，搭建过相关的环境之后就可以使用了。</p>
@@ -4447,7 +4602,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Web小组报告（一）</title>
+    <title>Web 小组报告（一）</title>
     <url>/2020/08/28/128f7edda942/</url>
     <content><![CDATA[<h1 id="搭建MySQL数据库："><a href="#搭建MySQL数据库：" class="headerlink" title="搭建MySQL数据库："></a>搭建MySQL数据库：</h1><ul>
 <li>采用从官网下载的MySQL，一路点击 <code>Next</code> 之后成功在 <code>Win</code> 上面安装了 <code>MySQL</code> 数据库。</li>
@@ -4592,7 +4747,7 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL命令学习</title>
+    <title>MySQL 命令学习</title>
     <url>/2020/08/27/94fe7c823089/</url>
     <content><![CDATA[<h2 id="《关于我高考分数太低不得不去转行搞信息安全这件事》"><a href="#《关于我高考分数太低不得不去转行搞信息安全这件事》" class="headerlink" title="《关于我高考分数太低不得不去转行搞信息安全这件事》"></a>《关于我高考分数太低不得不去转行搞信息安全这件事》</h2><ul>
 <li>为什么随便什么事情加上书名号都能成为轻小说啊？？？</li>
@@ -4890,7 +5045,7 @@
       </tags>
   </entry>
   <entry>
-    <title>引用reference</title>
+    <title>引用 reference</title>
     <url>/2019/07/18/d04103d4c4c1/</url>
     <content><![CDATA[<h1 id="求地址运算符-amp"><a href="#求地址运算符-amp" class="headerlink" title="求地址运算符 &amp;"></a>求地址运算符 &amp;</h1><p>在<code>C++</code>里面，如果想要得到找到一个变量的地址，就可以使用<code>&amp;variable</code>来实现，比如：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a=<span class="number">123123</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;&amp;a&lt;&lt;<span class="built_in">endl</span>; </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -4941,7 +5096,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Python赋值逻辑</title>
+    <title>Python 赋值逻辑</title>
     <url>/2019/07/14/31e4adf711f9/</url>
     <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
 <p>在进行<code>Python</code>的代码训练计划之中，自己出现了一些莫名其妙的<code>bug</code>，经过上网一番查询发现，是因为<code>Python</code>的赋值逻辑不同于C++，而我并没有意识到这些不同，所以特意总结下来，接下来的<code>blog</code>为搬运，原文链接在文章最后。</p>
@@ -5071,7 +5226,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Python实践-保护小雪乃</title>
+    <title>Python 实践-保护小雪乃</title>
     <url>/2019/06/26/01915b74a55c/</url>
     <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
 <p><code>Python</code>的基础学习已经告一段落了，为了加强效果，实行第二阶段计划，编写一个名为「保护小雪乃」的游戏，来增强自己的代码能力。（其实是学习外星人入侵之后改编的）</p>
@@ -5128,7 +5283,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Python学习笔记</title>
+    <title>Python 学习笔记</title>
     <url>/2019/06/19/79dbbcabe6b7/</url>
     <content><![CDATA[<h1 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h1><blockquote>
 <p>不知不觉自己已经高中毕业了（并不），这个暑假需要学点什么，然后就买了一本《Python编程从入门到实践》，并夕夕上只要25块，看起来超值。然后暑假就学习如何用Python来编写程序吧，至于C++的康复计划，留到以后有时间再说。所以下面就记录一些经常需要查询的东西，帮助自己学习Python。</p>
@@ -5443,7 +5598,7 @@
       </tags>
   </entry>
   <entry>
-    <title>快读和CMD教程</title>
+    <title>快读和 CMD 教程</title>
     <url>/2017/12/19/2131c6a0d5c0/</url>
     <content><![CDATA[<blockquote>
 <p>退役老年选手回报党和国家系列……</p>
@@ -5501,7 +5656,7 @@
       </tags>
   </entry>
   <entry>
-    <title>NOIP2017总结</title>
+    <title>NOIP2017 总结</title>
     <url>/2017/11/29/3c3161ce6d44/</url>
     <content><![CDATA[<h1 id="NOIP2017游记"><a href="#NOIP2017游记" class="headerlink" title="NOIP2017游记"></a>NOIP2017游记</h1><h2 id="DAY1-2"><a href="#DAY1-2" class="headerlink" title="DAY1/2"></a>DAY1/2</h2><ul>
 <li><p>到了郑州，有点小兴奋，然后就去河南省工业大学去试机，然后键盘很渣，电脑很渣……不过不得不说图书馆建造的是真的不错，非常大……</p>
@@ -5558,7 +5713,7 @@
       </tags>
   </entry>
   <entry>
-    <title>11-03考试总结</title>
+    <title>11-03 考试总结</title>
     <url>/2017/11/03/e587f457e07d/</url>
     <content><![CDATA[<h1 id="考试状态"><a href="#考试状态" class="headerlink" title="考试状态"></a>考试状态</h1><blockquote>
 <p>这次考试仍然很失败！</p>
@@ -5660,7 +5815,7 @@
       </tags>
   </entry>
   <entry>
-    <title>LCA算法总结</title>
+    <title>LCA 算法总结</title>
     <url>/2017/10/28/c2689af56808/</url>
     <content><![CDATA[<h1 id="LCA"><a href="#LCA" class="headerlink" title="LCA"></a>LCA</h1><h2 id="LCA的Tarjan实现"><a href="#LCA的Tarjan实现" class="headerlink" title="LCA的Tarjan实现"></a>LCA的Tarjan实现</h2><ul>
 <li><p>emmmm最近公共祖先的实现方式有很多，比如倍增和Tarjan……我感觉后者写起来是比较简单的，好吧事实上我只会后者，所以就只讲一下Tarjan实现LCA的方式吧。复杂度玄学，大概是点的个数加上每一个点所连出来边的数量吧，其实是很快的。</p>
@@ -5712,7 +5867,7 @@
       </tags>
   </entry>
   <entry>
-    <title>NOIP题解报告</title>
+    <title>NOIP 题解报告</title>
     <url>/2017/10/27/c81ef593b034/</url>
     <content><![CDATA[<h1 id="说在前面："><a href="#说在前面：" class="headerlink" title="说在前面："></a>说在前面：</h1><blockquote>
 <p>最近一直在刷NOIP历年的题目，感觉还好，快刷完了，最近时间很紧，大概做了一些规划。期中考试又必须要参加，感觉真的药丸，马上就要NOIP了，加油吧！</p>
@@ -5952,7 +6107,7 @@
       </tags>
   </entry>
   <entry>
-    <title>10-19考试总结</title>
+    <title>10-19 考试总结</title>
     <url>/2017/10/19/f6f0ab898170/</url>
     <content><![CDATA[<h1 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h1><blockquote>
 <p>emmmm这次考试啊，真的是爆炸了，炸的连渣都不剩，顿时觉得自己的DP已经弱的不能再弱了QAQ</p>
@@ -6021,7 +6176,7 @@
       </tags>
   </entry>
   <entry>
-    <title>10-17考试总结</title>
+    <title>10-17 考试总结</title>
     <url>/2017/10/17/c21d5288a5f9/</url>
     <content><![CDATA[<h1 id="考试总结"><a href="#考试总结" class="headerlink" title="考试总结"></a>考试总结</h1><blockquote>
 <p>今天焦老师让我们写总结，我决定开始写总结，以前除了大型的考试意外都没有写过，以后怕不是要天天写了……</p>
@@ -6332,7 +6487,7 @@
       </tags>
   </entry>
   <entry>
-    <title>GCD和LCM</title>
+    <title>GCD 和 LCM</title>
     <url>/2017/10/08/a29d32b8f740/</url>
     <content><![CDATA[<h1 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h1><blockquote>
 <p>其实就是挖一个坑而已，NOIP之前要赶快填上，不能再颓废了。</p>
@@ -6424,7 +6579,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Python的一些用法</title>
+    <title>Python 的一些用法</title>
     <url>/2017/09/11/bc53b6b0d5ef/</url>
     <content><![CDATA[<h1 id="说在前面"><a href="#说在前面" class="headerlink" title="说在前面"></a>说在前面</h1><blockquote>
 <p>最近脑子一抽去学Python了，感觉自己好智障。Python很多东西都和C++不一样，所以特意记录下来。</p>
@@ -6835,7 +6990,7 @@
       </tags>
   </entry>
   <entry>
-    <title>NOIP前最后的暑假</title>
+    <title>NOIP 前最后的暑假</title>
     <url>/2017/08/01/44d530be0586/</url>
     <content><![CDATA[<h1 id="暑假安排"><a href="#暑假安排" class="headerlink" title="暑假安排"></a>暑假安排</h1><p>话说我是来写暑假安排的，然后莫明的写了很多其他的东西（雾</p>
 <p>暑假的话，因为其他人都去了雅礼中学参加培训，实力相比会进步很快的吧，所以我也不能够落下来了呢！住进了机房……就要努力的联系算法啊，所以说给自己列出来一个表，慢慢加油吧！</p>
@@ -7052,7 +7207,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Jul刷题柱</title>
+    <title>Jul 刷题柱</title>
     <url>/2017/07/12/5ec1303806d6/</url>
     <content><![CDATA[<h1 id="刷题柱"><a href="#刷题柱" class="headerlink" title="刷题柱"></a>刷题柱</h1><p>Jul/1 被赶回去学文化课</p>
 <p>Jul/2 被赶回去学文化课</p>
@@ -7084,7 +7239,7 @@
       </tags>
   </entry>
   <entry>
-    <title>基于Trie数的Aho-Corasick自动机</title>
+    <title>基于 Trie 数的 Aho-Corasick 自动机</title>
     <url>/2017/06/05/eeb2fb796d98/</url>
     <content><![CDATA[<h1 id="说在前面："><a href="#说在前面：" class="headerlink" title="说在前面："></a>说在前面：</h1><blockquote>
 <p>自从被刘老师赶出来机房了，没有办法好好在OJ上刷题，于是就借着各种闲杂课看看各种知识点吧，题目等到暑假的时候一定要刷个够。昨天老师基本没有讲什么课，所以就用来学习算法了。</p>
@@ -7178,7 +7333,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Jun刷题柱</title>
+    <title>Jun 刷题柱</title>
     <url>/2017/06/03/0260dd93531c/</url>
     <content><![CDATA[<blockquote>
 <p>转段考试的成绩已经出来了，还是老样子，年级1000+，所以说，为了暑假可以在机房学到更多的知识，未来一个月，我要真的在文化课方面进行努力了，我已经做好了不来机房的觉悟了，加油吧，用自己每一天的一点一点努力换来回报。</p>
@@ -7222,7 +7377,7 @@
       </tags>
   </entry>
   <entry>
-    <title>KMP算法</title>
+    <title>KMP 算法</title>
     <url>/2017/06/03/05f6609b6f48/</url>
     <content><![CDATA[<h1 id="说在前面："><a href="#说在前面：" class="headerlink" title="说在前面："></a>说在前面：</h1><p>我要开字符串了，加油吧！↖(^ω^)↗</p>
 <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><blockquote>
@@ -7786,7 +7941,7 @@
       </tags>
   </entry>
   <entry>
-    <title>LIST要学会的东西</title>
+    <title>LIST 要学会的东西</title>
     <url>/2017/05/20/592c9ab8b67c/</url>
     <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
 <p>靠着疯狂水第十页的大水题，然后成功挤进OJ排行榜的第一页，但是怕是马上杨树神就超过我了，不过一个月内再次进入应该还是没问题的，但是需要勤学知识点，勤敲代码啊。不想 <code>NOIP2017</code> 一结束就滚回去学文化课就需要努力的……</p>
@@ -8054,7 +8209,7 @@
       </tags>
   </entry>
   <entry>
-    <title>May刷题柱</title>
+    <title>May 刷题柱</title>
     <url>/2017/05/20/7e9d5f193955/</url>
     <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
 <p>少年你已经落后于别人不少了，如果你还想冲击NOI的话，赶快去刷题，不要浮躁，用自己的努力来证明自己！</p>
@@ -8378,7 +8533,7 @@
       </tags>
   </entry>
   <entry>
-    <title>你的bug！</title>
+    <title>你的 bug！</title>
     <url>/2017/05/20/ab0363382f47/</url>
     <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>写下来自己犯下的所有错误，以便以后减少程序Debug的时间……</p>
 <ol>
@@ -8442,7 +8597,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Dijkstra堆优化+SPFA判断负环+如何卡掉SPFA  </title>
+    <title>Dijkstra 堆优化 SPFA 判断负环 如何卡掉 SPFA  </title>
     <url>/2017/05/20/6db101601323/</url>
     <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
 <p>Dijkstra的堆优化真的是不好写，首先图里面一直犯的错误又来了，访问其他点直接上邻接表的下标i，求如何提高智商？在线等，急！</p>
@@ -8513,7 +8668,7 @@
       </tags>
   </entry>
   <entry>
-    <title>轻院ACM总结</title>
+    <title>轻院 ACM 总结</title>
     <url>/2017/05/20/04052e0cb4a9/</url>
     <content><![CDATA[<h1 id="轻院ACM"><a href="#轻院ACM" class="headerlink" title="轻院ACM"></a>轻院ACM</h1><p>这个轻院的ACM啊，真的是一颗赛艇啊，算是长了不少经验的说，包括和其他队友一起配合，一起解题，都是很不错的经历。</p>
 <p>然后最后感觉在这场比赛中，最重要的就是几个人在配合方面，因为三个人一台电脑，所以说比较麻烦，有时候自己的程序不能占着电脑Debug，这就是考验代码能力的时候到了，我觉得ACM这种赛制还是非常人情化的，没有OI那么残酷，OI是一点失误就GG了，但是ACM却可以多次提交，不过是题量多一点，时间长一点，而且可以几个人一起讨论，结合其他人的长处一起配合，效率很高。</p>
@@ -8587,7 +8742,7 @@
       </tags>
   </entry>
   <entry>
-    <title>DP斜率优化</title>
+    <title>DP 斜率优化</title>
     <url>/2017/05/20/f7c13f37222e/</url>
     <content><![CDATA[<h1 id="写在前面："><a href="#写在前面：" class="headerlink" title="写在前面："></a>写在前面：</h1><blockquote>
 <p>在做斜率优化的题目的时候，一定要记得，在编译之前看一遍整个代码，看看公式推得正确不正确，验证一下函数返回的值是否正确，然后顺一遍思路。不然你会Debug很惨很惨……</p>
@@ -8668,7 +8823,7 @@
       </tags>
   </entry>
   <entry>
-    <title>DP单调性优化/DP离散化</title>
+    <title>DP 单调性优化 DP 离散化</title>
     <url>/2017/05/20/3ff705a47e38/</url>
     <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><ul>
 <li>其实是动态规划深入讨论的一部分，但是由于内容比较多，所以拆开了。虽然动态规划的复杂度相对于搜索算法来说，已经很优秀了，是搜索算法的一种很强大的优化，但是DP在原来的基础上还是可以继续进行优化的，这其中一种方法就是利用单调性进行优化，适用范围还是挺广的。<br></li>
@@ -8881,7 +9036,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Apr刷题柱</title>
+    <title>Apr 刷题柱</title>
     <url>/2017/05/19/b267f74be642/</url>
     <content><![CDATA[<h1 id="综述："><a href="#综述：" class="headerlink" title="综述："></a>综述：</h1><blockquote>
 <p>完全是受到了尧神的启发，决定开一个刷题柱，记录下来每天刷的题，给自己增添一些动力QAQ，加油！</p>
@@ -9322,7 +9477,7 @@
       </tags>
   </entry>
   <entry>
-    <title>SPFA/BFS+NOIP2009最佳贸易</title>
+    <title>SPFA/BFS+NOIP2009 最佳贸易</title>
     <url>/2017/05/19/5f5e6231cd15/</url>
     <content><![CDATA[<h1 id="错误总结："><a href="#错误总结：" class="headerlink" title="错误总结："></a>错误总结：</h1><blockquote>
 <p>好久没有这么爽的A一道题了，这个爽代表着无数次Debug和最后的恍然大悟，然后AC。很有成就感的说，比作数学题爽得多……</p>
@@ -9384,7 +9539,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Floyed的k循环在最外层详解</title>
+    <title>Floyed 的 k 循环在最外层详解</title>
     <url>/2017/05/19/6bb8f8495a00/</url>
     <content><![CDATA[<h1 id="Flyed算法"><a href="#Flyed算法" class="headerlink" title="Flyed算法"></a>Flyed算法</h1><h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    <span class="keyword">for</span>(k=<span class="number">1</span>;k&lt;=n;k++)</span><br><span class="line"> <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">     <span class="keyword">if</span>(e[i][j]&gt;e[i][k]+e[k][j])</span><br><span class="line">   e[i][j]=e[i][k]+e[k][j];</span><br></pre></td></tr></table></figure>
 <h2 id="代码讲解："><a href="#代码讲解：" class="headerlink" title="代码讲解："></a>代码讲解：</h2><p>这段代码的基本思想就是：最开始只允许经过1号顶点进行中转，接下来只允许经过1和2号顶点进行中转……允许经过1~n号所有顶点进行中转，求任意两点之间的最短路程。用一句话概括就是：从i号顶点到j号顶点只经过前k号点的最短路程。</p>
@@ -9405,7 +9560,7 @@
       </tags>
   </entry>
   <entry>
-    <title>DFS&amp;BFS初步理解+P1167细胞问题</title>
+    <title>DFS&amp;BFS 初步理解 + P1167 细胞问题</title>
     <url>/2017/05/19/bd911b6aa105/</url>
     <content><![CDATA[<h1 id="DFS和BFS定义"><a href="#DFS和BFS定义" class="headerlink" title="DFS和BFS定义"></a>DFS和BFS定义</h1><h2 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h2><p>关于DFS，他叫做深度优先搜索，简称DFS，就是一条道走到黑，只要这里能够搜索，那么就不停地往下搜，往下搜，一直搜到不能搜为止，然后不能搜了直接返回上一层，然后继续搜，一直搜到不能搜为止。但是书上一直说DFS如果地图类型数据量很大的话会系统堆栈溢出……</p>
 <h2 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h2><p>关于BFS，他叫做广度优先搜索，简称BFS，就是一走走一圈，走完一圈走下一圈，是一层一层的走，如果DFS是一个知识点刨根问底型学习的话，BFS就是分区规划型学习，两种算法在不同的题目虽然都可以用到，但是效率却相差甚远,所以要去学习怎么搞算法……</p>
@@ -9585,7 +9740,7 @@
       </tags>
   </entry>
   <entry>
-    <title>单调队列FIFO+P1157window</title>
+    <title>单调队列 FIFO+P1157window</title>
     <url>/2017/05/19/1c606ecfd617/</url>
     <content><![CDATA[<h2 id="单调队列描述"><a href="#单调队列描述" class="headerlink" title="单调队列描述"></a>单调队列描述</h2><p>于队列，就是一个数组，不过需要用head（我习惯用top）和tail（我习惯用end）来维护的一个先进后出的队列（有时候出入不规则）。单调队列就是在整个队列中，所有元素都是单调递增或者单调递减的，因为需要维护整个队列为单调的，所以有时候需要在队头或者队尾都删除数。</p>
 <p>单调队列和单调栈是相似的，但是最优解的范围不同，队列在乎全局P1157，栈在乎局部P1153.</p>
@@ -9762,7 +9917,7 @@
       </tags>
   </entry>
   <entry>
-    <title>NOIP2016总结</title>
+    <title>NOIP2016 总结</title>
     <url>/2017/05/19/b566dfb5f961/</url>
     <content><![CDATA[<h1 id="NOIP2016"><a href="#NOIP2016" class="headerlink" title="NOIP2016!"></a>NOIP2016!</h1><p>总的来说，这次NOIP已经结束了，成绩也不尽人意原因又很多，但是最主要还是自身的原因。</p>
 <h2 id="比赛概况"><a href="#比赛概况" class="headerlink" title="比赛概况"></a>比赛概况</h2><p>这次联赛普遍比较难，自己之所以考的很烂最主要的原因就是该拿到的分数没有拿到，两个T1都写挂了。</p>
