@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ClassPath 和 getResourceAsStream()</title>
+    <url>/2021/03/30/c8996e2c757f/</url>
+    <content><![CDATA[<h2 id="ClassPath"><a href="#ClassPath" class="headerlink" title="ClassPath"></a>ClassPath</h2><blockquote>
+<p>Classpath 是 Java 虚拟机或 Java 编译器中的参数，用于指定用户定义的类和包的位置。</p>
+</blockquote>
+<h3 id="普通本地项目的-ClassPath"><a href="#普通本地项目的-ClassPath" class="headerlink" title="普通本地项目的 ClassPath"></a>普通本地项目的 ClassPath</h3><p>Java 的运行是先运行 <code>javac.exe</code> 先将 <code>.java</code> 代码编译成 <code>.class</code> 字节码文件，然后运行 <code>java.exe</code> 启动 JVM ，然后 JVM 调用自己的 ClassLoader 类加载器读取 <code>.class</code> 文件，然后处理文件为内存中的 Class 类，这样无论是实例化还是执行就都没问题了。</p>
+<p>但是 ClassLoader 去哪里找 <code>.class</code> 文件呢？那就是 ClassPath。而需要加载的 <code>.class</code> 文件除了我们自己写的 java 代码编译出来的以外，还有我们引用的外部的核心类的 <code>.class</code> 文件。对于外部核心类，我们通过设置环境变量中的 <code>classpath=XXXXXX</code> 将核心类的文件位置告诉 ClassLoader。至于我们自己写的 java 代码的 <code>.class</code> 文件位置，则由 IDEA 在代替我们运行 java.exe 文件的时候，传入了 <code>-cp XXXX</code> 参数，告诉了 ClassLoader 位置。</p>
+<p>而 IDEA 增加的参数的地址在一个本地的普通工程中是固定的，那就是工程中的 Out\Production\ProjectName 文件夹里面。这个文件夹里面存储的就是编译好的 <code>.class</code> 文件。所以 Out\Production\ProjectName 也属于 ClassPath 的一部分。</p>
+<h3 id="Web-项目的-ClassPath"><a href="#Web-项目的-ClassPath" class="headerlink" title="Web 项目的 ClassPath"></a>Web 项目的 ClassPath</h3><p>对于我们正在开发的 Web 项目来说，文件结构就会复杂很多了。首先是开发本地的文件，我们写 Java 代码的文件结构是这样的：</p>
+<p><img src="https://xorex.space/image/207.jpg"></p>
+<p>首先 main/java 和 test/java 下面的都是我们开发的时候编写的 <code>.java</code> 文件存储的位置，而 main/resource 和 test/resource 分别是业务代码和测试代码运行时所需要的资源的存放位置。 main/webapp 目录里面则是放置着 Web 应用所需要的文件资源（html，css，jsp，js 等），需要注意的是 main/webapp/WEB-INF 文件夹比较特殊，这个文件夹用于存储禁止用户访问的资源内容，只要 Web 应用需要，但是不想让用户访问到，就需要放置到这个文件夹下面。</p>
+<p>上面就是我们在开发应用的时候，本地的一个项目结构了。但是我们开发的东西是最终需要部署到服务器上面的，肯定不会直接放置我们的开发文件（都是 <code>.java</code>文件无法运行），所以和上面的本地普通工程一样，需要有一个放置成品的文件夹，那就是 Target 文件夹，里面自动生成了所有被开发的成品。而其中文件夹名字和我们的项目名一样的那个文件夹，就是我们最终需要部署的 Web 应用了。</p>
+<p><img src="https://xorex.space/image/208.jpg"></p>
+<p>而这个 Web 应用成品的生成逻辑是这样的：首先开发区的 webapp 里面的东西会直接平移到成品文件夹里面（各种 Web 资源 html，css，jsp，js 等）。然后将开发区的 main/java 文件夹下面的所有 <code>.java</code> 文件编译成 <code>.class</code> 文件，然后和 main/resource 文件夹里面的资源一起按照原有的结构和放到 WEB-INF/classes 文件夹里面 (java+resource-&gt;classes) 。然后将 Maven 里面记录的依赖全部下载到 WEB-INF/lib 文件夹里面，供运行 classes 里面的字节码的时候调用。</p>
+<p>这也是对应 Tomcat 的一个 Web 应用应该有的目录结构：<a href="https://xorex.space/2021/03/27/9234b0350059/#Java-Web-%E5%BA%94%E7%94%A8%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84">Tomcat 应用目录结构</a></p>
+<p>那么这里 Web 应用里面的 ClassPath 也就一目了然了， <code>BookStore/WEB-INF/classes</code> 和 <code>BookStore/WEB-INF/lib</code>。</p>
+<h2 id="getResourceAsStream"><a href="#getResourceAsStream" class="headerlink" title="getResourceAsStream()"></a>getResourceAsStream()</h2><p>这个方法都是用来读取一个文件，调用后返回读取这个文件的 InputStream 对象，用于获取数据。</p>
+<h3 id="使用-Class-类的方法"><a href="#使用-Class-类的方法" class="headerlink" title="使用 Class 类的方法"></a>使用 Class 类的方法</h3><p><code>this.getClass().getResourceAsStream(String file);</code> 这里是通过 Class 类来调用出来这个方法。当传入的文件路径开头加上了 <code>/</code> 之后，会以 ClassPath 为根路径去寻找资源。当传入的文件路径没有 <code>/</code> 的时候，则从 <strong>此类所在的包</strong> 下面去寻找资源</p>
+<h3 id="使用-ClassLoader-类的方法"><a href="#使用-ClassLoader-类的方法" class="headerlink" title="使用 ClassLoader 类的方法"></a>使用 ClassLoader 类的方法</h3><p><code>this.getClass().getClassLoader().getResourceAsStream(String file);</code> 这里是通过类加载器 ClassLoader 类来调用这个方法，传入的参数不允许开头加上 <code>/</code> ，默认是以 ClassPath 为根路径去寻找资源。</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>ClassPath</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP 的请求与响应</title>
     <url>/2021/03/29/9fe744b92f15/</url>
     <content><![CDATA[<h2 id="HTTP-协议"><a href="#HTTP-协议" class="headerlink" title="HTTP 协议"></a>HTTP 协议</h2><h3 id="HTTP-版本"><a href="#HTTP-版本" class="headerlink" title="HTTP 版本"></a>HTTP 版本</h3><ol>
@@ -226,7 +254,7 @@
   </entry>
   <entry>
     <title>DOM4j 解析 XML</title>
-    <url>/2021/03/27/ea12aeb2606a/</url>
+    <url>/2021/03/26/0287d2a0e598/</url>
     <content><![CDATA[<h2 id="使用-DOM4j"><a href="#使用-DOM4j" class="headerlink" title="使用 DOM4j"></a>使用 DOM4j</h2><h3 id="XML-文件"><a href="#XML-文件" class="headerlink" title="XML 文件"></a>XML 文件</h3><p>首先拥有 xml 文件：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">breakfast_menu</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>Belgian Waffles<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$5.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Two of our famous Belgian Waffles with plenty of real maple syrup<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>650<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>Strawberry Belgian Waffles<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$7.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Light Belgian waffles covered with strawberries and whipped cream<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>900<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>Berry-Berry Belgian Waffles<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$8.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Light Belgian waffles covered with an assortment of fresh berries and whipped cream<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>900<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>French Toast<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$4.50<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Thick slices made from our homemade sourdough bread<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>600<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>Homestyle Breakfast<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">price</span>&gt;</span>$6.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>Two eggs, bacon or sausage, toast, and our ever-popular hash browns<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">calories</span>&gt;</span>950<span class="tag">&lt;/<span class="name">calories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">food</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">breakfast_menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="保存-Food-类"><a href="#保存-Food-类" class="headerlink" title="保存 Food 类"></a>保存 Food 类</h3><p>然后尝试解析这个 XML 文件，将里面的信息保存到一个类中。</p>
@@ -4166,7 +4194,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#x65;&#x6f;&#x6e;&#x65;&#x40;&#x72;&#117;&#x6e;&#111;&#x6f;&#98;&#46;&#x63;&#x6f;&#109;">&#x73;&#111;&#x6d;&#x65;&#x6f;&#x6e;&#x65;&#x40;&#x72;&#117;&#x6e;&#111;&#x6f;&#98;&#46;&#x63;&#x6f;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#109;&#101;&#111;&#110;&#101;&#x40;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#46;&#99;&#111;&#109;">&#x73;&#x6f;&#109;&#101;&#111;&#110;&#101;&#x40;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#46;&#99;&#111;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
