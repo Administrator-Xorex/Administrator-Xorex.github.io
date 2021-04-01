@@ -1,8 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>JSP 页面开发</title>
+    <url>/2021/03/31/3c183c4054d2/</url>
+    <content><![CDATA[<h2 id="JSP-概述"><a href="#JSP-概述" class="headerlink" title="JSP 概述"></a>JSP 概述</h2><blockquote>
+<p>JSP（全称为 JavaServer Pages）是由 Sun 公司主导建立的一种动态网页技术标准。JSP 部署于网络服务器上，可以响应客户端发送的请求，并根据请求内容动态地生成 HTML、XML 或其他格式文档的 Web 网页，然后返回给请求者。JSP 技术以 Java 语言作为脚本语言，为用户的 HTTP 请求提供服务，并能与服务器上的其它 Java 程序共同处理复杂的业务需求。</p>
+</blockquote>
+<p>JSP 适合用来处理动态网页的生成，其实本质上还是会翻译成正规的 Servlet 的 Java 程序，只不过 JSP 的技术让我们开发动态网页更加方便了。</p>
+<h2 id="JSP-原理"><a href="#JSP-原理" class="headerlink" title="JSP 原理"></a>JSP 原理</h2><p>JSP 本质上是一个 Servlet 程序，当我们启动 Tomcat 的时候，会将我们写的 JSP 程序翻译成一个完整的 Servlet 程序，在：<code>\JetBrains\IntelliJIdea2020.3\tomcat\d2e3b327-bf64-4ef1-9da7-9edd1aeafdaa\work\Catalina\localhost\BookStore\org\apache\jsp</code> 里面，可以看到 <code>.java</code> 和 <code>.class</code> 文件，这就是被 Tomcat 临时翻译的 Servlet 程序。（因为还没有正式部署到 Tomcat 里面）</p>
+<h2 id="JSP-基本语法"><a href="#JSP-基本语法" class="headerlink" title="JSP 基本语法"></a>JSP 基本语法</h2><h3 id="JSP-表达式"><a href="#JSP-表达式" class="headerlink" title="JSP 表达式"></a>JSP 表达式</h3><p><code>&lt;%= Expression %&gt;</code> 会翻译为 <code>out.print(Expression)</code> 输出。所以表达式不可以带分号，否则会报错。</p>
+<p>比如下面代码使用 JSP 表达式在一级标题标签里面输出时间。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;h1&gt;&lt;%= new Date() %&gt;&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="JSP-脚本"><a href="#JSP-脚本" class="headerlink" title="JSP 脚本"></a>JSP 脚本</h3><p><code>&lt;% Codes; %&gt;</code> 里面的多行代码会被完整的平移到 <code>_jspService()</code> 方法里面，成为方法内部执行代码。因为是完整平移，所以可以作脚本片段拼接，实现循环输出 HTML 代码：</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">10</span>;i++) &#123;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;h1&gt;&lt;%= new Date() %&gt;&lt;/h1&gt;</span><br><span class="line">&lt;br/&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="JSP-声明"><a href="#JSP-声明" class="headerlink" title="JSP 声明"></a>JSP 声明</h3><p><code>&lt;%! Codes; %&gt;</code> 里面的多行代码会被完整的平移到类里面（非方法），所以里面只可以声明属性和方法（或者静态代码块）。上面的 JSP 脚本就不可以声明这些（因为在 <code>_jspService()</code> 方法内部）只可以执行代码，而 JSP 声明相反。</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%!</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">toOut</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">10</span>;i++) &#123;</span><br><span class="line">            System.out.println(<span class="keyword">new</span> Date());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    toOut();</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="JSP-注释"><a href="#JSP-注释" class="headerlink" title="JSP 注释"></a>JSP 注释</h3><p><code>&lt;%-- JSP 注释 --%&gt;</code> 隐式 JSP 注释，在 Servlet 代码中看不到。</p>
+<p><code>&lt;!-- HTML 注释 --&gt;</code> 显式注释，在客户端可以看到这个 html 注释源码。</p>
+<p><code>&lt;% // /*Java 注释*/ %&gt;</code> 隐式 Java 注释，在 Servlet 代码中看不到。</p>
+<h3 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h3><p>各个 JSP 块之间是无法嵌套的，必须独立使用！！！</p>
+<h2 id="jspService-提供对象"><a href="#jspService-提供对象" class="headerlink" title="_jspService() 提供对象"></a>_jspService() 提供对象</h2><p>从生成的 Servlet 代码中可以看到，在 <code>_jspService()</code> 方法中，已经为我们提供了下面的八个实例化好的对象，供我们在 <code>&lt;% %&gt;</code> 代码块中使用。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line">pageContext = _jspxFactory.getPageContext(<span class="keyword">this</span>, request, response,</span><br><span class="line">    <span class="keyword">null</span>, <span class="keyword">true</span>, <span class="number">8192</span>, <span class="keyword">true</span>);</span><br><span class="line">_jspx_page_context = pageContext;</span><br><span class="line">application = pageContext.getServletContext();</span><br><span class="line">config = pageContext.getServletConfig();</span><br><span class="line">session = pageContext.getSession();</span><br><span class="line">out = pageContext.getOut();</span><br><span class="line">_jspx_out = out;</span><br></pre></td></tr></table></figure>
+<h2 id="JSP-指令"><a href="#JSP-指令" class="headerlink" title="JSP 指令"></a>JSP 指令</h2><p>JSP 指令是告诉 Servlet 转化引擎一些信息，类似于配置信息，格式为：<code>&lt;%@ 指令 属性名=&quot;值&quot; %&gt;</code>，属性可以写在一个指令语句中（用空格分开），也可以写在多个指令语句中。</p>
+<h3 id="page-指令"><a href="#page-指令" class="headerlink" title="page 指令"></a>page 指令</h3><blockquote>
+<p>page 指令用于定义 JSP 页面的各种属性，无论 page 指令出现在 JSP 页面中的什么地方，它作用的都是整个 JSP 页面。</p>
+</blockquote>
+<ul>
+<li><p><code>[ language=&quot;java&quot; ]</code> 指明页面的脚本语言，默认为 Java</p>
+</li>
+<li><p><code>[ extends=&quot;package.class&quot; ]</code> 指定生成的 Servlet 程序继承的类，默认为 HttpJspBase，间接继承</p>
+</li>
+<li><p><code>[ import=&quot;&#123;package.class | package.*&#125;, ...&quot; ]</code> 用于导入页面所用的外部类</p>
+</li>
+<li><p><code>[ session=&quot;true | false&quot; ]</code> 指明页面是否使用 session 会话，默认为 true</p>
+</li>
+<li><p><code>[ buffer=&quot;none | 8kb | sizekb&quot; ]</code> 用于设置页面缓冲区，建议使用默认的 8kb</p>
+</li>
+<li><p><code>[ autoFlush=&quot;true | false&quot; ]</code> 设置自动刷新缓冲区默认为 true</p>
+</li>
+<li><p><code>[ isThreadSafe=&quot;true | false&quot; ]</code> 表明页面是否使用了多线程，默认为 true</p>
+</li>
+<li><p><code>[ info=&quot;text&quot; ]</code> 设置一个字符串信息 text，用于描述本页面的信息</p>
+</li>
+<li><p><code>[ errorPage=&quot;relative_url&quot; ]</code> 指定页面出错时跳转页面的位置，设置优先度高于 web.xml</p>
+</li>
+<li><p><code>[ isErrorPage=&quot;true | false&quot; ]</code> 用于标注本页面为错误处理页面，会报错错误信息到 exception 中，默认为 false</p>
+</li>
+<li><p><code>[ contentType=&quot;mimeType [ ;charset=characterSet ]&quot; | &quot;text/html ; charset=ISO-8859-1&quot; ]</code> 指定页面的数据类型，编码等。</p>
+</li>
+<li><p><code>[ pageEncoding=&quot;characterSet | ISO-8859-1&quot; ]</code> 指定数据编码格式</p>
+</li>
+<li><p><code>[ isELIgnored=&quot;true | false&quot; ]</code> 控制 JSP 某些版本的用法是否被忽略</p>
+</li>
+</ul>
+<h3 id="include-指令"><a href="#include-指令" class="headerlink" title="include 指令"></a>include 指令</h3><p>用于引入外部的 jsp 文件，插入到当前的位置，要求两个页面的 page 指令不能冲突。因为引入外部 jsp 页面之后，会将两个文件合在一起，翻译成一个 Servlet 程序。</p>
+<p>head.jsp:</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;h1 style=&quot;color:red&quot;&gt;这玩意是文件头&lt;/h1&gt;&lt;br&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>foot.jsp:</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;h1 style=&quot;color:pink&quot;&gt;这玩意是文件尾&lt;/h1&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>将上面两个文件引入到当前 jsp 文件中:</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> errorPage=<span class="string">&quot;Error.jsp&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Test for include&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%@ include file=<span class="string">&quot;head.jsp&quot;</span>%&gt;</span><br><span class="line">&lt;h1&gt;俺是文件中间！&lt;/h1&gt;&lt;br&gt;</span><br><span class="line">&lt;%@ include file=<span class="string">&quot;foot.jsp&quot;</span> %&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="JSP-内置对象"><a href="#JSP-内置对象" class="headerlink" title="JSP 内置对象"></a>JSP 内置对象</h2><table>
+<thead>
+<tr>
+<th>NO.</th>
+<th>内置对象</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>pageContext</td>
+<td>javax.servlet.jsp.PageContext</td>
+</tr>
+<tr>
+<td>2</td>
+<td>request</td>
+<td>javax.servlet.http.HttpServletRequest</td>
+</tr>
+<tr>
+<td>3</td>
+<td>response</td>
+<td>javax.servlet.http.HttpServletResponse</td>
+</tr>
+<tr>
+<td>4</td>
+<td>session</td>
+<td>javax.servlet.http.HttpSession</td>
+</tr>
+<tr>
+<td>5</td>
+<td>application</td>
+<td>javax.servlet.ServletContext</td>
+</tr>
+<tr>
+<td>6</td>
+<td>config</td>
+<td>javax.servlet.ServletConfig</td>
+</tr>
+<tr>
+<td>7</td>
+<td>out</td>
+<td>javax.servlet.jsp.JspWriter</td>
+</tr>
+<tr>
+<td>8</td>
+<td>page</td>
+<td>java.lang.Object</td>
+</tr>
+<tr>
+<td>9</td>
+<td>exception</td>
+<td>java.lang.Throwable</td>
+</tr>
+</tbody></table>
+<h3 id="四大作用域"><a href="#四大作用域" class="headerlink" title="四大作用域"></a>四大作用域</h3><p>pageContext，request，session，application，四种对象的作用域范围测验：</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    pageContext.setAttribute(<span class="string">&quot;One&quot;</span>, <span class="string">&quot;pageContext&quot;</span>);</span><br><span class="line">    request.setAttribute(<span class="string">&quot;One&quot;</span>, <span class="string">&quot;request&quot;</span>);</span><br><span class="line">    session.setAttribute(<span class="string">&quot;One&quot;</span>,<span class="string">&quot;session&quot;</span>);</span><br><span class="line">    application.setAttribute(<span class="string">&quot;One&quot;</span>, <span class="string">&quot;application&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">pageContext 作用域：&lt;%=pageContext.getAttribute(<span class="string">&quot;One&quot;</span>) %&gt; &lt;br&gt;</span><br><span class="line">request 作用域：&lt;%=request.getAttribute(<span class="string">&quot;One&quot;</span>) %&gt; &lt;br&gt;</span><br><span class="line">session 作用域：&lt;%=session.getAttribute(<span class="string">&quot;One&quot;</span>) %&gt; &lt;br&gt;</span><br><span class="line">application 作用域：&lt;%=application.getAttribute(<span class="string">&quot;One&quot;</span>) %&gt; &lt;br&gt;</span><br></pre></td></tr></table></figure>
+<p>打开上面的页面，发现所有的都有值，说明都在作用域范围内。</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">pageContext 作用域：pageContext</span><br><span class="line">request 作用域：request</span><br><span class="line">session 作用域：session</span><br><span class="line">application 作用域：application</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pageContext 作用域限制在当前的页面中，下面添加请求转发，离开当前页面，发现 pageContext 属性值无法读取，已经离开作用域：</li>
+</ul>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;% request.getRequestDispatcher(<span class="string">&quot;/head.jsp&quot;</span>).forward(request, response); %&gt;</span><br></pre></td></tr></table></figure>
+<p>读取结果：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">pageContext 作用域：null</span><br><span class="line">request 作用域：request</span><br><span class="line">session 作用域：session</span><br><span class="line">application 作用域：application</span><br></pre></td></tr></table></figure>
+<ul>
+<li>request 作用域限制在一次请求中，当我们直接访问 <code>/head.jsp</code> 发现因为是新的一次请求，而并非设置 request 的请求 + 转发，所以 request 属性值失效。</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">pageContext 作用域：null</span><br><span class="line">request 作用域：null</span><br><span class="line">session 作用域：session</span><br><span class="line">application 作用域：application</span><br></pre></td></tr></table></figure>
+<ul>
+<li>session 作用域是一次会话，会话指从打开网页到关闭浏览器，这一个过程被称为一个会话。当我们访问 <code>test.jsp</code> 之后关闭网页，再次访问 <code>/head.jsp</code> 发现脱离上一次会话之后，session 中属性值失效。</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">pageContext 作用域：null</span><br><span class="line">request 作用域：null</span><br><span class="line">session 作用域：null</span><br><span class="line">application 作用域：application</span><br></pre></td></tr></table></figure>
+<ul>
+<li>application 作用域是整个 BookStore 项目，在这个项目下面，所有的页面何时何地都可以获取 application 设置的属性值，只有访问其他 Blog 之类的项目时，才会脱离 application 的作用域。</li>
+</ul>
+<h3 id="out-对象输出"><a href="#out-对象输出" class="headerlink" title="out 对象输出"></a>out 对象输出</h3><p><img src="https://xorex.space/image/209.jpg"></p>
+<p>out 有自己的缓冲区，可以使用 page 命令设置，只有这个缓冲区满了或者 out 调用了 flush() 方法，才会将 out 缓冲区内容交给 Writer 缓冲区处理。</p>
+<p>所以涉及到 out 的缓冲区问题，我们在 JSP 网页中一般都使用 out 来输出而不是 response.getWriter() 来输出。因为 JSP 的网页的 HTML 等都是使用 out 来输出，我们自己乱用 response.getWrite() 来输出会打乱其中的代码顺序。</p>
+<h2 id="JSP-标签"><a href="#JSP-标签" class="headerlink" title="JSP 标签"></a>JSP 标签</h2><p>需要注意一下子的是，下面的东西在填写参数的时候，可以使用 JSP 表达式来填写参数 <code>XXX=&lt;%=Expression%&gt;</code> </p>
+<h3 id="jsp-include"><a href="#jsp-include" class="headerlink" title="jsp:include"></a><a href="jsp:include">jsp:include</a></h3><p>格式： <code>&lt;jsp:include page=&quot;XXX&quot;/&gt;</code> 然后回将对应路径的文件也翻译成 Servlet 程序，然后在本页面使用下面这个函数调用生成的 Servlet 程序，这种包含方式被称为动态包含。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">JspRunTimeLibrary.include(request,response,<span class="string">&quot;/XXX/XXX.jsp&quot;</span>,out,<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<p>也就是说，对于动态包含是会生成两个 Servlet 程序，而对于静态包含，则会将两个合并为一个文件，然后生成一个 Servlet 程序。</p>
+<p>因为在调用的时候会传入 request response 参数，所以可以用其请求作用域来传递数据，很方便很好用。当然，一般在开发的时候都会去使用静态包含而不是动态包含。</p>
+<h3 id="jsp-forward"><a href="#jsp-forward" class="headerlink" title="jsp:forward"></a><a href="jsp:forward">jsp:forward</a></h3><p>格式 <code>&lt;jsp:forward page=&quot;XXX/XXX.xxx&quot; &gt;</code> 和 <code>request.getRequestDispatcher(&quot;XXX/XXX.xxx&quot;).forward(request, response);</code> 效果相同。</p>
+<h3 id="jsp-param"><a href="#jsp-param" class="headerlink" title="jsp:param"></a><a href="jsp:param">jsp:param</a></h3><p>格式：<code>&lt;jsp:param name=&quot;ParaName&quot; value=&quot;ParaValue&quot;/&gt;</code> 夹在 <code>&lt;jsp:forward&gt;&lt;/jspforward&gt;</code> 之间，作为转发请求时的附加 Get 参数。其中参数可以是其他的任何引用类型。</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>JSP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ClassPath 和 getResourceAsStream()</title>
-    <url>/2021/03/30/c8996e2c757f/</url>
+    <url>/2021/03/30/34a1ace02353/</url>
     <content><![CDATA[<h2 id="ClassPath"><a href="#ClassPath" class="headerlink" title="ClassPath"></a>ClassPath</h2><blockquote>
 <p>Classpath 是 Java 虚拟机或 Java 编译器中的参数，用于指定用户定义的类和包的位置。</p>
 </blockquote>
@@ -4194,7 +4347,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#109;&#101;&#111;&#110;&#101;&#x40;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#46;&#99;&#111;&#109;">&#x73;&#x6f;&#109;&#101;&#111;&#110;&#101;&#x40;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#46;&#99;&#111;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#109;&#101;&#111;&#110;&#x65;&#x40;&#x72;&#x75;&#x6e;&#111;&#111;&#98;&#46;&#x63;&#x6f;&#x6d;">&#115;&#111;&#109;&#101;&#111;&#110;&#x65;&#x40;&#x72;&#x75;&#x6e;&#111;&#111;&#98;&#46;&#x63;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
