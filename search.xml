@@ -6,12 +6,65 @@
     <content><![CDATA[<h2 id="关于我重新想要写-TodoList-这件事"><a href="#关于我重新想要写-TodoList-这件事" class="headerlink" title="关于我重新想要写 TodoList 这件事"></a>关于我重新想要写 TodoList 这件事</h2><p>三月份的 TodoList 我个人觉得我完成的还算成功，因为除了第六条对于我这种社恐来说实在难以完成，其他五条基本上都已经做到了，无论是学习效率还是学习习惯，都已经进入了一个全新的高度。</p>
 <p>其实现在这个东西现在就已经不是 TodoList 了，因为我发现根本不需要 TodoList 来督促我提高学习的效率，自认为上一个星期中，我的效率已经够高了，高到甚至能达到高三时的 80% 。我相信这是绝大多数大学生都难以到达的高度了（当然肯定比不了双一流的内卷大佬们）。加上上一篇的 TodoList 记录了不到 10 天就鸽了，所以我似乎并没有理由再写一篇 TodoList。</p>
 <p>但是不写总觉得难受，觉得还是要记录下来些什么，学习感悟也好，内心感想也罢，亦或者把这篇博客当成说说分享每天的见闻。所以这次的 4 月份 TodoList 会更加的开放，希望仍然可以被 4 月份温柔以待啊！</p>
+<h2 id="每一天的记录"><a href="#每一天的记录" class="headerlink" title="每一天的记录"></a>每一天的记录</h2><h3 id="04-03"><a href="#04-03" class="headerlink" title="04-03"></a>04-03</h3><p>今天是和往常一样的日子，不过唯一的不同是因为今天是假期，所以变得懒散了起来，上午纵容自己睡了个懒觉（毕竟这一个星期真的是太累了啊），寝室里面比较冷清。下午则是来到了实验室继续肝进度，晚上则是和家里面通了电话，好累啊，明天再努力吧……</p>
+<h3 id="04-05"><a href="#04-05" class="headerlink" title="04-05"></a>04-05</h3><p>今天不太想要去学习，想着一直肝了这么久了（但是还是比不过肝神思达同学），于是就给自己放了一天的假期，当自己尝试去看动画放松的时候，发现根本看不下去，满脑子想的都是自己的项目没做完，停下来放松开始看看项目的时候，又因为假期心里原因看不下去项目，两个都没有办法处理好。</p>
+<p>无法在学习以外的领域进入 <code>心流</code> 状态，已经是我现在最悲哀的事了。</p>
+<p>想想自己好像已经因为焦虑，丧失了获取快乐的能力，正如同知乎里面这个问题的答案一样：<a href="https://www.zhihu.com/question/37672919/answer/224810826">为什么越努力，越焦虑？</a>。我不仅把努力当成手段，也当成了目标。然后强迫自己每天努力，好像不努力学习就是在浪费时间，然后变得更加焦虑。</p>
+<p>所以有什么解决的方法吗，我觉得我现在唯一能做的就是努力忘记未来，仅仅只是活在当下，活在每一天的每一件小事情身上，然后用最高的效率，努力去完成它。未来的事情不用想，想了也没有用，自己只要每天都在享受生活，每天都在全力以赴即可。车至山前必有路，船到桥头自然直，成为一名幸福的普通人就够了！</p>
 ]]></content>
       <categories>
         <category>阶段性总结</category>
       </categories>
       <tags>
         <tag>规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cookie &amp; Session</title>
+    <url>/2021/04/07/fbc5026f0717/</url>
+    <content><![CDATA[<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><h3 id="创建-Cookie"><a href="#创建-Cookie" class="headerlink" title="创建 Cookie"></a>创建 Cookie</h3><p>使用构造方法创建，输入键值对即可，可以同时创建多个 Cookie，然后都输入到响应头中让浏览器保存。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Cookie cookie=<span class="keyword">new</span> Cookie(<span class="string">&quot;Tempest&quot;</span>, <span class="string">&quot;Yukino&quot;</span>);</span><br><span class="line">Cookie cookie1=<span class="keyword">new</span> Cookie(<span class="string">&quot;Yuuki&quot;</span>, <span class="string">&quot;Asuna&quot;</span>);</span><br><span class="line">resp.addCookie(cookie);</span><br><span class="line">resp.addCookie(cookie1);</span><br></pre></td></tr></table></figure>
+<h3 id="Cookie-生命周期"><a href="#Cookie-生命周期" class="headerlink" title="Cookie 生命周期"></a>Cookie 生命周期</h3><p>Cookie 的生命周期由 <code>setMaxAge()</code> 来设置，有三种值：</p>
+<ol>
+<li><p>正整数 表示经过这个正整数秒之后，这个 Cookie 过期。</p>
+</li>
+<li><p>-1 表示 Cookie 生命周期为会话级别，关闭浏览器就删除（其实就没写进内存）</p>
+</li>
+<li><p>0 表示立刻删除 Cookie，立刻的意思是字面意思，浏览器接收到响应就删了。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Cookie[] cookies = req.getCookies();</span><br><span class="line"><span class="keyword">for</span>(Cookie i:cookies) &#123;</span><br><span class="line">    i.setMaxAge(<span class="number">3600</span>); <span class="comment">//一小时后删除</span></span><br><span class="line">    i.setMaxAge(-<span class="number">1</span>); <span class="comment">//关闭浏览器就删除</span></span><br><span class="line">    i.setMaxAge(<span class="number">0</span>) <span class="comment">//立刻删除</span></span><br><span class="line">    resp.addCookie(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="修改-删除-Cookie"><a href="#修改-删除-Cookie" class="headerlink" title="修改/删除 Cookie"></a>修改/删除 Cookie</h3><p>因为对于浏览器接收到一个 Cookie 之后，会先查看有没有 Name、Path 和 Domain 都一样的 Cookie，如果有，那么就去修改这个 Cookie 的 Value 属性为新接收到的 Cookie 的 Value 值。如果没有，则创建一个新的 Cookie 去保存里面的内容。</p>
+<p>所以对一个 Cookie 进行修改或删除的时候，尽量先获取这个 Cookie，然后设置 Value 或者修改其 age 为 0；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Cookie[] cookies=req.getCookies();</span><br><span class="line">Cookie cookie = WebUtils.findCookie(<span class="string">&quot;Yuuki&quot;</span>, cookies);</span><br><span class="line">cookie.setValue(<span class="string">&quot;Xorex&quot;</span>);</span><br><span class="line">resp.addCookie(cookie);</span><br></pre></td></tr></table></figure>
+<h3 id="Domain-和-Path"><a href="#Domain-和-Path" class="headerlink" title="Domain 和 Path"></a>Domain 和 Path</h3><p>这个属性是定义在怎样的域名和路径下，才会发送 Cookie 给服务器。</p>
+<p>对于一个访问地址： <code>http://xorex.space:8080/BookStore/manager</code> 设定 Cookie 只在访问这里的时候发送：</p>
+<p>Path 设置为：/BookStore/manager</p>
+<p>Domain 设置为：xorex.space</p>
+<p>需要注意的是，这里定义的限制 Cookie 发送指的是只有访问地址为 <code>Domain+Path</code> 的子地址才会发送 Cookie，比如 Path 的子地址：<code>/BookStore/mananger/xorex/index.jsp</code> 和 Domain 的子地址：<code>bookstore.xorex.space</code> 都符合发送 Cookie 的要求，而且这里 Cookie 的限制是<strong>无视</strong>端口号的。</p>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><h3 id="Session-概述"><a href="#Session-概述" class="headerlink" title="Session 概述"></a>Session 概述</h3><p>Session 指的是一个会话，会话是指一个终端用户与交互系统进行通讯的过程。在 Web 里面就是从开发访问网页执行一定的操作之后最后关闭网页的过程。</p>
+<p>首先服务器里面有一个 Session 池，里面负责存储和生成 Session 对象，当客户端第一次访问服务器的时候，是肯定不会包含带有 Session ID 值的 Cookie 的。那么服务器会把它当作一个会话的开始，为这个客户生成一个 Session 对象，保存到 Session 池中，然后将这个 Session 对象的 Session ID 写入响应头的 Cookie 中，让浏览器保存下来，作为会话的认证标志。</p>
+<p>从一次之后的所有交互中，客户端都会将 Session ID 的 Cookie 放到请求头中，服务器通过这个 Session ID 从 Session 池中找到客户的 Session 对象来进行操作。Session 实例中同样拥有可以设置属性的域，会伴随这 Session 实例可以随意获取。</p>
+<h3 id="Session-创建和获取"><a href="#Session-创建和获取" class="headerlink" title="Session 创建和获取"></a>Session 创建和获取</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HttpSession session=req.getSession(); <span class="comment">//会自动决定是生成新的 Session 还是去 Session 池中去取。</span></span><br><span class="line">session.getID() <span class="comment">//获取 Session 的 ID 值。</span></span><br></pre></td></tr></table></figure>
+<h3 id="Session-生命周期控制"><a href="#Session-生命周期控制" class="headerlink" title="Session 生命周期控制"></a>Session 生命周期控制</h3><h4 id="Session-销毁"><a href="#Session-销毁" class="headerlink" title="Session 销毁"></a>Session 销毁</h4><p>Session 的销毁有三种情况：</p>
+<ol>
+<li><p>当 Session 硬是熬过了有效期之后，服务器会自动销毁此 Session。</p>
+</li>
+<li><p>当客户关闭浏览器，使保存了 Session ID 的 Cookie 被销毁，从而无法通过 Session ID 从 Session 池中获取客户的 Session 对象，然后等到默认设置的销毁时间之后，服务器再物理销毁 Session 实例。</p>
+</li>
+<li><p>另外一种则是服务器主动销毁，当使用 Session 的 invalidate() 方法之后，会主动将 Session 中的所有用户信息全部清除，然后此 Session 被禁用，和 request 的绑定也会被解除，但是 Session 对象还活着。当再次用 request 获取 Session 的时候，会从 Session 池中取出一个新的出来。</p>
+</li>
+</ol>
+<h4 id="Session-存活时间设置"><a href="#Session-存活时间设置" class="headerlink" title="Session 存活时间设置"></a>Session 存活时间设置</h4><p>Java 中使用 setMaxInactiveInterval() 方法设置 Session 的最大失效间隔时间，单位秒。</p>
+<p>当设置的时间为正数的时候，则等到经过指定时间后，Session 被销毁。</p>
+<p>当设置时间小于等于零的时候，标志此 Session 永远不会被销毁。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">session.setMaxInactiveInterval(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>Cookie</tag>
+        <tag>Session</tag>
       </tags>
   </entry>
   <entry>
@@ -4546,7 +4599,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#109;&#x65;&#111;&#110;&#101;&#64;&#114;&#117;&#110;&#x6f;&#111;&#x62;&#x2e;&#x63;&#x6f;&#109;">&#115;&#111;&#109;&#x65;&#111;&#110;&#101;&#64;&#114;&#117;&#110;&#x6f;&#111;&#x62;&#x2e;&#x63;&#x6f;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#64;&#x72;&#x75;&#x6e;&#111;&#x6f;&#98;&#46;&#x63;&#x6f;&#x6d;">&#x73;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#64;&#x72;&#x75;&#x6e;&#111;&#x6f;&#98;&#46;&#x63;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
