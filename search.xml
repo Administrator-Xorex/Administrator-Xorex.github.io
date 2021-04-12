@@ -20,6 +20,47 @@
       </tags>
   </entry>
   <entry>
+    <title>JSON 和 AJAX</title>
+    <url>/2021/04/12/f53c59e23e61/</url>
+    <content><![CDATA[<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><p>关于 JSON 本身的一些信息，可以在：<a href="https://www.xmind.net/m/rc4VPM/">JSON 和 XML 思维导图</a> 查看，这里不在叙述。</p>
+<h3 id="JavaScript-Object-lt-gt-String"><a href="#JavaScript-Object-lt-gt-String" class="headerlink" title="JavaScript Object &lt;-&gt; String"></a>JavaScript Object &lt;-&gt; String</h3><p>在 JavaScript 中，JSON 本身是一个对象，以访问属性的方式访问 JSON 里面的键值对:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> json=&#123;</span><br><span class="line">        <span class="string">&quot;Tempest&quot;</span> : <span class="string">&quot;Xorex&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Yukinoshita&quot;</span> : &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span> : <span class="string">&quot;Yukino&quot;</span>,</span><br><span class="line">            <span class="string">&quot;age&quot;</span> : <span class="number">18</span>,</span><br><span class="line">            <span class="string">&quot;height&quot;</span> : <span class="number">168</span>,</span><br><span class="line">            <span class="string">&quot;log&quot;</span> : [<span class="string">&quot;Yukinoshita&quot;</span>,<span class="string">&quot;Yukino&quot;</span>]</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;Yuuki&quot;</span> : <span class="string">&quot;Asuna&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">String</span>=json.Tempest;</span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">Array</span>=json.Yukinoshita.log;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>对于前后端进行数据传输的过程中，使用的就是 JSON 字符串进行传输，然后再解析成对象进行使用。在 JS 中对象转字符串使用：<code>JSON.stringify()</code> ，将字符串转为 JSON 使用 <code>JSON.parse()</code> 。</p>
+<h3 id="Java-Object-lt-gt-String"><a href="#Java-Object-lt-gt-String" class="headerlink" title="Java Object &lt;-&gt; String"></a>Java Object &lt;-&gt; String</h3><p>在 Java 端，则使用 Google 提供的 Gson 包的 Gson 对象来对 JSON 进行状态转换。</p>
+<h4 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h4><p>使用对于 JavaBean 来说，只需要在使用 <code>fromJson(String,Class)</code> 生成对象的时候传入 JavaBean 的 Class 对象即可。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">User userTempest=<span class="keyword">new</span> User(<span class="string">&quot;Tempest&quot;</span>, <span class="string">&quot;Xorex&quot;</span>, <span class="string">&quot;email&quot;</span>);</span><br><span class="line">Gson gson=<span class="keyword">new</span> Gson();</span><br><span class="line">String jsonString=gson.toJson(userTempest);</span><br><span class="line">User jsonBean=gson.fromJson(jsonString, User.class);</span><br><span class="line">System.out.println(jsonString);</span><br><span class="line">System.out.println(jsonBean);</span><br></pre></td></tr></table></figure>
+<h4 id="包含泛型的对象"><a href="#包含泛型的对象" class="headerlink" title="包含泛型的对象"></a>包含泛型的对象</h4><p>对于一个包含了泛型的对象比如 List 和 Map 来说，使用简单的 getClass() 是没有办法连同里面包含数据的 Class 一起获取的，那么在将 String 的 Json 转化为对应的实例的时候，就无法获取里面真正的泛型对应数据。比如这里 list.getClass() 之后，拿到的仅仅只是 ArrayList 的 Class 对象，导致了后面调用实例内部元素的方法的时候出错。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">JSON</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Gson gson=<span class="keyword">new</span> Gson();</span><br><span class="line">    List&lt;User&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    list.add(<span class="keyword">new</span> User(<span class="string">&quot;Tempest&quot;</span>, <span class="string">&quot;Xorex&quot;</span>, <span class="string">&quot;email&quot;</span>));</span><br><span class="line">    list.add(<span class="keyword">new</span> User(<span class="string">&quot;Yukinoshita&quot;</span>, <span class="string">&quot;Yukino&quot;</span>, <span class="string">&quot;email&quot;</span>));</span><br><span class="line">    String jsonString=gson.toJson(list);</span><br><span class="line">    List&lt;User&gt; jsonList=gson.fromJson(jsonString, list.getClass()); <span class="comment">// 这里传入的 Class 不完整</span></span><br><span class="line">    System.out.println(jsonList.get(<span class="number">0</span>).getEmail()); <span class="comment">//导致了获取集合内部元素之后，无法正常使用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而正确的做法就是利用 <code>TypeToken&lt;T&gt;</code> 来解决，利用匿名内部类的形式创建一个 <code>TypeToken&lt;T&gt;</code> 的实例，调用其方法 <code>getType()</code> 返回的就是泛型 T 所对应完整的 Class，其对应的代码为：<code>new TypeToken&lt;ArrayList&lt;User&gt;&gt;()&#123;&#125;.getType()</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">JSON</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Gson gson=<span class="keyword">new</span> Gson();</span><br><span class="line">    List&lt;User&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    list.add(<span class="keyword">new</span> User(<span class="string">&quot;Tempest&quot;</span>, <span class="string">&quot;Xorex&quot;</span>, <span class="string">&quot;email&quot;</span>));</span><br><span class="line">    list.add(<span class="keyword">new</span> User(<span class="string">&quot;Yukinoshita&quot;</span>, <span class="string">&quot;Yukino&quot;</span>, <span class="string">&quot;email&quot;</span>));</span><br><span class="line">    String jsonString=gson.toJson(list);</span><br><span class="line">    List&lt;User&gt; jsonList=gson.fromJson(jsonString, <span class="keyword">new</span> TypeToken&lt;ArrayList&lt;User&gt;&gt;()&#123;&#125;.getType());</span><br><span class="line">    System.out.println(((User)jsonList.get(<span class="number">0</span>)).getEmail());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="AJAX"><a href="#AJAX" class="headerlink" title="AJAX"></a>AJAX</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>AJAX 是 Asynchronous JavaScript and XML 的缩写，意为异步的 JavaScript 和 XML。它可以利用 JavaScript 去服务器获取响应，并在不刷新的条件下，更新页面的内容。这里只讲述一下关于 jQuery 的 AJAX 的使用方法：</p>
+<h3 id="ajax"><a href="#ajax" class="headerlink" title="$.ajax()"></a>$.ajax()</h3><p>这里使用 <code>$.ajax();</code> 方法来进行发起异步请求，其中方法参数为一个 JSON 对象，这个对象有若干可设置参数：</p>
+<ul>
+<li><p>url 表示发起请求的地址</p>
+</li>
+<li><p>type 表示请求的类型 GET ro POST</p>
+</li>
+<li><p>data 表示请求写代的参数，有两种形式 <code>&quot;key=value&amp;key=value&quot;</code> 和 <code>&quot;&#123;key:value&#125;&quot;</code> 两种</p>
+</li>
+<li><p>success 用于绑定一个方法，为响应成功之后执行的方法，方法需要设置一个参数，用于传入 ajax 响应的响应体数据。</p>
+</li>
+<li><p>dataType 用于标识响应的数据类型，”text” “json” “xml” 之类的。当为 text 的时候，数据会转化为字符串类型，json 的时候，会调用 <code>JSON.parse()</code> 将 String 数据会转化为 json 对象。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    $(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">&quot;#button&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            $.ajax(&#123;</span></span><br><span class="line"><span class="javascript">                url:<span class="string">&quot;http://localhost:8080/BookStore/ajax?service=ajax&quot;</span>,</span></span><br><span class="line"><span class="javascript">                type: <span class="string">&quot;GET&quot;</span>,</span></span><br><span class="line"><span class="javascript">                data: &#123;<span class="attr">name</span>:<span class="string">&quot;Xorex&quot;</span>&#125;,</span></span><br><span class="line"><span class="javascript">                dataType: <span class="string">&quot;json&quot;</span>,</span></span><br><span class="line"><span class="javascript">                success:<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    $(<span class="string">&quot;#h1&quot;</span>).text(<span class="string">&quot;我的名字是：&quot;</span>+data.name);</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> json=&#123;<span class="attr">name</span>:<span class="string">&quot;Xorex&quot;</span>&#125;</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">value</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">id</span>=<span class="string">&quot;button&quot;</span>&gt;</span>发送请求<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">&quot;h1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span> <span class="comment">&lt;!-- 用来显示返回的数据 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="get-or-post"><a href="#get-or-post" class="headerlink" title="$.get() or $.post()"></a>$.get() or $.post()</h3><p>这是一种更加简单的发起 ajax 的方式，直接定义了发送请求方式，填写的 JSON 参数可以更加简洁。</p>
+<p><code>$.get(url,data,function,dataType)</code> 和 <code>$.post(url,data,function,datatype)</code> 不需要构造 json，只需要依次填入参数即可。</p>
+<h3 id="getJson"><a href="#getJson" class="headerlink" title="$.getJson()"></a>$.getJson()</h3><p>更离谱 <code>$.getJson(url,data,function)</code> ，只需要了三个参数。</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>JSON</tag>
+        <tag>AJAX</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>极客大挑战 Web 题解</title>
     <url>/2021/04/11/f1ba598f1f57/</url>
     <content><![CDATA[<blockquote>
@@ -2407,8 +2448,8 @@
       <tags>
         <tag>XML</tag>
         <tag>Java</tag>
-        <tag>思维导图</tag>
         <tag>JSON</tag>
+        <tag>思维导图</tag>
       </tags>
   </entry>
   <entry>
@@ -4781,7 +4822,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#x65;&#x6f;&#x6e;&#101;&#64;&#x72;&#117;&#110;&#111;&#111;&#x62;&#46;&#99;&#111;&#x6d;">&#x73;&#111;&#x6d;&#x65;&#x6f;&#x6e;&#101;&#64;&#x72;&#117;&#110;&#111;&#111;&#x62;&#46;&#99;&#111;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#109;&#101;&#x6f;&#110;&#x65;&#64;&#x72;&#117;&#x6e;&#x6f;&#x6f;&#x62;&#46;&#99;&#111;&#109;">&#115;&#x6f;&#109;&#101;&#x6f;&#110;&#x65;&#64;&#x72;&#117;&#x6e;&#x6f;&#x6f;&#x62;&#46;&#99;&#111;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
