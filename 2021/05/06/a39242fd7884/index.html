@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计组-数据的表示和运算 | Xorex</title><meta name="keywords" content="计算机组成原理"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据的检验BCD 码BCD 码用 4 位二进制数来表示 1 位十进制数中的 0~9 这 10 个数码，对于浮点数来说，BCD 码的最大作作用就是能和十进制完美对接，不会产生 精度损失 ，因为其他二进制编码表示浮点小数的时候，为离散的，像 0.3 这样的数浮点数就无法表示。但是 BCD 码因为四位表示十进制的一位，所以就没有这个问题。 奇偶校验码奇校验码规定校验码的 1 有奇数个，也就是所有位（有效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计组-数据的表示和运算">
+<meta property="og:url" content="https://xorex.space/2021/05/06/a39242fd7884/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="数据的检验BCD 码BCD 码用 4 位二进制数来表示 1 位十进制数中的 0~9 这 10 个数码，对于浮点数来说，BCD 码的最大作作用就是能和十进制完美对接，不会产生 精度损失 ，因为其他二进制编码表示浮点小数的时候，为离散的，像 0.3 这样的数浮点数就无法表示。但是 BCD 码因为四位表示十进制的一位，所以就没有这个问题。 奇偶校验码奇校验码规定校验码的 1 有奇数个，也就是所有位（有效">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/159.jpg">
+<meta property="article:published_time" content="2021-05-06T07:39:00.000Z">
+<meta property="article:modified_time" content="2021-05-08T09:06:39.583Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/159.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2021/05/06/a39242fd7884/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-05-08 17:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">156</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">129</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计组-数据的表示和运算</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-05-06T07:39:00.000Z" title="undefined 2021-05-06 15:39">2021-05-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB/">计算机体系</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="数据的检验"><a href="#数据的检验" class="headerlink" title="数据的检验"></a>数据的检验</h2><h3 id="BCD-码"><a href="#BCD-码" class="headerlink" title="BCD 码"></a>BCD 码</h3><p>BCD 码用 4 位二进制数来表示 1 位十进制数中的 0~9 这 10 个数码，对于浮点数来说，BCD 码的最大作作用就是能和十进制完美对接，不会产生 <strong>精度损失</strong> ，因为其他二进制编码表示浮点小数的时候，为离散的，像 0.3 这样的数浮点数就无法表示。但是 BCD 码因为四位表示十进制的一位，所以就没有这个问题。</p>
+<h3 id="奇偶校验码"><a href="#奇偶校验码" class="headerlink" title="奇偶校验码"></a>奇偶校验码</h3><p>奇校验码规定校验码的 1 有奇数个，也就是所有位（有效信息位+校验位）进行异或运算得到结果为 1</p>
+<p>偶校验码规定校验码的 1 有偶数个，也就是所有位（有效信息位+校验位）进行异或运算得到结果为 0</p>
+<p>这种校验码只能检测有奇数位发生错误的情况，不具备纠错能力。</p>
+<h3 id="海明码"><a href="#海明码" class="headerlink" title="海明码"></a>海明码</h3><p>海明码具有两位检错，一位纠错的能力。</p>
+<p>首先设需要验证的位数为 n，需要 k 位作为校验位，根据公式：<code>n+k&lt;=2^k-1</code> 计算出来所需要的额外验证位 k。</p>
+<p>这些验证位在验证码的位置是按照二进制位权决定的，比如当 k 等于 3 的时候，在二进制里面就可以表示 1 2 4 这三个位权，那么就把所需要的 3 个验证位放在验证码的第 1 2 4 位上面。这是因为海明码的纠错是依靠判断验证位正确性然后将位权累加得到错误的地方，将验证位放到自己对应的位权的位置的话，一旦验证位错误也能获取错误的地方。这篇文章讲的很好：<a target="_blank" rel="noopener" href="https://www.huaweicloud.com/articles/e21f939952893bdebef76eeab885c424.html">带你从头思考海明码的创造过程</a></p>
+<p>验证位的计算也是根据分组决定的，分组的原因就是将某一个数据位的对错和几位位验证位绑定为一组，从而获取多组绑定结果。而分组的根据就是数据位在验证码的位权的二进制表示，比如一个数据位的位权是 5 也就是在验证码的地 5 位，那么 5 的二进制表示就是 101 对应分组就绑定到了 1 4 位上面的验证位上面了（想想为什么我们将验证位放到 2^n 上面），这样一旦 1 4 位的验证位验证失败，就可以一定确定是第 5 位出了错，因为只有第五位出错才会导致 1 4 位验证位同时验证失败。</p>
+<p>这样我们就可以根据数据的二进制表示来分组了，分完组就可以计算验证位的值了，一般来说海明码这里采用偶验证，将某验证位加上他能表示的所有数据位一起进行偶验证得到 0，从而反计算得到此验证位的值。海明码验证的过程也是此过程，将所有的验证位按照上面的方式进行偶验证，结果正确表示 0，错误表示 1。</p>
+<p>获取每一位验证位验证的结果之后，按照验证位位权将其求得十进制结果，得到错误数据位的标号。能得到原因就是因为分组，1 4 位验证位验证失败，一定是同时分到 1 4 位验证为组的数据位错误了，才能同时导致两个验证位失败，而同时分到 1 4 位的是第 4+1=5 位。</p>
+<p>下面的图也可以参考验证位的分组。</p>
+<p><img src="https://xorex.space/image/223.jpg" alt="223.jpg"></p>
+<h2 id="数据的表示"><a href="#数据的表示" class="headerlink" title="数据的表示"></a>数据的表示</h2><h3 id="定点小数和整数"><a href="#定点小数和整数" class="headerlink" title="定点小数和整数"></a>定点小数和整数</h3><p>定点数一般来说不怎么用到，虽然精度较高，但是表示的位数太低。</p>
+<p>定点小数是一个纯小数，第一位为符号位，后面全都是小数点后面的位数，权值为 <code>1-2^(-n)</code></p>
+<p>定点整数是一个纯整数，第一位为符号位，后面全都是小数点前面的位数，权值为 <code>2^n</code></p>
+<h3 id="移码"><a href="#移码" class="headerlink" title="移码"></a>移码</h3><p>移码的作用主要是为了表示浮点数的阶码（也就是科学计数法乘上去的 2^n）。</p>
+<p>那么作为根据它的用途，就需要满足以下特性：快速比对大小。（涉及到浮点数的计算必须比大小）</p>
+<p>因此移码就是将 <strong>真值</strong> 向右偏移，使得负数变成正数。注意这里的移码是没有符号位的，通过加一个数将真值向右偏移，所有的数都是正数，可以快速比大小。</p>
+<p>用 8bit 举例，经过偏移之后，00000000 表示原有的最小值 -2^8，11111111 表示原有的最大值 2^8-1。</p>
+<h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><p>对于位移运算来说，正数的原码、补码、反码、以及负数的原码，在进行位运算位移的时候，都是补零。</p>
+<p>唯一的不一样的是，负数的补码，在向左移的时候添 0 效果等价于乘 2，向右移的时候补 1 效果等价于除 2 。这里可以想想补码原理相关。</p>
+<h3 id="定点数的乘法运算"><a href="#定点数的乘法运算" class="headerlink" title="定点数的乘法运算"></a>定点数的乘法运算</h3><p>定点数的原码乘法运算和我们手算乘法是一模一样的，不同的是，它全程只有占用三个寄存器，通用寄存器，ACC 寄存器，MQ 寄存器。其中通用寄存器和 MQ 寄存器初始存储乘数，而 ACC 寄存器最后和 MQ 寄存器一起存储乘积结果。运算原理如下图：</p>
+<p><img src="https://xorex.space/image/224.jpg" alt="224.jpg"></p>
+<p>它通过检测 MQ 的最末尾值，如果为 1，那么在 ACC 中加上通用寄存器中的被乘数，为零则什么都不做，然后将 ACC 和 MQ 的内容一起左移一位。重复上面的步骤 MQ 的长度次数。最后 ACC 寄存器最后和 MQ 寄存器一起存储乘积结果。而符号位则直接采用两个乘数符号位的异或运算结果。</p>
+<p>对于原码的乘法运算来说，还是很简单的，但是计算机里面的定点数为了方便减法的运算，一般都是用补码来存储，所以这里要么直接转化成原码，要么直接使用补码的乘法器。</p>
+<hr>
+<p>这里的补码的乘法，有亿点点复杂，想了很久也没有想明白，只在知乎上找到了一个写的很好的文章，解释了 Booth 算法为什么要 Yn+1 - Yn 来决定是加还是减，用到了一点高中数列的知识。但是前面的很多推导他都省略了，结果导致根本看不懂。</p>
+<p>下面是计算过程：</p>
+<p><img src="https://xorex.space/image/225.jpg" alt="225.jpg"></p>
+<p>哭了，别说直观理解了，连推导过程都不给啊……</p>
+<p>学个计组也太难了吧……</p>
+<h3 id="C-语言类型转化"><a href="#C-语言类型转化" class="headerlink" title="C 语言类型转化"></a>C 语言类型转化</h3><p>里面的整形都使用的补码表示，long -&gt; int -&gt; short 都是直接截断后面的部分作为下一个类型的数据的，会直接丢失高位。</p>
+<p>对于 double -&gt; float 的尾数是丢失小数点最后几位的精度，而阶码则是截断后面部分舍去前面部分的。</p>
+<h3 id="IEEE-规范"><a href="#IEEE-规范" class="headerlink" title="IEEE 规范"></a>IEEE 规范</h3><p>浮点数在计算机中的表示方式为：</p>
+<p><img src="https://xorex.space/image/226.jpg" alt="226.jpg"></p>
+<p>其中符号位 S 为一位，0 表示正，1 表示负，而指数位（阶码） E 使用移码来表示，偏移量为 <code>2^n-1</code>。数值位 M 使用原码，表示小数的尾数。</p>
+<p>对于阶码，这里是根据补码进行加偏移量的，因为偏移量为 <code>2^n-1</code> 所以会导致表示范围为 <code>-1</code> 到 <code>2*2^n -2</code>，也就是说，阶码的实际表示范围为 <code>1</code> 到 <code>2*2^n -2</code>。</p>
+<table>
+<thead>
+<tr>
+<th>阶码 E 值</th>
+<th>尾码 M 值</th>
+<th>表示内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>浮点数为 0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>≠0</td>
+<td>表示为非规格化数尾数，没有默认的第一位 0.1</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>0</td>
+<td>表示为无穷大</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>≠0</td>
+<td>表示为 NaN，非数值</td>
+</tr>
+</tbody></table>
+<p>而尾数最终是需要被规格化的，规格化是指：将尾数部分化为 0.1XXXX 的形式，这样第一位的默认 1 就可以省略了。当然规格化的时候需要将阶码进行加减运算。</p>
+<h3 id="ALU-运算"><a href="#ALU-运算" class="headerlink" title="ALU 运算"></a>ALU 运算</h3><p>对于加法的电路设计来说，因为需要获取上一位的进位信息，所以需要串行计算，总的延时有点高。那么为了降低延时，可以通过数学逻辑进行并行计算（某种意义上的真正的多线程），也就是每一位的获取的计算都是独立的。</p>
+<p>首先构造一个并行的四位加法器，然后将四个四位加法器串行，得到一个较快的十六位加法器。（直接搞一个十六位并行的加法器电路设计过于复杂，所以还是四个拼接好了）</p>
+<p><img src="https://xorex.space/image/227.jpg" alt="227.jpg"></p>
+<p>这里面的并行计算的数学推导有点复杂啊，不学了……</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2021/05/06/a39242fd7884/">https://xorex.space/2021/05/06/a39242fd7884/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></div><div class="post_share"><div class="social-share" data-image="/waifus/159.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/05/08/530c4fb06907/"><img class="prev-cover" src="/waifus/160.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计组-存储系统</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/29/138ad4d24eb9/"><img class="next-cover" src="/waifus/158.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">计组-计算机基本结构/工作流程</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">要成为世界上最幸福的人啊！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">156</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">129</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A3%80%E9%AA%8C"><span class="toc-number">1.</span> <span class="toc-text">数据的检验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BCD-%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">BCD 码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">奇偶校验码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E6%98%8E%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">海明码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="toc-number">2.</span> <span class="toc-text">数据的表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%82%B9%E5%B0%8F%E6%95%B0%E5%92%8C%E6%95%B4%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">定点小数和整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E7%A0%81"><span class="toc-number">2.2.</span> <span class="toc-text">移码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-number">2.3.</span> <span class="toc-text">位运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-number">2.4.</span> <span class="toc-text">定点数的乘法运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E8%AF%AD%E8%A8%80%E7%B1%BB%E5%9E%8B%E8%BD%AC%E5%8C%96"><span class="toc-number">2.5.</span> <span class="toc-text">C 语言类型转化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IEEE-%E8%A7%84%E8%8C%83"><span class="toc-number">2.6.</span> <span class="toc-text">IEEE 规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ALU-%E8%BF%90%E7%AE%97"><span class="toc-number">2.7.</span> <span class="toc-text">ALU 运算</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
