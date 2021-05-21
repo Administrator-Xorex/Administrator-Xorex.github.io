@@ -1236,14 +1236,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/Java-Web/</loc>
+    <loc>https://xorex.space/tags/ClassPath/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/ClassPath/</loc>
+    <loc>https://xorex.space/tags/Java-Web/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1334,6 +1334,13 @@
   </url>
   
   <url>
+    <loc>https://xorex.space/tags/Floyed/</loc>
+    <lastmod>2021-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://xorex.space/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
@@ -1370,13 +1377,6 @@
   
   <url>
     <loc>https://xorex.space/tags/JSTL/</loc>
-    <lastmod>2021-05-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xorex.space/tags/Floyed/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1432,13 +1432,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/HTTP/</loc>
-    <lastmod>2021-05-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/SQL/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
@@ -1454,6 +1447,13 @@
   
   <url>
     <loc>https://xorex.space/tags/JDBC/</loc>
+    <lastmod>2021-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/HTTP/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1488,13 +1488,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E5%87%BD%E6%95%B0%E5%BC%8F/</loc>
-    <lastmod>2021-05-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/JSP/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
@@ -1502,7 +1495,7 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E6%B5%8B%E8%AF%95/</loc>
+    <loc>https://xorex.space/tags/%E5%87%BD%E6%95%B0%E5%BC%8F/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1510,6 +1503,13 @@
   
   <url>
     <loc>https://xorex.space/tags/%E5%8A%A0%E5%AF%86%E4%B8%8E%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2021-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1579,13 +1579,6 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/LCA/</loc>
-    <lastmod>2021-05-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xorex.space/tags/%E8%A7%84%E5%88%92/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
@@ -1593,7 +1586,7 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/Linux/</loc>
+    <loc>https://xorex.space/tags/LCA/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1608,6 +1601,13 @@
   
   <url>
     <loc>https://xorex.space/tags/Listener/</loc>
+    <lastmod>2021-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/Linux/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1635,14 +1635,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/MySQL/</loc>
+    <loc>https://xorex.space/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <loc>https://xorex.space/tags/MySQL/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1740,7 +1740,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/XSS/</loc>
+    <loc>https://xorex.space/tags/UML/</loc>
+    <lastmod>2021-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xorex.space/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1754,14 +1761,7 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/UML/</loc>
-    <lastmod>2021-05-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xorex.space/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>https://xorex.space/tags/XSS/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1796,14 +1796,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E5%B9%B8%E7%A6%8F/</loc>
+    <loc>https://xorex.space/tags/%E4%BA%8C%E5%88%86/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E4%BA%8C%E5%88%86/</loc>
+    <loc>https://xorex.space/tags/%E5%B9%B8%E7%A6%8F/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1859,14 +1859,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/bug/</loc>
+    <loc>https://xorex.space/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/</loc>
+    <loc>https://xorex.space/tags/bug/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1929,6 +1929,13 @@
   </url>
   
   <url>
+    <loc>https://xorex.space/tags/%E6%8E%92%E5%BA%8F/</loc>
+    <lastmod>2021-05-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://xorex.space/tags/C/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
@@ -1943,7 +1950,7 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E6%8E%92%E5%BA%8F/</loc>
+    <loc>https://xorex.space/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1965,13 +1972,6 @@
   
   <url>
     <loc>https://xorex.space/tags/%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2021-05-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xorex.space/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -2006,14 +2006,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/</loc>
+    <loc>https://xorex.space/tags/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98/</loc>
+    <loc>https://xorex.space/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -2041,14 +2041,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
+    <loc>https://xorex.space/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/</loc>
+    <loc>https://xorex.space/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -2141,14 +2141,14 @@
   </url>
   
   <url>
-    <loc>https://xorex.space/categories/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BD%95/</loc>
+    <loc>https://xorex.space/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xorex.space/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/</loc>
+    <loc>https://xorex.space/categories/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2021-05-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
