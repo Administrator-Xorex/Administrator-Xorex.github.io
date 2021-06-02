@@ -94,14 +94,14 @@
     <link href="https://xorex.space/2021/06/01/ac17795a00ed/"/>
     <id>https://xorex.space/2021/06/01/ac17795a00ed/</id>
     <published>2021-06-01T09:54:49.000Z</published>
-    <updated>2021-06-01T09:55:41.477Z</updated>
+    <updated>2021-06-02T04:01:51.231Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="IO-基本概念"><a href="#IO-基本概念" class="headerlink" title="IO 基本概念"></a>IO 基本概念</h2>]]></content>
+    <content type="html"><![CDATA[<h2 id="IO-基本概念"><a href="#IO-基本概念" class="headerlink" title="IO 基本概念"></a>IO 基本概念</h2><p>I/O 即输入／输出，通常指数据在存储器（内部和外部）或其他周边设备之间的输入和输出，输入是系统接收的信号或数据，输出则是从其发送的信号或数据。</p><h3 id="IO-系统的发展"><a href="#IO-系统的发展" class="headerlink" title="IO 系统的发展"></a>IO 系统的发展</h3><p>早期的 IO 系统是直接和 CPU 连接，由 CPU 直接控制 IO 系统，极大的降低了 CPU 的性能。</p><p>后来将一些和内存数据交换比较频繁的外设单独建立了 DMA （Direct Memory Access 直接存储访问） 总线。</p><p>再后来发展出了 IO 通道结构，主机只需要和 IO 上面的通道部件进行数据交换即可，再次加快了速度。</p><p>现在一般开始采用 IO 处理机，承担主机的功能来管理各种外设，基本拥有和 CPU 一样的结构。</p><p><img src="https://xorex.space/image/293.jpg" alt="293.jpg"></p><h3 id="IO-系统工作方式"><a href="#IO-系统工作方式" class="headerlink" title="IO 系统工作方式"></a>IO 系统工作方式</h3><p>IO 系统一般来说有三种工作方式，分别是：程序查询方式，程序中断方式，DMA 方式。三种方式的不同的地方就是使用了不同的设计来分担了一部分 CPU 对 IO 设备的控制，使得 IO 系统对 CPU 越来越简单，从而提升性能。</p><p><img src="https://xorex.space/image/294.jpg" alt="294.jpg"></p><h2 id="外设"><a href="#外设" class="headerlink" title="外设"></a>外设</h2><p>关于外设的各种信息，因为和生活比较接近，所以就不写了。</p><h2 id="IO-接口"><a href="#IO-接口" class="headerlink" title="IO 接口"></a>IO 接口</h2><p>IO 接口的相关结构，主要的作用就是建立起一个 CPU 和外设之间通讯的桥梁，来提高整个设备的性能和可拓展性，让各个部件都专注与自己本身的工作：</p><p><img src="https://xorex.space/image/295.jpg" alt="295.jpg"></p><p>以及 IO 接口结构的工作流程，CPU 只和接口进行交互，并且相关数据的获取都是从绿色的数据缓冲寄存器和设备状态标记寄存器，这也是为了减少 CPU 实际读取数据的时间，和通过主控芯片来提高外接设备的性能。</p><p><img src="https://xorex.space/image/296.jpg" alt="296.jpg"></p><p>这里需要注意一个概念，我们将上面绿色部分的寄存器称为端口 Prot，分为 数据端口，控制端口，状态端口。剩下的蓝色部分和控制逻辑电路作为控制逻辑。</p><p><img src="https://xorex.space/image/297.jpg" alt="297.jpg"></p><p>也就是说，CPU 实际上和外设进行数据交换的时候，本质上是和接口里面的端口进行数据交换，所以获取数据只需要知道数据所在的端口的地址即可。统一端口设计模式之后，CPU 就完全不需要关心实际外部设备的内部设计了，这些交给端口的控制逻辑解决即可。</p><hr><p>对不起，实在不想学了，以后学了操作系统，之后再来看看 IO 系统这一章吧！</p><p>一定会补完的，QAQ</p><p>滚去学 Spring 了……</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;IO-基本概念&quot;&gt;&lt;a href=&quot;#IO-基本概念&quot; class=&quot;headerlink&quot; title=&quot;IO 基本概念&quot;&gt;&lt;/a&gt;IO 基本概念&lt;/h2&gt;</summary>
+    <summary type="html">&lt;h2 id=&quot;IO-基本概念&quot;&gt;&lt;a href=&quot;#IO-基本概念&quot; class=&quot;headerlink&quot; title=&quot;IO 基本概念&quot;&gt;&lt;/a&gt;IO 基本概念&lt;/h2&gt;&lt;p&gt;I/O 即输入／输出，通常指数据在存储器（内部和外部）或其他周边设备之间的输入和输出，输入是系统接收</summary>
       
     
     
@@ -118,7 +118,7 @@
     <link href="https://xorex.space/2021/05/31/1b7d3a309aca/"/>
     <id>https://xorex.space/2021/05/31/1b7d3a309aca/</id>
     <published>2021-05-31T12:43:50.000Z</published>
-    <updated>2021-06-01T09:55:09.891Z</updated>
+    <updated>2021-06-01T13:20:35.142Z</updated>
     
     <content type="html"><![CDATA[<h2 id="总线（Bus）概念"><a href="#总线（Bus）概念" class="headerlink" title="总线（Bus）概念"></a>总线（Bus）概念</h2><p>总线是主机为了解决不同可更换设备之间的通信问题而产生的，计算机各种功能部件之间传送信息的公共通信干线。</p><h3 id="总线分类"><a href="#总线分类" class="headerlink" title="总线分类"></a>总线分类</h3><p>总线可以根据不同的特征进行不同的分类：</p><ol><li><p>机械特性：尺寸，形状，管脚数量，排列顺序。</p></li><li><p>电气特性：传输方向（单向 or 双向）和有效的电平范围（0 - 0.5 低电平 0.5 - 1 V 高电平）</p></li><li><p>功能特性：地址总线，数据总线，控制总线。</p></li><li><p>时间特性：信号和时序的关系。</p></li></ol><p>以及下图：</p><p><img src="https://xorex.space/image/284.jpg" alt="284.jpg"></p><p>数据传输格式：里面串行总线和并行总线的区别就是同时传输数据的位数，串行总线一次传输一位数，并行总线一次可以传输多位数。</p><p>总线的功能：主要内容看下图。</p><p><img src="https://xorex.space/image/285.jpg" alt="285.jpg"></p><h3 id="总线结构"><a href="#总线结构" class="headerlink" title="总线结构"></a>总线结构</h3><p>总线的结构：总线的结构设计分为单总线设计，双总线设计，三总线设计。当然这里的单总线指的是每种总线（数据总线，控制总线，地址总线）只有一根。</p><p>单总线结构，就是最基本的总线：</p><p><img src="https://xorex.space/image/286.jpg" alt="286.jpg"></p><p>双总线结构，将 CPU 与主存的总线和 IO 总线分离开来，高速的用一根，低速的用一根，从而提高整体的效率。</p><p>注意里面的通道是一个小控制器，它有自己的控制系统，负责控制 IO 和内存之间的交互。</p><p><img src="https://xorex.space/image/287.jpg" alt="287.jpg"></p><p>三总线结构，思路还是将不同的速度分级，从而提高整体的速度。这里多出来的就是 DMA 总线，也就是 Direct Memory Access 直接内存访问总线。将 IO 里面速度较快的部分（硬盘）单独和内存使用总线连接，提高硬盘速度。</p><p><img src="https://xorex.space/image/288.jpg" alt="288.jpg"></p><h2 id="总线性能指标"><a href="#总线性能指标" class="headerlink" title="总线性能指标"></a>总线性能指标</h2><p>总线带宽：也就是总线的数据传输速率，单位时间内总线上可传送数据的速率。</p><p>总线复用：有些总线是将地址总线和数据总线放在一起复用。</p><h2 id="总线仲裁"><a href="#总线仲裁" class="headerlink" title="总线仲裁"></a>总线仲裁</h2><p>因为在同一时间之内只能由一个设备控制总线发出信号，同一时间内只能由一个或多个设备接收总线的信号。</p><p>所以当多个设备想要向总线发送信号的时候，就需要决定哪个设备来使用总线，这便是总线仲裁。</p><h3 id="集中仲裁"><a href="#集中仲裁" class="headerlink" title="集中仲裁"></a>集中仲裁</h3><p>指的是使用一个单独的仲裁器，用它来决定谁获取总线的使用权限。当一个设备正在使用总线的时候，发出 BS 总线忙信号，仲裁器停止分配总线。当没有总线忙信号并且有设备正在请求总线的时候，发出 BG 总线允许信号，需要总线的设备接收到 BG 信号之后，开始使用总线并发出 BS 总线忙信号。这就是集中仲裁的基本原型。</p><p><img src="https://xorex.space/image/289.jpg" alt="289.jpg"></p><h2 id="总线标准"><a href="#总线标准" class="headerlink" title="总线标准"></a>总线标准</h2><p>总线标准就是国际上公布过推荐的一种模块设计标准，设计设备和总线的通信的时候，只需要遵守相关的模块设计标准，就可以接入任何一条总线。</p><p>PCI 总线，局部总线：</p><p><img src="https://xorex.space/image/290.jpg" alt="290.jpg"></p><p>PCI-E 总线，</p><p><img src="https://xorex.space/image/291.jpg" alt="291.jpg"></p><p>最后用一个奔腾3的主板设计模式，来大概感受一下总线：</p><p><img src="https://xorex.space/image/292.jpg" alt="292.jpg"></p>]]></content>
     
