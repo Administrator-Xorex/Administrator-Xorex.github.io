@@ -99,7 +99,7 @@
 <p>而对于 SpringMVC 来说，实现基础的功能只需要导入 Web 和 Servlet 两个包即可。</p>
 <p>SpringMVC 的模式和传统的 MVC 有一点点不同，那就是多了一个前端控制器，这个控制器也是 SpringMVC 控制整个 Web MVC 流程的实现基础。而这个前端控制器本身是一个 Servlet，交给 Tomcat 控制。然后 Tomcat 会拦截所有的 Servlet 请求，全都交给前端控制器这个 Servlet，前端控制器则根据 SpringMVC 的框架标准，控制处于 Spring 容器中的各种对象来完成业务的实现。</p>
 <p><img src="https://xorex.space/image/299.jpg" alt="299.jpg"></p>
-<p>所以先在 web.xml 中配置 DispatcherServlet ，初始化参数给 spring 配置文件的地址，也就是 applicationContext.xml 用来控制 IOC 容器（如果不配置的话会默认去 WEB-INF/springDispathcherServlet-servlet.xml 读配置文件，其中文件前缀就是配置的 DispathcerServlet 的 servlet-name），并配置拦截 / 下的所有 Serlvet 请求（/* 会拦截所有资源的请求，包括 jsp， / 不会拦截 jsp），当然除了拦截 Servlet 请求，静态资源的请求也从 Tomcat 手里抢了过来，这个问题等待解决！</p>
+<p>所以先在 web.xml 中配置 DispatcherServlet ，初始化参数给 spring 配置文件的地址，也就是 applicationContext.xml 用来控制 IOC 容器（如果不配置的话会默认去 WEB-INF/springDispathcherServlet-servlet.xml 读配置文件，其中文件前缀就是配置的 DispathcerServlet 的 servlet-name），并配置拦截 / 下的所有 Serlvet 请求（/* 会拦截所有资源的请求，包括 jsp， / 不会拦截 jsp），当然除了拦截 Servlet 请求，静态资源的请求也从 Tomcat 手里抢了过来，这个问题以后回补充解决方案。</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springDispathcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:applicationContext.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springDispathcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>搞好了前端控制器之后，就可以写 Controller 层的控制器了，只需要随便写一个类，然后标注 @Controller ，就可以被 IOC 容器标注为控制层了，等到 DispathcerServlet 调用自己即可。</p>
 <p>而对于这个伪装的 Servlet 如何有选择的处理不同的请求呢，这就依靠 @RequestMapping 注解，也就是请求映射，将请求和处理方法建立映射。</p>
@@ -111,11 +111,11 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(value=&quot;/fisrt&quot;,method=&quot;post&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/one&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">one</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;one&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/two&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">two</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;two&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样首先访问为 <code>/first/XXX</code> 的 POST 请求都会被定位到 FirstController 这个类中，然后根据 <code>/XXX</code> 的值精细化定位处理方法。</p>
 <h4 id="参数列表"><a href="#参数列表" class="headerlink" title="参数列表"></a>参数列表</h4><ol>
-<li><p>value/path 设置处理此方法映射的访问地址。详情请看 <a href="https://xorex.space/">请求路径</a></p>
+<li><p>value/path 设置处理此方法映射的访问地址。详情请看：<a href="https://xorex.space/2021/06/05/28d8300ff21a/#%E8%AF%B7%E6%B1%82%E8%B7%AF%E5%BE%84">请求路径</a></p>
 </li>
 <li><p>method 设置映射的访问方法，可以设置 <code>public enum RequestMethod</code> 里面设定的几种访问方法。</p>
 </li>
-<li><p>params 设置请求中的参数要求，必须包含某参数或者某参数为 XXX 值等。</p>
+<li><p>params 设置请求中的参数要求，必须包含某参数或者某参数为 XXX 值等。详情请看：<a href="https://xorex.space/2021/06/05/28d8300ff21a/#%E5%8F%82%E6%95%B0%E9%99%90%E5%88%B6">参数限制</a></p>
 </li>
 <li><p>headers 设置请求头包含 “请求头：设置” 的请求被本方法处理。</p>
 </li>
@@ -124,7 +124,6 @@
 <li><p>produces 设置要求生产类型，是根据 Accept 请求头进行比对的。根据请求想要获得的数据类型来决定本方法是否处理此请求。</p>
 </li>
 </ol>
-<p>需要注意的是，</p>
 <h4 id="请求路径"><a href="#请求路径" class="headerlink" title="请求路径"></a>请求路径</h4><p>其中可以使用 <code>&#123;VariableName&#125;</code> 的方式从 URI 中截取数据，保存到 VariableName 的变量中，然后下面通过注解 <code>@PathVariable</code> 将保存的截取数据送入方法参数中，如果参数名和截取数据所保存的变量名相等，就可以不在注解里面填写数据。如果注解标注的位置是 Map 类型，则会将<strong>所有</strong>截取的数据放入 Map 中。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/index/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toIndex</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> String id)</span> </span>&#123;</span><br><span class="line">        System.out.println(id);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果对截取的数据加以正则限制，则可以使用：<code>&#123;varName:regex&#125;</code> 来对某部分进行正则表达式限制。或者比较粗暴的使用 <code>*</code> 来省略被限制的部分路径。</p>
@@ -135,9 +134,7 @@
 <p>可以使用 <code>username!=XXX</code> 表示参数 username 不等于某个值即可（包括没有 username 参数），<code>!username</code> 表示必须没有 username 参数。<code>password</code> 表示必须要有密码参数。</p>
 <h3 id="return-地址"><a href="#return-地址" class="headerlink" title="return 地址"></a>return 地址</h3><p>请求映射方法的 return 值（为 String）就是此方法处理完请求之后会被转发到的地址（一般是 View 层）。</p>
 <p>而转发地址里面有很多都是重复的，如 <code>WEB-INF/pages/</code> 和 <code>.jsp</code> 所以就可以再搞一个内部资源视图控制器，也就是 jsp 的一个小的控制器，只需要将其放入 IOC 容器中，这个控制器就可以设置对视图资源的访问，设置一个前缀和后缀即可。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;viewResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span> </span><br><span class="line">    <span class="comment">&lt;!-- 放入 IOC 容器之后，这个实例会在转发 return 后面的地址之前自动被调用--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.jsp&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/pages/&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;viewResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span> </span><br><span class="line">    <span class="comment">&lt;!-- 放入 IOC 容器之后，这个实例会在转发 return 后面的地址之前自动被调用--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.jsp&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/pages/&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>开发知识</category>
       </categories>
@@ -3457,8 +3454,8 @@
       <tags>
         <tag>XML</tag>
         <tag>Java</tag>
-        <tag>思维导图</tag>
         <tag>JSON</tag>
+        <tag>思维导图</tag>
       </tags>
   </entry>
   <entry>
@@ -5837,7 +5834,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#x40;&#x72;&#117;&#110;&#111;&#111;&#98;&#x2e;&#x63;&#x6f;&#x6d;">&#115;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#x40;&#x72;&#117;&#110;&#111;&#111;&#98;&#x2e;&#x63;&#x6f;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#x6d;&#x65;&#111;&#110;&#101;&#64;&#114;&#x75;&#x6e;&#x6f;&#111;&#98;&#x2e;&#99;&#111;&#x6d;">&#115;&#111;&#x6d;&#x65;&#111;&#110;&#101;&#64;&#114;&#x75;&#x6e;&#x6f;&#111;&#98;&#x2e;&#99;&#111;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
