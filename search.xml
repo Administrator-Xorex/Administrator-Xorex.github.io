@@ -79,6 +79,23 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringMVC学习笔记-01</title>
+    <url>/2021/06/05/c48ba53740bc/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先拿张图，这里面就是 Spring 可以胜任的功能，其中 Web 模块其实就是我们接下来要学习的 SpringMVC，使用 Spring 来控制 Web 项目里面的 Model View Controller 三层模型。</p>
+<p><img src="https://xorex.space/image/298.jpg" alt="298.jpg"></p>
+<h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><p>首先需要导入 Spring 的核心包，也就是支持 Spring 运作的 Beans Core Context SpEL 和用于测试 Spring 的 Test 包。</p>
+<p>而对于 SpringMVC 来说，实现基础的功能只需要导入 Web 和 Servlet 两个包即可。</p>
+<p>SpringMVC 的模式和传统的 MVC 有一点点不同，那就是多了一个前端控制器，这个控制器也是 SpringMVC 控制整个 Web MVC 流程的实现基础。而这个前端控制器本身是一个 Servlet，交给 Tomcat 控制。然后 Tomcat 会拦截所有的 Servlet 请求，全都交给前端控制器这个 Servlet，前端控制器则根据 SpringMVC 的框架标准，控制处于 Spring 容器中的各种对象来完成业务的实现。</p>
+<p><img src="https://xorex.space/image/299.jpg" alt="299.jpg"></p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>SpringMVC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《一课经济学》读书笔记</title>
     <url>/2021/06/03/85d5c9bb45a9/</url>
     <content><![CDATA[<h2 id="本书内容"><a href="#本书内容" class="headerlink" title="本书内容"></a>本书内容</h2><p>由于在一段时间内的生产力综合是不变的，那么对一个群体的经济政策作用代价是所有人承受的，经济政策需要考虑所有的影响者。</p>
@@ -3390,8 +3407,8 @@
       <tags>
         <tag>XML</tag>
         <tag>Java</tag>
-        <tag>JSON</tag>
         <tag>思维导图</tag>
+        <tag>JSON</tag>
       </tags>
   </entry>
   <entry>
@@ -5770,7 +5787,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#x6d;&#101;&#x6f;&#x6e;&#x65;&#64;&#x72;&#117;&#110;&#111;&#x6f;&#x62;&#x2e;&#99;&#111;&#109;">&#115;&#x6f;&#x6d;&#101;&#x6f;&#x6e;&#x65;&#64;&#x72;&#117;&#110;&#111;&#x6f;&#x62;&#x2e;&#99;&#111;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#x6d;&#x65;&#111;&#110;&#101;&#x40;&#114;&#x75;&#110;&#x6f;&#111;&#98;&#46;&#99;&#111;&#109;">&#115;&#111;&#x6d;&#x65;&#111;&#110;&#101;&#x40;&#114;&#x75;&#110;&#x6f;&#111;&#98;&#46;&#99;&#111;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -6539,8 +6556,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>MySQL</tag>
         <tag>数据库</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
