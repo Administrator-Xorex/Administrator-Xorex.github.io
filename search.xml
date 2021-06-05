@@ -79,6 +79,18 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringMVC-02-REST实现</title>
+    <url>/2021/06/06/16b6f18b870f/</url>
+    <content><![CDATA[<h2 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h2><p>REST 即表述性状态传递（Representational State Transfer），是一种软件架构风格，指代使用不同的请求方式来表示这次请求需要完成的 CURD 的种类，然后在 URL 中携带被操作对象，</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>SpringMVC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringMVC-01-基础请求处理</title>
     <url>/2021/06/05/28d8300ff21a/</url>
     <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先拿张图，这里面就是 Spring 可以胜任的功能，其中 Web 模块其实就是我们接下来要学习的 SpringMVC，使用 Spring 来控制 Web 项目里面的 Model View Controller 三层模型。</p>
@@ -5825,7 +5837,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#x6d;&#101;&#111;&#110;&#x65;&#64;&#114;&#x75;&#x6e;&#111;&#111;&#x62;&#46;&#x63;&#x6f;&#109;">&#115;&#111;&#x6d;&#101;&#111;&#110;&#x65;&#64;&#114;&#x75;&#x6e;&#111;&#111;&#x62;&#46;&#x63;&#x6f;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#x40;&#x72;&#117;&#110;&#111;&#111;&#98;&#x2e;&#x63;&#x6f;&#x6d;">&#115;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#x40;&#x72;&#117;&#110;&#111;&#111;&#98;&#x2e;&#x63;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
