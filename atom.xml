@@ -94,14 +94,14 @@
     <link href="https://xorex.space/2021/06/07/4b96f4ec6f37/"/>
     <id>https://xorex.space/2021/06/07/4b96f4ec6f37/</id>
     <published>2021-06-07T14:17:56.000Z</published>
-    <updated>2021-06-07T14:51:19.104Z</updated>
+    <updated>2021-06-07T14:56:06.235Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="数据转发"><a href="#数据转发" class="headerlink" title="数据转发"></a>数据转发</h2><p>方法参数加上 <code>Map&lt;String,Object&gt;</code>、<code>Model</code>、<code>ModelMap</code> 三个中的任意一个即可，我们只要将数据保存到这些的参数实例中，Spring 会自动帮我们把数据放到 <strong>Request</strong> 域中。</p><p>关于这三个有什么关系呢：</p><p><img src="https://xorex.space/image/300.jpg" alt="300.jpg"></p><p>其实 Spring 传入参数中的是 BindingAwareModelMap 实例，所以才能三个中任意一个作为参数都能实现数据的转发。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="数据转发"><a href="#数据转发" class="headerlink" title="数据转发"></a>数据转发</h2><h3 id="操作-Map-系列参数"><a href="#操作-Map-系列参数" class="headerlink" title="操作 Map 系列参数"></a>操作 Map 系列参数</h3><p>方法参数加上 <code>Map&lt;String,Object&gt;</code>、<code>Model</code>、<code>ModelMap</code> 三个中的任意一个即可，我们只要将数据保存到这些的参数实例中，Spring 会自动帮我们把数据放到 <strong>Request</strong> 域中。</p><p>关于这三个有什么关系呢：</p><p><img src="https://xorex.space/image/300.jpg" alt="300.jpg"></p><p>其实 Spring 传入参数中的是 BindingAwareModelMap 实例，所以才能三个中任意一个作为参数都能实现数据的转发。</p><h3 id="使用-ModelAndView"><a href="#使用-ModelAndView" class="headerlink" title="使用 ModelAndView"></a>使用 ModelAndView</h3><h3 id="保存到-Session-中"><a href="#保存到-Session-中" class="headerlink" title="保存到 Session 中"></a>保存到 Session 中</h3>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;数据转发&quot;&gt;&lt;a href=&quot;#数据转发&quot; class=&quot;headerlink&quot; title=&quot;数据转发&quot;&gt;&lt;/a&gt;数据转发&lt;/h2&gt;&lt;p&gt;方法参数加上 &lt;code&gt;Map&amp;lt;String,Object&amp;gt;&lt;/code&gt;、&lt;code&gt;Model&lt;/code</summary>
+    <summary type="html">&lt;h2 id=&quot;数据转发&quot;&gt;&lt;a href=&quot;#数据转发&quot; class=&quot;headerlink&quot; title=&quot;数据转发&quot;&gt;&lt;/a&gt;数据转发&lt;/h2&gt;&lt;h3 id=&quot;操作-Map-系列参数&quot;&gt;&lt;a href=&quot;#操作-Map-系列参数&quot; class=&quot;headerlink&quot; ti</summary>
       
     
     
