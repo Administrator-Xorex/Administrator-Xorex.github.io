@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SpringMVC-06-AJAX支持/文件上传 | Xorex</title><meta name="keywords" content="SpringMVC"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="响应 AJAX 的 Json 类型设置响应内容只需要在请求处理方法前面加上 @ResponseBody 表示将方法返回值添加到响应体中。 12345@ResponseBody@RequestMapping(&quot;ajax&quot;)public String getAjax() &amp;#123;    return &quot;&lt;script&gt;alert(&amp;#x27;AJAX!&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC-06-AJAX支持&#x2F;文件上传">
+<meta property="og:url" content="https://xorex.space/2021/06/15/de23fc4f3bd1/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="响应 AJAX 的 Json 类型设置响应内容只需要在请求处理方法前面加上 @ResponseBody 表示将方法返回值添加到响应体中。 12345@ResponseBody@RequestMapping(&quot;ajax&quot;)public String getAjax() &amp;#123;    return &quot;&lt;script&gt;alert(&amp;#x27;AJAX!&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/184.jpg">
+<meta property="article:published_time" content="2021-06-15T14:46:38.000Z">
+<meta property="article:modified_time" content="2021-06-16T14:38:03.205Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="SpringMVC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/184.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2021/06/15/de23fc4f3bd1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-06-16 22:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">186</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">134</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SpringMVC-06-AJAX支持/文件上传</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-06-15T14:46:38.000Z" title="undefined 2021-06-15 22:46">2021-06-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/">开发知识</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="响应-AJAX-的-Json-类型"><a href="#响应-AJAX-的-Json-类型" class="headerlink" title="响应 AJAX 的 Json 类型"></a>响应 AJAX 的 Json 类型</h2><h3 id="设置响应内容"><a href="#设置响应内容" class="headerlink" title="设置响应内容"></a>设置响应内容</h3><p>只需要在请求处理方法前面加上 <code>@ResponseBody</code> 表示将方法返回值添加到响应体中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;ajax&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getAjax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&lt;script&gt;alert(&#x27;AJAX!&#x27;)&lt;/script&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后就会在响应体里面看到一串 JS 代码了。</p>
+<h3 id="Json-处理"><a href="#Json-处理" class="headerlink" title="Json 处理"></a>Json 处理</h3><p>SpringMVC 支持自动将对象转化为 Json 格式的字符串，需要导入三个包：<code>jackson-core</code>，<code>jackson-annotations</code>，<code>jackson-databind</code>。然后对于将自定义对象返回的方法，会自动转化为 Json 字符串：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;ajax/get&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Collection&lt;Employee&gt; <span class="title">returnAjax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> employeeDao.getAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法返回的值是一个 <code>Collection&lt;Employee&gt;</code> 对象，但是标注了 <code>@ResponseBody</code> 之后，这个对象会经过转换器转化为 Json 格式（因为我们引入的 <code>jackson-core</code> 里面的 Json 转化器被添加到了转化器列表里面）</p>
+<p>还可以使用一些其他关于 Json 的注解来控制转化的过程，如 <code>@JsonIgnore</code> 用于标注被省略转化的字段，使用 <code>JsonFormat(pattern=&quot;XXXX&quot;)</code> 来规定向 Date Time 这样的字段的转化格式等等：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonFormat(pattern = &quot;yyyy-MM-dd&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Date date;</span><br><span class="line"><span class="meta">@JsonIgnore</span></span><br><span class="line"><span class="keyword">private</span> String password;</span><br></pre></td></tr></table></figure>
+<p>然后响应体里面返回的转化 Json 就是按照我们的要求的了，没有 password，时间按照 yyyy-MM-dd 格式： <code>&#123;&quot;userName&quot;:&quot;Tempest&quot;,&quot;email&quot;:&quot;cloudloverain@Foxmail.com&quot;,&quot;date&quot;:&quot;2021-06-16&quot;&#125;</code></p>
+<h3 id="获取请求内容"><a href="#获取请求内容" class="headerlink" title="获取请求内容"></a>获取请求内容</h3><p>只需要在请求处理方法的参数前面加上 <code>@RequestBody</code> 表示将请求中的请求体放入参数中，比如我们设置一个 userName 的 Post 提交，按照 SpringMVC 参数填充规则，是无法填充到 <code>String body</code> 上面的，没有设置注解，参数名也不匹配，但是我们标注 <code>@RequestBody</code> 之后，整个 Post 的请求体会作为一个 String 字符串填充到 body 中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;ajax/post&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getAjax</span><span class="params">(<span class="meta">@RequestBody</span> String body)</span> </span>&#123;</span><br><span class="line">    System.out.println(body);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果，为 Post 所有内容：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tempest=Xorex&amp;Submit=Submit</span><br></pre></td></tr></table></figure>
+<hr>
+<p>而 <code>@RequestBody</code> 也支持自动转化格式的功能，比如将请求体中的 Json 数据转化为对象：</p>
+<p>请求体：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;userName&quot;</span>:<span class="string">&quot;Tempest&quot;</span>,<span class="attr">&quot;password&quot;</span>:<span class="string">&quot;Xorex&quot;</span>,<span class="attr">&quot;email&quot;</span>:<span class="string">&quot;cloudloverain@Foxmail.com&quot;</span>,<span class="attr">&quot;date&quot;</span>:<span class="string">&quot;2021-06-16&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>接收请求的处理方法，将 Json 自动转化为 User 对象并传入参数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;ajax/post&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getAjax</span><span class="params">(<span class="meta">@RequestBody</span> User user)</span> </span>&#123;</span><br><span class="line">    System.out.println(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Body-数据转化原理"><a href="#Body-数据转化原理" class="headerlink" title="Body 数据转化原理"></a>Body 数据转化原理</h2><h3 id="HttpMessageConverter-lt-T-gt"><a href="#HttpMessageConverter-lt-T-gt" class="headerlink" title="HttpMessageConverter&lt;T&gt;"></a>HttpMessageConverter&lt;T&gt;</h3><p>对于请求 Body 和响应 Body 和 Java 对象的数据转化流程如下：</p>
+<p><img src="https://xorex.space/image/302.jpg" alt="302.jpg"></p>
+<p>对于任意一个涉及到 Body 数据转换的请求或者响应，SpringMVC 会遍历自己拥有的所有 <code>HttpMessageConverter&lt;T&gt;</code>，去一一确认是否能处理此转换，默认实现了的转换器如下：</p>
+<p><img src="https://xorex.space/image/303.jpg" alt="303.jpg"></p>
+<h3 id="使用-HttpEntity-lt-T-gt-代替-RequestBody"><a href="#使用-HttpEntity-lt-T-gt-代替-RequestBody" class="headerlink" title="使用 HttpEntity&lt;T&gt; 代替 @RequestBody"></a>使用 HttpEntity&lt;T&gt; 代替 @RequestBody</h3><p>将这个类作为请求参数，泛型 T 写为 RequestBody 需要被转化的类型（会依次寻找能处理 T 的Converter）。然后调用 <code>getBody()</code> 、<code>getHeaders()</code> 等来获取更加完整的请求信息（请求头）;</p>
+<h3 id="使用-ResponseEntity-lt-T-gt-代替-ResponseBody"><a href="#使用-ResponseEntity-lt-T-gt-代替-ResponseBody" class="headerlink" title="使用 ResponseEntity&lt;T&gt; 代替 @ResponseBody"></a>使用 ResponseEntity&lt;T&gt; 代替 @ResponseBody</h3><p>只需要将这个这个类作为请求处理方法的返回类型，泛型 T 为向响应体写入的数据类型，也就是 Object-&gt;String 转化的 Object 类型。</p>
+<p>比如下面设置请求头（setcookie），设置请求体（User 用 Json 格式转 String），设置响应码（200 OK）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/Entity&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ResponseEntity&lt;User&gt; <span class="title">getEntity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    User user = <span class="keyword">new</span> User(<span class="string">&quot;Tempest&quot;</span>, <span class="string">&quot;Xorex&quot;</span>, <span class="string">&quot;cloudloverain@foxmail.com&quot;</span>, <span class="keyword">new</span> Date());</span><br><span class="line">    MultiValueMap&lt;String,String&gt; headers=<span class="keyword">new</span> HttpHeaders();</span><br><span class="line">    headers.set(HttpHeaders.SET_COOKIE, <span class="string">&quot;Temespt=Xorex&quot;</span>);</span><br><span class="line">    HttpStatus status=HttpStatus.OK;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ResponseEntity&lt;&gt;(user, headers, status);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>对于多媒体文件的处理在 SpringMVC 中使用的是 MultipartResolver 这个组件来解决的，当我们需要处理文件上传的时候，就需要给这个组件设置一个实现类去处理。</p>
+<p>从 MultipartResolver 的创建过程可以看到：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.multipartResolver = (MultipartResolver)context.getBean(<span class="string">&quot;multipartResolver&quot;</span>, MultipartResolver.class);</span><br></pre></td></tr></table></figure>
+<p>我们只需要在 ioc 容器中注册一个 id 为 multipartResolver 的 Bean 即可，这里使用的是：<code>CommonsMultipartResolver</code> 这个实现类：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;multipartResolver&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.multipart.commons.CommonsMultipartResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;maxUploadSize&quot;</span> <span class="attr">value</span>=<span class="string">&quot;#&#123;1024*1024*100&#125;&quot;</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--设置最大上传文件大小为100MB--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="单文件接收"><a href="#单文件接收" class="headerlink" title="单文件接收"></a>单文件接收</h3><p>然后使用 <code>MultipartFile</code> 类作为参数来接受请求发过来的文件，需要注意的是 <code>getName()</code> 指的是文件上传的 key 值 file，而 <code>getOriginalFileName()</code> 指的是文件本身的名字 <code>XXX.jpg</code>，使用它自带的 <code>transferTo(File)</code> 方法将上传来的文件转移到指定的位置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/upload&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getEntity</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    file.transferTo(<span class="keyword">new</span> File(<span class="string">&quot;D:\\Pictures\\Saved Pictures\\Tempest.jpg&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>注意需要将文件上传的表单里面添加一项 <code>enctype=&quot;multipart/form-data&quot;</code>，其不对字符编码。当使用有文件上传控件的表单时，该值是必需的。</p>
+<p>如果不加编码规则，那么上传的就是 <code>file=fileName</code>，并不包含多媒体数据（上传文件本身），惨痛结果：</p>
+<p><img src="https://xorex.space/image/304.jpg" alt="304.jpg"></p>
+<p>加了之后（没找到请求体 QAQ）：</p>
+<p><img src="https://xorex.space/image/305.jpg" alt="305.jpg"></p>
+<h3 id="多文件接收"><a href="#多文件接收" class="headerlink" title="多文件接收"></a>多文件接收</h3><p>这里的多文件指的是一个 name 对应多个文件的情景，这个时候只需要使用 <code>MultipartFile[]</code> 来接收文件即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/upload&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getEntity</span><span class="params">(<span class="meta">@RequestParam(&quot;file&quot;)</span> MultipartFile file,<span class="meta">@RequestParam(&quot;files&quot;)</span> MultipartFile[] files)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    System.out.println(file.getOriginalFilename());</span><br><span class="line">    <span class="keyword">for</span> (MultipartFile multipartFile : files) &#123;</span><br><span class="line">        System.out.println(multipartFile.getOriginalFilename());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2021/06/15/de23fc4f3bd1/">https://xorex.space/2021/06/15/de23fc4f3bd1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SpringMVC/">SpringMVC</a></div><div class="post_share"><div class="social-share" data-image="/waifus/184.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/06/16/a51fb26d70c9/"><img class="prev-cover" src="/waifus/185.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SpringMVC-07-拦截器/国际化</div></div></a></div><div class="next-post pull-right"><a href="/2021/06/11/4130a9517564/"><img class="next-cover" src="/waifus/183.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">SpringMVC-05-数据绑定/转化/校验</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">要成为世界上最幸福的人啊！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">186</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">134</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94-AJAX-%E7%9A%84-Json-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">响应 AJAX 的 Json 类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%93%8D%E5%BA%94%E5%86%85%E5%AE%B9"><span class="toc-number">1.1.</span> <span class="toc-text">设置响应内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Json-%E5%A4%84%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">Json 处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%86%85%E5%AE%B9"><span class="toc-number">1.3.</span> <span class="toc-text">获取请求内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Body-%E6%95%B0%E6%8D%AE%E8%BD%AC%E5%8C%96%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">Body 数据转化原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HttpMessageConverter-lt-T-gt"><span class="toc-number">2.1.</span> <span class="toc-text">HttpMessageConverter&lt;T&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-HttpEntity-lt-T-gt-%E4%BB%A3%E6%9B%BF-RequestBody"><span class="toc-number">2.2.</span> <span class="toc-text">使用 HttpEntity&lt;T&gt; 代替 @RequestBody</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-ResponseEntity-lt-T-gt-%E4%BB%A3%E6%9B%BF-ResponseBody"><span class="toc-number">2.3.</span> <span class="toc-text">使用 ResponseEntity&lt;T&gt; 代替 @ResponseBody</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">3.</span> <span class="toc-text">文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%96%87%E4%BB%B6%E6%8E%A5%E6%94%B6"><span class="toc-number">3.1.</span> <span class="toc-text">单文件接收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%96%87%E4%BB%B6%E6%8E%A5%E6%94%B6"><span class="toc-number">3.2.</span> <span class="toc-text">多文件接收</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
