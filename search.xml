@@ -79,8 +79,8 @@
       </tags>
   </entry>
   <entry>
-    <title>SpringMVC-07-拦截器/国际化</title>
-    <url>/2021/06/16/a51fb26d70c9/</url>
+    <title>SpringMVC-07-拦截器/异常处理</title>
+    <url>/2021/06/16/0372728335e9/</url>
     <content><![CDATA[<h2 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h2><h3 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h3><p>加强版本的 Filter，MVC 中的接口为 HandlerInterceptor 处理拦截器，一共有三个方法：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">()</span></span>; <span class="comment">//执行请求处理方法之前执行</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">()</span></span>; <span class="comment">//执行请求处理方法之后执行</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">()</span></span>; <span class="comment">//视图渲染完成之后执行</span></span><br></pre></td></tr></table></figure>
 <p>自己实现 HandlerInterceptor 之后，需要在 SpringMVC 中配置拦截器的信息才可以使用：</p>
@@ -94,7 +94,32 @@
 <p>举个例子，01、02 和 03 三个拦截器，02 的 preHandler() return false，进行截断，那么方法的执行结果为：</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">01 preHandle() is invoked!</span><br><span class="line">02 preHandle() is invoked!</span><br><span class="line">01 afterCompletion() is invoked! //因为 01 的 preHandle() 放行了，所以需要执行收尾方法、</span><br></pre></td></tr></table></figure>
 <p>所以如果一旦被拦截，整个请求就不会被处理了，也不会有有效的响应。</p>
-<h2 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h2>]]></content>
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><h3 id="异常处理流程"><a href="#异常处理流程" class="headerlink" title="异常处理流程"></a>异常处理流程</h3><p>SpringMVC 的异常处理是通过 <code>List&lt;HandlerExceptionResolver&gt;</code> 来解决的，如果在调用请求处理方法的时候抛出了异常，那么会依次枚举实现了 HandlerExceptionResolver 接口的类，如果抛出来的这些异常能被这些异常处理解析器解决，那么就交给他们，如果不能解决，那么会直接抛出异常到 Tomcat，最终在页面上显示一个丑丑的 500 服务器内部错误的页面。</p>
+<p>在 SpringMVC 中，有三个默认加载的 HandlerExceptionResolver 实现：ExceptionHandlerExceptionResolver、ResponseStatusExceptionResolver 和 DefaultHandlerExceptionResolver。</p>
+<ol>
+<li>ExceptionHandlerExceptionResolver</li>
+</ol>
+<p>第一个处理类可以处理的异常为所有使用了注解 <code>@ExcpetionHandler(Class)</code> 中参数输入的异常。也是我们用来自定义异常处理的方式，详情看下面介绍。</p>
+<ol start="2">
+<li>ResponseStatusExceptionResolver</li>
+</ol>
+<p>用于设置当我们出现了自定义异常的时候，应该返回什么状态码和错误信息，而使用核心就是注解 <code>@ResponseStatus</code>：</p>
+<p>我们首先自定义一个异常，并使用注解 <code>@ResponseStatus</code> 来定义</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE,reason = &quot;拒绝访问！&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CanNotAccsessException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/exception&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exception</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> CanNotAccsessException();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后当我们抛出我们自定义的异常 CanNotAccessException 无法被 ExceptionHandlerExceptionResolver 里面的异常处理方法处理之后，就会交给 ResponseStatusExceptionResolver ，发现异常拥有注解 <code>@ResponseStatus</code> 之后，会读取注解信息，然后返回一个自定义的错误页面， 406 拒绝访问。</p>
+<p><img src="https://xorex.space/image/306.jpg" alt="306.jpg"></p>
+<ol start="3">
+<li>DefaulthandlerExceptionResolver</li>
+</ol>
+<p>是用来处理和 SpringMVC 相关的异常，我们可以忽略它，比如这些异常：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">handleNoSuchRequestHandlingMethod</span><br><span class="line">handleHttpRequestMethodNotSupported</span><br><span class="line">handleHttpMediaTypeNotSupported</span><br><span class="line">handleMissingServletRequestParameter</span><br><span class="line">handleServletRequestBindingException</span><br><span class="line">handleTypeMismatch</span><br><span class="line">handleHttpMessageNotReadable</span><br><span class="line">handleHttpMessageNotWritable</span><br><span class="line">handleMethodArgumentNotValidException</span><br><span class="line">handleMissingServletRequestParameter</span><br><span class="line">handleMissingServletRequestPartException</span><br><span class="line">handleBindException</span><br></pre></td></tr></table></figure>
+<h3 id="ExceptionHandler"><a href="#ExceptionHandler" class="headerlink" title="@ExceptionHandler"></a>@ExceptionHandler</h3><p>只需要在某个方法前面加上 <code>@ExceptionHandler</code> 这个注解，就可以让这个方法变为异常处理器。处理的异常去觉得注解里面的参数填写的异常种类。可以自己在异常处理器中返回 ModelAndView 来自定义视图，不写也没关系。获取异常实例通过异常处理器的参数处获取，参数类型一定要匹配被 catch 异常的类型。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/exception&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exception</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> CanNotAccsessException(); <span class="comment">//抛出异常供下面处理器处理</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ExceptionHandler(CanNotAccsessException.class)</span> <span class="comment">//指明这个方法是处理 CanNotAccessException 异常的处理器</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ModelAndView <span class="title">mathException</span><span class="params">(Exception exception)</span> </span>&#123; <span class="comment">//获取被抛出来的实例</span></span><br><span class="line">    ModelAndView mv = <span class="keyword">new</span> ModelAndView(<span class="string">&quot;Hello/error&quot;</span>);</span><br><span class="line">    mv.addObject(<span class="string">&quot;error&quot;</span>, exception);</span><br><span class="line">    <span class="keyword">return</span> mv; <span class="comment">//当然如果不想跳转页面的话也可以不返回 ModelAndView</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ControllerAdvice"><a href="#ControllerAdvice" class="headerlink" title="@ControllerAdvice"></a>@ControllerAdvice</h3><p>可以将多个 ExceptionHandler 异常处理器方法集中到一个类中去，然后使用注解 <code>@ControllerAdvice</code> 告诉 SpringMVC 这个类里面的东西都是控制层的建议方法。这个属于全局的异常处理器，而上面在 <code>@Controller</code> 里面定义的处理器则是局部处理器，只能处理本类里面抛出的异常。</p>
+<p>当 <code>@Controller</code> 和 <code>@ControllerAdvice</code> 都拥有能处理异常的方法的时候，本类处理器优先级高于全局处理器。而对于两个在同一个地方的异常处理器，则是优先选择匹配精度最高的那一个。</p>
+<h3 id="SimpleMappingExceptionHandlerResovler"><a href="#SimpleMappingExceptionHandlerResovler" class="headerlink" title="SimpleMappingExceptionHandlerResovler"></a>SimpleMappingExceptionHandlerResovler</h3><p>这个异常处理解析器是通过配置的方式来对某些异常进行指定页面处理。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.handler.SimpleMappingExceptionResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;exceptionMappings&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">props</span>&gt;</span> <span class="comment">&lt;!--设置捕捉异常之后前往的页面--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">&quot;java.lang.NullPointerException&quot;</span>&gt;</span>Hello/error<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span> <span class="comment">&lt;!-- 设置将异常实例放入请求域的 Key --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;exceptionAttribute&quot;</span> <span class="attr">value</span>=<span class="string">&quot;exception&quot;</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>开发知识</category>
       </categories>
@@ -6165,7 +6190,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#x6d;&#x65;&#111;&#x6e;&#x65;&#64;&#x72;&#117;&#x6e;&#x6f;&#x6f;&#98;&#46;&#x63;&#x6f;&#x6d;">&#x73;&#x6f;&#x6d;&#x65;&#111;&#x6e;&#x65;&#64;&#x72;&#117;&#x6e;&#x6f;&#x6f;&#98;&#46;&#x63;&#x6f;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#x40;&#x72;&#117;&#x6e;&#111;&#111;&#98;&#x2e;&#x63;&#111;&#x6d;">&#115;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#x40;&#x72;&#117;&#x6e;&#111;&#111;&#98;&#x2e;&#x63;&#111;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -6956,8 +6981,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>数据库</tag>
         <tag>MySQL</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
