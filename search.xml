@@ -23,44 +23,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MyBatis 基础与配置</title>
-    <url>/2022/01/01/2dfc14c136d8/</url>
-    <content><![CDATA[<blockquote>
-<p>暂时放弃更新，等学完 MyBatis 再好好总结！！！</p>
-</blockquote>
-<h2 id="MyBatis-概述"><a href="#MyBatis-概述" class="headerlink" title="MyBatis 概述"></a>MyBatis 概述</h2><p>Mybatis 是一种持久层的框架，通过建立接口的方法和 XML 注册的 SQL 语句的映射关系来实现对数据库的操作。</p>
-<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><h3 id="获取数据库连接之前"><a href="#获取数据库连接之前" class="headerlink" title="获取数据库连接之前"></a>获取数据库连接之前</h3><p>首先获取数据库的连接实例 SqlSession 的连接池 SqlSessionFactory：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> SqlSessionFactory factory; <span class="comment">//连接池</span></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String resource=<span class="string">&quot;MyBatis-config.xml&quot;</span>; <span class="comment">//连接池的配置文件</span></span><br><span class="line">        InputStream inputstream = Resources.getResourceAsStream(resource); <span class="comment">//将配置文件读入流中</span></span><br><span class="line">        factory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputstream); <span class="comment">//按照配置文件建造 SqlSession 连接池</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SqlSession <span class="title">getSession</span><span class="params">()</span> </span>&#123; <span class="comment">//从连接池获取连接</span></span><br><span class="line">        <span class="keyword">return</span> factory.openSession();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>获取连接池需要在服务器启动的时候进行，所以放到静态代码块里面执行。上面的 <code>SqlSessionFactoryBuilder</code> 作用就是按照配置文件建造连接池，此实例用完就扔，所以不给外部引用，让 GC 把它回收了。留着 <code>SqlSessionFactory</code> 作为单独一个连接池管理 SQL 连接。</p>
-<h3 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h3><p>在 <code>MyBatis-config.xml</code> 连接池配置中加入数据库连接环境，其中 <code>&lt;property&gt;</code> 标签中的 value 中依次填入所有的信息即可。</p>
-<p>或者外部引入一个 properties 文件，里面写上数据库连接数据，然后用 <code>$&#123;PropertyName&#125;</code> 的方式引用。</p>
-<p>外部文件 <code>DataBase.properties</code>：</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">driver</span>=<span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="attr">url</span>=<span class="string">jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=utf8</span></span><br><span class="line"><span class="attr">username</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">password</span>=<span class="string">123456</span></span><br></pre></td></tr></table></figure>
-<p>然后配置文件：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">&quot;DataBase.properties&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">properties</span>&gt;</span> <span class="comment">&lt;!--引入外部的文件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">&quot;JDBC&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">transactionManager</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">&quot;POOLED&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;driver&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;url&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;username&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;password&#125;&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="建立-DAO-层方法和-SQL-语句的映射"><a href="#建立-DAO-层方法和-SQL-语句的映射" class="headerlink" title="建立 DAO 层方法和 SQL 语句的映射"></a>建立 DAO 层方法和 SQL 语句的映射</h3><p>DAO 层的接口：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">getUsers</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">addUser</span><span class="params">(User user)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">updateUser</span><span class="params">(User user)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">deleteUserByUserName</span><span class="params">(String userName)</span></span>;</span><br><span class="line">    <span class="function">User <span class="title">queryUserById</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">    <span class="function">User <span class="title">queryUserByUserName</span><span class="params">(String userName)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>新建数据库操作接口映射的 XML 文件：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;space.xorex.mapper.UserMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getUsers&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;space.xorex.pojo.User&quot;</span>&gt;</span></span><br><span class="line">        select * from user;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>注意上面的 <code>namespace</code> 是下方的 SQL 语句映射的<strong>执行方法</strong>名称所在的定义空间（就是定义这些方法的接口），接口只能写完整的类名，不可以用别名。然后每一条就是执行方法映射的 SQL 语句。</p>
-<p>对于这些映射标签，比如下面的，就一定要注意对应的接口方法名称的 参数 和 返回值，写对应的信息，而对于常见的数据类型，MyBatis 进行了别名映射，可以<strong>不区分大小写</strong>的使用这些别名。然后就是占位符的填充，使用 <code>#&#123;&#125;</code> 里面写数据名，是从 parameterType 中寻找的。</p>
-<p>如果为 Java 设置的 Java 内置数据类型（基本数据 + String + Map + List 之类的），则使用参数名即可，比如下面的 <code>#&#123;userName&#125;</code></p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryUserByUserName&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;space.xorex.pojo.User&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;string&quot;</span>&gt;</span> </span><br><span class="line"><span class="comment">&lt;!--这里 string 就是一个规定好的 java.lang.String 的别名--&gt;</span></span><br><span class="line">    select *</span><br><span class="line">    from user</span><br><span class="line">    where userName=#&#123;userName&#125;; <span class="tag">&lt;&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>开发知识</category>
-      </categories>
-      <tags>
-        <tag>MyBatis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring 框架学习笔记</title>
     <url>/2022/01/01/d68ebc25d776/</url>
     <content><![CDATA[<h2 id="关于-Spring-框架"><a href="#关于-Spring-框架" class="headerlink" title="关于 Spring 框架"></a>关于 Spring 框架</h2><blockquote>
@@ -76,6 +38,145 @@
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatis 基础与配置</title>
+    <url>/2021/07/16/5ac39fb023c9/</url>
+    <content><![CDATA[<h2 id="MyBatis-概述"><a href="#MyBatis-概述" class="headerlink" title="MyBatis 概述"></a>MyBatis 概述</h2><p>Mybatis 是一种持久层的框架，通过建立接口的方法和 XML 注册的 SQL 语句的映射关系来实现对数据库的操作。</p>
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><h3 id="获取数据库连接之前"><a href="#获取数据库连接之前" class="headerlink" title="获取数据库连接之前"></a>获取数据库连接之前</h3><p>首先获取数据库的连接实例 SqlSession 的连接池 SqlSessionFactory：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> SqlSessionFactory factory; <span class="comment">//连接池</span></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String resource=<span class="string">&quot;MyBatis-config.xml&quot;</span>; <span class="comment">//连接池的配置文件</span></span><br><span class="line">        InputStream inputstream = Resources.getResourceAsStream(resource); <span class="comment">//将配置文件读入流中</span></span><br><span class="line">        factory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputstream); <span class="comment">//按照配置文件建造 SqlSession 连接池</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SqlSession <span class="title">getSession</span><span class="params">()</span> </span>&#123; <span class="comment">//从连接池获取连接</span></span><br><span class="line">        <span class="keyword">return</span> factory.openSession();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>获取连接池需要在服务器启动的时候进行，所以放到静态代码块里面执行。上面的 <code>SqlSessionFactoryBuilder</code> 作用就是按照配置文件建造连接池，此实例用完就扔，所以不给外部引用，让 GC 把它回收了。留着 <code>SqlSessionFactory</code> 作为单独一个连接池管理 SQL 连接。</p>
+<h3 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h3><p>在 <code>MyBatis-config.xml</code> 连接池配置中加入数据库连接环境，其中 <code>&lt;property&gt;</code> 标签中的 value 中依次填入所有的信息即可。</p>
+<p>或者外部引入一个 properties 文件，里面写上数据库连接数据，然后用 <code>$&#123;PropertyName&#125;</code> 的方式引用。</p>
+<p>外部文件 <code>DataBase.properties</code>：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">driver</span>=<span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="attr">url</span>=<span class="string">jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=utf8</span></span><br><span class="line"><span class="attr">username</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">password</span>=<span class="string">123456</span></span><br></pre></td></tr></table></figure>
+<p>然后配置文件：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">&quot;DataBase.properties&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">properties</span>&gt;</span> <span class="comment">&lt;!--引入外部的文件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">&quot;JDBC&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">transactionManager</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">&quot;POOLED&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.driver&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="建立-DAO-层方法和-SQL-语句的映射"><a href="#建立-DAO-层方法和-SQL-语句的映射" class="headerlink" title="建立 DAO 层方法和 SQL 语句的映射"></a>建立 DAO 层方法和 SQL 语句的映射</h3><p>DAO 层的接口：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">getUsers</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">addUser</span><span class="params">(User user)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">updateUser</span><span class="params">(User user)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">deleteUserByUserName</span><span class="params">(String userName)</span></span>;</span><br><span class="line">    <span class="function">User <span class="title">queryUserById</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">    <span class="function">User <span class="title">queryUserByUserName</span><span class="params">(String userName)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新建数据库操作接口映射的 XML 文件：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;space.xorex.mapper.UserMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getUsers&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;space.xorex.pojo.User&quot;</span>&gt;</span></span><br><span class="line">        select * from user</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意上面的 <code>namespace</code> 是下方的 SQL 语句映射的<strong>执行方法</strong>名称所在的定义空间（就是定义这些方法的接口），接口只能写完整的类名，不可以用别名。然后每一条就是执行方法映射的 SQL 语句。</p>
+<p>对于这些映射标签，比如下面的，就一定要注意对应的接口方法名称的 参数 和 返回值，写对应的信息，而对于常见的数据类型，MyBatis 进行了别名映射，可以<strong>不区分大小写</strong>的使用这些别名。然后就是占位符的填充，使用 <code>#&#123;&#125;</code> 里面写数据名，是从 parameterType 中寻找的。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryUserByUserName&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;space.xorex.pojo.User&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;string&quot;</span>&gt;</span> </span><br><span class="line"><span class="comment">&lt;!--这里 string 就是一个规定好的 java.lang.String 的别名--&gt;</span></span><br><span class="line">    select *</span><br><span class="line">    from user</span><br><span class="line">    where userName=#&#123;userName&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="获取-Mapper-实例"><a href="#获取-Mapper-实例" class="headerlink" title="获取 Mapper 实例"></a>获取 Mapper 实例</h3><p>直接用 MybatisUtils 里面的 getSession() 获取连接，然后调用 SqlSession 的 getMapper() 获取对应 Mapper 接口的实现对象。都用完之后，SqlSession 需要提交 commit() 和关闭 close()。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserMapperTest</span> </span>&#123;</span><br><span class="line">    SqlSession session=MybatisUtils.getSession();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        UserMapper mapper=session.getMapper(UserMapper.class);</span><br><span class="line">        mapper.insertUser(<span class="string">&quot;This&quot;</span>, <span class="string">&quot;That&quot;</span>);</span><br><span class="line">        session.commit(); <span class="comment">//修改完数据库需要提交</span></span><br><span class="line">        session.close(); <span class="comment">//使用完连接记得关闭</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参数映射"><a href="#参数映射" class="headerlink" title="参数映射"></a>参数映射</h2><h3 id="多参数在-SQL-中的映射"><a href="#多参数在-SQL-中的映射" class="headerlink" title="多参数在 SQL 中的映射"></a>多参数在 SQL 中的映射</h3><p>这里主要是 SQL 语句中 parameterType 属性和 @Param 注解的解释。</p>
+<p>其中因为 Java 基本上所有的版本都是支持反射获取方法参数类型 （Method 类 getParameterTypes()），所以对于 parameterType 这个属性完全可以不写，Mybatis 完全可以通过反射拿到。</p>
+<p>但是 Mybatis 拿到的仅仅只是方法参数的类型，是拿不到参数名的，编译之后就成了 var1 var2 这样的，所以对于多个参数进行的映射如 <code>public void insertUser(String userName,String password);</code> 这样，只能用一些特殊的技巧填入 SQL 语句中的 #{} 里面：</p>
+<ol>
+<li>使用数字表示参数顺序</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertUser&quot;</span>&gt;</span></span><br><span class="line">    insert into user (username,password) values (#&#123;0&#125;,#&#123;1&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通过数字来表示方法中的第 0 个参数，第 1 个参数等等。</p>
+<ol start="2">
+<li>使用 @Param(“Name”) 来定义参数名</li>
+</ol>
+<p>使用 Mybatis 提供的注解 @Param 来对方法中的参数起一个别名。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUser</span><span class="params">(<span class="meta">@Param(&quot;userNameVar&quot;)</span> String userName,<span class="meta">@Param(&quot;passwordVar&quot;)</span> String password)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>然后就可以在 SQL 语句中使用我们在 @Param 中定义的别名了。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertUser&quot;</span>&gt;</span></span><br><span class="line">    insert into user (username,password) values (#&#123;userNameVar&#125;,#&#123;passwordVar&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>MyBatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringMVC-架构解析</title>
+    <url>/2021/07/15/39ec926b82d1/</url>
+    <content><![CDATA[<h2 id="SpringMVC-工作流程"><a href="#SpringMVC-工作流程" class="headerlink" title="SpringMVC 工作流程"></a>SpringMVC 工作流程</h2><iframe src="https://www.xmind.net/embed/969fGv" width="800px" height="540px" frameborder="0" scrolling="no"></iframe>
+
+<h2 id="流程图补充说明"><a href="#流程图补充说明" class="headerlink" title="流程图补充说明"></a>流程图补充说明</h2><p>待更新…</p>
+<h2 id="DispatcherServlet-九大组件"><a href="#DispatcherServlet-九大组件" class="headerlink" title="DispatcherServlet 九大组件"></a>DispatcherServlet 九大组件</h2><h3 id="MultipartResolver"><a href="#MultipartResolver" class="headerlink" title="MultipartResolver"></a>MultipartResolver</h3><p>多媒体解析器，一般用来实现上传下载的功能</p>
+<h3 id="LocaleResolver"><a href="#LocaleResolver" class="headerlink" title="LocaleResolver"></a>LocaleResolver</h3><p>国际化解析器，自动从请求头中的地区和语言信息解析并获取 Locale 对象，并设置到响应内容中，来实现国际化。</p>
+<h3 id="ThemeResolver"><a href="#ThemeResolver" class="headerlink" title="ThemeResolver"></a>ThemeResolver</h3><p>主题解析器，主题是样式、图片及它们所形成的显示效果的集合。一套主题对应一个 properties文件，里面存放着与当前主题相关的所有资源。</p>
+<h3 id="List-lt-HandlerMapping-gt"><a href="#List-lt-HandlerMapping-gt" class="headerlink" title="List&lt;HandlerMapping&gt;"></a>List&lt;HandlerMapping&gt;</h3><p>请求映射处理的集合，作用是判断请求和对应的处理器之间的映射关系，确保请求能找到对应的处理器。</p>
+<h3 id="List-lt-HandlerAdapter-gt"><a href="#List-lt-HandlerAdapter-gt" class="headerlink" title="List&lt;HandlerAdapter&gt;"></a>List&lt;HandlerAdapter&gt;</h3><p>处理器适配器集合，因为在 SpringMVC 中 Handler 可以是任意形式的，比如 @RequestMapping 的方法，实现 Controller 接口的类，为了将这些 Handler 统一规格给 SpringMVC 使用，就需要能转化这些 Handler 的 Adapter。</p>
+<h3 id="List-lt-HandlerExceptionResolver-gt"><a href="#List-lt-HandlerExceptionResolver-gt" class="headerlink" title="List&lt;HandlerExceptionResolver&gt;"></a>List&lt;HandlerExceptionResolver&gt;</h3><p>异常处理解析器集合，判断是否能处理所抛出来的异常，转化为目标的 ModelAndView，如果不能处理，则会将异常抛给 Tomcat。</p>
+<h3 id="RequestToViewNameTranslator"><a href="#RequestToViewNameTranslator" class="headerlink" title="RequestToViewNameTranslator"></a>RequestToViewNameTranslator</h3><p>请求名到视图名翻译器，当我们自己写的 Handler 没有定义 viewName 的时候，就会调用它，将请求的目标截取，作为 viewName，供 ViewResolver 进行解析。</p>
+<h3 id="FlashMapManager"><a href="#FlashMapManager" class="headerlink" title="FlashMapManager"></a>FlashMapManager</h3><p>重定向参数传递，当我们将 Post 请求进行重定向为 Get 请求的时候（防止重复提交），为了将 Post 数据体现在 Get 请求页面中，用 FlashMapManager 实现重定向参数传递。  </p>
+<h3 id="List-lt-ViewResolver-gt"><a href="#List-lt-ViewResolver-gt" class="headerlink" title="List&lt;ViewResolver&gt;"></a>List&lt;ViewResolver&gt;</h3><p>视图解析器集合，用来通过视图名解析成视图 View 的解析器，从而进行渲染页面。</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>SpringMVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 异常阅读</title>
+    <url>/2021/07/06/cb7f2bf06a64/</url>
+    <content><![CDATA[<h2 id="异常信息解读"><a href="#异常信息解读" class="headerlink" title="异常信息解读"></a>异常信息解读</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">&quot;level 1 exception&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fun1();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;level 2 exception&quot;</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">new</span> Test().fun2();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">java.lang.RuntimeException: level 2 exception</span><br><span class="line">    at space.xorex.SSM_CRUD.DAO.Test.fun2(Test.java:15)</span><br><span class="line">    at space.xorex.SSM_CRUD.DAO.Test.main(Test.java:21)</span><br><span class="line">Caused by: java.io.IOException: level 1 exception</span><br><span class="line">    at space.xorex.SSM_CRUD.DAO.Test.fun1(Test.java:8)</span><br><span class="line">    at space.xorex.SSM_CRUD.DAO.Test.fun2(Test.java:13)</span><br><span class="line">    ... 1 more</span><br></pre></td></tr></table></figure>
+<p>对于整个异常栈来说，最下面的 Caused by 就是异常最初被抛出来的类型和原因。然后依次向上的 Caused by 就是上一个异常被捕获之后，catch 语句里面抛出来的其他的异常。每一个 Caused by 都是捕获下一层抛出的异常，经过分析后被抛出的新异常。而没有 Caused by 修饰的最顶层异常，就是没有被任何程序捕捉处理的异常。</p>
+<p>异常栈里每一层都有这些信息组成：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">[Caused by] 异常名 自定义异常出现原因 </span><br><span class="line">异常在被捕获之前经过的第一个方法</span><br><span class="line">异常在被捕获之前经过的第二个方法</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，异常中会有 <code>XXX more</code> 的语句，这是指没有被打印出来的方法对异常的抛接过程，是不重要的信息，可以不用管。</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>异常</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SSM_CRUD 搭建架构（一）</title>
+    <url>/2021/07/03/f4ad326f7d77/</url>
+    <content><![CDATA[<h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><p>等完全搭建好了再更新。</p>
+<h2 id="实现目标"><a href="#实现目标" class="headerlink" title="实现目标"></a>实现目标</h2><p>一个基于 SSM 整合的 CRUD，并使用 Mybatis-Generator 自动生成数据库代码。bootstrap 和 jQuery 作为前端框架。</p>
+<h3 id="导入包"><a href="#导入包" class="headerlink" title="导入包"></a>导入包</h3><ol>
+<li><p>三大框架的核心包 Spring-Core Spring-WebMVC Mybatis</p>
+</li>
+<li><p>用于自动分页的 Pagehelper ，生成代码的 Mybatis-Generator-Core</p>
+</li>
+<li><p>数据库原生的 Mysql-Connector-Java 数据库连接池 c3p0</p>
+</li>
+<li><p>实现 jsp 中 JSTL 标签语言的 JSTL 库</p>
+</li>
+</ol>
+<h2 id="Spring-和-SpringMVC-配置"><a href="#Spring-和-SpringMVC-配置" class="headerlink" title="Spring 和 SpringMVC 配置"></a>Spring 和 SpringMVC 配置</h2><h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><p>在 Web.xml 中配置一启动服务器就创建 Spring 容器的 Listener 和指定 Spring 配置文件位置的 context-param 。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:applicationContext.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>contextLoaderListener 监听启动后执行内容：</p>
+<blockquote>
+<p>Initialize Spring’s web application context for the given servlet context, using the application context provided at construction time, or creating a new one according to the “contextClass” and “contextConfigLocation” context-params.</p>
+</blockquote>
+<h3 id="配置杂七杂八"><a href="#配置杂七杂八" class="headerlink" title="配置杂七杂八"></a>配置杂七杂八</h3><ol>
+<li>Filter 字符编码 CharacterEncodingFilter 设置初始参数，encoding=utf-8，forceRequestEncoding 和 forceResponseEncoding 都设置为 true 。拦截路径为全路径 <code>/*</code> 。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--字符编码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>characterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>forceRequestEncoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>forceResponseEncoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>characterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Filter REST 风格，HiddenHttpMethodFilter，拦截路径为全路径 <code>/*</code> 。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--REST风格实现过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>hiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.HiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>hiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="关于两个容器分工问题"><a href="#关于两个容器分工问题" class="headerlink" title="关于两个容器分工问题"></a>关于两个容器分工问题</h3><p>Spring 的容器是一个父容器，SpringMVC 的容器是子容器。<strong>子容器可以访问父容器</strong>，<strong>而父容器不能访问子容器</strong>。</p>
+<p>所以这就决定了用于自动注入的对象必须放入 Spring 容器中（放入到 SpringMVC 容器 Spring 访问不到），而又因为 Spring 并没有区分四大组件： @Controller @Service @Component @Repository 的功能，所以虽然 SpringMVC 可以访问到 Spring 的容器，但是却无法找到 Controller 的实例。</p>
+<p>总之就是 Controller 必须放到 SpringMVC 的容器中，其他的组件可以随意放置两个容器中。</p>
+<p>但是一般来说我们会把其他的组件都放到 Spring 的容器中，因为 Spring 可以轻易和其他框架进行整合。</p>
+<h2 id="整合-Mybatis"><a href="#整合-Mybatis" class="headerlink" title="整合 Mybatis"></a>整合 Mybatis</h2><h3 id="SqlSessionFactory"><a href="#SqlSessionFactory" class="headerlink" title="SqlSessionFactory"></a>SqlSessionFactory</h3><p>整合 Mybatis 的核心就是将 SqlSessionFactory 以及 Mybatis 自动生成的 DAO 接口实现实例交给 IOC 容器进行管理。Mybatis 有和 Spring 的整合包： Mybatis-Spring.jar。</p>
+<p>Spring 中配置实现了 BeanFactory 接口的 SqlSessionFactoryBean 实例加入 IOC 容器中，负责获取 SqlSessionFactory。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--实现了BeanFactory，调用getBean() 返回 sqlSessionFactory 用于获取连接--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactory&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;configLocation&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:Mybatis-config.xml&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;pooledDataSource&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mapperLocations&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:space.xorex.SSM_CRUD.DAO*&quot;</span> /&gt;</span> <span class="comment">&lt;!--将Mapper和映射文件放到同级目录下面--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="DAO-接口实现"><a href="#DAO-接口实现" class="headerlink" title="DAO 接口实现"></a>DAO 接口实现</h3><p>MapperScannerConfigurer 扫描 DAO 中规定的接口，并加入 IOC 容器中。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 将Mybatis生成的DAO接口实现类加入 IOC 容器中--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;mapperScannerConfigurer&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--扫描所有 DAO 接口的实现--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;basePackage&quot;</span> <span class="attr">value</span>=<span class="string">&quot;space.xorex.SSM_CRUD.DAO&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h3><h4 id="基于命名空间"><a href="#基于命名空间" class="headerlink" title="基于命名空间"></a>基于命名空间</h4><p>这里使用 Spring 的 tx 包和 aop 功能实现事务的控制，</p>
+<p>首先使用 tx 注解进行配置确定对于被标注使用 AOP 功能的方法中，哪些是需要进行事务管理的。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">&quot;txAdvice&quot;</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 选择控制事务的方法 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*&quot;</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 搞个 get 优化 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;get*&quot;</span> <span class="attr">read-only</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后就是配置 AOP 的切入点表达式，声明哪些包下面的哪些类的哪些方法需要进行 AOP 管理，其实就是 DAO 包下面所有接口的所有方法，同时将事务管理配置的 AOP 配置进行一个整合。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置切入点表达式--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;txPoint&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;execution(public * space.xorex.SSM_CRUD..*(..))&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置事务增强，也就是将 AOP 和 TX 所选择的方法进行一个整合--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;txAdvice&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;txPoint&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="基于注解"><a href="#基于注解" class="headerlink" title="基于注解"></a>基于注解</h4><p>直接无脑标注 @Trancational 即可。</p>
+<p>然后在 Spring 中进行扫描。</p>
+<h2 id="增删查改"><a href="#增删查改" class="headerlink" title="增删查改"></a>增删查改</h2><p>数据库方面原本是想要使用 Mybatis Generator 进行实现的，但是出现了不知道为什么的错误，所以决定自己写代码：</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>SSM</tag>
       </tags>
   </entry>
   <entry>
@@ -114,7 +215,7 @@
 </ol>
 <p>是用来处理和 SpringMVC 相关的异常，我们可以忽略它，比如这些异常：</p>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">handleNoSuchRequestHandlingMethod</span><br><span class="line">handleHttpRequestMethodNotSupported</span><br><span class="line">handleHttpMediaTypeNotSupported</span><br><span class="line">handleMissingServletRequestParameter</span><br><span class="line">handleServletRequestBindingException</span><br><span class="line">handleTypeMismatch</span><br><span class="line">handleHttpMessageNotReadable</span><br><span class="line">handleHttpMessageNotWritable</span><br><span class="line">handleMethodArgumentNotValidException</span><br><span class="line">handleMissingServletRequestParameter</span><br><span class="line">handleMissingServletRequestPartException</span><br><span class="line">handleBindException</span><br></pre></td></tr></table></figure>
-<h3 id="ExceptionHandler"><a href="#ExceptionHandler" class="headerlink" title="@ExceptionHandler"></a>@ExceptionHandler</h3><p>只需要在某个方法前面加上 <code>@ExceptionHandler</code> 这个注解，就可以让这个方法变为异常处理器。处理的异常去觉得注解里面的参数填写的异常种类。可以自己在异常处理器中返回 ModelAndView 来自定义视图，不写也没关系。获取异常实例通过异常处理器的参数处获取，参数类型一定要匹配被 catch 异常的类型。</p>
+<h3 id="ExceptionHandler"><a href="#ExceptionHandler" class="headerlink" title="@ExceptionHandler"></a>@ExceptionHandler</h3><p>只需要在某个方法前面加上 <code>@ExceptionHandler</code> 这个注解，就可以让这个方法变为异常处理器。处理的异常取决于注解里面的参数填写的异常种类。可以自己在异常处理器中返回 ModelAndView 来自定义视图，不写也没关系。获取异常实例通过异常处理器的参数处获取，参数类型一定要匹配被 catch 异常的类型。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/exception&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exception</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> CanNotAccsessException(); <span class="comment">//抛出异常供下面处理器处理</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ExceptionHandler(CanNotAccsessException.class)</span> <span class="comment">//指明这个方法是处理 CanNotAccessException 异常的处理器</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ModelAndView <span class="title">mathException</span><span class="params">(Exception exception)</span> </span>&#123; <span class="comment">//获取被抛出来的实例</span></span><br><span class="line">    ModelAndView mv = <span class="keyword">new</span> ModelAndView(<span class="string">&quot;Hello/error&quot;</span>);</span><br><span class="line">    mv.addObject(<span class="string">&quot;error&quot;</span>, exception);</span><br><span class="line">    <span class="keyword">return</span> mv; <span class="comment">//当然如果不想跳转页面的话也可以不返回 ModelAndView</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="ControllerAdvice"><a href="#ControllerAdvice" class="headerlink" title="@ControllerAdvice"></a>@ControllerAdvice</h3><p>可以将多个 ExceptionHandler 异常处理器方法集中到一个类中去，然后使用注解 <code>@ControllerAdvice</code> 告诉 SpringMVC 这个类里面的东西都是控制层的建议方法。这个属于全局的异常处理器，而上面在 <code>@Controller</code> 里面定义的处理器则是局部处理器，只能处理本类里面抛出的异常。</p>
 <p>当 <code>@Controller</code> 和 <code>@ControllerAdvice</code> 都拥有能处理异常的方法的时候，本类处理器优先级高于全局处理器。而对于两个在同一个地方的异常处理器，则是优先选择匹配精度最高的那一个。</p>
@@ -1241,6 +1342,7 @@
 <p><code>Ctrl + ↑/↓</code> 向上/下滚轮</p>
 <p><code>Alt + ↑/↓</code> 光标移动到上/下一个方法中</p>
 <p><code>Shift + 滚轮</code> 横向滚动滚轴</p>
+<p><code>Ctrl + Alt + ←/→</code> 切换光标上一个/下一个位置</p>
 <h3 id="文本编辑"><a href="#文本编辑" class="headerlink" title="文本编辑"></a>文本编辑</h3><p><code>Ctrl + R</code> 当前文件进行文本替换 Replace</p>
 <p><code>Ctrl + Shift + F</code> 全局搜索</p>
 <p><code>Ctrl + Shift + R</code> 全局替换</p>
@@ -4870,8 +4972,8 @@
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>笔记</tag>
         <tag>异常</tag>
+        <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -5694,42 +5796,46 @@
     <title>Linux 基础命令</title>
     <url>/2020/11/16/3bb93ab9d35c/</url>
     <content><![CDATA[<h2 id="Linux-简介"><a href="#Linux-简介" class="headerlink" title="Linux 简介"></a>Linux 简介</h2><ul>
-<li><p>最早的操作系统相关是Unix操作系统，诞生与1970年，是一个比较完善的分时操作系统。（分时操作系统是使一台计算机采用时间片轮转的方式同时为几个、几十个甚至几百个用户服务的一种操作系统，用来降低使用计算机的成本）</p>
+<li><p>最早的操作系统相关是 Unix 操作系统，诞生与 1970 年，是一个比较完善的分时操作系统。（分时操作系统是使一台计算机采用时间片轮转的方式同时为几个、几十个甚至几百个用户服务的一种操作系统，用来降低使用计算机的成本）</p>
 </li>
-<li><p>之后C语言诞生了，程序员们用这种高效的，可以移植性强的语言代替汇编语言重写了Unix系统，美国官方将Unix，C语言，ICP/IP协议，当作标准开始推广。成功对后来的计算机发展产生了深远的影响。</p>
+<li><p>之后 C 语言诞生了，程序员们用这种高效的，可以移植性强的语言代替汇编语言重写了 Unix 系统，美国官方将 Unix，C 语言，ICP/IP 协议，当作标准开始推广。成功对后来的计算机发展产生了深远的影响。</p>
 </li>
-<li><p>有些程序员将Unix系统进行改编，于是就有了各种Unix的衍生版本，如：Sun Solaris、FreeBSD、IBM AIX、HP-UX 等等。</p>
+<li><p>有一天 Unix 突然宣布不开源了，因此有些程序员将 Unix 系统进行改编，于是就有了各种 Unix 的衍生版本，如：Sun Solaris、FreeBSD、IBM AIX、HP-UX 等等。</p>
 </li>
-<li><p>Linus Torvalds 同学在上学时，觉得学校给用的Unix衍生操作系统Minix 太难用了，于是就模仿Unix写了自己的操作系统Linux，并且公开了Linux的源代码，允许所有程序员对Linux进行修改和完善，成功大火。</p>
+<li><p>除此之外，还有一个编写 Unix 衍生版本的计划 GNU 被发起了，而 GNU 则是 GNU Not Unix 的递归缩写。自发起这个计划以来，GNU 开始大量的产生或收集各种系统所必备的组件，像是——函数库（libraries）、编译器（compilers）、调式工具（debugs）、文本编辑器（text editors）、网站服务器（web server），以及一个 Unix 的使用者接口（Unix shell）等等。但由于种种原因，GNU 一直没有开发操作系统的 kernel。正当 Richard Stallman 在为操作系统内核伤脑筋的时候，Linux 出现了。</p>
 </li>
-<li><p>根据国际公约，南极洲属于全人类的资产，任何国家都不能宣誓主权，于是Linus使用南极的特产——小企鹅，作为了Linux的Logo，象征着Linux的开源精神。</p>
+<li><p>Linus Torvalds 同学在上学时，觉得学校给用的 Unix 衍生操作系统 Minix 太难用了，于是就模仿 Unix 写了自己的操作系统 Linux，并且公开了 Linux 的源代码，允许所有程序员对 Linux 进行修改和完善，成功大火，所以其实可以说，Linux 是 Unix 的一个衍生系统（功能基本相同，但是系统开源）。而因为 Linux 因为借用了很多 GNU 的组件，所以它也被称为 GNU/Linux 系统。</p>
+</li>
+<li><p>根据国际公约，南极洲属于全人类的资产，任何国家都不能宣誓主权，于是 Linus 使用南极的特产——小企鹅，作为了 Linux 的 Logo，象征着 Linux 的开源精神。</p>
 </li>
 </ul>
 <h2 id="Linux的组成"><a href="#Linux的组成" class="headerlink" title="Linux的组成"></a>Linux的组成</h2><ul>
 <li><strong>内核层</strong> ：内核层是操作系统的核心，是直接依附在计算机的硬件系统上面，负责对计算机硬件资源和软件资源的调用。通过高效有序的控制，来最大化的发挥出来硬件的能力，为用户提供一个安全，可靠，高效的应用环境。</li>
-<li><strong>Shell(壳)层</strong> ： 壳是用来区别核的，而着个shell的目的就是链接用户和Core核，因此这个shell也叫 命令解释器，用来接受用户的命令，然后解释给计算机执行，shell分为图形界面和命令行界面。</li>
-<li><strong>应用层</strong> ：应用层用来提供一个图形环境，用来支持操作系统中的各种应用，但是Linux不需要安装GUI就可以提供完整的功能。</li>
+<li><strong>Shell(壳)层</strong> ： 壳是用来区别核的，而着个 shell 的目的就是链接用户和 Core 核，因此这个 shell 也叫 命令解释器，用来接受用户的命令，然后解释给计算机执行，shell 分为图形界面和命令行界面。</li>
+<li><strong>应用层</strong> ：应用层用来提供一个图形环境，用来支持操作系统中的各种应用，但是 Linux 不需要安装 GUI 就可以提供完整的功能。</li>
 </ul>
 <h2 id="常用系统工作命令"><a href="#常用系统工作命令" class="headerlink" title="常用系统工作命令"></a>常用系统工作命令</h2><ol>
 <li><code>date</code> 显示当前的时间。</li>
 <li><code>reboot</code> 重启计算机。</li>
-<li><code>poweroff</code> 关闭当前计算机。</li>
+<li><code>poweroff</code> 关闭系统关闭电源</li>
+<li><code>halt</code> 只关闭系统不关电源。</li>
+<li><code>shutdown</code> 有条件的关闭系统关闭电源</li>
 <li><code>ps</code> 用来查看系统中的进程状态。</li>
 <li><code>top</code> 强化版本的任务管理器。</li>
-<li><code>pidof</code> 后面加某一进程的名称，然后返回这一进程的PID值。</li>
-<li><code>kill</code> 后面加后一进程的PID值，用来杀掉该进程。<ul>
+<li><code>pidof</code> 后面加某一进程的名称，然后返回这一进程的 PID 值。</li>
+<li><code>kill</code> 后面加后一进程的 PID 值，用来杀掉该进程。<ul>
 <li><code>killall</code> 后面加某一应用的名称，会杀掉所有该应用的进程。</li>
 </ul>
 </li>
 <li><code>echo</code> 后面加想要输出的内容，可以是变量，可以是字符串。</li>
 </ol>
 <h2 id="系统状态检测命令"><a href="#系统状态检测命令" class="headerlink" title="系统状态检测命令"></a>系统状态检测命令</h2><ol>
-<li><code>ifconfig</code> 可以获取网卡配置和网络状态信息，inet 后面是IP地址，ether后面是MAC地址。</li>
+<li><code>ifconfig</code> 可以获取网卡配置和网络状态信息，inet 后面是 IP 地址，ether 后面是 MAC 地址。</li>
 <li><code>uname -a</code> 可以查看当前系统的系统内核和版本什么的信息。</li>
 <li><code>free -h</code> 用来显示当前主机的内存使用的相关信息。</li>
 <li><code>who</code> 用来查看当前使用这台计算机的用户信息。</li>
 <li><code>last</code> 用来查看最近的所用用户登录记录（这是个可修改的文档）</li>
-<li><code>history</code> 可以展示你最近执行的进1000条命令。<ul>
+<li><code>history</code> 可以展示你最近执行的进 1000 条命令。<ul>
 <li><code>history -c</code> 删除最近执行的命令记录。</li>
 </ul>
 </li>
@@ -5775,9 +5881,9 @@
 <li><code>more -n &lt;file&gt;</code> 再查看大量文本的同时标注行号。</li>
 </ul>
 </li>
-<li><p><code>head -n k &lt;file&gt;</code> 查看file文件前k行的内容。</p>
+<li><p><code>head -n k &lt;file&gt;</code> 查看 file 文件前 k 行的内容。</p>
 </li>
-<li><p><code>tail -n k &lt;file&gt;</code> 查看file文件后k行的内容。</p>
+<li><p><code>tail -n k &lt;file&gt;</code> 查看 file 文件后 k 行的内容。</p>
 </li>
 <li><p><code>wc</code> 用来显示文本的一些信息。</p>
 <ul>
@@ -5786,7 +5892,7 @@
 <li><code>wc -c &lt;file&gt;</code> 返回文本的字节数。</li>
 </ul>
 </li>
-<li><p><code>stat &lt;file&gt;</code> 用来查看文件的具体存储信息和时间信息，会有三个参数，<strong>Access</strong>访问时间，<strong>Modify</strong>修改时间，<strong>Change</strong>修改时间。</p>
+<li><p><code>stat &lt;file&gt;</code> 用来查看文件的具体存储信息和时间信息，会有三个参数，<strong>Access</strong> 访问时间，<strong>Modify</strong> 修改时间，<strong>Change</strong> 修改时间。</p>
 </li>
 </ol>
 <h2 id="文件目录管理命令"><a href="#文件目录管理命令" class="headerlink" title="文件目录管理命令"></a>文件目录管理命令</h2><ol>
@@ -5797,9 +5903,9 @@
 <li><code>mkdir -p &lt;director1/director2/directro3&gt;</code>可以创造嵌套的文件夹。</li>
 </ul>
 </li>
-<li><p><code>cp &lt;file1/dire1&gt; &lt;file2/dire2&gt;</code> 复制file1或dire1到dire2目录或者到本地但是重命名为file2。</p>
+<li><p><code>cp &lt;file1/dire1&gt; &lt;file2/dire2&gt;</code> 复制 file1 或 dire1 到 dire2 目录或者到本地但是重命名为 file2。</p>
 </li>
-<li><p><code>mv &lt;file1/dire1&gt; &lt;file2/dire2&gt;</code> 移动file1或dire1到dire2目录或者到本地但是重命名为file2。</p>
+<li><p><code>mv &lt;file1/dire1&gt; &lt;file2/dire2&gt;</code> 移动 file1 或 dire1 到 dire2 目录或者到本地但是重命名为 file2。</p>
 </li>
 <li><p><code>rm &lt;file/dire&gt;</code> 命令用于删除文件或者目录。</p>
 <ul>
@@ -5843,14 +5949,38 @@
 <li><code>-perm</code> 匹配权限。</li>
 <li><code>-user</code> 匹配所有者。</li>
 <li><code>-group</code> 匹配所有组。</li>
-<li><code>-mtime -n +n</code> 匹配修改内容的时间，-n表示在n天以内，+n表示n天以前。</li>
-<li><code>-atime -n +n</code> 匹配访问内容的时间，-n表示在n天以内，+n表示n天以前。</li>
-<li><code>-ctime -n +n</code> 匹配修改文件的权限的时间，-n表示在n天以内，+n表示n天以前。</li>
+<li><code>-mtime -n +n</code> 匹配修改内容的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
+<li><code>-atime -n +n</code> 匹配访问内容的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
+<li><code>-ctime -n +n</code> 匹配修改文件的权限的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
 <li><code>-type b/d/c/p/l/f</code> 匹配文件类型（后面的字幕参数依次表示块设备、目录、字符设备、管道、链接文件、文本文件）</li>
-<li><code>-size</code> 匹配文件大小（+50kb表示文件大于，-表示小于）</li>
+<li><code>-size</code> 匹配文件大小（+50kb 表示文件大于，- 表示小于）</li>
 </ul>
 </li>
 </ol>
+<h3 id="路径相关"><a href="#路径相关" class="headerlink" title="路径相关"></a>路径相关</h3><p>绝对路径使用 <code>/</code> 开头，表示根目录，而相对路径不用任何字符开头。</p>
+<p>其中 <code>./</code> 表示当前目录，而 <code>../</code> 表示上一级目录。</p>
+<p>使用 <code>pwd</code> (print work directory) 命令可以现实当前所在目录的绝对路径。</p>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>连接，将一个表面文件和另外一个目标文件关联，点击表面文件打开目标文件。</p>
+<p>硬链接：在当前目录下面添加一个目标文件的目录项（索引），从始至终只有一个文件——目标文件。</p>
+<p>软连接：真的建立了一个文件（又有文件节点），将自己文件路径名链接到了目标文件。</p>
+<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>change mode 改变模式，用来改变文件的权限。</p>
+<p>权限作用人 <code>[who]</code> 分为：u (user) 表示该文件的拥有者，g (group) 表示与该文件的拥有者属于同一个群体者，o (others) 表示其他以外的人，a (all) 表示这三者皆是。</p>
+<p>权限 <code>[mode]</code> 分为：r (read) 读取，w (write) 写入，x (executable) 执行。</p>
+<p>权限操作 <code>[operator]</code> 分为：+ 增加权限，- 取消权限， = 表示唯一设定权限（也就是清除所有权限之后再增加设定权限）</p>
+<ol>
+<li>对指定的用户组进行修改</li>
+</ol>
+<p>格式：<code>chmod [who][operator][mode] file</code> 。</p>
+<p>例：<code>chmod u=r waifu.jpg</code> 命令表示将 waifu.jpg 文件所有者的权限重新设定为只有读取权限。</p>
+<ol start="2">
+<li>对所有用户组进行修改</li>
+</ol>
+<p>格式：<code>chmod [WhoOperator][WhoOperator][WhoOperator] file</code> 或者 <code>chmod [sumOperatorNumber][sumOperatorNumber][sumOperatorNumber] file</code> 。</p>
+<p>上面每一个都表示某一个用户组的权限：第一位表示 user 第二位表示 group 第三位表示 others。</p>
+<p><code>[WhoOperator]</code> 使用三个权限符号表示，没有权限用 - 代表。r-x 表示读和执行权限。</p>
+<p><code>[sumOperatorNumber]</code> 表示将权限符号用数字替代，没有权限用 - 代表，r 4、w 2、x 1，然后相加就是代表的权限。如 7 表示同时拥有读写执行权限。</p>
+<h3 id="vi"><a href="#vi" class="headerlink" title="vi"></a>vi</h3><h4 id="文本插入命令"><a href="#文本插入命令" class="headerlink" title="文本插入命令"></a>文本插入命令</h4><p>［Esc］:w [回车］ 表示保存不退出<br>［Esc］:wq[回车］表示保存同时退出vi<br>［Esc］:q![回车] 表示不保存强行退出vi<br>［Esc］:wq  test.c [回车] 表示保存成文件名test.c，并退出</p>
+<h4 id="转义命令"><a href="#转义命令" class="headerlink" title="转义命令"></a>转义命令</h4><p>列出所有正在使用系统的用户、所用终端名和注册到系统的时间。</p>
 ]]></content>
       <categories>
         <category>开发知识</category>
@@ -6190,7 +6320,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#x40;&#x72;&#117;&#x6e;&#111;&#111;&#98;&#x2e;&#x63;&#111;&#x6d;">&#115;&#x6f;&#109;&#x65;&#111;&#110;&#x65;&#x40;&#x72;&#117;&#x6e;&#111;&#111;&#98;&#x2e;&#x63;&#111;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#x6d;&#x65;&#111;&#110;&#x65;&#64;&#x72;&#x75;&#110;&#111;&#111;&#98;&#x2e;&#x63;&#111;&#109;">&#115;&#111;&#x6d;&#x65;&#111;&#110;&#x65;&#64;&#x72;&#x75;&#110;&#111;&#111;&#98;&#x2e;&#x63;&#111;&#109;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
