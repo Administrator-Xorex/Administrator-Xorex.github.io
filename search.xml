@@ -41,8 +41,217 @@
       </tags>
   </entry>
   <entry>
-    <title>MyBatis 基础与配置</title>
-    <url>/2021/07/16/5ac39fb023c9/</url>
+    <title>MyBatis-02-全局配置文件</title>
+    <url>/2021/07/16/0df908575ba7/</url>
+    <content><![CDATA[<h2 id="properties-属性"><a href="#properties-属性" class="headerlink" title="properties 属性"></a>properties 属性</h2><p>这里的 properties 有三种配置方式：</p>
+<ol>
+<li>在 properties 内部标签定义：</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbc.userName&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Xorex&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbc.password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;123456&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbc.url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;https://xorex.space/&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbc.driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;space.xorex.jdbc.Driver&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>引入外部的配置文件</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span> <span class="attr">resource</span>=<span class="string">&quot;JDBC.properties&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>在创建 SqlSessionFactory 的时候，给 Builder 传入一份配置文件。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream, Properties properties)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这三种方式传入的配置信息的优先级是依次递增的，后面的会覆盖前面的配置条目的信息，只需要注意第一种和第二种的优先级关系，有点反常 QAQ。</p>
+<h2 id="settings-设置"><a href="#settings-设置" class="headerlink" title="settings 设置"></a>settings 设置</h2><h3 id="cacheEnabled"><a href="#cacheEnabled" class="headerlink" title="cacheEnabled"></a>cacheEnabled</h3><p><code>true/false:true</code></p>
+<p>允许缓存：全局性的打开或者关闭缓存设置。</p>
+<h3 id="lazyLoadingEnable-No"><a href="#lazyLoadingEnable-No" class="headerlink" title="lazyLoadingEnable No"></a>lazyLoadingEnable No</h3><p><code>true/false:false</code></p>
+<p>允许延迟加载：全局性的打开或者关闭数据库延迟加载，可被 fetchType 覆盖。</p>
+<h3 id="aggressiveLazyLoading-No"><a href="#aggressiveLazyLoading-No" class="headerlink" title="aggressiveLazyLoading No"></a>aggressiveLazyLoading No</h3><p><code>true/false:false</code></p>
+<p>侵入式延迟加载：开启时，任一方法的调用都会加载该对象的所有延迟加载属性。 否则，每个延迟加载属性会按需加载（参考 lazyLoadTriggerMethods)。</p>
+<h3 id="multipleResultSetsEnable-No"><a href="#multipleResultSetsEnable-No" class="headerlink" title="multipleResultSetsEnable No"></a>multipleResultSetsEnable No</h3><p><code>true/false:true</code></p>
+<p>是否允许单语句查询返回多结果集（需要数据库支持）</p>
+<h3 id="useColumnLabel"><a href="#useColumnLabel" class="headerlink" title="useColumnLabel"></a>useColumnLabel</h3><p><code>true/false:true</code></p>
+<p>使用列标签代替列名，是解决查询结果映射集的一种方法。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> userName <span class="keyword">as</span> <span class="keyword">user</span> <span class="keyword">from</span> users;</span><br></pre></td></tr></table></figure>
+<p>这样就给 userName 起了一个别名（列标签）user，在进行结果映射的时候，如果开启了 useColumnLabel，那么就用别名 user 去找结果映射填充而不是原名的 userName。<strong>建议一直开着</strong>。</p>
+<h3 id="useGeneratedKeys"><a href="#useGeneratedKeys" class="headerlink" title="useGeneratedKeys"></a>useGeneratedKeys</h3><p><code>true/false:false</code></p>
+<p>在调用 insert 和 update 语句更新数据库的时候，允许 JDBC 自动生成主键，并将主键内容返回给传入参数的 keyProperty 一项。</p>
+<p>也就是传入一个 User 实例后，利用 userName 和 password 插入数据库，数据库生成的主键回赋值给传入参数 id 属性。</p>
+<p>这个在 settings 设置之后，只对接口映射器有效（也就是在 Mapper 接口处使用注解开发），而对 XML 映射器无效。因此如果想要 XML 处实现，则需要到具体的 insert 和 update 语句里面设置：<code>useGeneratedKyes=&quot;true&quot; keyProperty=&quot;id&quot;</code> 打开开关并指定赋值主键的属性。</p>
+<h3 id="autoMappingBehavior"><a href="#autoMappingBehavior" class="headerlink" title="autoMappingBehavior"></a>autoMappingBehavior</h3><p><code>NONE/PARTIAL/FULL:PARTIAL</code></p>
+<p>表示自动结果映射行为的等级，none 表示不自动映射，partial [pɑːrʃl] 局部的，表示只会自动映射没有定义嵌套结果映射的字段，FULL 自动映射任何复杂的结果集，无论是否有嵌套。</p>
+<p>不过一般默认的 PARTIAL 级别就够用了，FULL 就有点不太可控了，对于嵌套映射，还是自己写一个 ResultMap 爽。</p>
+<h3 id="autoMappingUnknowColumnBehavior"><a href="#autoMappingUnknowColumnBehavior" class="headerlink" title="autoMappingUnknowColumnBehavior"></a>autoMappingUnknowColumnBehavior</h3><p><code>NONE/WARNING/FAILING:NONE</code></p>
+<p>表示开启自动映射的时候，遇到未知列或者未知属性的时候，应该怎么做。</p>
+<p>NONE 表示什么都不做，WARNING 表示日志输出 WARN 级别，FAILING 表示抛出 SqlSessionException。</p>
+<h3 id="defaultExecutorType"><a href="#defaultExecutorType" class="headerlink" title="defaultExecutorType"></a>defaultExecutorType</h3><p><code>SIMPLE/REUSE/BATCH:SIMPLE</code></p>
+<p>配置默认的执行器，SIMPLE 为简单执行器，没执行一句 SQL 就创建一个新的 Statement 实例。REUSE 为重复使用执行器，将执行过的 Statement 实例放入 Map 中缓存，方便下次相同 SQL 语句使用。BATCH 为批量执行器，会将多个 SQL 一次性执行。</p>
+<h3 id="defaultStatementTimeout"><a href="#defaultStatementTimeout" class="headerlink" title="defaultStatementTimeout"></a>defaultStatementTimeout</h3><p><code>正整数:null</code></p>
+<p>设置 Mybatis 等待数据库响应的最长时间，默认没有设置，单位秒。</p>
+<h3 id="defaultFetchSize"><a href="#defaultFetchSize" class="headerlink" title="defaultFetchSize"></a>defaultFetchSize</h3><p><code>正整数:null</code></p>
+<p>设置 Mybatis 获取 SQL 结果集的缓冲区大小的建议值，避免因为结果集数据过大，单位为条。</p>
+<h3 id="mapUnderScoreToCamelCase"><a href="#mapUnderScoreToCamelCase" class="headerlink" title="mapUnderScoreToCamelCase"></a>mapUnderScoreToCamelCase</h3><p><code>true/false:false</code></p>
+<p>设置将数据库列里面的下划线命名法和 Java 中的驼峰命名法进行映射匹配。</p>
+<p>……</p>
+<p>其实还有很多很多设置，但是时间和精力关系，就先这样了，等学到后面回把这些补上的。</p>
+<h2 id="typeAliases-别名"><a href="#typeAliases-别名" class="headerlink" title="typeAliases 别名"></a>typeAliases 别名</h2><p>TypeAliases 主要作用就是为我们自己写的 POJO 起别名，这样只要遇到需要写全类名的地方，都可以用别名来代替。需要注意的是，所有的别名都是<strong>不区分大小写</strong>的！！！</p>
+<h3 id="单独指定"><a href="#单独指定" class="headerlink" title="单独指定"></a>单独指定</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">type</span>=<span class="string">&quot;space.xorex.mybatis.POJO.User&quot;</span> <span class="attr">alias</span>=<span class="string">&quot;user&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>单独给某一个类指定<strong>任意</strong>一个名字作为他的别名。</p>
+<hr>
+<p>或者使用注解 <code>@Alias(&quot;name&quot;)</code> 标注在需要别名的 POJO 的申明类上面，也可以起别名。</p>
+<h3 id="整个包执行"><a href="#整个包执行" class="headerlink" title="整个包执行"></a>整个包执行</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;space.xorex.mybatis.POJO&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>会将 <code>space.xorex.mybatis.POJO</code> 下面所有的 POJO 都起一个和<strong>类名相同</strong>不区分大小写的别名。</p>
+<h3 id="MyBatis-内部设置的别名"><a href="#MyBatis-内部设置的别名" class="headerlink" title="MyBatis 内部设置的别名"></a>MyBatis 内部设置的别名</h3><p>MyBatis 给 Java 常见的一些类设置了别名，包含几乎所有的数据类型，不过对于基本类型和包装器类型，因为本来差距就是首字母大小写，所以两者的别名有所不同。基本类型的数据别名<strong>前面多了下划线</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>别名</th>
+<th>映射的类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_byte</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>_long</td>
+<td>long</td>
+</tr>
+<tr>
+<td>_short</td>
+<td>short</td>
+</tr>
+<tr>
+<td>_int</td>
+<td>int</td>
+</tr>
+<tr>
+<td>_integer</td>
+<td>int</td>
+</tr>
+<tr>
+<td>_double</td>
+<td>double</td>
+</tr>
+<tr>
+<td>_float</td>
+<td>float</td>
+</tr>
+<tr>
+<td>_boolean</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>string</td>
+<td>String</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>Byte</td>
+</tr>
+<tr>
+<td>long</td>
+<td>Long</td>
+</tr>
+<tr>
+<td>short</td>
+<td>Short</td>
+</tr>
+<tr>
+<td>int</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>integer</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+</tr>
+<tr>
+<td>float</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>date</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>decimal</td>
+<td>BigDecimal</td>
+</tr>
+<tr>
+<td>bigdecimal</td>
+<td>BigDecimal</td>
+</tr>
+<tr>
+<td>object</td>
+<td>Object</td>
+</tr>
+<tr>
+<td>map</td>
+<td>Map</td>
+</tr>
+<tr>
+<td>hashmap</td>
+<td>HashMap</td>
+</tr>
+<tr>
+<td>list</td>
+<td>List</td>
+</tr>
+<tr>
+<td>arraylist</td>
+<td>ArrayList</td>
+</tr>
+<tr>
+<td>collection</td>
+<td>Collection</td>
+</tr>
+<tr>
+<td>iterator</td>
+<td>Iterator</td>
+</tr>
+</tbody></table>
+<h2 id="typeHandlers-类型处理器"><a href="#typeHandlers-类型处理器" class="headerlink" title="typeHandlers 类型处理器"></a>typeHandlers 类型处理器</h2><p>类型处理器主要的工作内容就是将 SQL 数据库中的数据类型和 Java 的数据类型做一个转化，MyBatis 本身已经内置了很多类型处理器了，基本足够我们使用，但是如果想要实现自己的 typeHandler 的话，也不是不可以，只需要实现 TypeHandler 接口或者继承 BaseTypeHandler 即可。</p>
+<p>实现完自己 typeHandler 后，需要将其加入 MyBatis 全局配置文件的 <code>&lt;typeHandlers&gt;</code> 里面：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">typeHandlers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeHandler</span> <span class="attr">handler</span>=<span class="string">&quot;space.xorex.handlers.MyHandler&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">typeHandlers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="objectFactory-对象工厂"><a href="#objectFactory-对象工厂" class="headerlink" title="objectFactory 对象工厂"></a>objectFactory 对象工厂</h2><p>这个没啥可说的，就是单纯的用来创造一个填充数据库查询来的数据的对象实例。这个选项的意义就是当自己实现了 objectFactory 之后，将自己的实现的工厂替换 MyBatis 自带的工厂。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">objectFactory</span> <span class="attr">type</span>=<span class="string">&quot;space.xorex.mybatis.objectFactorys.MyObjectFactory&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="plugins-插件"><a href="#plugins-插件" class="headerlink" title="plugins 插件"></a>plugins 插件</h2><p>插件的作用其实就是一个拦截器，它可以拦截 MyBatis 里面的四大组件：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Executor(update, query, flushStatements, commit, rollback, getTransaction, close, isClosed) <span class="comment">//负责 SQL 语句的执行</span></span><br><span class="line">ParameterHandler(getParameterObject, setParameters) <span class="comment">//负责参数的填充</span></span><br><span class="line">ResultSetHandler(handleResultSets, handleOutputParameters) <span class="comment">//负责查询结果集的映射</span></span><br><span class="line">StatementHandler(prepare, parameterize, batch, update, query) <span class="comment">//负责 SQL 语句的构造</span></span><br></pre></td></tr></table></figure>
+<p>我们只要实现了 Interceptor 接口，就可以在这个拦截器里面对上面类里面的任意执行方法进行拦截，比如执行器 Executor 的更新方法 update()，然后加入一些自定义的东西。最后加入到配置中就生效了。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">interceptor</span>=<span class="string">&quot;space.xorex.mybatis.interceptors.MyInterceptors&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="environment-环境"><a href="#environment-环境" class="headerlink" title="environment 环境"></a>environment 环境</h2><p>MyBatis 里面的环境就是数据库相关的配置，在 <code>&lt;environments&gt;</code> 标签里面可以添加多个数据库环境配置，然后在 default 选项里面指明要使用的环境 id 即可。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">&quot;Dep-Env&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;Test-Env&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">transactionManager</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;Dep-Env&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">transactionManager</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中 transactionManager 标签主要是设置事务管理的级别，其属性 type 有两个选项 <code>JDBC/MANAGED</code> ，JDBC 指的是使用 JDBC 自带的 commit rollback 进心事务管理，而 MANAGED 表示啥都不做。</p>
+<p>当我们单独使用 MyBatis 的时候，可以用 JDBC 来控制事务。而和 Spring 整合之后，所以这条可以不配置（Spring 的事务控制的配置会直接覆盖 MyBatis 的！）</p>
+<p>其次的 dataSource 用来配置数据源，其属性 type 有 <code>UNPOOLED/POOLED/JNDI</code>，UNPOOLED 表示一次访问新建一个连接，POOLED 表示使用连接池来优化连接，JNDI 是在 EJB 服务器上使用的，这个可以先不管。</p>
+<p>然后 dataSource 里面就是设置各种数据源的信息了。</p>
+<hr>
+<p>当我们使用 Spring 进行整合的时候，上面的配置其实都没啥用（也不需要配置），我们将数据源和事务管理都交给 Spring 来完成，MyBatis 做好自己的 CRUD 即可。</p>
+<h2 id="databaseIdProvider-数据库厂商标识"><a href="#databaseIdProvider-数据库厂商标识" class="headerlink" title="databaseIdProvider 数据库厂商标识"></a>databaseIdProvider 数据库厂商标识</h2><p>这个主要是用来设置多数据库连接的时候，一个数据库厂商标识别名的问题，其中属性 type 的值 DB_VENDOR 是固定的，表示通过方法 <code>DatabaseMetaData#getDatabaseProductName()</code> 自动获取当前数据库连接的数据库厂商标识。</p>
+<p>获取标识之后，会在下面 property 标签里面的 name 属性匹配相同的数据库厂商标识，然后给它设置一个别名，为 value 里面的值。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">databaseIdProvider</span> <span class="attr">type</span>=<span class="string">&quot;DB_VENDOR&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;MySQL&quot;</span> <span class="attr">value</span>=<span class="string">&quot;mysql&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;SQL Server&quot;</span> <span class="attr">value</span>=<span class="string">&quot;sqlserver&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">databaseIdProvider</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>设置别名是为了方便，但是要在那里需要这个数据库厂商标识别名呢，答案就是在 Mapper.xml 的 SQL 语句映射文件里面，每一句 SQL 标签都有一个属性 databaseId 里面可以填写数据库厂商标识别名，标识这句 SQL 是在对应数据库上执行的。这样面对不停切换的数据库源，可以轻松的用不同 SQL 语句来应对。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getAllUsers&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;user&quot;</span> <span class="attr">databaseId</span>=<span class="string">&quot;mysql&quot;</span>&gt;</span></span><br><span class="line">    select * from users;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getAllUsers&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;user&quot;</span> <span class="attr">databaseId</span>=<span class="string">&quot;sqlserver&quot;</span>&gt;</span></span><br><span class="line">    select * from users;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="mappers-映射器"><a href="#mappers-映射器" class="headerlink" title="mappers 映射器"></a>mappers 映射器</h2><p>用来找 SQL 的 mapper.xml 映射文件的，分为单个配置和批量配置：</p>
+<h3 id="单个配置"><a href="#单个配置" class="headerlink" title="单个配置"></a>单个配置</h3><p>使用 mapper 标签，resource 是从类路径下面开始找的指定配置文件，class 根据接口全类名在同级目录下找同名配置文件的，url 是从磁盘（格式为本地文件传输协议 <code>file:///</code> ）或者网络上根据路径找的映射文件。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">&quot;space/xorex/mybatis/Mapper/UserMapper.xml&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">class</span>=<span class="string">&quot;space.xorex.mybatis.Mapper.UserMapper&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">url</span>=<span class="string">&quot;file:///D:/MyBatis/src/main/java/space/xorex/mybatis/Mapper/UserMapper.xml&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="批量配置"><a href="#批量配置" class="headerlink" title="批量配置"></a>批量配置</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;space.xorex.mybatis.Mapper&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用 package 标签，设置一个包名，然后会自动在包的同级目录下面找到所有的 xml 映射文件，根据类和 xml 文件名称相同进行匹配。</p>
+<h3 id="优先级问题"><a href="#优先级问题" class="headerlink" title="优先级问题"></a>优先级问题</h3><p>需要注意的是，四者完全冲突，建议一个 mapper 只使用一种方法进行映射。</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>MyBatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatis-01-基础与配置</title>
+    <url>/2021/07/16/3074f743feb9/</url>
     <content><![CDATA[<h2 id="MyBatis-概述"><a href="#MyBatis-概述" class="headerlink" title="MyBatis 概述"></a>MyBatis 概述</h2><p>Mybatis 是一种持久层的框架，通过建立接口的方法和 XML 注册的 SQL 语句的映射关系来实现对数据库的操作。</p>
 <h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><h3 id="获取数据库连接之前"><a href="#获取数据库连接之前" class="headerlink" title="获取数据库连接之前"></a>获取数据库连接之前</h3><p>首先获取数据库的连接实例 SqlSession 的连接池 SqlSessionFactory：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> SqlSessionFactory factory; <span class="comment">//连接池</span></span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String resource=<span class="string">&quot;MyBatis-config.xml&quot;</span>; <span class="comment">//连接池的配置文件</span></span><br><span class="line">        InputStream inputstream = Resources.getResourceAsStream(resource); <span class="comment">//将配置文件读入流中</span></span><br><span class="line">        factory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputstream); <span class="comment">//按照配置文件建造 SqlSession 连接池</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SqlSession <span class="title">getSession</span><span class="params">()</span> </span>&#123; <span class="comment">//从连接池获取连接</span></span><br><span class="line">        <span class="keyword">return</span> factory.openSession();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -62,6 +271,8 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryUserByUserName&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;space.xorex.pojo.User&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;string&quot;</span>&gt;</span> </span><br><span class="line"><span class="comment">&lt;!--这里 string 就是一个规定好的 java.lang.String 的别名--&gt;</span></span><br><span class="line">    select *</span><br><span class="line">    from user</span><br><span class="line">    where userName=#&#123;userName&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="获取-Mapper-实例"><a href="#获取-Mapper-实例" class="headerlink" title="获取 Mapper 实例"></a>获取 Mapper 实例</h3><p>直接用 MybatisUtils 里面的 getSession() 获取连接，然后调用 SqlSession 的 getMapper() 获取对应 Mapper 接口的实现对象。都用完之后，SqlSession 需要提交 commit() 和关闭 close()。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserMapperTest</span> </span>&#123;</span><br><span class="line">    SqlSession session=MybatisUtils.getSession();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        UserMapper mapper=session.getMapper(UserMapper.class);</span><br><span class="line">        mapper.insertUser(<span class="string">&quot;This&quot;</span>, <span class="string">&quot;That&quot;</span>);</span><br><span class="line">        session.commit(); <span class="comment">//修改完数据库需要提交</span></span><br><span class="line">        session.close(); <span class="comment">//使用完连接记得关闭</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>需要说一下的是，这里获取的 Mapper 接口实现类，其实是一个动态代理类，叫作 MapperProxy，这个动态代理类是 Mybatis 根据配置文件自动生成的。</p>
 <h2 id="参数映射"><a href="#参数映射" class="headerlink" title="参数映射"></a>参数映射</h2><h3 id="多参数在-SQL-中的映射"><a href="#多参数在-SQL-中的映射" class="headerlink" title="多参数在 SQL 中的映射"></a>多参数在 SQL 中的映射</h3><p>这里主要是 SQL 语句中 parameterType 属性和 @Param 注解的解释。</p>
 <p>其中因为 Java 基本上所有的版本都是支持反射获取方法参数类型 （Method 类 getParameterTypes()），所以对于 parameterType 这个属性完全可以不写，Mybatis 完全可以通过反射拿到。</p>
 <p>但是 Mybatis 拿到的仅仅只是方法参数的类型，是拿不到参数名的，编译之后就成了 var1 var2 这样的，所以对于多个参数进行的映射如 <code>public void insertUser(String userName,String password);</code> 这样，只能用一些特殊的技巧填入 SQL 语句中的 #{} 里面：</p>
@@ -173,7 +384,7 @@
 <h2 id="增删查改"><a href="#增删查改" class="headerlink" title="增删查改"></a>增删查改</h2><p>数据库方面原本是想要使用 Mybatis Generator 进行实现的，但是出现了不知道为什么的错误，所以决定自己写代码：</p>
 ]]></content>
       <categories>
-        <category>开发知识</category>
+        <category>项目记录</category>
       </categories>
       <tags>
         <tag>SSM</tag>
@@ -6320,7 +6531,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#111;&#x6d;&#x65;&#111;&#110;&#x65;&#64;&#x72;&#x75;&#110;&#111;&#111;&#98;&#x2e;&#x63;&#111;&#109;">&#115;&#111;&#x6d;&#x65;&#111;&#110;&#x65;&#64;&#x72;&#x75;&#110;&#111;&#111;&#98;&#x2e;&#x63;&#111;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#x6d;&#x65;&#x6f;&#110;&#101;&#x40;&#114;&#117;&#x6e;&#111;&#111;&#98;&#46;&#99;&#111;&#x6d;">&#x73;&#x6f;&#x6d;&#x65;&#x6f;&#110;&#101;&#x40;&#114;&#117;&#x6e;&#111;&#111;&#98;&#46;&#99;&#111;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
