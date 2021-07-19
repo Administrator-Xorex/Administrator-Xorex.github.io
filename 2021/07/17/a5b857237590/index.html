@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MyBatis-03-XML映射文件 | Xorex</title><meta name="keywords" content="MyBatis"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="标签属性insert update delete这个三个标签分别负责实现：插入更新和删除，三者的属性非常接近。 属性设置   属性 描述    id 此语句绑定接口的方法   parameterType 用来说明方法输入的参数类型，但这个类型通过反射可以拿到，所以不需要写   flushCache true&#x2F;false:true此语句被调用之后刷新本地缓存和二级缓存。   timeout 整形等待">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis-03-XML映射文件">
+<meta property="og:url" content="https://xorex.space/2021/07/17/a5b857237590/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="标签属性insert update delete这个三个标签分别负责实现：插入更新和删除，三者的属性非常接近。 属性设置   属性 描述    id 此语句绑定接口的方法   parameterType 用来说明方法输入的参数类型，但这个类型通过反射可以拿到，所以不需要写   flushCache true&#x2F;false:true此语句被调用之后刷新本地缓存和二级缓存。   timeout 整形等待">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/190.jpg">
+<meta property="article:published_time" content="2021-07-17T08:04:33.000Z">
+<meta property="article:modified_time" content="2021-07-19T12:06:46.891Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="MyBatis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/190.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2021/07/17/a5b857237590/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-19 20:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">192</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">135</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MyBatis-03-XML映射文件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-07-17T08:04:33.000Z" title="undefined 2021-07-17 16:04">2021-07-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/">开发知识</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="标签属性"><a href="#标签属性" class="headerlink" title="标签属性"></a>标签属性</h2><h3 id="insert-update-delete"><a href="#insert-update-delete" class="headerlink" title="insert update delete"></a>insert update delete</h3><p>这个三个标签分别负责实现：插入更新和删除，三者的属性非常接近。</p>
+<h4 id="属性设置"><a href="#属性设置" class="headerlink" title="属性设置"></a>属性设置</h4><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>此语句绑定接口的方法</td>
+</tr>
+<tr>
+<td>parameterType</td>
+<td>用来说明方法输入的参数类型，但这个类型通过反射可以拿到，所以不需要写</td>
+</tr>
+<tr>
+<td>flushCache</td>
+<td><code>true/false:true</code>此语句被调用之后刷新本地缓存和二级缓存。</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>整形等待数据库的最长秒数，这个不用填，交给 Spring 控制</td>
+</tr>
+<tr>
+<td>statementType</td>
+<td>执行 SQL 使用的语句类型，可选 STATEMENT，PREPARED 或 CALLABLE，表示 Statement，PreparedStatement 和 CallableStatement，默认PREPARED</td>
+</tr>
+<tr>
+<td>useGeneratedKeys（适用于 insert 和 update）</td>
+<td><code>true/false:false</code> 开启之后，执行完 SQL 会在传入的对象中自动填写数据库生成的主键值（需要设置keyProperty）</td>
+</tr>
+<tr>
+<td>keyProperty（适用于 insert 和 update）</td>
+<td>搭配上面的 useGeneratedKeys 使用，指明传入参数的哪个属性对应数据库主键。</td>
+</tr>
+<tr>
+<td>keyColumn（适用于 insert 和 update）</td>
+<td>对于某些主键列不在第一个的数据库，需要设置这个，指明哪一列是主键的列，才能配合使用上面两项设置。</td>
+</tr>
+<tr>
+<td>databaseId</td>
+<td>用来指明这条 SQL 语句执行的数据库类型。</td>
+</tr>
+</tbody></table>
+<h4 id="获取自增主键"><a href="#获取自增主键" class="headerlink" title="获取自增主键"></a>获取自增主键</h4><p>在 SQL 语句里面设置 useGeneratedKeys 和 keyProperty：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertUser&quot;</span> <span class="attr">keyProperty</span>=<span class="string">&quot;id&quot;</span> <span class="attr">useGeneratedKeys</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    SQL statement...</span><br><span class="line"><span class="tag">&lt;<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后用于新插入的对象 user 执行完 SQL 语句之后，就会被自动赋值 id 属性为生成的主键值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    UserMapper mapper = session.getMapper(UserMapper.class);</span><br><span class="line">    User user=<span class="keyword">new</span> User(<span class="string">&quot;Xorex&quot;</span>, <span class="string">&quot;Tempest&quot;</span>, <span class="keyword">new</span> UserAddress(<span class="string">&quot;Xorex&quot;</span>,<span class="string">&quot;China&quot;</span>));</span><br><span class="line">    mapper.insertUser(user);</span><br><span class="line">    System.out.println(user.getId());</span><br><span class="line">    session.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><h4 id="属性设置-1"><a href="#属性设置-1" class="headerlink" title="属性设置"></a>属性设置</h4><p>这里只说说和上面三条不太一样的：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>resultType</td>
+<td>设置返回值类型，非常用类型必须填写。</td>
+</tr>
+<tr>
+<td>resultMap</td>
+<td>设置结果映射，和 resultType 二选一</td>
+</tr>
+<tr>
+<td>useCache</td>
+<td><code>true/false:true</code> 查询结果会放在二级缓存中</td>
+</tr>
+<tr>
+<td>resultSetType</td>
+<td>用于设置 JDBC 获取的结果集的类型 FORWARD_ONLY 指的是只能用 next() 向下读取，SCROLL_SENSITIVE 可以实现结果前后滚动读取和相对坐标跳跃读取，而选项 SCROLL_INSENSITIVE 的结果集不仅可以前后滚动读取，还可以实时感知数据库的更新（不包括插入和删除），也就是获取的结果集在不同时间调用的时候，拿到的都是最新的数据。一般这个选项不需要我们设置，使用默认的 unset 即可。</td>
+</tr>
+<tr>
+<td>resultOrdered</td>
+<td>和 MyBatis 缓存有关，设置为 true 之后表示数据是根据 key 相同分好组的，MyBatis 就可以进行解析优化。具体用法后面再讨论。</td>
+</tr>
+<tr>
+<td>resultSet</td>
+<td>由于一些特殊语句（比如两条 selete 查询）会返回多个结果集，为了操作不同结果集，就需要区分。这里是按照顺序设置结果集的名称 <code>resultSet=&quot;User,Address&quot;</code> 这样为两条 SQL 返回的不同结果集命名。</td>
+</tr>
+</tbody></table>
+<h2 id="参数映射"><a href="#参数映射" class="headerlink" title="参数映射"></a>参数映射</h2><h3 id="单参数映射"><a href="#单参数映射" class="headerlink" title="单参数映射"></a>单参数映射</h3><p>当我们的方法参数为一个单个参的时候，又分为很多种情况。</p>
+<ol>
+<li><p>为 MyBatis 内置的较为基本的类型的时候，MyBatis 会直接将其返回调用 toString() 填充到 SQL 语句中。</p>
+</li>
+<li><p>为 POJO 类型的时候，会根据 <code>#&#123;VarName&#125;</code> 构造 getVarName() 方法获取 POJO 值，填充 SQL 语句。</p>
+</li>
+<li><p>为 Map 类型的时候，会根据 <code>#&#123;Varname&#125;</code> 名字作为 Key 从 Map 中取出 value，填充到 SQL 语句中。</p>
+</li>
+<li><p>为 List 类型的时候：</p>
+</li>
+<li><p>为 数组类型的时候：</p>
+</li>
+</ol>
+<h3 id="多参数映射"><a href="#多参数映射" class="headerlink" title="多参数映射"></a>多参数映射</h3><h4 id="多参数入参解决方案"><a href="#多参数入参解决方案" class="headerlink" title="多参数入参解决方案"></a>多参数入参解决方案</h4><p>这里主要是 SQL 语句中 parameterType 属性和 @Param 注解的解释。</p>
+<p>其中因为 Java 基本上所有的版本都是支持反射获取方法参数类型 （Method 类 getParameterTypes()），所以对于 parameterType 这个属性完全可以不写，Mybatis 完全可以通过反射拿到。</p>
+<p>但是 Mybatis 拿到的仅仅只是方法参数的类型，是拿不到参数名的，编译之后就成了 var1 var2 这样的，所以对于多个参数进行的映射如 <code>public void insertUser(String userName,String password);</code> 这样，只能用一些特殊的技巧填入 SQL 语句中的 #{} 里面：</p>
+<ol>
+<li>使用数字表示参数顺序</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertUser&quot;</span>&gt;</span></span><br><span class="line">    insert into user (username,password) values (#&#123;0&#125;,#&#123;1&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通过数字来表示方法中的第 0 个参数，第 1 个参数等等。</p>
+<ol start="2">
+<li>使用 @Param(“Name”) 来定义参数名</li>
+</ol>
+<p>使用 Mybatis 提供的注解 @Param 来对方法中的参数起一个别名。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUser</span><span class="params">(<span class="meta">@Param(&quot;userNameVar&quot;)</span> String userName,<span class="meta">@Param(&quot;passwordVar&quot;)</span> String password)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>然后就可以在 SQL 语句中使用我们在 @Param 中定义的别名了。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertUser&quot;</span>&gt;</span></span><br><span class="line">    insert into user (username,password) values (#&#123;userNameVar&#125;,#&#123;passwordVar&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>将多个参数封装为 Map 之后传入</li>
+</ol>
+<p>自己构造一个参数的 参数名-&gt;参数值 的 Map。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    UserMapper mapper = session.getMapper(UserMapper.class);</span><br><span class="line">    HashMap&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;userName&quot;</span>, <span class="string">&quot;Xorex&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;password&quot;</span>, <span class="string">&quot;Tempest&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;userAddress&quot;</span>,<span class="string">&quot;China&quot;</span>);</span><br><span class="line">    mapper.insertUser(map);</span><br><span class="line">    session.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 SQL 里面直接写 Map 的 key 就能获取自己传入的 value。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertUser&quot;</span>&gt;</span></span><br><span class="line">    insert into user (user_name,password)</span><br><span class="line">    values(#&#123;userName&#125;,#&#123;password&#125;);</span><br><span class="line">    insert into address (user_name,user_address)</span><br><span class="line">    values(#&#123;userName&#125;,#&#123;userAddress&#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>封装成 POJO 入参</li>
+</ol>
+<p>将所有需要入参的参数封装为一个 POJO，然后就能像使用 Map 一样，用属性名取出参数值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    UserMapper mapper = session.getMapper(UserMapper.class);</span><br><span class="line">    mapper.insertUser(<span class="keyword">new</span> User(<span class="string">&quot;Xorex&quot;</span>, <span class="string">&quot;Tempest&quot;</span>, <span class="keyword">new</span> UserAddress(<span class="string">&quot;Xorex&quot;</span>,<span class="string">&quot;China&quot;</span>)));</span><br><span class="line">    session.commit();</span><br><span class="line">    session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertUser&quot;</span>&gt;</span></span><br><span class="line">    insert into user (user_name,password)</span><br><span class="line">    values(#&#123;userName&#125;,#&#123;password&#125;);</span><br><span class="line">    insert into address (user_name,user_address)</span><br><span class="line">    values(#&#123;userAddress.userName&#125;,#&#123;userAddress.userAddress&#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="多参数入参原理"><a href="#多参数入参原理" class="headerlink" title="多参数入参原理"></a>多参数入参原理</h4><p>其实只要你的方法参数数量大于 1 ，那么就会被 MyBatis 封装为 Map 类型，通过 Key-&gt;Value 来在 SQL 中填充值。</p>
+<p>如果在方法参数的地方标注了 @Param(“Alias”)，那么封装 Map 的时候这里的 Key 就是自己设置的 Alias，如果没标注，那么就是 arg1 arg2 这些。</p>
+<p>而从 Map 中取出来的值也是原原本本的传入的参数类型，不会改变。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">(<span class="meta">@Param(&quot;user&quot;)</span> User user,<span class="meta">@Param(&quot;address&quot;)</span> String address)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这里面需要取值的时候，user 取出来一个 User 对象，address 取出来一个 String 对象。</p>
+<h2 id="结果映射"><a href="#结果映射" class="headerlink" title="结果映射"></a>结果映射</h2><p>Java 是可以通过反射拿到方法的返回值类型，但是对于 List Map 这样用到了泛型的，是无法拿到泛型的具体类型，也自然无法进行封装，所以才会引入 resultType 和 resultMap 来解决这个问题，两者将作为反射的一个补充。</p>
+<h3 id="列名和属性一一对应"><a href="#列名和属性一一对应" class="headerlink" title="列名和属性一一对应"></a>列名和属性一一对应</h3><p>当数据库的列名和属性名一一对应的时候，就不需要自定义映射规则了，只需要指定映射结果类型即可。</p>
+<ol>
+<li><p>当设置为 POJO 类型的时候，会根据列名和属性名进行一一映射，如果名字相同，则可以映射成功，如果不相同，则需要引入 resultMap 来自定义映射规则。</p>
+</li>
+<li><p>当设置为 List 类型的时候，resultType 应该填写 <code>List&lt;Type&gt;</code> 里面的数据类型 Type，多条结果会自动封装为 List。</p>
+</li>
+<li><p>当想要将一条数据的列名作为 Key，值作为 Value，返回值类型为 Map&lt;String,Object&gt;，resultType 应该填写 map。</p>
+</li>
+<li><p>当想要将主键作为 Key，剩下其余的值封装为 POJO 作为 Value 的时候，返回值类型为 Map&lt;KeyType,POJOType&gt;，resultType 应该填写 POJO 的类型。并在接口方法出添加注解 <code>@MapKey(&quot;KeyColumn&quot;)</code> 来指明拿哪一列的值作为 Map 中 POJO 的 Key。</p>
+</li>
+</ol>
+<h3 id="列名和属性不对应"><a href="#列名和属性不对应" class="headerlink" title="列名和属性不对应"></a>列名和属性不对应</h3><p>这个时候就无法自动映射了，需要我们指定映射规则，也就是填写 resultMap。</p>
+<p>需要注意的是，当我们设置了驼峰下划线自动映射之后，也就是 mapUnderScoreToCamelCase 之后。这玩意只能在 <strong>自动匹配</strong> 的时候生效，也就是使用 resultType 或者 resultMap 设置属性 autoMapping=ture 的时候，会在自动映射的属性-列中自动进行下划线驼峰转化。</p>
+<p>当你进行手动映射的时候，只能老老实实写 SQL 语句里面的真实列名进行手动映射，mapUnderScoreToCamelCase 不会生效的！！！</p>
+<h4 id="resultMap-标签属性"><a href="#resultMap-标签属性" class="headerlink" title="resultMap 标签属性"></a>resultMap 标签属性</h4><ol>
+<li>id 定义此 resultMap 的 id。</li>
+<li>type 定义此 resultMap 结果映射的类。</li>
+<li>autoMapping <code>true/false:false</code>，在 resultMap 中开启自动映射。</li>
+<li>extends 外部继承一个 resultMap，并在它后面补充（概念上是和 Java 的继承是一样的）</li>
+</ol>
+<h4 id="resultMap-内部标签"><a href="#resultMap-内部标签" class="headerlink" title="resultMap 内部标签"></a>resultMap 内部标签</h4><ol>
+<li>&lt;id&gt; 定义 ID 映射，有特殊优化。</li>
+<li>&lt;result&gt; 定义一个普通的映射</li>
+<li>&lt;association&gt; 关联，定义一个内联的 resultMap，给是属性的 POJO 赋值。</li>
+<li>&lt;constructor&gt; 构造器，利用构造器给结果赋值。</li>
+<li>&lt;collection&gt; 集合，将一对多的查询结果的多的部分封装为集合类型。</li>
+<li>&lt;discriminator&gt; 鉴别器，</li>
+</ol>
+<p>下面主要介绍后三个的用法:</p>
+<h5 id="constructor-构造器"><a href="#constructor-构造器" class="headerlink" title="constructor 构造器"></a>constructor 构造器</h5><p>指的是使用 POJO 里面的构造器进行封装参数，参数传入顺序是按照标签顺序进行的，只需要写 javaType 和 column 两个属性即可。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;UserMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;user&quot;</span> <span class="attr">autoMapping</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;userAddress&quot;</span> <span class="attr">javaType</span>=<span class="string">&quot;useraddress&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">arg</span> <span class="attr">javaType</span>=<span class="string">&quot;string&quot;</span> <span class="attr">column</span>=<span class="string">&quot;user_name&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">arg</span> <span class="attr">javaType</span>=<span class="string">&quot;string&quot;</span> <span class="attr">column</span>=<span class="string">&quot;user_address&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果想要按照参数名来进行传参而不是顺序，则需要在 POJO 的构造方法的参数里面添加 <code>@Param(&quot;paramName&quot;)</code> 注解，然后在 arg 标签里面指定属性 <code>name=paramName</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">UserAddress</span><span class="params">(<span class="meta">@Param(&quot;userName&quot;)</span> String userName, <span class="meta">@Param(&quot;userAddress&quot;)</span> String userAddress)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.userName = userName;</span><br><span class="line">    <span class="keyword">this</span>.userAddress = userAddress;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;UserMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;user&quot;</span> <span class="attr">autoMapping</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;userAddress&quot;</span> <span class="attr">autoMapping</span>=<span class="string">&quot;false&quot;</span> <span class="attr">javaType</span>=<span class="string">&quot;useraddress&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor</span>&gt;</span> <span class="comment">&lt;!--更换位置之后也不需要担心顺序哦--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">arg</span> <span class="attr">javaType</span>=<span class="string">&quot;string&quot;</span> <span class="attr">column</span>=<span class="string">&quot;user_address&quot;</span> <span class="attr">name</span>=<span class="string">&quot;userAddress&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">arg</span> <span class="attr">javaType</span>=<span class="string">&quot;string&quot;</span> <span class="attr">column</span>=<span class="string">&quot;user_name&quot;</span> <span class="attr">name</span>=<span class="string">&quot;userName&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">constructor</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="collection-集合"><a href="#collection-集合" class="headerlink" title="collection 集合"></a>collection 集合</h5><p>collection 主要是用来封装一对多的情况，也就是 POJO 属性有集合类型的情况。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> List&lt;UserAddress&gt; userAddress;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为是一对多，所以查出来的条数是多的数量，因此在<strong>对一使用自动映射</strong>的时候，会因为有多条数据无法对应上一而报错。 <code>Expected one result (or null) to be returned by selectOne(), but found: 3</code></p>
+<p>正确的解决方案就是：先手动映射上一列，到后面映射集合元素的时候，就会对应上多条数据，从而避免多条数据无法对应上，手动映射随便一列就行，我这里选的是主键。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;UserMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;user&quot;</span> <span class="attr">autoMapping</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;password&quot;</span> <span class="attr">property</span>=<span class="string">&quot;password&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;userAddress&quot;</span> <span class="attr">javaType</span>=<span class="string">&quot;arraylist&quot;</span> <span class="attr">ofType</span>=<span class="string">&quot;useraddress&quot;</span> <span class="attr">autoMapping</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>collection 和其他标签<strong>唯一不同</strong>的地方是，标注集合内元素类型使用的是 <code>ofType</code> 属性，而我们在其他标签（比如 association）指明映射类型使用的 javaType 在这里面则是值生成的集合的类型，比如 ArrayList，LinkedList 等等。</p>
+<h5 id="discriminator-鉴别器"><a href="#discriminator-鉴别器" class="headerlink" title="discriminator 鉴别器"></a>discriminator 鉴别器</h5><p>这个东西用的不多，就先不学了。</p>
+<h5 id="分级查询"><a href="#分级查询" class="headerlink" title="分级查询"></a>分级查询</h5><p>记得在配置中有 lazyLoadingEnabled aggressiveLazyLoading 两条关于懒加载，按需加载，延迟加载的配置，这些配置就是作用于分级查询的语句的。</p>
+<p>分级查询针对对象是内联属性，也就是 collection 和 association 标签，实现方式就是将联合查询的 SQL 语句拆分成两句简单的查询，然后分两次调用。不同的是第二次调用是通过配置来完成的：</p>
+<p>还是这样一个 POJO：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> List&lt;UserAddress&gt; userAddress;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后将内联查询拆分成两条单独的 SQL 语句，第一条 SQL 只处理非内联属性的值获取，第二条 SQL 负责处理内联属性的值获取。然后在 resultMap 对内联属性进行映射处理的时候，添加数据获取源 <code>select=&quot;&quot;</code> 表明通过另外一条 SQL 查询获取数据，对于此 SQL 的输入参数，则通过上一条 SQL 查询结果获取，设置为属性 column 将上一条结果的某一列的值传给下一条 SQL。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;UserMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;user&quot;</span> <span class="attr">autoMapping</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;user_name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;userName&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;userAddress&quot;</span> <span class="attr">ofType</span>=<span class="string">&quot;useraddress&quot;</span> <span class="attr">autoMapping</span>=<span class="string">&quot;true&quot;</span> <span class="attr">select</span>=<span class="string">&quot;getUserAddressByUserName&quot;</span> <span class="attr">column</span>=<span class="string">&quot;user_name&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getUserByUserName&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;UserMap&quot;</span>&gt;</span></span><br><span class="line">    select * from user where user_name=#&#123;userName&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getUserAddressByUserName&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;useraddress&quot;</span>&gt;</span></span><br><span class="line">    select * from address where user_name=#&#123;userName&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是，指定的数据传递 column 属性之后，回<strong>对这一列数据的自动封装有一定影响</strong>，需要重新手动映射一下，也就是因为 <code>column=&quot;user_name&quot;</code> 多出来的 <code>&lt;result column=&quot;user_name&quot; property=&quot;userName&quot;/&gt;</code>。</p>
+<p>这样分级查询就构建好了！！！</p>
+<p>对于第二级 SQL 的输入为多个参数的情况，使用 <code>column=&#123;key1=column1,key2=column2&#125;</code> 这样来解决，key 为我们在 <code>@Param()</code> 定义的别名，column 为上一条查询结果的列名。</p>
+<hr>
+<p>构建完分级查询之后，最大的意义就是使用延迟加载来提高数据库性能！！！</p>
+<p>只需要将 lazyLoadingEnabled 设置为 true 表明系统可以使用延迟加载，然后将 aggressiveLazyLoading 设置为 false ，关闭延迟加载侵入。这样分级查询的第二级就只会在需要（被调用的时候）进行了！！！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2021/07/17/a5b857237590/">https://xorex.space/2021/07/17/a5b857237590/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MyBatis/">MyBatis</a></div><div class="post_share"><div class="social-share" data-image="/waifus/190.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/19/6df2c6bea164/"><img class="prev-cover" src="/waifus/191.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MyBatis-04-动态SQL和缓存系统</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/17/10f39f81a384/"><img class="next-cover" src="/waifus/189.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MyBatis-02-全局配置文件</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">要成为世界上最幸福的人啊！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">192</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">135</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">标签属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#insert-update-delete"><span class="toc-number">1.1.</span> <span class="toc-text">insert update delete</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">属性设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE"><span class="toc-number">1.1.2.</span> <span class="toc-text">获取自增主键</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#select"><span class="toc-number">1.2.</span> <span class="toc-text">select</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E8%AE%BE%E7%BD%AE-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">属性设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E6%98%A0%E5%B0%84"><span class="toc-number">2.</span> <span class="toc-text">参数映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%8F%82%E6%95%B0%E6%98%A0%E5%B0%84"><span class="toc-number">2.1.</span> <span class="toc-text">单参数映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%8F%82%E6%95%B0%E6%98%A0%E5%B0%84"><span class="toc-number">2.2.</span> <span class="toc-text">多参数映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E5%8F%82%E6%95%B0%E5%85%A5%E5%8F%82%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">2.2.1.</span> <span class="toc-text">多参数入参解决方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E5%8F%82%E6%95%B0%E5%85%A5%E5%8F%82%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.2.</span> <span class="toc-text">多参数入参原理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84"><span class="toc-number">3.</span> <span class="toc-text">结果映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%90%8D%E5%92%8C%E5%B1%9E%E6%80%A7%E4%B8%80%E4%B8%80%E5%AF%B9%E5%BA%94"><span class="toc-number">3.1.</span> <span class="toc-text">列名和属性一一对应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%90%8D%E5%92%8C%E5%B1%9E%E6%80%A7%E4%B8%8D%E5%AF%B9%E5%BA%94"><span class="toc-number">3.2.</span> <span class="toc-text">列名和属性不对应</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#resultMap-%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7"><span class="toc-number">3.2.1.</span> <span class="toc-text">resultMap 标签属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#resultMap-%E5%86%85%E9%83%A8%E6%A0%87%E7%AD%BE"><span class="toc-number">3.2.2.</span> <span class="toc-text">resultMap 内部标签</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#constructor-%E6%9E%84%E9%80%A0%E5%99%A8"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">constructor 构造器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#collection-%E9%9B%86%E5%90%88"><span class="toc-number">3.2.2.2.</span> <span class="toc-text">collection 集合</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#discriminator-%E9%89%B4%E5%88%AB%E5%99%A8"><span class="toc-number">3.2.2.3.</span> <span class="toc-text">discriminator 鉴别器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E7%BA%A7%E6%9F%A5%E8%AF%A2"><span class="toc-number">3.2.2.4.</span> <span class="toc-text">分级查询</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
