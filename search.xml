@@ -41,9 +41,67 @@
       </tags>
   </entry>
   <entry>
+    <title>SpringBoot-03-Web场景开发</title>
+    <url>/2021/07/31/7c6a2d6fac9a/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>SpringBoot-02-自动配置原理</title>
     <url>/2021/07/30/47898b4fe443/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h2 id="自动配置原理"><a href="#自动配置原理" class="headerlink" title="自动配置原理"></a>自动配置原理</h2><h3 id="SpringBootApplication-解析"><a href="#SpringBootApplication-解析" class="headerlink" title="@SpringBootApplication 解析"></a>@SpringBootApplication 解析</h3><p>我们是在 <code>@SpringBootApplication</code> 中确定的 SpringBoot 的程序入口，也是 SpringBoot 的初始化开始的地方。那么 SpringBoot 是如何实现自动配置的呢，将 <code>@SpringBootApplication</code> 点开，可以看到是下面三个注解组成的：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br></pre></td></tr></table></figure>
+<p><code>@SpringBootConfiguration</code> 本质就是个 <code>@Configuration</code> 表示这个类是一个配置类（也就是可以当作 applicationContext.xml 使用的类），比如在里面使用注解 <code>@Bean</code> 代替 <code>&lt;bean&gt;</code> 来配置 IOC 容器的 Bean。</p>
+<p><code>@ComponentScan</code> 主要是用来扫描包组件的，它可以自定义扫描的 BasePackage，如果没有指定的话，就是 <code>@SpringBootApplication</code> 所在的地方为 BasePackage 。</p>
+<p><code>@EnableAutoConfiguration</code> 这个是核心，又包含了下面的两种注解：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import(&#123;AutoConfigurationImportSelector.class&#125;)</span></span><br></pre></td></tr></table></figure>
+<h4 id="AutoConfigurationPackage"><a href="#AutoConfigurationPackage" class="headerlink" title="@AutoConfigurationPackage"></a>@AutoConfigurationPackage</h4><p>这里又套娃导入了一个 <code>@Import(&#123;Registrar.class&#125;)</code> ，点开 Registrar.class 可以看到，代码里面主要干了下面的事情：</p>
+<p>自动配置包类，注册了当前路径为下面的 PackageNames 作为配置的下属包（其实也对应 <code>@ComponentScan</code>）：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">AutoConfigurationPackages.register(getPackageNames().toArray()); <span class="comment">// 有简略</span></span><br></pre></td></tr></table></figure>
+<h4 id="Import-AutoConfigurationImportSelector-class"><a href="#Import-AutoConfigurationImportSelector-class" class="headerlink" title="@Import({AutoConfigurationImportSelector.class})"></a>@Import({AutoConfigurationImportSelector.class})</h4><p>这里主要导入了 AutoConfigurationImportSelector.class 这个类，主要干的事情就是：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> String[] selectImports () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.getAutoConfigurationEntry;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是获得 100 多个 web 的 starter 所需要配置的类的全类名（其实是在一个文件中写死的类名），然后返回。</p>
+<hr>
+<p>SpringBoot 更厉害的是，它不是全部都真的将所有的预设类实例化并添加到 IOC 容器中的，而是根据 <code>@Conditional</code> 注解，根据里面的条件判断是否加载这个类。</p>
+<p>比如虽然导入了 web-starter 的开发环境，可能需要 AOP 相关，但是 SpringBoot 是根据 <code>@ConditionalOnClass(Advice.class)</code> 来判断是否加载的，只有导入了 AspectJ 这个包（Advice.class 存在），SpringBoot 才会给你将 AOP 所需要的类都给加入到 IOC 容器中。</p>
+<p>这就是传说中的按需加载。</p>
+<h2 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h2><h3 id="具体实现细节"><a href="#具体实现细节" class="headerlink" title="具体实现细节"></a>具体实现细节</h3><p>上面大概说了说实利用 <code>@Conditional</code> 系列注解进行按需加载的，我们来结合一个熟悉的案例分析一下，DispatcherServlet:</p>
+<p>上面说到了返回的 100 多个配置类的全类名统一格式都是 XXXXAutoConfiguration，通过运行这些类，来对相关内容进行自动配置。</p>
+<p>我们点开 DispathcerServletAutoConfiguration，这个就是对 DispathcerServlet 进行自动配置的类，先看看程序头：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ConditionalOnClass(&#123;DispatcherServlet.class&#125;)</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter(&#123;ServletWebServerFactoryAutoConfiguration.class&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DispatcherServletAutoConfiguration</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@ConditionalOnClass</code>表示导入了 DispathcerSevlet（也就是 SpringMVC） 后才会运行下面的自动装配类。<code>@AutoConfigureAfter</code> 表示先自动加载完服务器的 AutoConfiguration 之后再加载自己。这两个都是启动装配的起始条件。</p>
+<p>再进一步就是子类 RegistrationConfiguration 了：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@EnableConfigurationProperties(&#123;WebMvcProperties.class&#125;)</span></span><br><span class="line"><span class="meta">@Import(&#123;DispatcherServletAutoConfiguration.DispatcherServletConfiguration.class&#125;)</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DispatcherServletRegistrationConfiguration</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@EnableConfigurationProperties</code> 表示使用 WebMvcProperties.class 内容作为配置文件，而这个类是使用 <code>spring.mvc</code> 作为配置的 prefix 的。</p>
+<p>前面都是讲了按需加载的一些东西，那么具体的 DispatcherServlet 的配置细节在那里呢？</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> DispatcherServletRegistrationBean <span class="title">dispatcherServletRegistration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    DispatcherServletRegistrationBean registration = <span class="keyword">new</span> DispatcherServletRegistrationBean(dispatcherServlet, webMvcProperties.getServlet().getPath());</span><br><span class="line">    registration.setName(<span class="string">&quot;dispatcherServlet&quot;</span>);</span><br><span class="line">    registration.setLoadOnStartup(webMvcProperties.getServlet().getLoadOnStartup());</span><br><span class="line">    multipartConfig.ifAvailable(registration::setMultipartConfig);</span><br><span class="line">    <span class="keyword">return</span> registration;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到是将一系列的配置信息都设置到了 registration 中，最后返回，这里就是将获取的所有配置信息设置的地方。</p>
+<h3 id="更改设置信息"><a href="#更改设置信息" class="headerlink" title="更改设置信息"></a>更改设置信息</h3><p>如何修改默认的设置信息呢，当然是在 application.properties 里面修改了，那么这些修改又是如何影响到 SpringBoot 的自动装配呢，我们以 CharacterEncodingFilter 的自动装配为例展示一下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@EnableConfigurationProperties(&#123;ServerProperties.class&#125;)</span> <span class="comment">//调用外部的 服务器设置</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(&#123;CharacterEncodingFilter.class&#125;)</span> <span class="comment">//有这个类才会进行自动初始化</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty(</span></span><br><span class="line"><span class="meta">    prefix = &quot;server.servlet.encoding&quot;,  //在调用的外部 ServerProperties 中 server.servlet.encoding 选项是否为enabled，如果是成立，如果不是失败，如果没有配置则默认为是。</span></span><br><span class="line"><span class="meta">    value = &#123;&quot;enabled&quot;&#125;,</span></span><br><span class="line"><span class="meta">    matchIfMissing = true</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpEncodingAutoConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Encoding properties;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//从外部的 ServerProerties 中获取关于编码的设置，并放入本地变量 properties 中</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HttpEncodingAutoConfiguration</span><span class="params">(ServerProperties properties)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.properties = properties.getServlet().getEncoding();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span> <span class="comment">//在 IOC 中创建 Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span> <span class="comment">//IOC 中必须没有手动创建此实例才会自动创建</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CharacterEncodingFilter <span class="title">characterEncodingFilter</span><span class="params">()</span> </span>&#123; <span class="comment">//根据读取的 properties 配置信息创建 Bean 并放入 IOC 中。</span></span><br><span class="line">        CharacterEncodingFilter filter = <span class="keyword">new</span> OrderedCharacterEncodingFilter();</span><br><span class="line">        filter.setEncoding(<span class="keyword">this</span>.properties.getCharset().name());</span><br><span class="line">        filter.setForceRequestEncoding(<span class="keyword">this</span>.properties.shouldForce(org.springframework.boot.web.servlet.server.Encoding.Type.REQUEST));</span><br><span class="line">        filter.setForceResponseEncoding(<span class="keyword">this</span>.properties.shouldForce(org.springframework.boot.web.servlet.server.Encoding.Type.RESPONSE));</span><br><span class="line">        <span class="keyword">return</span> filter;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据上面的代码，我们能看到配置信息的最重要来源就是上一级的 ServerProperties.class 里面获取的，那么 ServerProperties 又是如何生成的呢？</p>
+<p>上一篇文章前面提到了 <code>@ConfigurationProperties(prefix=&quot;XXX&quot;)</code> 标注了之后会从 application.properties 找到前缀为 XXX 的配置然后调用 set 方法进行配置注入。 ServerProperties.class 在创建之后会属性都是默认值，然后再经过 <code>@ConfigurationProperties(prefix=&quot;XXX&quot;)</code> 从配置文件中注入外部设置来覆盖默认设置。</p>
+<hr>
+<p>具体从读取到 @ConfigurationProperties 再到读取 application.properties 注入设置的详细源码，一定会再详细介绍的。</p>
+<p>现在对于 SpringBoot 的了解还是太浅了…… </p>
+<p>QAQ</p>
+<h2 id="自动装配总结"><a href="#自动装配总结" class="headerlink" title="自动装配总结"></a>自动装配总结</h2><ol>
+<li>SpringBoot 会首先获取所有自动装配运行类的名字，然后依次运行 XXXAutoConfiguration 的自动装配运行类，负责装配 XXX。</li>
+<li>自动装配运行类通过 <code>@Conditional</code> 系列注解，判断满足要求之后开始从 XXXProperties.class 中拿到具体的配置信息。XXXProperties 和 application.properties 绑定。</li>
+<li>自动装配运行类运行后会向 IOC 容器中添加很多配置好的组件，IOC 有了这些配置好的组件之后就拥有了对应的功能。</li>
+<li>可以通过自己使用 <code>@Bean</code> 向 IOC 中添加配件来实现自定义配置，或者在 application.properties 中设置自定义配置。</li>
+</ol>
+<h2 id="自动装配开发技巧"><a href="#自动装配开发技巧" class="headerlink" title="自动装配开发技巧"></a>自动装配开发技巧</h2><ol>
+<li><p>开发的时候将对应的场景依赖引入即可，xxx-starter</p>
+</li>
+<li><p>查看场景依赖的哪些元素装配了，可以在设置中设置 debug=true，会打印日志，Positive 生效部分，Negative 不生效部分</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
   </entry>
   <entry>
     <title>SpringBoot-01-快速开始和自动配置</title>
