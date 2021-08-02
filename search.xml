@@ -23,24 +23,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring 框架学习笔记</title>
-    <url>/2022/01/01/d68ebc25d776/</url>
-    <content><![CDATA[<h2 id="关于-Spring-框架"><a href="#关于-Spring-框架" class="headerlink" title="关于 Spring 框架"></a>关于 Spring 框架</h2><blockquote>
-<p>暂时放弃更新，完全学完 Spring 之后再来总结。</p>
-</blockquote>
-<h2 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h2><h3 id="set-方法属性注入"><a href="#set-方法属性注入" class="headerlink" title="set 方法属性注入"></a>set 方法属性注入</h3><p>具体方法就是使用 IOC 获取到对象之后，调用对象的 setXXX() 方法设置属性。</p>
-<h3 id="lt-property-gt-注入"><a href="#lt-property-gt-注入" class="headerlink" title="&lt;property&gt; 注入"></a>&lt;property&gt; 注入</h3><p>在 Spring 的 Bean XML 文件的 <code>&lt;bean&gt;&lt;/bean&gt;</code> 标签里面添加属性标签，<code>&lt;property&gt;</code> 标签内部有属性 name 和 value，用于设置属性值。这种方法本质上使用的是 <strong>setXXX()</strong> 方法完成的。</p>
-<h3 id="lt-constructor-arg-gt-注入"><a href="#lt-constructor-arg-gt-注入" class="headerlink" title="&lt;constructor-arg&gt; 注入"></a>&lt;constructor-arg&gt; 注入</h3><p>在 Spring 的 Bean XML 文件的 <code>&lt;bean&gt;&lt;/bean&gt;</code> 标签里面添加属性标签，<code>&lt;constructor-arg&gt;</code> 标签内部有属性 name 和 value，用于设置属性值。这种方法本质上使用的 <strong>构造方法</strong> 完成的，使用的时候一定要检查以下所对应的构造方法是否正确。</p>
-<h3 id="p-名称空间注入"><a href="#p-名称空间注入" class="headerlink" title="p 名称空间注入"></a>p 名称空间注入</h3><p>本质上使用 <strong>getXXX()</strong> 方法完成的，首先需要在 xml 头添加一条固定的属性：<code>xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</code> 然后就可以在 <code>&lt;bean&gt;</code> 里面通过给属性 <code>p:XXX</code> 来 set 对象的属性值了（这里 XXX 为对象属性名称）。</p>
-]]></content>
-      <categories>
-        <category>开发知识</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SpringBoot-04-动态资源处理</title>
     <url>/2021/08/01/d5fec45a0a25/</url>
     <content><![CDATA[<h2 id="RestFul-风格"><a href="#RestFul-风格" class="headerlink" title="RestFul 风格"></a>RestFul 风格</h2><h3 id="装配原理"><a href="#装配原理" class="headerlink" title="装配原理"></a>装配原理</h3><p>装配 SpringMVC 的时候就已经装配了 HiddenHttpMethodFilter，我们只需要在配置文件中开启使用即可。</p>
@@ -56,6 +38,32 @@
 <li>@PutMapping</li>
 <li>@DeleteMapping</li>
 </ol>
+<h2 id="请求处理"><a href="#请求处理" class="headerlink" title="请求处理"></a>请求处理</h2><p>详细的处理流程和 SpringMVC 是相同的，都是交给了 DispatcherServlet 来解决，所以我们可以完全按照 SpringMVC 的流程来进行请求处理：</p>
+<h3 id="基本注解"><a href="#基本注解" class="headerlink" title="基本注解"></a>基本注解</h3><ol>
+<li>@PathVariable 不指定名字的时候用 Map 接受所有的路径变量。</li>
+<li>@RequestHeader 不指定名字的时候用 Map 接受所有的请求头。</li>
+<li>@ModelAttribute 操作隐含模型，标注在属性获取数据，标注在方法上存入数据</li>
+<li>@RequestParam 不指定名字的时候用 Map 接受所有的请求参数。</li>
+<li>@RequestBody 获取请求体内所有数据。</li>
+<li>@CookieValue 加名字接收 Cookie 的 String 值或 Cookie 对象，不加名字没法用。</li>
+<li>@RequestAttribute 必须指定名字来获取指定的请求域对象的值，不支持 Map 全都拿走（为啥啊？）</li>
+<li>@MatrixVariable 获取矩阵变量的值。</li>
+</ol>
+<h3 id="矩阵变量"><a href="#矩阵变量" class="headerlink" title="矩阵变量"></a>矩阵变量</h3><p>首先需要明确一个矩阵变量的概念，对于普通的变量来说只能 <code>?key1=value1&amp;key2=value2</code> 这样通过字符串传递参数，而这些参数是一维的，是只能一个 key 对应一个 value 的。</p>
+<p>矩阵变量的意义是将字符串传递参数从一维变为二维，而多的一个维度就通过路径分隔实现的，也是通过 key=value 的形式表示一组参数，不同的是同一个维度（路径分割下）的参数通过前缀 <code>;</code> 隔开，一个 key 的多个 value 可以用 <code>,</code> 隔开。</p>
+<p><code>http://localhost:8080/Matrix/Boy;name=Xorex;hobby=coding,eat,sleep/Girl;name=yukino;hobby=play,outgoing,love</code></p>
+<p>需要注意的是，对于一个 <code>/&#123;&#125;/</code> 之间的内容来说，<code>;</code> 开头之后的一组 <code>key=value</code> 或 <code>key=value1,value2</code> 作为一个参数，可以有若干个以 <code>;</code> 开头的参数，他们组成了一个维度的矩阵变量。而 <code>;</code> 之前的字符串则是作为这个维度的路径变量，可以用 @PathVariable 来捕获。具体例子可以看下面的 Demo。</p>
+<p>这就是矩阵变量，有两个维度一个是性别维度，一个是个人信息的维度。而 @MatrixVariable 的作用就是从矩阵变量中提取信息。</p>
+<p>因为 SpringMVC 的 urlPathHelper 的属性 removeSemicolonContent 设置为了 true，也就是将 <code>;</code> 给移除掉了，导致无法使用矩阵变量，我们首先需要设置为 false 才可以，方式就是将生成 urlPathHelper 对象的 WebMvcConfigurer 配置类的生成 urlPathHelper 方法自己实现。</p>
+<p>WebMvcConfigurer 是一个有默认实现的接口（Java 8 新特性），我们只需要实现 WebMvcConfigurer 并单独重写 configurePathMath() 方法即可，然后扔到 IOC 容器中，会由于 @Conditional 系类注解导致不加载原来的，然后被使用的配置就是我们自己放入的 IOC 容器的这个：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Bean</span> <span class="comment">//在 IOC 容器中配置自定义 WebMvcConfigurer </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> WebMvcConfigurer <span class="title">webMvcConfigurer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> WebMvcConfigurer() &#123;</span><br><span class="line">        <span class="meta">@Override</span> <span class="comment">//因为默认实现机制，我们只需要重写一个方法就能实现接口</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configurePathMatch</span><span class="params">(PathMatchConfigurer configurer)</span> </span>&#123;</span><br><span class="line">            UrlPathHelper urlPathHelper = <span class="keyword">new</span> UrlPathHelper();</span><br><span class="line">            urlPathHelper.setRemoveSemicolonContent(<span class="keyword">false</span>);</span><br><span class="line">            configurer.setUrlPathHelper(urlPathHelper);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们就可以这样捕获上面的 URL（<code>http://localhost:8080/Matrix/Boy;name=Xorex;hobby=coding,eat,sleep/Girl;name=yukino;hobby=play,outgoing,love</code>） 了：</p>
+<p>使用 pathVar 来区分维度，value 选定参数，两者确定了矩阵变量里面的一个参数：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/Matrix/&#123;Boy&#125;/&#123;Girl&#125;&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title">getMatrix</span><span class="params">(<span class="meta">@MatrixVariable(pathVar = &quot;Boy&quot;,value = &quot;name&quot;)</span> String boyName,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     <span class="meta">@MatrixVariable(pathVar = &quot;Boy&quot;,value = &quot;hobby&quot;)</span> List&lt;String&gt; boyHobbys,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     <span class="meta">@MatrixVariable(pathVar = &quot;Girl&quot;,value = &quot;name&quot;)</span> String girlName,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     <span class="meta">@MatrixVariable(pathVar = &quot;Girl&quot;,value = &quot;hobby&quot;)</span> List&lt;String&gt; girlHobbys,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     <span class="meta">@PathVariable</span> Map&lt;String,String&gt; paths)</span> </span>&#123;</span><br><span class="line">    HashMap&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;boyName&quot;</span>, boyName);</span><br><span class="line">    map.put(<span class="string">&quot;boyHobbys&quot;</span>, boyHobbys);</span><br><span class="line">    map.put(<span class="string">&quot;girlName&quot;</span>, girlName);</span><br><span class="line">    map.put(<span class="string">&quot;girlHobbys&quot;</span>, girlHobbys);</span><br><span class="line">    map.put(<span class="string">&quot;pathMap&quot;</span>, paths);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;girlName&quot;</span>: <span class="string">&quot;yukino&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;girlHobbys&quot;</span>: [<span class="string">&quot;play&quot;</span>, <span class="string">&quot;outgoing&quot;</span>, <span class="string">&quot;love&quot;</span>],</span><br><span class="line">	<span class="attr">&quot;boyHobbys&quot;</span>: [<span class="string">&quot;coding&quot;</span>, <span class="string">&quot;eat&quot;</span>, <span class="string">&quot;sleep&quot;</span>],</span><br><span class="line">	<span class="attr">&quot;pathMap&quot;</span>: &#123;</span><br><span class="line">		<span class="attr">&quot;Boy&quot;</span>: <span class="string">&quot;Boy&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;Girl&quot;</span>: <span class="string">&quot;Girl&quot;</span></span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">&quot;boyName&quot;</span>: <span class="string">&quot;Xorex&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="请求参数-返回参数-源码解析"><a href="#请求参数-返回参数-源码解析" class="headerlink" title="请求参数/返回参数 源码解析"></a>请求参数/返回参数 源码解析</h2><h3 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h3><p>众所周知，SpringMVC 对于一个请求的处理通过 Adapter 来实现的，以 RequestMappingHandlerAdapter 来说，他就是请求和 @RequestMapping 标注方法之间的桥梁。</p>
+<p>我们对它主要来讨论一下映射的关系。</p>
 ]]></content>
       <categories>
         <category>开发知识</category>
