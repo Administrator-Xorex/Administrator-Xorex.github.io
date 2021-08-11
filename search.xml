@@ -84,7 +84,11 @@
 <p>以前我们需要 Config.xml 和 Mapper.xml，但是现在有了自动配置之后，我们就可以利用 application.yaml/properties 的 mybatis 前缀配置将 Config.xml 配置文件给省略掉：</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">map-underscore-to-camel-case:</span> <span class="literal">true</span> <span class="comment">#驼峰和下划线映射</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">classpath:MyBatis/Mapper/*.xml</span> <span class="comment">#mappers 位置定位</span></span><br></pre></td></tr></table></figure>
 <p>指明了 mapper.xml 还需要将 Mapper 的接口也放入 IOC 容器中才可以，这里使用注解 <code>@Mapper</code> （标注在接口处） 或者 <code>MapperScanner</code> （建议标注在和数据库配置相关的 @Configuration 的配置类上） 来注册 Mapper 接口。</p>
-<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><h3 id="JUnit5"><a href="#JUnit5" class="headerlink" title="JUnit5"></a>JUnit5</h3>]]></content>
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>还是引入 starter：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是 SpringBoot 默认是集成了 JUnit5 的，不包含其他的 JUnit 版本，不同的是不需要引入 Spring 环境了，在测试类的开头用 <code>@SpringBootTest</code> 就可以直接使用 SpringBoot 环境了。</p>
+<p>剩下的东西大部分和 JUnit4 差不多，以后做项目深入学一学，练一练。</p>
+]]></content>
       <categories>
         <category>开发知识</category>
       </categories>
@@ -7295,7 +7299,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#x6d;&#101;&#x6f;&#110;&#101;&#64;&#x72;&#x75;&#110;&#111;&#x6f;&#x62;&#x2e;&#x63;&#111;&#109;">&#115;&#x6f;&#x6d;&#101;&#x6f;&#110;&#101;&#64;&#x72;&#x75;&#110;&#111;&#x6f;&#x62;&#x2e;&#x63;&#111;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#109;&#x65;&#x6f;&#110;&#x65;&#x40;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#x2e;&#99;&#111;&#x6d;">&#x73;&#111;&#109;&#x65;&#x6f;&#110;&#x65;&#x40;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#x2e;&#99;&#111;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
