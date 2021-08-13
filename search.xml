@@ -88,6 +88,8 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>需要注意的是 SpringBoot 默认是集成了 JUnit5 的，不包含其他的 JUnit 版本，不同的是不需要引入 Spring 环境了，在测试类的开头用 <code>@SpringBootTest</code> 就可以直接使用 SpringBoot 环境了。</p>
 <p>剩下的东西大部分和 JUnit4 差不多，以后做项目深入学一学，练一练。</p>
+<h2 id="指标监控-Actuator"><a href="#指标监控-Actuator" class="headerlink" title="指标监控 Actuator"></a>指标监控 Actuator</h2><p>SpringBoot 已经内置集成了 Actuator 这个东西，我们只需要引入 spring-boot-starter-actuator 即可。</p>
+<p>具体的内容有点复杂，不太想学了，以后再搞吧……</p>
 ]]></content>
       <categories>
         <category>开发知识</category>
@@ -4869,8 +4871,8 @@
       <tags>
         <tag>XML</tag>
         <tag>Java</tag>
-        <tag>JSON</tag>
         <tag>思维导图</tag>
+        <tag>JSON</tag>
       </tags>
   </entry>
   <entry>
@@ -7299,7 +7301,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#109;&#x65;&#x6f;&#110;&#x65;&#x40;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#x2e;&#99;&#111;&#x6d;">&#x73;&#111;&#109;&#x65;&#x6f;&#110;&#x65;&#x40;&#114;&#117;&#x6e;&#x6f;&#111;&#x62;&#x2e;&#99;&#111;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#x6d;&#101;&#111;&#110;&#x65;&#64;&#114;&#x75;&#x6e;&#x6f;&#x6f;&#x62;&#x2e;&#x63;&#x6f;&#x6d;">&#x73;&#x6f;&#x6d;&#101;&#111;&#110;&#x65;&#64;&#114;&#x75;&#x6e;&#x6f;&#x6f;&#x62;&#x2e;&#x63;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -8090,8 +8092,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>MySQL</tag>
         <tag>数据库</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
