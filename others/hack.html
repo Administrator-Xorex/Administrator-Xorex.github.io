@@ -1,0 +1,50 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<script>
+const LaunchCode = Uint8Array.of(parseInt('20', 16),parseInt('05', 16),parseInt('0A', 16),parseInt('0A', 16),parseInt('05', 16),parseInt('05', 16),parseInt('00', 16),parseInt('43', 16))
+const KeepAliveCode = Uint8Array.of(parseInt('21', 16),parseInt('04', 16),parseInt('0A', 16),parseInt('0A', 16),parseInt('05', 16),parseInt('05', 16),parseInt('43', 16))
+
+function SendLaunchPacket(cha){
+    cha.writeValue(LaunchCode)
+}
+
+function SendPeriodicPacket(cha){
+    var tmp = new Date().getSeconds()
+    if (tmp <= 32 && tmp >= 27){
+        console.log("+1s")
+        SendLaunchPacket(cha)
+    }
+}
+
+function KeepAlive(cha){
+    cha.writeValue(KeepAliveCode)
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+function main() {
+    navigator.bluetooth.requestDevice({
+    filters: [{
+        name: 'XiaoanTech'
+    }],
+    optionalServices: ['0783b03e-8535-b5a0-7140-a304d2495cb7']
+    })
+    .then(device => device.gatt.connect())
+    .then(server => server.getPrimaryService('0783b03e-8535-b5a0-7140-a304d2495cb7'))
+    .then(service => service.getCharacteristic('0783b03e-8535-b5a0-7140-a304d2495cba'))
+    .then(characteristic => {
+        SendLaunchPacket(characteristic);
+        sleep(500);
+        setInterval(SendPeriodicPacket, 10, characteristic)
+        setInterval(KeepAlive, 1000, characteristic);
+    })
+}
+
+</script>
+</head>
+<body>
+<button style="width:100%;height:100%;display:block;" onclick="main();">Go!</button>
+
+</body></html>
