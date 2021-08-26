@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JVM-01-类加载子系统 | Xorex</title><meta name="keywords" content="JVM"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从零开始的 JVM 学习生活JVM 作为 Java 运行的平台，的确是需要好好玩一玩的！ JVM 声明周期JVM 生命周期分为 启动 执行 结束 三个阶段。 启动通过 BootStrap ClassLoader 这个类加载器把该虚拟机的初始类加载进来并执行（初始类负责完成启动工作，不同的 JVM 初始类叫法不同） 执行一个 Java 程序的执行本质就是一个 JVM 进程的执行，执行过程中可以看到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM-01-类加载子系统">
+<meta property="og:url" content="https://xorex.space/2021/08/25/14cb06146992/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="从零开始的 JVM 学习生活JVM 作为 Java 运行的平台，的确是需要好好玩一玩的！ JVM 声明周期JVM 生命周期分为 启动 执行 结束 三个阶段。 启动通过 BootStrap ClassLoader 这个类加载器把该虚拟机的初始类加载进来并执行（初始类负责完成启动工作，不同的 JVM 初始类叫法不同） 执行一个 Java 程序的执行本质就是一个 JVM 进程的执行，执行过程中可以看到">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/202.jpg">
+<meta property="article:published_time" content="2021-08-24T16:25:43.000Z">
+<meta property="article:modified_time" content="2021-08-26T10:32:54.377Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="JVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/202.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2021/08/25/14cb06146992/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-26 18:32'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">203</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">139</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JVM-01-类加载子系统</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-08-24T16:25:43.000Z" title="undefined 2021-08-25 00:25">2021-08-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB/">计算机体系</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="从零开始的-JVM-学习生活"><a href="#从零开始的-JVM-学习生活" class="headerlink" title="从零开始的 JVM 学习生活"></a>从零开始的 JVM 学习生活</h2><p>JVM 作为 Java 运行的平台，的确是需要好好玩一玩的！</p>
+<h2 id="JVM-声明周期"><a href="#JVM-声明周期" class="headerlink" title="JVM 声明周期"></a>JVM 声明周期</h2><p>JVM 生命周期分为 启动 执行 结束 三个阶段。</p>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>通过 BootStrap ClassLoader 这个类加载器把该虚拟机的初始类加载进来并执行（初始类负责完成启动工作，不同的 JVM 初始类叫法不同）</p>
+<h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><p>一个 Java 程序的执行本质就是一个 JVM 进程的执行，执行过程中可以看到 OpenJDK Platform 这个进程的资源使用情况。</p>
+<h3 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h3><p>JVM 结束可能情况：</p>
+<ul>
+<li>正常程序结束</li>
+<li>出现错误和未处理异常</li>
+<li>操作系统出现错误</li>
+<li>Java 某个线程调用了 exit 方法（会结束整个 JVM 进程）</li>
+</ul>
+<h2 id="类加载子系统"><a href="#类加载子系统" class="headerlink" title="类加载子系统"></a>类加载子系统</h2><p>Class Loading SubSystem</p>
+<p>这个系统主要负责将一个 class 文件加载到 JVM 中的全过程，而这个过程包含下面的 <strong>加载-链接-初始化</strong> 三个步骤。</p>
+<h3 id="加载-Loading"><a href="#加载-Loading" class="headerlink" title="加载 Loading"></a>加载 Loading</h3><p>加载 Loading 过程主要干了三件事：</p>
+<ul>
+<li>先获取类的二进制字节流（读取 class 文件获取流）</li>
+<li>将二进制字节流转化为内存中方法区的数据（将文件内容转移到内存中固定格式的数据）</li>
+<li>在内存中生成此类的 Class 对象，作为方法区这些数据的入口（获取操作这些数据的接口）</li>
+</ul>
+<h3 id="链接-Linking"><a href="#链接-Linking" class="headerlink" title="链接 Linking"></a>链接 Linking</h3><p>链接 Linking 也主要干三件事：<strong>验证-准备-解析</strong></p>
+<h4 id="验证-Verify"><a href="#验证-Verify" class="headerlink" title="验证 Verify"></a>验证 Verify</h4><p>主要是为了保证上一步加载进来的二进制数据都是合法的。</p>
+<ul>
+<li>文件格式验证：</li>
+</ul>
+<p>验证文件内容组成是否符合 JVM 规范（文件结构校验）</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">魔数 CAFEBABE</span><br><span class="line">版本号是否能被处理</span><br><span class="line">常量池 tag 是否在范围内</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>元数据验证：</li>
+</ul>
+<p>对类的描述信息进行语义验证（语法校验）</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这个类是否继承了标了 final 的类</span><br><span class="line">这个类是否实现了接口或者抽象父类的所有方法</span><br><span class="line">重写的方法是否符合重写规则</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>字节码验证</li>
+</ul>
+<p>对方法体的字节码指令验证（运行时语法校验）</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">操作栈放入 int 却按照 float 加载</span><br><span class="line">跳转指令跳转到其他方法的指令上面</span><br><span class="line">类型转化是否符合向上转型</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>符号引用验证</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">比如常量池的引用类型全限定内名能否找到类</span><br><span class="line">引用的数据访问行是否合法 public private 等</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<h4 id="准备-Prepare"><a href="#准备-Prepare" class="headerlink" title="准备 Prepare"></a>准备 Prepare</h4><p>准备这一段主要在为类的非 static final 字段分配内存。该地址的内存空间中全是二进制零，也就是： 0 false 0x00 \u0000 0.0f null(引用类型) 等等。</p>
+<p>对于一个非 static final 的字段来说，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> i = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>实现执行 prepare 阶段，为 i 分配内存，内存中值为 0，结束 prepare 之后，会在后面的阶段（static 是在类加载子系统的初始化阶段，非 static XXXXX）为 i 设置自定义初始值 10。</p>
+<hr>
+<p>为什么 final 字段一定要自定义初始化？</p>
+<p>如果不在<strong>定义</strong>的时候或者<strong>构造函数</strong>中对 final 字段进行赋值的话，则生成的对象中 final 字段的值是未知的，外部也不知道此字段是否能赋值。因此 final 字段要么在定义的时候给初始化值，要么在构造函数中进行初始化，总之绝不能在实例中调用 final 是一个未知量。</p>
+<hr>
+<p>结合上面 final 的分析，因为 static final 不依赖于实例，所以自然没了 final 字段中构造函数初始化的方式，是只能也必须在定义的时候给出初始化值的。</p>
+<p>这样 static final 初始化值一定是常量，是在编译成字节码的时候就确定的。因此这里在准备阶段分配完内存之后，<strong>直接默认给初值为常量值了</strong>。因此 static final 的字段初始化值确定就是在 Prepare 阶段完成的。</p>
+<h4 id="解析-Resolve"><a href="#解析-Resolve" class="headerlink" title="解析 Resolve"></a>解析 Resolve</h4><p>解析主要是符号引用（比如限定全类名，<code>Ljava/lang/String;</code> <code>toString()</code>）转化为一个指向目标的指针，比如（String 的 Class 对象地址，方法区 toString() 的地址）</p>
+<p>解析主要是在 JVM 执行完下面的初始化之后再执行的。</p>
+<h3 id="初始化-Inilalization"><a href="#初始化-Inilalization" class="headerlink" title="初始化 Inilalization"></a>初始化 Inilalization</h3><p>这个初始化是针对类 static （不包括 static final）字段和 static 代码块。链接的准备阶段为字段分配了内存空间，而这个现在所处的阶段就是为分配了空间的 static 字段进行赋值和执行 static 代码块里面的内容。 </p>
+<p>这里的初始化就是调用通过字节码指令分析（收集所有的 static 字段赋值指令和 static 代码块中的代码指令）生成的一个 <code>&lt;clinit&gt;</code> (class init) 方法，把所有对 static 字段进行初始化的代码和结合在一起，然后执行，比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> num=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">10</span>;i++) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就会生成用来执行的初始化方法 <code>&lt;clinit&gt;</code>，它的字节码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">0</span> iconst_1</span><br><span class="line"> 1 putstatic #7 &lt;space/xorex/rename/Test.num : I&gt;</span><br><span class="line"> <span class="number">4</span> iconst_1</span><br><span class="line"> <span class="number">5</span> istore_0</span><br><span class="line"> <span class="number">6</span> iload_0</span><br><span class="line"> <span class="number">7</span> bipush <span class="number">10</span></span><br><span class="line"> <span class="number">9</span> if_icmpgt <span class="number">18</span> (+<span class="number">9</span>)</span><br><span class="line"><span class="number">12</span> iinc <span class="number">0</span> by <span class="number">1</span></span><br><span class="line"><span class="number">15</span> goto <span class="number">6</span> (-<span class="number">9</span>)</span><br><span class="line"><span class="number">18</span> <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这里生成的 <code>&lt;clinit&gt;</code> 就是将 static 的 num 赋值语句和 static 代码块里面的语句的字节码放在一起，然后在当前线程中执行它。</p>
+<hr>
+<p>需要注意的是，在初始化阶段中的 <code>&lt;clinit&gt;</code> 执行内容中是不包括 static final 的初始化赋值的，因为这个过成已经在链接的 Prepare 阶段完成。</p>
+<p>并且 <code>&lt;clinit&gt;</code> 的执行过程是线程安全的，一个类只会被类加载一次，也就是只会执行一次 <code>&lt;clinit&gt;</code> 方法。</p>
+<h2 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Launcher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Launcher launcher = <span class="keyword">new</span> Launcher();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String bootClassPath =</span><br><span class="line">        System.getProperty(<span class="string">&quot;sun.boot.class.path&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Launcher <span class="title">getLauncher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> launcher;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ClassLoader loader;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Launcher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建 ExtClassLoader 父加载器为 null（其实就是 BootStrapClassLoader）</span></span><br><span class="line">        ClassLoader extcl;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            extcl = ExtClassLoader.getExtClassLoader();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(</span><br><span class="line">                <span class="string">&quot;Could not create extension class loader&quot;</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建 AppClassLoader 并将 ExtClassLoader 设置为其父加载器</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            loader = AppClassLoader.getAppClassLoader(extcl);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(</span><br><span class="line">                <span class="string">&quot;Could not create application class loader&quot;</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置当前线程的上下文类加载器</span></span><br><span class="line">        Thread.currentThread().setContextClassLoader(loader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2021/08/25/14cb06146992/">https://xorex.space/2021/08/25/14cb06146992/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JVM/">JVM</a></div><div class="post_share"><div class="social-share" data-image="/waifus/202.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/05/20/567f91f8bbba/"><img class="prev-cover" src="/waifus/168.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">为美好的世界献上祝福</div></div></a></div><div class="next-post pull-right"><a href="/2021/08/18/36f2db03f802/"><img class="next-cover" src="/waifus/202.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JavaByteCodeResolver 项目记录</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">要成为世界上最幸福的人啊！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">203</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">139</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84-JVM-%E5%AD%A6%E4%B9%A0%E7%94%9F%E6%B4%BB"><span class="toc-number">1.</span> <span class="toc-text">从零开始的 JVM 学习生活</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM-%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F"><span class="toc-number">2.</span> <span class="toc-text">JVM 声明周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-number">2.1.</span> <span class="toc-text">启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C"><span class="toc-number">2.2.</span> <span class="toc-text">执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F"><span class="toc-number">2.3.</span> <span class="toc-text">结束</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%AD%90%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">类加载子系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD-Loading"><span class="toc-number">3.1.</span> <span class="toc-text">加载 Loading</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5-Linking"><span class="toc-number">3.2.</span> <span class="toc-text">链接 Linking</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81-Verify"><span class="toc-number">3.2.1.</span> <span class="toc-text">验证 Verify</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87-Prepare"><span class="toc-number">3.2.2.</span> <span class="toc-text">准备 Prepare</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90-Resolve"><span class="toc-number">3.2.3.</span> <span class="toc-text">解析 Resolve</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-Inilalization"><span class="toc-number">3.3.</span> <span class="toc-text">初始化 Inilalization</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">类加载器</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2021 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

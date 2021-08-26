@@ -23,12 +23,132 @@
       </tags>
   </entry>
   <entry>
+    <title>JVM-01-类加载子系统</title>
+    <url>/2021/08/25/14cb06146992/</url>
+    <content><![CDATA[<h2 id="从零开始的-JVM-学习生活"><a href="#从零开始的-JVM-学习生活" class="headerlink" title="从零开始的 JVM 学习生活"></a>从零开始的 JVM 学习生活</h2><p>JVM 作为 Java 运行的平台，的确是需要好好玩一玩的！</p>
+<h2 id="JVM-声明周期"><a href="#JVM-声明周期" class="headerlink" title="JVM 声明周期"></a>JVM 声明周期</h2><p>JVM 生命周期分为 启动 执行 结束 三个阶段。</p>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>通过 BootStrap ClassLoader 这个类加载器把该虚拟机的初始类加载进来并执行（初始类负责完成启动工作，不同的 JVM 初始类叫法不同）</p>
+<h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><p>一个 Java 程序的执行本质就是一个 JVM 进程的执行，执行过程中可以看到 OpenJDK Platform 这个进程的资源使用情况。</p>
+<h3 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h3><p>JVM 结束可能情况：</p>
+<ul>
+<li>正常程序结束</li>
+<li>出现错误和未处理异常</li>
+<li>操作系统出现错误</li>
+<li>Java 某个线程调用了 exit 方法（会结束整个 JVM 进程）</li>
+</ul>
+<h2 id="类加载子系统"><a href="#类加载子系统" class="headerlink" title="类加载子系统"></a>类加载子系统</h2><p>Class Loading SubSystem</p>
+<p>这个系统主要负责将一个 class 文件加载到 JVM 中的全过程，而这个过程包含下面的 <strong>加载-链接-初始化</strong> 三个步骤。</p>
+<h3 id="加载-Loading"><a href="#加载-Loading" class="headerlink" title="加载 Loading"></a>加载 Loading</h3><p>加载 Loading 过程主要干了三件事：</p>
+<ul>
+<li>先获取类的二进制字节流（读取 class 文件获取流）</li>
+<li>将二进制字节流转化为内存中方法区的数据（将文件内容转移到内存中固定格式的数据）</li>
+<li>在内存中生成此类的 Class 对象，作为方法区这些数据的入口（获取操作这些数据的接口）</li>
+</ul>
+<h3 id="链接-Linking"><a href="#链接-Linking" class="headerlink" title="链接 Linking"></a>链接 Linking</h3><p>链接 Linking 也主要干三件事：<strong>验证-准备-解析</strong></p>
+<h4 id="验证-Verify"><a href="#验证-Verify" class="headerlink" title="验证 Verify"></a>验证 Verify</h4><p>主要是为了保证上一步加载进来的二进制数据都是合法的。</p>
+<ul>
+<li>文件格式验证：</li>
+</ul>
+<p>验证文件内容组成是否符合 JVM 规范（文件结构校验）</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">魔数 CAFEBABE</span><br><span class="line">版本号是否能被处理</span><br><span class="line">常量池 tag 是否在范围内</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>元数据验证：</li>
+</ul>
+<p>对类的描述信息进行语义验证（语法校验）</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">这个类是否继承了标了 final 的类</span><br><span class="line">这个类是否实现了接口或者抽象父类的所有方法</span><br><span class="line">重写的方法是否符合重写规则</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>字节码验证</li>
+</ul>
+<p>对方法体的字节码指令验证（运行时语法校验）</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">操作栈放入 int 却按照 float 加载</span><br><span class="line">跳转指令跳转到其他方法的指令上面</span><br><span class="line">类型转化是否符合向上转型</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>符号引用验证</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">比如常量池的引用类型全限定内名能否找到类</span><br><span class="line">引用的数据访问行是否合法 public private 等</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<h4 id="准备-Prepare"><a href="#准备-Prepare" class="headerlink" title="准备 Prepare"></a>准备 Prepare</h4><p>准备这一段主要在为类的非 static final 字段分配内存。该地址的内存空间中全是二进制零，也就是： 0 false 0x00 \u0000 0.0f null(引用类型) 等等。</p>
+<p>对于一个非 static final 的字段来说，比如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> i = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>实现执行 prepare 阶段，为 i 分配内存，内存中值为 0，结束 prepare 之后，会在后面的阶段（static 是在类加载子系统的初始化阶段，非 static XXXXX）为 i 设置自定义初始值 10。</p>
+<hr>
+<p>为什么 final 字段一定要自定义初始化？</p>
+<p>如果不在<strong>定义</strong>的时候或者<strong>构造函数</strong>中对 final 字段进行赋值的话，则生成的对象中 final 字段的值是未知的，外部也不知道此字段是否能赋值。因此 final 字段要么在定义的时候给初始化值，要么在构造函数中进行初始化，总之绝不能在实例中调用 final 是一个未知量。</p>
+<hr>
+<p>结合上面 final 的分析，因为 static final 不依赖于实例，所以自然没了 final 字段中构造函数初始化的方式，是只能也必须在定义的时候给出初始化值的。</p>
+<p>这样 static final 初始化值一定是常量，是在编译成字节码的时候就确定的。因此这里在准备阶段分配完内存之后，<strong>直接默认给初值为常量值了</strong>。因此 static final 的字段初始化值确定就是在 Prepare 阶段完成的。</p>
+<h4 id="解析-Resolve"><a href="#解析-Resolve" class="headerlink" title="解析 Resolve"></a>解析 Resolve</h4><p>解析主要是符号引用（比如限定全类名，<code>Ljava/lang/String;</code> <code>toString()</code>）转化为一个指向目标的指针，比如（String 的 Class 对象地址，方法区 toString() 的地址）</p>
+<p>解析主要是在 JVM 执行完下面的初始化之后再执行的。</p>
+<h3 id="初始化-Inilalization"><a href="#初始化-Inilalization" class="headerlink" title="初始化 Inilalization"></a>初始化 Inilalization</h3><p>这个初始化是针对类 static （不包括 static final）字段和 static 代码块。链接的准备阶段为字段分配了内存空间，而这个现在所处的阶段就是为分配了空间的 static 字段进行赋值和执行 static 代码块里面的内容。 </p>
+<p>这里的初始化就是调用通过字节码指令分析（收集所有的 static 字段赋值指令和 static 代码块中的代码指令）生成的一个 <code>&lt;clinit&gt;</code> (class init) 方法，把所有对 static 字段进行初始化的代码和结合在一起，然后执行，比如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> num=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">10</span>;i++) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就会生成用来执行的初始化方法 <code>&lt;clinit&gt;</code>，它的字节码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="number">0</span> iconst_1</span><br><span class="line"> 1 putstatic #7 &lt;space/xorex/rename/Test.num : I&gt;</span><br><span class="line"> <span class="number">4</span> iconst_1</span><br><span class="line"> <span class="number">5</span> istore_0</span><br><span class="line"> <span class="number">6</span> iload_0</span><br><span class="line"> <span class="number">7</span> bipush <span class="number">10</span></span><br><span class="line"> <span class="number">9</span> if_icmpgt <span class="number">18</span> (+<span class="number">9</span>)</span><br><span class="line"><span class="number">12</span> iinc <span class="number">0</span> by <span class="number">1</span></span><br><span class="line"><span class="number">15</span> goto <span class="number">6</span> (-<span class="number">9</span>)</span><br><span class="line"><span class="number">18</span> <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这里生成的 <code>&lt;clinit&gt;</code> 就是将 static 的 num 赋值语句和 static 代码块里面的语句的字节码放在一起，然后在当前线程中执行它。</p>
+<hr>
+<p>需要注意的是，在初始化阶段中的 <code>&lt;clinit&gt;</code> 执行内容中是不包括 static final 的初始化赋值的，因为这个过成已经在链接的 Prepare 阶段完成。</p>
+<p>并且 <code>&lt;clinit&gt;</code> 的执行过程是线程安全的，一个类只会被类加载一次，也就是只会执行一次 <code>&lt;clinit&gt;</code> 方法。</p>
+<h2 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Launcher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Launcher launcher = <span class="keyword">new</span> Launcher();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String bootClassPath =</span><br><span class="line">        System.getProperty(<span class="string">&quot;sun.boot.class.path&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Launcher <span class="title">getLauncher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> launcher;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ClassLoader loader;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Launcher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建 ExtClassLoader 父加载器为 null（其实就是 BootStrapClassLoader）</span></span><br><span class="line">        ClassLoader extcl;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            extcl = ExtClassLoader.getExtClassLoader();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(</span><br><span class="line">                <span class="string">&quot;Could not create extension class loader&quot;</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建 AppClassLoader 并将 ExtClassLoader 设置为其父加载器</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            loader = AppClassLoader.getAppClassLoader(extcl);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(</span><br><span class="line">                <span class="string">&quot;Could not create application class loader&quot;</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置当前线程的上下文类加载器</span></span><br><span class="line">        Thread.currentThread().setContextClassLoader(loader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+]]></content>
+      <categories>
+        <category>计算机体系</category>
+      </categories>
+      <tags>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaByteCodeResolver 项目记录</title>
+    <url>/2021/08/18/36f2db03f802/</url>
+    <content><![CDATA[<h2 id="MUTF-Charset-实现"><a href="#MUTF-Charset-实现" class="headerlink" title="MUTF Charset 实现"></a>MUTF Charset 实现</h2><h2 id="BytesTo-Double-Float"><a href="#BytesTo-Double-Float" class="headerlink" title="BytesTo Double Float"></a>BytesTo Double Float</h2><p>整个实现的细节 etc</p>
+]]></content>
+      <categories>
+        <category>项目记录</category>
+      </categories>
+      <tags>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java .class 文件结构</title>
     <url>/2021/08/14/e5acbdd3c85b/</url>
     <content><![CDATA[<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>我们来看看 Java 的 Hello World 程序经过 Javac (Java Compiler) 之后，会编译成 Java 字节码文件。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> Offset: 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 	</span><br><span class="line">00000000: CA FE BA BE 00 00 00 3B 00 1D 0A 00 02 00 03 07    J~:&gt;...;........</span><br><span class="line">00000010: 00 04 0C 00 05 00 06 01 00 10 6A 61 76 61 2F 6C    ..........java&#x2F;l</span><br><span class="line">00000020: 61 6E 67 2F 4F 62 6A 65 63 74 01 00 06 3C 69 6E    ang&#x2F;Object...&lt;in</span><br><span class="line">00000030: 69 74 3E 01 00 03 28 29 56 09 00 08 00 09 07 00    it&gt;...()V.......</span><br><span class="line">00000040: 0A 0C 00 0B 00 0C 01 00 10 6A 61 76 61 2F 6C 61    .........java&#x2F;la</span><br><span class="line">00000050: 6E 67 2F 53 79 73 74 65 6D 01 00 03 6F 75 74 01    ng&#x2F;System...out.</span><br><span class="line">00000060: 00 15 4C 6A 61 76 61 2F 69 6F 2F 50 72 69 6E 74    ..Ljava&#x2F;io&#x2F;Print</span><br><span class="line">00000070: 53 74 72 65 61 6D 3B 08 00 0E 01 00 0C 48 65 6C    Stream;......Hel</span><br><span class="line">00000080: 6C 6F 20 57 6F 72 6C 64 21 0A 00 10 00 11 07 00    lo.World!.......</span><br><span class="line">00000090: 12 0C 00 13 00 14 01 00 13 6A 61 76 61 2F 69 6F    .........java&#x2F;io</span><br><span class="line">000000a0: 2F 50 72 69 6E 74 53 74 72 65 61 6D 01 00 07 70    &#x2F;PrintStream...p</span><br><span class="line">000000b0: 72 69 6E 74 6C 6E 01 00 15 28 4C 6A 61 76 61 2F    rintln...(Ljava&#x2F;</span><br><span class="line">000000c0: 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 56 07 00    lang&#x2F;String;)V..</span><br><span class="line">000000d0: 16 01 00 18 4A 61 76 61 2F 56 53 63 6F 64 65 50    ....Java&#x2F;VScodeP</span><br><span class="line">000000e0: 72 6F 6A 65 63 74 2F 48 65 6C 6C 6F 01 00 04 43    roject&#x2F;Hello...C</span><br><span class="line">000000f0: 6F 64 65 01 00 0F 4C 69 6E 65 4E 75 6D 62 65 72    ode...LineNumber</span><br><span class="line">00000100: 54 61 62 6C 65 01 00 04 6D 61 69 6E 01 00 16 28    Table...main...(</span><br><span class="line">00000110: 5B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69    [Ljava&#x2F;lang&#x2F;Stri</span><br><span class="line">00000120: 6E 67 3B 29 56 01 00 0A 53 6F 75 72 63 65 46 69    ng;)V...SourceFi</span><br><span class="line">00000130: 6C 65 01 00 0A 48 65 6C 6C 6F 2E 6A 61 76 61 00    le...Hello.java.</span><br><span class="line">00000140: 21 00 15 00 02 00 00 00 00 00 02 00 01 00 05 00    !...............</span><br><span class="line">00000150: 06 00 01 00 17 00 00 00 1D 00 01 00 01 00 00 00    ................</span><br><span class="line">00000160: 05 2A B7 00 01 B1 00 00 00 01 00 18 00 00 00 06    .*7..1..........</span><br><span class="line">00000170: 00 01 00 00 00 03 00 09 00 19 00 1A 00 01 00 17    ................</span><br><span class="line">00000180: 00 00 00 25 00 02 00 01 00 00 00 09 B2 00 07 12    ...%........2...</span><br><span class="line">00000190: 0D B6 00 0F B1 00 00 00 01 00 18 00 00 00 0A 00    .6..1...........</span><br><span class="line">000001a0: 02 00 00 00 05 00 08 00 06 00 01 00 1B 00 00 00    ................</span><br><span class="line">000001b0: 02 00 1C                                           ...</span><br></pre></td></tr></table></figure>
 <p>然后我们可以使用 Java 自带的反编译工具 javap 来对字节码反编译：</p>
-<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">Classfile /E:/Work/Java/VScodeProject/Hello.class</span><br><span class="line">  Last modified 2021年8月14日; size 435 bytes</span><br><span class="line">  SHA-256 checksum 324a5e74b6109dc3e1235281f57ee39e74d08af19760dda79433bd878f5a7ece</span><br><span class="line">  Compiled from &quot;Hello.java&quot;</span><br><span class="line">public class Java.VScodeProject.Hello</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 59</span><br><span class="line">  flags: (0x0021) ACC_PUBLIC, ACC_SUPER</span><br><span class="line">  this_class: #21                         // Java/VScodeProject/Hello</span><br><span class="line">  super_class: #2                         // java/lang/Object</span><br><span class="line">  interfaces: 0, fields: 0, methods: 2, attributes: 1</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #2.#3          // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 = Class              #4             // java/lang/Object</span><br><span class="line">   #3 = NameAndType        #5:#6          // &quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #4 = Utf8               java/lang/Object</span><br><span class="line">   #5 = Utf8               &lt;init&gt;</span><br><span class="line">   #6 = Utf8               ()V</span><br><span class="line">   #7 = Fieldref           #8.#9          // java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">   #8 = Class              #10            // java/lang/System</span><br><span class="line">   #9 = NameAndType        #11:#12        // out:Ljava/io/PrintStream;</span><br><span class="line">  #10 = Utf8               java/lang/System</span><br><span class="line">  #11 = Utf8               out</span><br><span class="line">  #12 = Utf8               Ljava/io/PrintStream;</span><br><span class="line">  #13 = String             #14            // Hello Wrold!</span><br><span class="line">  #14 = Utf8               Hello Wrold!</span><br><span class="line">  #15 = Methodref          #16.#17        // java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">  #16 = Class              #18            // java/io/PrintStream</span><br><span class="line">  #17 = NameAndType        #19:#20        // println:(Ljava/lang/String;)V</span><br><span class="line">  #18 = Utf8               java/io/PrintStream</span><br><span class="line">  #19 = Utf8               println</span><br><span class="line">  #20 = Utf8               (Ljava/lang/String;)V</span><br><span class="line">  #21 = Class              #22            // Java/VScodeProject/Hello</span><br><span class="line">  #22 = Utf8               Java/VScodeProject/Hello</span><br><span class="line">  #23 = Utf8               Code</span><br><span class="line">  #24 = Utf8               LineNumberTable</span><br><span class="line">  #25 = Utf8               main</span><br><span class="line">  #26 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #27 = Utf8               SourceFile</span><br><span class="line">  #28 = Utf8               Hello.java</span><br><span class="line">&#123;</span><br><span class="line">  public Java.VScodeProject.Hello();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: (0x0001) ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=1, locals=1, args_size=1</span><br><span class="line">         0: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">         4: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 3: 0</span><br><span class="line"></span><br><span class="line">  public static void main(java.lang.String[]);</span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: (0x0009) ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=2, locals=1, args_size=1</span><br><span class="line">         0: getstatic     #7                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">         3: ldc           #13                 // String Hello Wrold!</span><br><span class="line">         5: invokevirtual #15                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">         8: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 5: 0</span><br><span class="line">        line 6: 8</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: &quot;Hello.java&quot;</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">对于一个字节码文件来说，一共由以下十个部分的组成：</span><br><span class="line"></span><br><span class="line">- 魔数字 Magic Number 类似于网络传输的 MIME 协议，用来标识文件的内容类型。</span><br><span class="line"></span><br><span class="line">- 版本号 Minor/Major Version 生成的字节码 Javac 版本。</span><br><span class="line"></span><br><span class="line">- 常量池 Constant Pool </span><br><span class="line"></span><br><span class="line">- 类访问标记 Access Flag</span><br><span class="line"></span><br><span class="line">- 类访问索引 This Class</span><br><span class="line"></span><br><span class="line">- 超类索引 Super Class</span><br><span class="line"></span><br><span class="line">- 接口表索引 Interface</span><br><span class="line"></span><br><span class="line">- 字段表 Field</span><br><span class="line"></span><br><span class="line">- 方法表 Method</span><br><span class="line"></span><br><span class="line">- 属性表 Attribute</span><br><span class="line"></span><br><span class="line">## 魔数 Magic Number</span><br><span class="line"></span><br><span class="line">很多类型的文件，其起始的几个字节的内容是固定的（或是有意填充，或是本就如此）。因此这几个字节的内容也被称为魔数 (Magic Number)，因为根据这几个字节的内容就可以确定文件类型。</span><br><span class="line"></span><br><span class="line">Java 字节码文件 `.class` 的内容开头标识为前四个字节： CAFEBABE，咖啡宝贝：</span><br><span class="line"></span><br><span class="line">![328.jpg](https://xorex.space/image/328.jpg)</span><br><span class="line"></span><br><span class="line">当我们修改了 `.class` 里面的魔数之后，JVM 再去加载并运行这个类的时候，就会报错了，说魔数值不相容 Incompatible：</span><br><span class="line"></span><br><span class="line">```txt</span><br><span class="line">E:\Work&gt;java Java.VScodeProject.Hello</span><br><span class="line">Error: LinkageError occurred while loading main class Java.VScodeProject.Hello</span><br><span class="line">        java.lang.ClassFormatError: Incompatible magic value 3405691579 in class file Java/VScodeProject/Hello</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">Classfile /E:/Work/Java/VScodeProject/Hello.class</span><br><span class="line">  Last modified 2021年8月14日; size 435 bytes</span><br><span class="line">  SHA-256 checksum 324a5e74b6109dc3e1235281f57ee39e74d08af19760dda79433bd878f5a7ece</span><br><span class="line">  Compiled from &quot;Hello.java&quot;</span><br><span class="line">public class Java.VScodeProject.Hello</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 59</span><br><span class="line">  flags: (0x0021) ACC_PUBLIC, ACC_SUPER</span><br><span class="line">  this_class: #21                         // Java/VScodeProject/Hello</span><br><span class="line">  super_class: #2                         // java/lang/Object</span><br><span class="line">  interfaces: 0, fields: 0, methods: 2, attributes: 1</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #2.#3          // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 = Class              #4             // java/lang/Object</span><br><span class="line">   #3 = NameAndType        #5:#6          // &quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #4 = Utf8               java/lang/Object</span><br><span class="line">   #5 = Utf8               &lt;init&gt;</span><br><span class="line">   #6 = Utf8               ()V</span><br><span class="line">   #7 = Fieldref           #8.#9          // java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">   #8 = Class              #10            // java/lang/System</span><br><span class="line">   #9 = NameAndType        #11:#12        // out:Ljava/io/PrintStream;</span><br><span class="line">  #10 = Utf8               java/lang/System</span><br><span class="line">  #11 = Utf8               out</span><br><span class="line">  #12 = Utf8               Ljava/io/PrintStream;</span><br><span class="line">  #13 = String             #14            // Hello Wrold!</span><br><span class="line">  #14 = Utf8               Hello Wrold!</span><br><span class="line">  #15 = Methodref          #16.#17        // java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">  #16 = Class              #18            // java/io/PrintStream</span><br><span class="line">  #17 = NameAndType        #19:#20        // println:(Ljava/lang/String;)V</span><br><span class="line">  #18 = Utf8               java/io/PrintStream</span><br><span class="line">  #19 = Utf8               println</span><br><span class="line">  #20 = Utf8               (Ljava/lang/String;)V</span><br><span class="line">  #21 = Class              #22            // Java/VScodeProject/Hello</span><br><span class="line">  #22 = Utf8               Java/VScodeProject/Hello</span><br><span class="line">  #23 = Utf8               Code</span><br><span class="line">  #24 = Utf8               LineNumberTable</span><br><span class="line">  #25 = Utf8               main</span><br><span class="line">  #26 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #27 = Utf8               SourceFile</span><br><span class="line">  #28 = Utf8               Hello.java</span><br><span class="line">&#123;</span><br><span class="line">  public Java.VScodeProject.Hello();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: (0x0001) ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=1, locals=1, args_size=1</span><br><span class="line">         0: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">         4: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 3: 0</span><br><span class="line"></span><br><span class="line">  public static void main(java.lang.String[]);</span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: (0x0009) ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=2, locals=1, args_size=1</span><br><span class="line">         0: getstatic     #7                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">         3: ldc           #13                 // String Hello Wrold!</span><br><span class="line">         5: invokevirtual #15                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">         8: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 5: 0</span><br><span class="line">        line 6: 8</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: &quot;Hello.java&quot;</span><br></pre></td></tr></table></figure>
+<p>对于一个字节码文件来说，一共由以下十个部分的组成：</p>
+<ul>
+<li><p>魔数字 Magic Number 类似于网络传输的 MIME 协议，用来标识文件的内容类型。</p>
+</li>
+<li><p>版本号 Minor/Major Version 生成的字节码 Javac 版本。</p>
+</li>
+<li><p>常量池 Constant Pool </p>
+</li>
+<li><p>类访问标记 Access Flag</p>
+</li>
+<li><p>类访问索引 This Class</p>
+</li>
+<li><p>超类索引 Super Class</p>
+</li>
+<li><p>接口表索引 Interface</p>
+</li>
+<li><p>字段表 Field</p>
+</li>
+<li><p>方法表 Method</p>
+</li>
+<li><p>属性表 Attribute</p>
+</li>
+</ul>
+<h2 id="魔数-Magic-Number"><a href="#魔数-Magic-Number" class="headerlink" title="魔数 Magic Number"></a>魔数 Magic Number</h2><p>很多类型的文件，其起始的几个字节的内容是固定的（或是有意填充，或是本就如此）。因此这几个字节的内容也被称为魔数 (Magic Number)，因为根据这几个字节的内容就可以确定文件类型。</p>
+<p>Java 字节码文件 <code>.class</code> 的内容开头标识为前四个字节： CAFEBABE，咖啡宝贝：</p>
+<p><img src="https://xorex.space/image/328.jpg" alt="328.jpg"></p>
+<p>当我们修改了 <code>.class</code> 里面的魔数之后，JVM 再去加载并运行这个类的时候，就会报错了，说魔数值不相容 Incompatible：</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">E:\Work&gt;java Java.VScodeProject.Hello</span><br><span class="line">Error: LinkageError occurred while loading main class Java.VScodeProject.Hello</span><br><span class="line">        java.lang.ClassFormatError: Incompatible magic value 3405691579 in class file Java/VScodeProject/Hello</span><br></pre></td></tr></table></figure>
 <p>其实 Java 创始人还想了一个魔数：CAFEHEAD，不过这个 CAFEHEAD 用到了 Java 的序列化文件的魔数了。</p>
 <h2 id="版本号-Minor-Verson"><a href="#版本号-Minor-Verson" class="headerlink" title="版本号 Minor Verson"></a>版本号 Minor Verson</h2><p>版本号码就是紧跟着魔数的后面四个字节的内容，表示 Javac 编译时的版本号：</p>
 <p><img src="https://xorex.space/image/329.jpg" alt="329.jpg"></p>
@@ -119,14 +239,14 @@
 <td>用于 invokeDynamic 指令。invokeDynamic 和 Java 平台上实现了一些动态语言（如Python）相类似的有关功能。</td>
 </tr>
 </tbody></table>
-<h3 id="3-Integer-4-Float"><a href="#3-Integer-4-Float" class="headerlink" title="3_Integer 4_Float"></a>3_Integer 4_Float</h3><p>Java中，int 和 float 型数据的长度都是 4 个字节。tag 3 和 tag 4 分别代表 int 和 float 型数据信息。</p>
+<h3 id="3-Integer-4-Float"><a href="#3-Integer-4-Float" class="headerlink" title="3_Integer 4_Float"></a>3_Integer 4_Float</h3><p>Java 中，int 和 float 型数据的长度都是 4 个字节。tag 3 和 tag 4 分别代表 int 和 float 型数据信息。</p>
 <p>当你看到一块代码为： 03 00 00 00 01 表示 tag 为 Integer 整形的常量，值为 1。（需要说一下 JVM 使用的是大端模式来存储数据，所以这里是高位在前，和 x86 小端模式相反）</p>
 <p>我们表示为：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CONSTANT_Integer_Info &#123;</span><br><span class="line">    u1 tag; <span class="comment">//使用一个字节装 tag </span></span><br><span class="line">    u4 bytes; <span class="comment">// 使用四个字节装值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>需要注意的是，Java 将 boolean char byte short int 这些小于等于四字节的非浮点数都以 3_Integer 来保存。</p>
 <h3 id="5-Long-6-Double"><a href="#5-Long-6-Double" class="headerlink" title="5_Long 6_Double"></a>5_Long 6_Double</h3><p>Java中，long 和 double 型数据的长度都是8个字节。这两种常量分别代表 long 以及 double 型数据信息。再 poolCount 中，Long 和 Double 是按照两个常量快的大小计算的（按照几个不是看实际占用容量，而是另外一套规则）。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CONSTANT_Long_Info &#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u8 bytes; <span class="comment">//JVM 大端模式直接写就好</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CONSTANT_Double_Info &#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u8 bytes;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="1-UTF8"><a href="#1-UTF8" class="headerlink" title="1_UTF8"></a>1_UTF8</h3><p>这个 tag 表示存储的是字符串真正内容的 tag ，而 8_String 存储的则是指向 1_UTF8 的一个索引。</p>
+<h3 id="1-UTF8"><a href="#1-UTF8" class="headerlink" title="1_UTF8"></a>1_UTF8</h3><p>这是存储的是字符串真正内容的 tag ，而 8_String 存储的则是指向 1_UTF8 的一个索引。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CONSTANT_Utf8 &#123;</span><br><span class="line">    u1 tag; </span><br><span class="line">    u2 length;</span><br><span class="line">    ulength bytes[length];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里的 length 表示后面存储字符串真正内容的 bytes 长度，而不是字符串的长度。bytes[] 里面使用 MUTF-8 （Modified UTF-8）编码来存储字符串内容。</p>
 <p>MUTF-8 和 UTF-8 只有两处不同：</p>
@@ -145,8 +265,12 @@
 <h3 id="12-NameAndType"><a href="#12-NameAndType" class="headerlink" title="12_NameAndType"></a>12_NameAndType</h3><p>使用 NameAndType 来表示字段和方法，记录了字段或者方法的名字（指向 1_utf8 的 ID）和描述符（同样是指向 1_utf8 的 ID），占用三个常量池 ID:</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CONSTANT_NameAndType &#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u2 utf8NameIndex;</span><br><span class="line">    u2 utf8DescriptorIndex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>名字就是方法名或者字段名，而描述符的规则具体的可以看下面在介绍字段表和方法表里面的东西。</p>
-<h3 id="9-Fieldref-10-Methodref-11-InterfaceMethodref"><a href="#9-Fieldref-10-Methodref-11-InterfaceMethodref" class="headerlink" title="9_Fieldref 10_Methodref 11_InterfaceMethodref"></a>9_Fieldref 10_Methodref 11_InterfaceMethodref</h3><p>三者的结构模式都是一样的，固定的 tag 来区分常量块里面的内容，classIndex 指向一个 7_Class 的 ID 描述此字段方法接口所属的 Class 的信息，nameAndTypeIndex 指向一个 12_NameAndType 的 ID 描述</p>
+<h3 id="9-Fieldref-10-Methodref-11-InterfaceMethodref"><a href="#9-Fieldref-10-Methodref-11-InterfaceMethodref" class="headerlink" title="9_Fieldref 10_Methodref 11_InterfaceMethodref"></a>9_Fieldref 10_Methodref 11_InterfaceMethodref</h3><p>三者主要都是用来标记在类中出现过的字段，方法的。</p>
+<p>其中本类的所有字段都会以 Fieldref 的格式保存在常量池中。本类所创建的所有方法和代码调用的所有方法以 Methodref 格式保存，而代码调用过的接口的方法，则以 InterfaceMethodref 保存。</p>
+<p>三者的结构模式都是一样的，固定的 tag 来区分常量块里面的内容，classIndex 指向一个 7_Class 的 ID 描述此字段方法接口所属的 Class 的信息，nameAndTypeIndex 指向一个 12_NameAndType 的 ID 描述</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CONSTANT_Field/Method/InterfaceMethod-ref &#123;</span><br><span class="line">    u1 tag;</span><br><span class="line">    u2 classIndex;</span><br><span class="line">    u2 nameAndTypeIndex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 <h3 id="15-MethodHandle-16-MethodType-18-InvokeDynamic"><a href="#15-MethodHandle-16-MethodType-18-InvokeDynamic" class="headerlink" title="15_MethodHandle 16_MethodType 18_InvokeDynamic"></a>15_MethodHandle 16_MethodType 18_InvokeDynamic</h3><p>这些主要是为了更好的支持动态语言调用出现的。具体内容就不多介绍了。</p>
 <h2 id="访问标记"><a href="#访问标记" class="headerlink" title="访问标记"></a>访问标记</h2><p>紧接着常量池的就是访问标记了，集合成两个字节。</p>
 <p><img src="https://xorex.space/image/330.jpg" alt="330.jpg"></p>
@@ -206,7 +330,16 @@
 </tr>
 </tbody></table>
 <p>举个例子，<code>String[]</code> 被描述为：<code>[Ljava/lang/String;</code>，<code>[</code> 为一维数组，<code>L</code> 表示为引用类型，<code>java/lang/String</code> 为引用类型的全类名，<code>;</code> 为结束符号。 </p>
-<h3 id="字段属性具体内容"><a href="#字段属性具体内容" class="headerlink" title="字段属性具体内容"></a>字段属性具体内容</h3>]]></content>
+<h3 id="字段属性具体内容"><a href="#字段属性具体内容" class="headerlink" title="字段属性具体内容"></a>字段属性具体内容</h3><p>先欠着，以后再写。</p>
+<h2 id="方法表"><a href="#方法表" class="headerlink" title="方法表"></a>方法表</h2><p>方法表的结构和 字段表差不多：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">MethodTable &#123;</span><br><span class="line">  u2 methodsCount</span><br><span class="line">  MethodInfo[] methods[MethodCount]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">MethodInfo &#123;</span><br><span class="line">  u2 accessFlags</span><br><span class="line">  u2 nameIndex</span><br><span class="line">  u2 descriptorIndex</span><br><span class="line">  u2 attributesCount</span><br><span class="line">  AttributeInfo attributes[attributesCount]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法名和描述符"><a href="#方法名和描述符" class="headerlink" title="方法名和描述符"></a>方法名和描述符</h3><p>对于方法名索引 nameIndex 就是一个指向 utf8Info 的常量，就是方法的名字</p>
+<p>描述符的格式则是：<code>(A)B</code> 其中 A 是方法的参数，里面参数的描述符和字段的格式是一样的，挨在一起，本身位置就在参数里面的位置，B 表示方法的返回值。</p>
+<p><code>(IDLjava/lang/String;)Ljava/lang/Object;</code> 所表示的方法就是：</p>
+<p>Object method(int param1,double param2,String param3);</p>
+]]></content>
       <categories>
         <category>计算机体系</category>
       </categories>
@@ -5075,8 +5208,8 @@
       <tags>
         <tag>XML</tag>
         <tag>Java</tag>
-        <tag>JSON</tag>
         <tag>思维导图</tag>
+        <tag>JSON</tag>
       </tags>
   </entry>
   <entry>
@@ -7505,7 +7638,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#x6d;&#x65;&#111;&#x6e;&#x65;&#64;&#x72;&#x75;&#x6e;&#x6f;&#x6f;&#98;&#x2e;&#x63;&#x6f;&#109;">&#115;&#x6f;&#x6d;&#x65;&#111;&#x6e;&#x65;&#64;&#x72;&#x75;&#x6e;&#x6f;&#x6f;&#98;&#x2e;&#x63;&#x6f;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#x6d;&#x65;&#x6f;&#110;&#101;&#64;&#x72;&#117;&#110;&#x6f;&#111;&#x62;&#46;&#x63;&#x6f;&#x6d;">&#x73;&#111;&#x6d;&#x65;&#x6f;&#110;&#101;&#64;&#x72;&#117;&#110;&#x6f;&#111;&#x62;&#46;&#x63;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
