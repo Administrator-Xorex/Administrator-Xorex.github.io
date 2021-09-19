@@ -23,59 +23,29 @@
       </tags>
   </entry>
   <entry>
-    <title>JVM-00-工具使用</title>
-    <url>/2021/09/17/dc34a920af7f/</url>
-    <content><![CDATA[<h2 id="JVM-相关设置"><a href="#JVM-相关设置" class="headerlink" title="JVM 相关设置"></a>JVM 相关设置</h2><p><code>-XX:+PrintFlagsInitial</code> 打印所有 JVM 的默认参数。</p>
-<p><code>-XX:+PrintFlagsFinal</code> 打印经过修改之后的 JVM 参数。</p>
-<p><code>-XX:+PrintGCDetials</code> 执行过程中输出 GC 的过程。</p>
-<p><code>-Xms100m</code> 等价于 <code>-XX:InitialHeapSize=100m</code> 设置堆空间的初试内存大小为 100m，默认物理内存 1/64。</p>
-<p><code>-Xmx100m</code> 等价于 <code>-XX:MaxHeapSize=100m</code> 设置对空间的最大内存大小为 100m，默认物理内存 1/4。</p>
-<p><code>-Xss1m</code>（可以附加单位）等价于 <code>-XX:ThreadStackSize=1024</code>（指定单位为 kb）</p>
-<p><code>-XX:SurvivorRatio=8</code> 设置 S0 S1 区和 Eden 区比例为 1:1:8 。</p>
-<p><code>-XX:NewRatio=3</code> 设置新生代和老年代的比例为 1:3。</p>
-<p><code>-XX:MaxTenuringThreshold=10</code> 设置 S 区晋升老年代的时间门槛为生存 10 次 GC。</p>
-<h2 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h2><p>Java Process Status，用来查看 Java 当前正在运行的进程的相关信息。</p>
-<p><code>jps</code> 输出 PID 和进程名。</p>
-<p><code>jps -l</code> 输出 PID 和详细的进程名。</p>
-<p><code>jps -v</code> 打印 JVM 的设置参数。</p>
-<h2 id="jVirutalVM"><a href="#jVirutalVM" class="headerlink" title="jVirutalVM"></a>jVirutalVM</h2><p>可视化工具</p>
+    <title>Sep-21-Diary</title>
+    <url>/2021/09/19/4248ad9a289e/</url>
+    <content><![CDATA[<blockquote>
+<p>为什么会想起来要写这个东西呢，emmmmmmm，大概是因为，觉得最近的自己好幸福，因此想要将最近发生的事情都一一记录下来，免得都忘记了 QAQ</p>
+</blockquote>
+<h2 id="9-月-19-日-周日"><a href="#9-月-19-日-周日" class="headerlink" title="9 月 19 日 周日"></a>9 月 19 日 周日</h2><p>经过调休之后的三天中秋节假期的前两天都要搭在了摆摊招新上面了，早上赖床到 10 点，然后去和各位小伙伴们一起大致装饰了一下摊位，中间去和 syc 易控的摊位一起互动了一下，恰钱归来的 77 还是一如既往的帅，交际花小熊还是一如既往的可爱。</p>
+<p>中午下训的时候来的学弟学妹们很多，不少学弟学妹们也都加了群（虽然没有那天网安院宣讲瞬间加爆群更震撼）。自己也学了学如何营业吸引新生，（开发实验室了解一下！），去耐心的和各位学弟学妹们讲解开发实验室是做什么的，有什么方向等等，感觉自己成长了不少 hhh。摆摊中间也很快乐的面基了几位可爱的学弟。虽然自己记忆力过于差导致没记住几个（可能是因为穿着迷彩服长得都差不多？）网友面基了属于是。</p>
+<p>忙了一中午之后，带了蜜雪冰城犒劳了一下各位小伙伴们，吃了饭，回实验室休息了一小会，然后又带了两把椅子回来，小伙伴在打牌玩。上训的时候来咨询的学弟学妹们就少很多了，基本都是赶着去集合。我也逛了逛其他社团的摊位，倒是没有我感兴趣的。以后清闲了可以在学校创办一个 现代工业社，为各位工业党组织一个交流的平台。</p>
+<p>之后就是让其他小伙伴们回去休息，我独自一人趴着睡觉了一下午，直到思达同学过来，我们一起摆电脑（更有开发实验室的感觉了）下午下训的人多了一点。过了一会还有学弟买可乐慰问我 hhhh</p>
+<p>晚上等它们上训之后我们就撤了，领了外卖吃完之后，就去准备和苯苯面基。下训之前和小熊一起乱转，唱跳天文，音乐这几个社团聚集在一起氛围很棒。因为是晴天，月亮还很圆，能用它们的天文望远镜看很清晰的月亮，大概有 80 倍的无损。因为不太好意思就没去拍照。</p>
+<p>后来面基了苯苯，拉了几个学弟学妹进招生群，还见到了可爱的小虾，一起去超市买了糖，路途中间还是有点尴尬，不过对我来说已经是很大的进步了。最后有点小后悔没把她送到楼下。</p>
+<p>赶完模电作业，洗了澡，一天结束了。好耶！</p>
 ]]></content>
       <categories>
-        <category>开发底层原理</category>
+        <category>Diary</category>
       </categories>
       <tags>
-        <tag>jvm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JVM 疑问表</title>
-    <url>/2021/08/28/92de71cb6cd8/</url>
-    <content><![CDATA[<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><ol>
-<li><p>被加载到内存的类的具体格式是什么位置在哪里，每一部分的信息是如何放到内存中的，又是如何提供给外界访问的。</p>
-</li>
-<li><p>将符号引用解析为直接引用的过程是如何实现的，Hash 表吗？</p>
-</li>
-<li><p>早期绑定，晚期绑定，静态链接，动态链接概念上的区别。</p>
-</li>
-<li><p>晚期绑定的流程是什么样的，是对运行时常量池中替换还是虚拟机栈中的动态链接进行替换？</p>
-</li>
-<li><p>为什么 Java 中的 Lambda 表达式是动态语言特性，哪里体现了变量类型是由运行时的值确定的？将 Lambda 赋值给一个变量不也需要声明变量的接口类型吗。</p>
-</li>
-<li><p>虚方法表在内存中的位置是哪里，多态的具体实现原理，方法分派的流程。</p>
-</li>
-<li></li>
-</ol>
-]]></content>
-      <categories>
-        <category>开发底层原理</category>
-      </categories>
-      <tags>
-        <tag>JVM</tag>
+        <tag>Diary</tag>
       </tags>
   </entry>
   <entry>
     <title>JVM-02-内存结构</title>
-    <url>/2021/08/28/47c56ad59509/</url>
+    <url>/2021/09/14/1a1fe348928a/</url>
     <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2>]]></content>
       <categories>
         <category>开发底层原理</category>
@@ -86,7 +56,7 @@
   </entry>
   <entry>
     <title>JVM-01-类加载子系统</title>
-    <url>/2021/08/25/14cb06146992/</url>
+    <url>/2021/09/07/8934dfa7770a/</url>
     <content><![CDATA[<h2 id="从零开始的-JVM-学习生活"><a href="#从零开始的-JVM-学习生活" class="headerlink" title="从零开始的 JVM 学习生活"></a>从零开始的 JVM 学习生活</h2><p>JVM 作为 Java 运行的平台，的确是需要好好玩一玩的！</p>
 <h2 id="JVM-声明周期"><a href="#JVM-声明周期" class="headerlink" title="JVM 声明周期"></a>JVM 声明周期</h2><p>JVM 生命周期分为 启动 执行 结束 三个阶段。</p>
 <h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>通过 BootStrap ClassLoader 这个类加载器把该虚拟机的初始类加载进来并执行（初始类负责完成启动工作，不同的 JVM 初始类叫法不同）</p>
@@ -181,6 +151,57 @@
 <p>下面就是一个针对 AES 加密算法加密过的 .class 文件进行加载的过程。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AESClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="comment">//加锁保证所有线程只会加载一次此类</span></span><br><span class="line">        <span class="keyword">synchronized</span>(getClassLoadingLock(name)) &#123;</span><br><span class="line">            <span class="comment">//被调用到就说明所有的父加载器都无法处理</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                File file = <span class="keyword">new</span> File(path);</span><br><span class="line">                <span class="keyword">byte</span>[] bytes = AESUtil.decrypt(file, <span class="string">&quot;Xorex&quot;</span>);</span><br><span class="line">                <span class="comment">//解码获取源字节数组之后，调用 defineClass 将合法的字节数组解析到符合 Class 的内存中并返回对象（此方法核心是 native 方法，交给 C++ 处理）</span></span><br><span class="line">                <span class="keyword">return</span> defineClass(name, bytes, <span class="number">0</span>, bytes.length);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>类加载子系统暂时告一段落，下一个目标，运行时数据区概述及线程！</p>
+]]></content>
+      <categories>
+        <category>开发底层原理</category>
+      </categories>
+      <tags>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM-00-工具使用</title>
+    <url>/2021/08/28/5d198c827fc8/</url>
+    <content><![CDATA[<h2 id="JVM-相关设置"><a href="#JVM-相关设置" class="headerlink" title="JVM 相关设置"></a>JVM 相关设置</h2><p><code>-XX:+PrintFlagsInitial</code> 打印所有 JVM 的默认参数。</p>
+<p><code>-XX:+PrintFlagsFinal</code> 打印经过修改之后的 JVM 参数。</p>
+<p><code>-XX:+PrintGCDetials</code> 执行过程中输出 GC 的过程。</p>
+<p><code>-Xms100m</code> 等价于 <code>-XX:InitialHeapSize=100m</code> 设置堆空间的初试内存大小为 100m，默认物理内存 1/64。</p>
+<p><code>-Xmx100m</code> 等价于 <code>-XX:MaxHeapSize=100m</code> 设置对空间的最大内存大小为 100m，默认物理内存 1/4。</p>
+<p><code>-Xss1m</code>（可以附加单位）等价于 <code>-XX:ThreadStackSize=1024</code>（指定单位为 kb）</p>
+<p><code>-XX:SurvivorRatio=8</code> 设置 S0 S1 区和 Eden 区比例为 1:1:8 。</p>
+<p><code>-XX:NewRatio=3</code> 设置新生代和老年代的比例为 1:3。</p>
+<p><code>-XX:MaxTenuringThreshold=10</code> 设置 S 区晋升老年代的时间门槛为生存 10 次 GC。</p>
+<h2 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h2><p>Java Process Status，用来查看 Java 当前正在运行的进程的相关信息。</p>
+<p><code>jps</code> 输出 PID 和进程名。</p>
+<p><code>jps -l</code> 输出 PID 和详细的进程名。</p>
+<p><code>jps -v</code> 打印 JVM 的设置参数。</p>
+<h2 id="jVirutalVM"><a href="#jVirutalVM" class="headerlink" title="jVirutalVM"></a>jVirutalVM</h2><p>可视化工具</p>
+]]></content>
+      <categories>
+        <category>开发底层原理</category>
+      </categories>
+      <tags>
+        <tag>jvm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM 疑问表</title>
+    <url>/2021/08/23/758bc43727a3/</url>
+    <content><![CDATA[<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><ol>
+<li><p>被加载到内存的类的具体格式是什么位置在哪里，每一部分的信息是如何放到内存中的，又是如何提供给外界访问的。</p>
+</li>
+<li><p>将符号引用解析为直接引用的过程是如何实现的，Hash 表吗？</p>
+</li>
+<li><p>早期绑定，晚期绑定，静态链接，动态链接概念上的区别。</p>
+</li>
+<li><p>晚期绑定的流程是什么样的，是对运行时常量池中替换还是虚拟机栈中的动态链接进行替换？</p>
+</li>
+<li><p>为什么 Java 中的 Lambda 表达式是动态语言特性，哪里体现了变量类型是由运行时的值确定的？将 Lambda 赋值给一个变量不也需要声明变量的接口类型吗。</p>
+</li>
+<li><p>虚方法表在内存中的位置是哪里，多态的具体实现原理，方法分派的流程。</p>
+</li>
+<li></li>
+</ol>
 ]]></content>
       <categories>
         <category>开发底层原理</category>
@@ -7725,7 +7746,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#x6d;&#x65;&#x6f;&#110;&#x65;&#x40;&#x72;&#x75;&#110;&#x6f;&#x6f;&#x62;&#x2e;&#x63;&#111;&#x6d;">&#x73;&#x6f;&#x6d;&#x65;&#x6f;&#110;&#x65;&#x40;&#x72;&#x75;&#110;&#x6f;&#x6f;&#x62;&#x2e;&#x63;&#111;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#111;&#109;&#101;&#111;&#x6e;&#101;&#64;&#x72;&#x75;&#110;&#x6f;&#x6f;&#98;&#x2e;&#x63;&#x6f;&#x6d;">&#x73;&#111;&#109;&#101;&#111;&#x6e;&#101;&#64;&#x72;&#x75;&#110;&#x6f;&#x6f;&#98;&#x2e;&#x63;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -8516,8 +8537,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>数据库</tag>
         <tag>MySQL</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
