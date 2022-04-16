@@ -1,0 +1,416 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Docker | Xorex</title><meta name="keywords" content="Docker"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Docker 基础概念Docker 存在的意义，是提供了一个标准化的操作系统运行环境，每个环境独立运行一个应用，他们之间相互隔离。 像 VMWare 这样的软件是提供了一个物理机器级别的虚拟化，通过这个软件，可以在一台电脑上虚拟出来多个物理硬件系统，在每一个虚拟机器中可以安装不同的操作系统。而 Docker 则是更轻量，是提供了一个操作系统级别的虚拟化。通过 Docker，可以在一台电脑上虚拟化出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker">
+<meta property="og:url" content="https://xorex.space/2021/12/17/3caac9085d1b/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="Docker 基础概念Docker 存在的意义，是提供了一个标准化的操作系统运行环境，每个环境独立运行一个应用，他们之间相互隔离。 像 VMWare 这样的软件是提供了一个物理机器级别的虚拟化，通过这个软件，可以在一台电脑上虚拟出来多个物理硬件系统，在每一个虚拟机器中可以安装不同的操作系统。而 Docker 则是更轻量，是提供了一个操作系统级别的虚拟化。通过 Docker，可以在一台电脑上虚拟化出">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/216.jpg">
+<meta property="article:published_time" content="2021-12-17T03:24:42.000Z">
+<meta property="article:modified_time" content="2022-04-15T09:14:34.019Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/216.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2021/12/17/3caac9085d1b/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-15 17:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">230</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">143</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Docker</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-12-17T03:24:42.000Z" title="undefined 2021-12-17 11:24">2021-12-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/">开发知识</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="Docker-基础概念"><a href="#Docker-基础概念" class="headerlink" title="Docker 基础概念"></a>Docker 基础概念</h2><p>Docker 存在的意义，是提供了一个标准化的操作系统运行环境，每个环境独立运行一个应用，他们之间相互隔离。</p>
+<p>像 VMWare 这样的软件是提供了一个物理机器级别的虚拟化，通过这个软件，可以在一台电脑上虚拟出来多个物理硬件系统，在每一个虚拟机器中可以安装不同的操作系统。而 Docker 则是更轻量，是提供了一个操作系统级别的虚拟化。通过 Docker，可以在一台电脑上虚拟化出来多个操作系统内核，这样实现了不同的应用可以有一个独立的操作系统的运行环境，它们之间互不干扰。</p>
+<p><img src="https://xorex.space/image/336.jpg" alt="336.jpg"></p>
+<p>Docker 的架构和 Maven 是一样的，都有官方的镜像文件地址，可以用阿里云镜像解决。（不会就去百度）</p>
+<h2 id="Docker-命令"><a href="#Docker-命令" class="headerlink" title="Docker 命令"></a>Docker 命令</h2><h3 id="Docker-服务命令"><a href="#Docker-服务命令" class="headerlink" title="Docker 服务命令"></a>Docker 服务命令</h3><p>使用 systemctl 来控制 Docker 进程，这个 systemctl 是 systemd 的一个命令，它是 Linux 下的一款系统和服务管理器。</p>
+<p><code>systemctl CONTROL docker</code></p>
+<p>这里面可以填写的 CONTROL 命令是：start stop restart status enable（开机启动） disable（关闭开机启动）</p>
+<h3 id="Docker-镜像操作"><a href="#Docker-镜像操作" class="headerlink" title="Docker 镜像操作"></a>Docker 镜像操作</h3><p><code>docker image ls</code> <code>docker images</code> 查看镜像</p>
+<p><code>docker images -q</code> 只获取所有镜像的 ID，可以用于批量删除镜像</p>
+<p><code>docker search NAME</code> 在 Docker 仓库里面去搜索叫做 NAME 的镜像。</p>
+<p><code>docker pull NAME:TAG</code> 来直接获取叫做 NAME 版本为 TAG 的镜像，如果省略 TAG 的话，默认就是最新的版本了。</p>
+<p><code>docker image rm NAME</code> 删除叫做 NAME 的镜像。</p>
+<h3 id="Docker-容器操作"><a href="#Docker-容器操作" class="headerlink" title="Docker 容器操作"></a>Docker 容器操作</h3><h4 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h4><p><code>docker ps -a</code> 查看全部的容器（包括关闭了的）</p>
+<p><code>docker ps -aq</code> 返回所有容器的 ID</p>
+<h4 id="创建删除容器"><a href="#创建删除容器" class="headerlink" title="创建删除容器"></a>创建删除容器</h4><p><code>docker run XXX</code> 通过镜像创建一个容器并运行</p>
+<p>参数：</p>
+<ul>
+<li>-i 保持容器运行</li>
+<li>-t 分配一个容器的输入终端，退出之后，会关闭容器。</li>
+<li>-d 在后台创建中断，通过 <code>docker exec CONTAINER_NAME</code> 进入容器中断操作，退出后不关闭容器</li>
+<li><code>–name=XXX</code> 给容器一个名字</li>
+<li>最后一个参数，就是创建容器的镜像名字</li>
+</ul>
+<p>因此 -it 创建出来的是交互式容器，-id 创建出来的是守护式容器。</p>
+<p>eg: <code>docker run -id --name=Nginx002 nginx:latest</code> 创建根据 nginx latest 镜像创建的名字为 Nginx002 的容器，并以守护模式运行，然后执行 <code>docker exec -it Nginx002 /bin/bash</code> 来进入守护模式运行的容器。</p>
+<p>注意上面的 /bin/bash 是进入容器中，需要执行的初始化命令，/bin/bash 就是用来启动容器的 bash 终端的，用来操作这个容器。</p>
+<hr>
+<p><code>docker rm NAME</code> 根据容器名字或者 ID：Name</p>
+<h4 id="启动与关闭"><a href="#启动与关闭" class="headerlink" title="启动与关闭"></a>启动与关闭</h4><p><code>docker start NAME</code> 根据容器名字启动已经停止的容器。</p>
+<p><code>docker stop NAME</code> …</p>
+<h4 id="详细信息"><a href="#详细信息" class="headerlink" title="详细信息"></a>详细信息</h4><p><code>docker inspect NAME</code> 查看 NAME 容器的具体信息。</p>
+<h2 id="数据卷设置"><a href="#数据卷设置" class="headerlink" title="数据卷设置"></a>数据卷设置</h2><p>通过和宿主机的目录建立同步映射，来解决容器和宿主机以及容器和容器之间的通讯。</p>
+<h3 id="挂载目录"><a href="#挂载目录" class="headerlink" title="挂载目录"></a>挂载目录</h3><p>一个容器要挂载到宿主机的目录的时候，只能在创建的时候设置，不然就要去更改容器的配置文件才可以，所以在创建容器的时候，一定要思考好，挂载到那里才合适。</p>
+<p>挂载目录的命令是在 run 的时候，加上 <code>-v 宿主机目录:容器目录</code> 即可。不存在会自动创建，存在就是原文件夹。</p>
+<p><code>docker run -id --name=CONTAINER_NAME -v /Xorex/Nginx001:/Xorex/Nginx001 IMAGE_NAME</code></p>
+<h3 id="数据卷容器"><a href="#数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h3><p>就是建立一个容器，这个容器作为一个数据卷容器。其他的容器挂载到它身上，就等价于挂载到了数据卷容器挂载的目录里面了。优势是可以通过数据卷容器，很方便的管理数据挂载。</p>
+<p>首先建立数据卷容器： <code>docker run -id --name=CONTAINER_NAME -v /VOLUMNAME IMAGE_NAME</code> 和上面直接挂载不同的是，没有了宿主目录，只写一个容器的目录（宿主目录交给 Docker 分配）</p>
+<p>然后就是建立普通容器，挂载到数据卷容器上面，使用 <code>--volumes-from VOLUM_DATA_CONTAINER_NAME</code> 来挂载到对应名字的数据卷容器上面：</p>
+<p><code>docker run -id --name=CONTAINER_NAME --volumes-from VOLUM_DATA_CONTAINER_NAME IMAGE_NAME</code> 从而将创建的新容器，挂载到数据卷容器上面，也就等价于挂载到了它对应的宿主机目录上面。</p>
+<h2 id="基本部署"><a href="#基本部署" class="headerlink" title="基本部署"></a>基本部署</h2><h3 id="MySQL-部署"><a href="#MySQL-部署" class="headerlink" title="MySQL 部署"></a>MySQL 部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker search mysql</span><br><span class="line">docker pull mysql</span><br><span class="line"></span><br><span class="line">mkdir ~/mysql</span><br><span class="line"><span class="built_in">cd</span> ~/mysql</span><br><span class="line"></span><br><span class="line">docker run -id \</span><br><span class="line">-p 3306:3306 \</span><br><span class="line">--name=MySQL \</span><br><span class="line">-v <span class="variable">$PWD</span>/conf:/etc/mysql/conf.d \</span><br><span class="line">-v <span class="variable">$PWD</span>/logs:/logs \</span><br><span class="line">-v <span class="variable">$PWD</span>/data:/var/lib/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=XXXXX \</span><br><span class="line">mysql</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-p prot 端口映射</li>
+<li>-v $PWD 是获取当前目录，用来拼接绝对路径。conf.d 数据库配置文件。 logs 数据库日志存放。 data 数据库表数据保存。</li>
+<li>-e env 环境变量，设置数据库的初始登录密码。</li>
+<li>\ 表示的是命令还没有输入完毕，符号后面不能有空格，直接回车继续输入指令。</li>
+</ul>
+<p>部署完毕之后，就可以在 MySQL 容器里面直接操作，或者外部访问宿主机的 3306 端口对 MySQL 进行链接访问了。</p>
+<hr>
+<p>如果是使用的阿里云服务器，记得在 网络安全-安全组 里面，将 3306 端口打开。</p>
+<h3 id="Tomcat-部署"><a href="#Tomcat-部署" class="headerlink" title="Tomcat 部署"></a>Tomcat 部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -id \</span><br><span class="line">--name=Tomcat \</span><br><span class="line">-p 8080:8080 \</span><br><span class="line">-v <span class="variable">$PWD</span>:/usr/<span class="built_in">local</span>/tomcat/webapps \</span><br><span class="line">tomcat</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以访问服务器的 8080 端口，来对 Tomcat 进行访问了，好耶！</p>
+<h3 id="Nginx-部署"><a href="#Nginx-部署" class="headerlink" title="Nginx 部署"></a>Nginx 部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -id \</span><br><span class="line">--name=Nginx \</span><br><span class="line">-p 80:80 \</span><br><span class="line">-v <span class="variable">$PWD</span>/conf/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v <span class="variable">$PWD</span>/logs:/var/<span class="built_in">log</span>/nginx \</span><br><span class="line">-v <span class="variable">$PWD</span>/html:/usr/share/nginx/html \</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h2><h3 id="Dokcer-镜像原理"><a href="#Dokcer-镜像原理" class="headerlink" title="Dokcer 镜像原理"></a>Dokcer 镜像原理</h3><p>对于 Docker 的镜像来说，根据各种依赖，将镜像进行了大量的分层，来实现镜像文件的复用。<br>比如对于 Tomcat 镜像来说，它能跑起来是借助于 Tomcat 镜像（Tomcat 代码），以及父依赖 JDK 环境，以及 JVM 运行起来的父依赖 Rootfs 镜像（Linux 发行版系统）。</p>
+<p>这些多层的镜像被外界看作为一个整体，叫做一个 Tomcat 镜像，所以看起来会很大。但是当你下载其他的镜像的时候，可能会有一些父依赖镜像已经下载过了，所以就可以节省空间，实现镜像的复用。</p>
+<p>所以：</p>
+<ul>
+<li><p>Docker 镜像的本质是一个分层的文件系统。</p>
+</li>
+<li><p>Docker 的 Centos 镜像只有 200mb，Centos 操作系统 ISO 镜像要几个 G 的原因是：Docker 借助分层文件系统，复用了宿主机的 Bootfs，因此 Docker 的 Centos 镜像只需要下载 Rootfs 和其他即可，相对来说节省很多空间。</p>
+</li>
+<li><p>Docker 的 Tomcat 镜像有 500mb 为什么比 Tomcat 安装包 70mb 大这么多：因为 Docker 的 Tomcat 还包括运行所依赖的父镜像 JDK 和 Rootfs 系统，所以加起来很大。而 Tomcat 安装包只包括自己本身，因此比较小。</p>
+</li>
+</ul>
+<p>（但其实 Docker 的分层要比上面描述的更加细致，可以通过 <code>docker inspect IMAGE_NAME</code> 看一看具体的分层情况）</p>
+<h3 id="制作镜像"><a href="#制作镜像" class="headerlink" title="制作镜像"></a>制作镜像</h3><h4 id="容器转镜像"><a href="#容器转镜像" class="headerlink" title="容器转镜像"></a>容器转镜像</h4><p>就是将已经有的运行容器转化为镜像，这个镜像可以以 tar 的形式来传播。</p>
+<p><code>docker commit CONTAINER_NAME IMAGE_NAME:TAG</code> 将已经生成的容器 CONTAINER_NAME 转化为，版本为 TAG 的镜像 IMAGE_NAME 。</p>
+<p><code>docker save -o TAR_NAME IMAGE_NAME:TAG</code> 将版本为 TAG 的镜像 IMAGE_NAME 压缩为 tar 文件：TAR_NAME 。</p>
+<p><code>docker load -i TA2AME</code> 将压缩文件 TAR_NAME 加载镜像。</p>
+<hr>
+<p>需要注意的是，容器转镜像的时候，是不包括链接到宿主机的目录的！！！</p>
+<h4 id="DockerFile-生成镜像"><a href="#DockerFile-生成镜像" class="headerlink" title="DockerFile 生成镜像"></a>DockerFile 生成镜像</h4><p>DockerFile 是一个文本文件，包含了大量的 Docker 指令来生成一个镜像。</p>
+<h2 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h2><h3 id="DockerFile-关键字表"><a href="#DockerFile-关键字表" class="headerlink" title="DockerFile 关键字表"></a>DockerFile 关键字表</h3><table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FROM</td>
+<td>指定父镜像</td>
+<td>指定 dockerfile 基于那个 image 构建</td>
+</tr>
+<tr>
+<td>MAINTAINER</td>
+<td>作者信息</td>
+<td>用来标明这个 dockerfile 谁写的</td>
+</tr>
+<tr>
+<td>LABEL</td>
+<td>标签</td>
+<td>用来标明 dockerfile 的标签 可以使用 Label 代替 Maintainer 最终都是在docker image基本信息中可以查看</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>执行命令</td>
+<td>执行一段命令 默认是 /bin/sh 格式: RUN command 或者 RUN [“command” , “param1”,”param2”]</td>
+</tr>
+<tr>
+<td>CMD</td>
+<td>容器启动命令</td>
+<td>提供启动容器时候的默认命令 和 ENTRYPOINT 配合使用.格式 CMD command param1 param2 或者 CMD [“command” , “param1”,”param2”]</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>入口</td>
+<td>一般在制作一些执行就关闭的容器中会使用</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>复制文件</td>
+<td>build 的时候复制文件到 image 中</td>
+</tr>
+<tr>
+<td>ADD</td>
+<td>添加文件</td>
+<td>build 的时候添加文件到 image 中 不仅仅局限于当前 build 上下文 可以来源于远程服务</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>环境变量</td>
+<td>指定 build 时候的环境变量 可以在启动的容器的时候 通过 -e 覆盖 格式 ENV name=value</td>
+</tr>
+<tr>
+<td>ARG</td>
+<td>构建参数</td>
+<td>构建参数 只在构建的时候使用的参数 如果有 ENV 那么 ENV 的相同名字的值始终覆盖arg的参数</td>
+</tr>
+<tr>
+<td>VOLUME</td>
+<td>定义外部可以挂载的数据卷</td>
+<td>指定 build 的 image 那些目录可以启动的时候挂载到文件系统中 启动容器的时候使用 -v 绑定 格式 VOLUME [“目录”]</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>暴露端口</td>
+<td>定义容器运行的时候监听的端口 启动容器的使用 -p 来绑定暴露端口 格式: EXPOSE 8080 或者 EXPOSE 8080/udp</td>
+</tr>
+<tr>
+<td>WORKDIR</td>
+<td>工作目录</td>
+<td>指定容器内部的工作目录 如果没有创建则自动创建 如果指定/ 使用的是绝对地址 如果不是/开头那么是在上一条 workdir 的路径的相对路径</td>
+</tr>
+<tr>
+<td>USER</td>
+<td>指定执行用户</td>
+<td>指定 build 或者启动的时候 用户 在 RUN CMD ENTRYPONT 执行的时候的用户</td>
+</tr>
+<tr>
+<td>HEALTHCHECK</td>
+<td>健康检查</td>
+<td>指定监测当前容器的健康监测的命令 基本上没用 因为很多时候 应用本身有健康监测机制</td>
+</tr>
+<tr>
+<td>ONBUILD</td>
+<td>触发器</td>
+<td>当存在 ONBUILD 关键字的镜像作为基础镜像的时候 当执行 FROM 完成之后 会执行 ONBUILD的命令 但是不影响当前镜像 用处也不怎么大</td>
+</tr>
+<tr>
+<td>STOPSIGNAL</td>
+<td>发送信号量到宿主机</td>
+<td>该 STOPSIGNAL 指令设置将发送到容器的系统调用信号以退出。</td>
+</tr>
+<tr>
+<td>SHELL</td>
+<td>指定执行脚本的shell</td>
+<td>指定 RUN CMD ENTRYPOINT 执行命令的时候 使用的 shell</td>
+</tr>
+</tbody></table>
+<h3 id="编写-DockerFile"><a href="#编写-DockerFile" class="headerlink" title="编写 DockerFile"></a>编写 DockerFile</h3><p>将一个 SpringBoot 项目构建出一个镜像。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> java:<span class="number">8</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> Xorex &lt;Xorex.space&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> springboot-hello-0.0.1-SNAPSHOT.jar app.jar</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> java -jar app.jar</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就是根据这个 DockerFile 自己生成一个 Docker 镜像。</p>
+<p><code>docker build -f ./XXX.dockerfile -t IMAGE_NAME:TAG .</code> -f 表示指定文件位置， -t 表示后面执行生成的镜像的名字和版本号。（别忘了最后的 <code>.</code>）</p>
+<p>比如我写的：<code>docker build -f /dockerfile -t app:1.0 .</code> 然后就会生成一个叫做 app:1.0 的镜像啦！只需要将这个镜像跑在容器中，就成功部署了项目啦。（有可能会要求你去建立一个 .dockerignore 的文件，就建立一个就好了，内容写 <code>*</code>）</p>
+<p>还有，记得要 ADD 的东西，放到和 dockerfile 一个文件夹里面，不然可能会添加失败。</p>
+<h3 id="自定义-CentOS7"><a href="#自定义-CentOS7" class="headerlink" title="自定义 CentOS7"></a>自定义 CentOS7</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM centos:7</span><br><span class="line">MAINTAINER xorex &lt;xorex.space&gt;</span><br><span class="line">RUN yum install -y vim</span><br><span class="line">WORKDIR /Xorex</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker-Compose"></a>Docker-Compose</h2><p>这个用于编写 Docker 执行的文件的，适用于大规模复杂部署。因为自己的 ECS 怎么都连不上 Github 所以就不学了吧。</p>
+<p>把讲义里面的东西还是贴一下把，万一以后用得到。</p>
+<h3 id="一、安装-Docker-Compose"><a href="#一、安装-Docker-Compose" class="headerlink" title="一、安装 Docker Compose"></a>一、安装 Docker Compose</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Compose目前已经完全支持Linux、Mac OS和Windows，在我们安装Compose之前，需要先安装Docker。下面我 们以编译好的二进制包方式安装在Linux系统中。</span> </span><br><span class="line">https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64</span><br><span class="line">curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置文件可执行权限</span> </span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看版本信息</span> </span><br><span class="line">docker-compose -version</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、卸载-Docker-Compose"><a href="#二、卸载-Docker-Compose" class="headerlink" title="二、卸载 Docker Compose"></a>二、卸载 Docker Compose</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 二进制包方式安装的，删除二进制文件即可</span></span><br><span class="line">rm /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、-使用-Docker-Compose-编排-Nginx-SpringBoot-项目"><a href="#三、-使用-Docker-Compose-编排-Nginx-SpringBoot-项目" class="headerlink" title="三、 使用 Docker Compose 编排 Nginx+SpringBoot 项目"></a>三、 使用 Docker Compose 编排 Nginx+SpringBoot 项目</h3><ul>
+<li>创建 docker-compose 目录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/docker-compose</span><br><span class="line">cd ~/docker-compose</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编写 docker-compose.yml 文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:</span><br><span class="line">  nginx:</span><br><span class="line">   image: nginx</span><br><span class="line">   ports:</span><br><span class="line">    - 80:80</span><br><span class="line">   links:</span><br><span class="line">    - app</span><br><span class="line">   volumes:</span><br><span class="line">    - ./nginx/conf.d:/etc/nginx/conf.d</span><br><span class="line">  app:</span><br><span class="line">    image: app</span><br><span class="line">    expose:</span><br><span class="line">      - &quot;8080&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建./nginx/conf.d目录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ./nginx/conf.d</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在./nginx/conf.d目录下 编写itheima.conf文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    access_log off;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://app:8080;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在~/docker-compose 目录下 使用docker-compose 启动容器</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>测试访问</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.149.135/hello</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-底层原理"><a href="#Docker-底层原理" class="headerlink" title="Docker 底层原理"></a>Docker 底层原理</h2><p>Docker 是使用 Go 语言，利用了 <strong>Linux 内核</strong> 的一个软件。也就是虚拟化本身，是 Linux 内核自己支持的，Docker 只是利用了这个特性。</p>
+<p>总的来说，Docker 的镜像就是一个分层管理的文件系统和一些命令组成。Docker 开启的容器，对于宿主机来说就是一个进程，但是被命名空间和其他进程隔离。通过 Linux 内核 <code>CGroups</code> 系统管理容器能分配到的物理机器资源大小。</p>
+<h3 id="Namespace-命名空间"><a href="#Namespace-命名空间" class="headerlink" title="Namespace 命名空间"></a>Namespace 命名空间</h3><p>一个容器对应一系列的命名空间，通过不同容器的命名空间的隔离，实现了资源调用的隔离。主要有以下的命名空间的使用：</p>
+<p><code>PID</code> Process ID 隔离进程</p>
+<p><code>NET</code> NetWroking 隔离网络</p>
+<p><code>IPC</code> InterPress Communication 共享内存</p>
+<p><code>MNT</code> Mount 文件挂载</p>
+<p><code>UTS</code> Unix TimeSharing System 隔离内核</p>
+<p>等等等等。</p>
+<h3 id="Control-Groups"><a href="#Control-Groups" class="headerlink" title="Control Groups"></a>Control Groups</h3><p>Control Groups 又被称作为 CGroups，是 Linux 提供的针对进程的资源利用（CPU 内存 等）的统计和限制的一种技术。</p>
+<p>CGroups 技术加入 Linux 内核让 Docker 容器分配到不同的资源成为可能，下面是 CGroups 起到的一些作用：</p>
+<ul>
+<li><p>资源限制（Resource limiting）：可以将组设置为不超过设定的内存限制。比如：内存子系统可以为进程组设定一个内存使用上限，一旦进程组使用的内存达到限额再申请内存，就会出发Out of Memory警告。</p>
+</li>
+<li><p>优先级（Prioritization）：通过优先级让一些组优先得到更多的CPU等资源。</p>
+</li>
+<li><p>资源审计（Accounting）：用来统计系统实际上把多少资源用到适合的目的上，可以使用cpuacct子系统记录某个进程组使用的CPU时间。</p>
+</li>
+<li><p>隔离（isolation）：为组隔离命名空间，这样一个组不会看到另一个组的进程、网络连接和文件系统。</p>
+</li>
+<li><p>控制（Control）：挂起、恢复和重启动等操作。</p>
+</li>
+</ul>
+<h3 id="Union-File-System"><a href="#Union-File-System" class="headerlink" title="Union File System"></a>Union File System</h3><p>联合文件系统，是 Linux 的一种轻量级高性能分层文件系统。</p>
+<p>联合文件系统是实现Docker镜像的技术基础。Docker镜像可以通过分层来进行继承。例如，用户基于基础镜像（用来生成其他镜像的基础，往往没有父镜像）来制作各种不同的应用镜像。这些镜像共享同一个基础镜像层，提高了存储效率。此外，当用户改变了一个Docker镜像（比如升级程序到新的版本），则会创建一个新的层（layer）。因此，用户不用替换整个原镜像或者重新建立，只需要添加新层即可。用户分发镜像的时候，也只需要分发被改动的新层内容（增量部分）。这让Docker的镜像管理变得十分轻量级和快速。</p>
+<p>镜像分层，相同内容复用！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2021/12/17/3caac9085d1b/">https://xorex.space/2021/12/17/3caac9085d1b/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Docker/">Docker</a></div><div class="post_share"><div class="social-share" data-image="/waifus/216.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/13/79be75538808/"><img class="prev-cover" src="/waifus/217.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python-01-基础语法</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/14/45f3eae43303/"><img class="next-cover" src="/waifus/116.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Maven</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">要成为世界上最幸福的人啊！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">230</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">143</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">Docker 基础概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">Docker 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-%E6%9C%8D%E5%8A%A1%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.</span> <span class="toc-text">Docker 服务命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-%E9%95%9C%E5%83%8F%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.</span> <span class="toc-text">Docker 镜像操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-%E5%AE%B9%E5%99%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">2.3.</span> <span class="toc-text">Docker 容器操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8"><span class="toc-number">2.3.1.</span> <span class="toc-text">查看容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">2.3.2.</span> <span class="toc-text">创建删除容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%85%B3%E9%97%AD"><span class="toc-number">2.3.3.</span> <span class="toc-text">启动与关闭</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="toc-number">2.3.4.</span> <span class="toc-text">详细信息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">数据卷设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E8%BD%BD%E7%9B%AE%E5%BD%95"><span class="toc-number">3.1.</span> <span class="toc-text">挂载目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.</span> <span class="toc-text">数据卷容器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E9%83%A8%E7%BD%B2"><span class="toc-number">4.</span> <span class="toc-text">基本部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E9%83%A8%E7%BD%B2"><span class="toc-number">4.1.</span> <span class="toc-text">MySQL 部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat-%E9%83%A8%E7%BD%B2"><span class="toc-number">4.2.</span> <span class="toc-text">Tomcat 部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E9%83%A8%E7%BD%B2"><span class="toc-number">4.3.</span> <span class="toc-text">Nginx 部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E5%83%8F"><span class="toc-number">5.</span> <span class="toc-text">镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dokcer-%E9%95%9C%E5%83%8F%E5%8E%9F%E7%90%86"><span class="toc-number">5.1.</span> <span class="toc-text">Dokcer 镜像原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F"><span class="toc-number">5.2.</span> <span class="toc-text">制作镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E8%BD%AC%E9%95%9C%E5%83%8F"><span class="toc-number">5.2.1.</span> <span class="toc-text">容器转镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DockerFile-%E7%94%9F%E6%88%90%E9%95%9C%E5%83%8F"><span class="toc-number">5.2.2.</span> <span class="toc-text">DockerFile 生成镜像</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DockerFile"><span class="toc-number">6.</span> <span class="toc-text">DockerFile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DockerFile-%E5%85%B3%E9%94%AE%E5%AD%97%E8%A1%A8"><span class="toc-number">6.1.</span> <span class="toc-text">DockerFile 关键字表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99-DockerFile"><span class="toc-number">6.2.</span> <span class="toc-text">编写 DockerFile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-CentOS7"><span class="toc-number">6.3.</span> <span class="toc-text">自定义 CentOS7</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Compose"><span class="toc-number">7.</span> <span class="toc-text">Docker-Compose</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85-Docker-Compose"><span class="toc-number">7.1.</span> <span class="toc-text">一、安装 Docker Compose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8D%B8%E8%BD%BD-Docker-Compose"><span class="toc-number">7.2.</span> <span class="toc-text">二、卸载 Docker Compose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E4%BD%BF%E7%94%A8-Docker-Compose-%E7%BC%96%E6%8E%92-Nginx-SpringBoot-%E9%A1%B9%E7%9B%AE"><span class="toc-number">7.3.</span> <span class="toc-text">三、 使用 Docker Compose 编排 Nginx+SpringBoot 项目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">Docker 底层原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Namespace-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">8.1.</span> <span class="toc-text">Namespace 命名空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Control-Groups"><span class="toc-number">8.2.</span> <span class="toc-text">Control Groups</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Union-File-System"><span class="toc-number">8.3.</span> <span class="toc-text">Union File System</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2022 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

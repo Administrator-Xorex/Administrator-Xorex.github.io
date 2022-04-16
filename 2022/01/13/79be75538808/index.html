@@ -1,0 +1,351 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python-01-基础语法 | Xorex</title><meta name="keywords" content="Python"><meta name="author" content="Xorex"><meta name="copyright" content="Xorex"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="命名规范 模块名：短小，全小写字母，下划线分割。  包名：全小写，其他和 Java 一样 space.xorex.bookstore。  类名：和 Java 完全一样，首字母大写的驼峰命名。  函数名，变量名：全小写字母，下划线分割。  常量：全大写。下划线分割   数据类型int 整形对于 Python 来说，无论多长的整数，都是 int 类型。会在内部随着大小在 byte short int">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python-01-基础语法">
+<meta property="og:url" content="https://xorex.space/2022/01/13/79be75538808/index.html">
+<meta property="og:site_name" content="Xorex">
+<meta property="og:description" content="命名规范 模块名：短小，全小写字母，下划线分割。  包名：全小写，其他和 Java 一样 space.xorex.bookstore。  类名：和 Java 完全一样，首字母大写的驼峰命名。  函数名，变量名：全小写字母，下划线分割。  常量：全大写。下划线分割   数据类型int 整形对于 Python 来说，无论多长的整数，都是 int 类型。会在内部随着大小在 byte short int">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xorex.space/waifus/217.jpg">
+<meta property="article:published_time" content="2022-01-13T03:49:41.000Z">
+<meta property="article:modified_time" content="2022-04-15T09:09:05.224Z">
+<meta property="article:author" content="Xorex">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xorex.space/waifus/217.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://xorex.space/2022/01/13/79be75538808/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-15 17:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="Xorex" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Megumi.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">230</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">143</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/PostTop.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xorex</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python-01-基础语法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2022-01-13T03:49:41.000Z" title="undefined 2022-01-13 11:49">2022-01-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/">开发知识</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h2><ul>
+<li><p>模块名：短小，全小写字母，下划线分割。</p>
+</li>
+<li><p>包名：全小写，其他和 Java 一样 space.xorex.bookstore。</p>
+</li>
+<li><p>类名：和 Java 完全一样，首字母大写的驼峰命名。</p>
+</li>
+<li><p>函数名，变量名：全小写字母，下划线分割。</p>
+</li>
+<li><p>常量：全大写。下划线分割</p>
+</li>
+</ul>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="int-整形"><a href="#int-整形" class="headerlink" title="int 整形"></a>int 整形</h3><p>对于 Python 来说，无论多长的整数，都是 int 类型。会在内部随着大小在 byte short int long 高精度 进行自动切换，不需要担心转化的问题。</p>
+<p>可以用不同进制的数赋值，并进行运算也是可以的！</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">num1 = <span class="number">0x22</span>  </span><br><span class="line">num2 = <span class="number">0x22</span>  </span><br><span class="line">print(num1 + num2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="float-浮点数"><a href="#float-浮点数" class="headerlink" title="float 浮点数"></a>float 浮点数</h3><p>同样支持 float double 高精度 随时切换，对外展示为 float 类型。</p>
+<p>并且支持指数表示法：比如 <code>1.234E23</code></p>
+<h3 id="complex-复数"><a href="#complex-复数" class="headerlink" title="complex 复数"></a>complex 复数</h3><p>Python 内置复数处理，没错就是实部+虚部，其中 a 和 b 是实数，则使用 a+bj 表示复数。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">complex_number = <span class="number">1</span> + <span class="number">4j</span>  </span><br><span class="line">print(<span class="built_in">type</span>(complex_number))</span><br></pre></td></tr></table></figure>
+
+<p>输出类型是复数 complex</p>
+<h3 id="str-字符串"><a href="#str-字符串" class="headerlink" title="str 字符串"></a>str 字符串</h3><p>字符串，Pythno 字符串中，单引号和双引号没有任何区别，但是还是建议双引号。同时字符串不可被改变。</p>
+<p>可以使用反斜杠来进行字符串转义。</p>
+<hr>
+<p>对于换行来说，使用 \ 可以表示下一行也是内容。下面输出 <code>Tempest Xorex</code></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span> = <span class="string">&quot;Tempest &quot;</span> \ </span><br><span class="line">      <span class="string">&quot;Xorex&quot;</span>  </span><br><span class="line">print(<span class="built_in">str</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>可以用 ‘’’ 或者 “”” 里面放格式自由的字符串。</p>
+<h3 id="bytes-字节串"><a href="#bytes-字节串" class="headerlink" title="bytes 字节串"></a>bytes 字节串</h3><p>字节串和字符串比较相似，字符串是保存的一个个字符，字节串则是保存的一个个字节，可以类比字节数组 bytes[] 。字节串可以存储字符串，音频，图片等等由字节组成的数据。</p>
+<p>将字符串转化为字节串：</p>
+<ul>
+<li>如果字符串内容都是 ASCII，在字符串常量前面加 b 即可转化：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bytes_var = <span class="string">b&quot;Xorex&quot;</span>  </span><br><span class="line">print(<span class="built_in">type</span>(bytes_var)) <span class="comment">#输出内容为 bytes 类型</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>python 内置 bytes 类型的构造方法，可以通过构造方法获取</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bytes_b = <span class="built_in">bytes</span>(<span class="string">&quot;你好呀&quot;</span>,<span class="string">&quot;UTF-8&quot;</span>) <span class="comment"># 字符串和转化字节的编码  </span></span><br><span class="line">print(<span class="built_in">type</span>(bytes_b))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用字符串对象的 encode() 方法，返回一个字节串</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bytes_a = <span class="string">&quot;你好呀&quot;</span>.encode(<span class="string">&quot;UTF-8&quot;</span>)  </span><br><span class="line">print(bytes_a)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="bool-布尔"><a href="#bool-布尔" class="headerlink" title="bool 布尔"></a>bool 布尔</h3><p>True 和 False 两种</p>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>Python 类型转换是通过函数完成的。下面是要转化为对应的类型的转化函数：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int(x)</td>
+<td>将 x 转换成整数类型</td>
+</tr>
+<tr>
+<td>float(x)</td>
+<td>将 x 转换成浮点数类型</td>
+</tr>
+<tr>
+<td>complex(real，[,imag])</td>
+<td>创建一个复数</td>
+</tr>
+<tr>
+<td>str(x)</td>
+<td>将 x 转换为字符串</td>
+</tr>
+<tr>
+<td>repr(x)</td>
+<td>将 x 转换为表达式字符串</td>
+</tr>
+<tr>
+<td>eval(str)</td>
+<td>计算在字符串中的有效 Python 表达式，并返回一个对象</td>
+</tr>
+<tr>
+<td>chr(x)</td>
+<td>将整数 x 转换为一个字符</td>
+</tr>
+<tr>
+<td>ord(x)</td>
+<td>将一个字符 x 转换为它对应的整数值</td>
+</tr>
+<tr>
+<td>hex(x)</td>
+<td>将一个整数 x 转换为一个十六进制字符串</td>
+</tr>
+<tr>
+<td>oct(x)</td>
+<td>将一个整数 x 转换为一个八进制的字符串</td>
+</tr>
+</tbody></table>
+<h4 id="str-x-和-repr-x"><a href="#str-x-和-repr-x" class="headerlink" title="str(x) 和 repr(x)"></a>str(x) 和 repr(x)</h4><p>两个都是对象的 toString() 方法，不同的是打印信息的目的不太相同：</p>
+<ul>
+<li><p>str() 的输出追求可读性，输出格式要便于理解，适合用于输出内容到用户终端。</p>
+</li>
+<li><p>repr() 的输出追求明确性，除了对象内容，还需要展示出对象的数据类型信息，适合开发和调试阶段使用。</p>
+</li>
+</ul>
+<p>repr: representation 展示、演示。</p>
+<h4 id="eval-str"><a href="#eval-str" class="headerlink" title="eval(str)"></a>eval(str)</h4><p>只要是 Python 能计算的表达式的字符串，放到里面都可以被解析计算。</p>
+<h4 id="ord-x"><a href="#ord-x" class="headerlink" title="ord(x)"></a>ord(x)</h4><p>ord() ordinal 顺序的次序的，返回字符在 Unicode 中的编码次序，为 int 类型。</p>
+<h3 id="缓存机制"><a href="#缓存机制" class="headerlink" title="缓存机制"></a>缓存机制</h3><p>类似于 Java 的字符串类型的机制，不过由于 Python 没有基本数据类型，所以原本 Interger 这种包装类的缓存机制，也一并被 Python 统一设置在了全局里面。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>是否可以重用</th>
+<th>生效范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>范围在 [-5, 256] 之间的小整数</td>
+<td>如果之前在程序中创建过，就直接存入缓存，后续不再创建。</td>
+<td>全局</td>
+</tr>
+<tr>
+<td>bool 类型</td>
+<td>↑</td>
+<td>↑</td>
+</tr>
+<tr>
+<td>字符串类型数据</td>
+<td>↑</td>
+<td>↑</td>
+</tr>
+<tr>
+<td>大于 256 的整数</td>
+<td>只要在本代码块内创建过，就直接缓存，后续不再创建。</td>
+<td>本代码块</td>
+</tr>
+<tr>
+<td>大于 0 的浮点型小数</td>
+<td>↑</td>
+<td>↑</td>
+</tr>
+<tr>
+<td>小于 0 的浮点型小数</td>
+<td>不进行缓存，每次都需要额外创建。</td>
+<td>↑</td>
+</tr>
+<tr>
+<td>小于 -5 的整数</td>
+<td>↑</td>
+<td>↑</td>
+</tr>
+</tbody></table>
+<h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><h3 id="输入-input"><a href="#输入-input" class="headerlink" title="输入 input()"></a>输入 input()</h3><p>将控制台的一行输入并返回为字符串。其中 input() 函数里面可以输入字符串作为输入提示。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name=<span class="built_in">input</span>(<span class="string">&quot;请输入你的名字：&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="输出-print"><a href="#输出-print" class="headerlink" title="输出 print()"></a>输出 print()</h3><p>来看看 print() 函数的定义吧，我相信看了就懂：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># known special case of print</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print</span>(<span class="params">self, *args, sep=<span class="string">&#x27; &#x27;</span>, end=<span class="string">&#x27;\n&#x27;</span>, file=<span class="literal">None</span></span>):</span>  </span><br><span class="line">    <span class="string">&quot;&quot;&quot;  </span></span><br><span class="line"><span class="string">    print(value, ..., sep=&#x27; &#x27;, end=&#x27;\n&#x27;, file=sys.stdout, flush=False)  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Prints the values to a stream, or to sys.stdout by default.  </span></span><br><span class="line"><span class="string">    Optional keyword arguments:  </span></span><br><span class="line"><span class="string">    file:  a file-like object (stream); defaults to the current sys.stdout.  </span></span><br><span class="line"><span class="string">    sep:   string inserted between values, default a space.  </span></span><br><span class="line"><span class="string">    end:   string appended after the last value, default a newline.  </span></span><br><span class="line"><span class="string">    flush: whether to forcibly flush the stream.  </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>  </span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>默认分隔符空格，结尾是换行，输出到屏幕上（sys.stdout）。于是可以这样写：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;Tempest&quot;</span>,<span class="string">&quot;Xorex&quot;</span>, end=<span class="string">&quot;[end]&quot;</span>,sep=<span class="string">&quot;[sep]&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后输出：<code>Tempest[sep]Xorex[end]</code></p>
+<p>也可以设置 file 属性，定义输出位置，接收参数可以是 open() 打开的文件。</p>
+<hr>
+<p>print() 支持格式化输出，和 C 语言一样，在字符串中添加占位符，然后紧跟着字符串后面，表示占位符代替的变量。当一个占位符的时候可以不加括号，多个就需要加括号。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">first_name = <span class="string">&quot;Tempest&quot;</span>  </span><br><span class="line">last_name = <span class="string">&quot;Xorex&quot;</span>  </span><br><span class="line">age = <span class="number">18</span>  </span><br><span class="line">print(<span class="string">&quot;First Name: %s; &quot;</span> %first_name,<span class="string">&quot;Last Name: %s;  age: %d;&quot;</span> %(last_name,age))</span><br></pre></td></tr></table></figure>
+
+<p>输出：<code>First Name: Tempest; Last Name: Xorex; age: 18;</code></p>
+<p>剩下的诸如输出宽度，输出精度，对齐方式什么的，就和 C 语言是一样的了。</p>
+<h2 id="Python-运算"><a href="#Python-运算" class="headerlink" title="Python 运算"></a>Python 运算</h2><h3 id="算数运算"><a href="#算数运算" class="headerlink" title="算数运算"></a>算数运算</h3><p>和 Java 相比，除了基本的加减乘除模，多了整除 // 和幂运算</p>
+<h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><p>和 Java 的一样，只支持整形运算，运算位数取决于最长的那个数。</p>
+<h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><p>除了 大于小于等于不等于大于等于小于等于 以外，多了两个： <code>is</code> 和 <code>is not</code>。</p>
+<p>前面的都是拿着字面量进行比较，而 <code>is</code> 和 <code>is not</code> 是进行对象地址进行比较的。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">187987897234234</span>  </span><br><span class="line">y = <span class="built_in">int</span>(<span class="built_in">input</span>()) <span class="comment"># 不也写成字面量是因为有字面量缓存，所以输出转化一下，获取一个新的对象   </span></span><br><span class="line">print(x <span class="keyword">is</span> y) <span class="comment"># 输出结果是 False</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><p>逻辑运算符 and or not，支持任何数据类型（不仅仅是 Bool），支持短路运算。</p>
+<h3 id="运算优先级和结合性"><a href="#运算优先级和结合性" class="headerlink" title="运算优先级和结合性"></a>运算优先级和结合性</h3><p>反正小括号优先级最高，不确定就加小括号。</p>
+<p><img src="https://xorex.space/image/337.jpg" alt="337.jpg"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Xorex</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xorex.space/2022/01/13/79be75538808/">https://xorex.space/2022/01/13/79be75538808/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xorex.space" target="_blank">Xorex</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="/waifus/217.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/14/2a632949769c/"><img class="prev-cover" src="/waifus/218.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python-02-序列</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/17/3caac9085d1b/"><img class="next-cover" src="/waifus/216.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Docker</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC8yODcyMS81Mjky"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Megumi.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Xorex</div><div class="author-info__description">要成为世界上最幸福的人啊！</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">230</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">143</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Administrator-Xorex"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Administrator-Xorex" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="http://tool.gljlw.com/qq/?qq=2676424606" target="_blank" title="添加好友"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:cloudloverain@foxmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/65831075" target="_blank" title="bilibili"><i class="fas fa-tv"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-number">1.</span> <span class="toc-text">命名规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#int-%E6%95%B4%E5%BD%A2"><span class="toc-number">2.1.</span> <span class="toc-text">int 整形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#float-%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">float 浮点数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#complex-%E5%A4%8D%E6%95%B0"><span class="toc-number">2.3.</span> <span class="toc-text">complex 复数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.4.</span> <span class="toc-text">str 字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bytes-%E5%AD%97%E8%8A%82%E4%B8%B2"><span class="toc-number">2.5.</span> <span class="toc-text">bytes 字节串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bool-%E5%B8%83%E5%B0%94"><span class="toc-number">2.6.</span> <span class="toc-text">bool 布尔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.7.</span> <span class="toc-text">类型转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#str-x-%E5%92%8C-repr-x"><span class="toc-number">2.7.1.</span> <span class="toc-text">str(x) 和 repr(x)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eval-str"><span class="toc-number">2.7.2.</span> <span class="toc-text">eval(str)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ord-x"><span class="toc-number">2.7.3.</span> <span class="toc-text">ord(x)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6"><span class="toc-number">2.8.</span> <span class="toc-text">缓存机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-number">3.</span> <span class="toc-text">输入输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5-input"><span class="toc-number">3.1.</span> <span class="toc-text">输入 input()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA-print"><span class="toc-number">3.2.</span> <span class="toc-text">输出 print()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-%E8%BF%90%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">Python 运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97"><span class="toc-number">4.1.</span> <span class="toc-text">算数运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-number">4.2.</span> <span class="toc-text">位运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">4.3.</span> <span class="toc-text">关系运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">4.4.</span> <span class="toc-text">逻辑运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E4%BC%98%E5%85%88%E7%BA%A7%E5%92%8C%E7%BB%93%E5%90%88%E6%80%A7"><span class="toc-number">4.5.</span> <span class="toc-text">运算优先级和结合性</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2022 By Xorex</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="Xorex" data-fontsize="18px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
