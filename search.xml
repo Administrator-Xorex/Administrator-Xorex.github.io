@@ -23,6 +23,650 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux-02</title>
+    <url>/2022/08/03/8f6d5138d550/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux-01-基础</title>
+    <url>/2022/08/03/1e7d798d8809/</url>
+    <content><![CDATA[<h2 id="Linux-简介"><a href="#Linux-简介" class="headerlink" title="Linux 简介"></a>Linux 简介</h2><ul>
+<li><p>最早的操作系统相关是 Unix 操作系统，诞生与 1970 年，是一个比较完善的分时操作系统。（分时操作系统是使一台计算机采用时间片轮转的方式同时为几个、几十个甚至几百个用户服务的一种操作系统，用来降低使用计算机的成本）</p>
+</li>
+<li><p>之后 C 语言诞生了，程序员们用这种高效的，可以移植性强的语言代替汇编语言重写了 Unix 系统，美国官方将 Unix，C 语言，ICP/IP 协议，当作标准开始推广。成功对后来的计算机发展产生了深远的影响。</p>
+</li>
+<li><p>有一天 Unix 突然宣布不开源了，因此有些程序员将 Unix 系统进行改编，于是就有了各种 Unix 的衍生版本，如：Sun Solaris、FreeBSD、IBM AIX、HP-UX 等等。</p>
+</li>
+<li><p>除此之外，还有一个编写 Unix 衍生版本的计划 GNU 被发起了，而 GNU 则是 GNU Not Unix 的递归缩写。自发起这个计划以来，GNU 开始大量的产生或收集各种系统所必备的组件，像是——函数库（libraries）、编译器（compilers）、调式工具（debugs）、文本编辑器（text editors）、网站服务器（web server），以及一个 Unix 的使用者接口（Unix shell）等等。但由于种种原因，GNU 一直没有开发操作系统的 kernel。正当 Richard Stallman 在为操作系统内核伤脑筋的时候，Linux 出现了。</p>
+</li>
+<li><p>Linus Torvalds 同学在上学时，觉得学校给用的 Unix 衍生操作系统 Minix 太难用了，于是就模仿 Unix 写了自己的操作系统 Linux，并且公开了 Linux 的源代码，允许所有程序员对 Linux 进行修改和完善，成功大火，所以其实可以说，Linux 是 Unix 的一个衍生系统（功能基本相同，但是系统开源）。而因为 Linux 因为借用了很多 GNU 的组件，所以现在 Linux 一般特指 内核层，整个系统则被称为 GNU/Linux。</p>
+</li>
+<li><p>根据国际公约，南极洲属于全人类的资产，任何国家都不能宣誓主权，于是 Linus 使用南极的特产——小企鹅，作为了 Linux 的 Logo，象征着 Linux 的开源精神。</p>
+</li>
+</ul>
+<h2 id="Linux-的组成"><a href="#Linux-的组成" class="headerlink" title="Linux 的组成"></a>Linux 的组成</h2><ul>
+<li><strong>内核层</strong> ：内核层是操作系统的核心，是直接依附在计算机的硬件系统上面，负责对计算机硬件资源和软件资源的调用。通过高效有序的控制，来最大化的发挥出来硬件的能力，为用户提供一个安全，可靠，高效的应用环境。</li>
+<li><strong>Shell(壳)层</strong> ： 壳是用来区别核的，而着个 shell 的目的就是链接用户和 Core 核，因此这个 shell 也叫 命令解释器，用来接受用户的命令，然后解释给计算机执行，shell 分为图形界面和命令行界面。</li>
+<li><strong>应用层</strong> ：应用层用来提供一个图形环境，用来支持操作系统中的各种应用，但是 Linux 不需要安装 GUI 就可以提供完整的功能。</li>
+</ul>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><blockquote>
+<p>在 Linux 中，一切皆文件。</p>
+</blockquote>
+<h3 id="Linux-的分区"><a href="#Linux-的分区" class="headerlink" title="Linux 的分区"></a>Linux 的分区</h3><p>Linux 默认是进入根目录 <code>/</code> 所在的分区进行操作的。所以无论是物理扩展硬盘，还是对硬盘进行分区，都只能通过根目录 <code>/</code> 进行访问的。所以这些新的分区，都需要在根目录下面找一个 <strong>挂载点</strong>，也就是文件夹，作为访问分区的入口。</p>
+<p>比如我们新分区一个 100G 的空间，使用了不同的文件系统格式。那么我们怎么访问这 100G 的空间呢，答案就是在根目录下给它找一个文件夹作为挂载点，挂载到主分区上面，这样就可以通过根目录下面的文件夹去访问新分区里面的数据了。</p>
+<p>如图：</p>
+<p><img src="https://xorex.space/image/351.jpg" alt="351.jpg"></p>
+<p>根目录在 sda2 逻辑分区中，启动操作系统则会进入 sda2 分区的 根目录 <code>/</code> 下面，而其它的分区则挂载到根目录下面的文件夹下面。 </p>
+<p>再来个例子：<a href="http://c.biancheng.net/view/2859.html">Linux 挂载详解</a></p>
+<h3 id="安装-Linux"><a href="#安装-Linux" class="headerlink" title="安装 Linux"></a>安装 Linux</h3><p>Linux 系统安装必要的分区：</p>
+<ol>
+<li><p><strong>根目录分区</strong>：启动访问的目录，挂载到 <code>/</code>，</p>
+</li>
+<li><p><strong>引导分区</strong>：系统启动所需，需要挂载到 <code>/boot</code> 下面。文件系统格式可以采用 <code>ext4</code> 或者 <code>xfs</code>。</p>
+</li>
+<li><p><strong>交换分区</strong>：类似于 Win 的虚拟内存，不需要通过根目录访问，所以挂载到 <code>swap</code> 下面，和 <code>/</code> 级别平行。文件系统格式为 <code>swap</code> 格式。</p>
+</li>
+</ol>
+<p><img src="https://xorex.space/image/352.jpg" alt="352.jpg"></p>
+<h3 id="根目录文件结构"><a href="#根目录文件结构" class="headerlink" title="根目录文件结构"></a>根目录文件结构</h3><ul>
+<li><p><code>/bin</code>：bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着最经常使用的命令的二进制可执行文件。是 <code>/usr/bin</code> 下面的一个链接。</p>
+</li>
+<li><p><code>/boot</code>：这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。</p>
+</li>
+<li><p><code>/dev</code>：dev 是 Device(设备) 的缩写, 该目录下存放的是 Linux 的外部设备，在 Linux 中访问设备的方式和访问文件的方式是相同的。比如 cpu disk core input output 等等。</p>
+</li>
+<li><p><code>/etc</code>：etc 是 Etcetera(等等) 的缩写，这个目录用来存放所有的系统管理所需要的配置文件和子目录，比如我们配置 Redis 加入系统服务就是增加了配置文件 <code>/etc/systemd/system/redis.service</code>。</p>
+</li>
+<li><p><code>/home</code>：用户的主目录，在 Linux 中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。Root 用户自己的目录在 <code>/root</code> 里面。一般用来放专属于某个用户的数据，比如 </p>
+</li>
+<li><p><code>/lib</code>：lib 是 Library(库) 的缩写这个目录里存放着系统最基本的动态连接共享库，其作用类似于 Windows 里的 DLL 文件。几乎所有的应用程序都需要用到这些共享库，是 <code>/usr/lib</code> 的链接。</p>
+</li>
+<li><p><code>/lib64</code>：和 lib 是一样的，不同的是里面是 64位 共享库，是 <code>/usr/lib64</code> 的链接。</p>
+</li>
+<li><p><code>/lost+found</code>：这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些关机丢失的文件。</p>
+</li>
+<li><p><code>/media</code>：linux 系统会自动识别一些媒体设备，例如U盘、光驱等等，当识别后，Linux 会把识别的设备挂载到这个目录下，从这个目录下面去访问。</p>
+</li>
+<li><p><code>/mnt</code>：系统提供该目录是为了让用户临时挂载别的文件系统的，可以将外部设备挂载到 /mnt/ 上面，是一个可自己修改的 <code>/media</code></p>
+</li>
+<li><p><code>/opt</code>：opt 是 optional(可选) 的缩写，这是给主机额外安装软件所摆放的目录。比如 MySQL Redis 等等，默认是空的。</p>
+</li>
+<li><p><code>/proc</code>：proc 是 Processes(进程) 的缩写，/proc 是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>/root</code>：该目录为系统管理员，也称作超级权限者的用户主目录。用来放 Root 用户的资料的。</p>
+</li>
+<li><p><code>/sbin</code>：s 就是 Super User 的意思，是 Superuser Binaries (超级用户的二进制文件) 的缩写，这里存放的是系统管理员才能够调用的超级命令，和 <code>/bin</code> 一样，是 usr 文件夹下面的链接。</p>
+</li>
+<li><p><code>/srv</code>：service 所以，该目录存放一些系统服务启动所需要的数据。</p>
+</li>
+<li><p><code>/sys</code>：system，系统内核信息的文件夹。安装了新出现的一个文件系统 sys、fs。sysfs 文件系统集成了下面3种文件系统的信息：针对进程信息的 proc 文件系统、针对设备的 devfs 文件系统以及针对伪终端的 devpts 文件系统。该文件系统是内核设备树的一个直观反映。当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统中被创建。</p>
+</li>
+<li><p><code>/tmp</code>：tmp 是 temporary(临时) 的缩写这个目录是用来存放一些临时文件的。可以设置为下载目录。</p>
+</li>
+<li><p><code>/usr</code>：usr 是 unix shared resources(共享资源) 的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。除了安装应用程序之外，还有其他的共享资源，比如：<code>/usr/bin</code>、<code>/usr/sbin</code>、<code>/usr/src</code>（内核源代码）。</p>
+</li>
+<li><p><code>/var</code>：var 是 variable(变量) 的缩写，这个目录中存放着在不断扩充着、会变化的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</p>
+</li>
+<li><p><code>/run</code>：是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</p>
+</li>
+</ul>
+<h2 id="文件编辑"><a href="#文件编辑" class="headerlink" title="文件编辑"></a>文件编辑</h2><h3 id="vim-编辑器"><a href="#vim-编辑器" class="headerlink" title="vim 编辑器"></a>vim 编辑器</h3><p>有三种模式，一般模式，编辑模式，指令模式。</p>
+<p>一般模式：一进来就处于的模式，用于整体的操作文本。比如复制粘贴剪贴删除：段、行、词。和光标再文本中的移动。</p>
+<p>编辑模式：按 i 进入编辑模式，可以输入内容。按 ESC 退出。</p>
+<p>指令模式：按 <code>: / ?</code> 任意一个进入命令模式，后面跟着对应命令，回车执行。按 ESC 退出。</p>
+<h4 id="一般模式"><a href="#一般模式" class="headerlink" title="一般模式"></a>一般模式</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl f</td>
+<td>Front 向下翻一页</td>
+</tr>
+<tr>
+<td>Ctrl b</td>
+<td>Back 向回翻一页</td>
+</tr>
+<tr>
+<td>G</td>
+<td>光标移动到最后一行</td>
+</tr>
+<tr>
+<td>gg</td>
+<td>光标移动到第一行</td>
+</tr>
+<tr>
+<td>p</td>
+<td>在光标处粘贴</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u</td>
+<td>撤销</td>
+</tr>
+<tr>
+<td>Ctrl r</td>
+<td>取消撤销</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="编辑模式"><a href="#编辑模式" class="headerlink" title="编辑模式"></a>编辑模式</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>p</td>
+<td>在光标处粘贴</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="指令模式"><a href="#指令模式" class="headerlink" title="指令模式"></a>指令模式</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>p</td>
+<td>在光标处粘贴</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="常用系统工作命令"><a href="#常用系统工作命令" class="headerlink" title="常用系统工作命令"></a>常用系统工作命令</h2><ol>
+<li><code>date</code> 显示当前的时间。</li>
+<li><code>reboot</code> 重启计算机。</li>
+<li><code>poweroff</code> 关闭系统关闭电源</li>
+<li><code>halt</code> 只关闭系统不关电源。</li>
+<li><code>shutdown</code> 有条件的关闭系统关闭电源</li>
+<li><code>ps</code> 用来查看系统中的进程状态。</li>
+<li><code>top</code> 强化版本的任务管理器。</li>
+<li><code>pidof</code> 后面加某一进程的名称，然后返回这一进程的 PID 值。</li>
+<li><code>kill</code> 后面加后一进程的 PID 值，用来杀掉该进程。<ul>
+<li><code>killall</code> 后面加某一应用的名称，会杀掉所有该应用的进程。</li>
+</ul>
+</li>
+<li><code>echo</code> 后面加想要输出的内容，可以是变量，可以是字符串。</li>
+</ol>
+<h2 id="系统状态检测命令"><a href="#系统状态检测命令" class="headerlink" title="系统状态检测命令"></a>系统状态检测命令</h2><ol>
+<li><code>ifconfig</code> 可以获取网卡配置和网络状态信息，inet 后面是 IP 地址，ether 后面是 MAC 地址。</li>
+<li><code>uname -a</code> 可以查看当前系统的系统内核和版本什么的信息。</li>
+<li><code>free -h</code> 用来显示当前主机的内存使用的相关信息。</li>
+<li><code>who</code> 用来查看当前使用这台计算机的用户信息。</li>
+<li><code>last</code> 用来查看最近的所用用户登录记录（这是个可修改的文档）</li>
+<li><code>history</code> 可以展示你最近执行的进 1000 条命令。<ul>
+<li><code>history -c</code> 删除最近执行的命令记录。</li>
+</ul>
+</li>
+</ol>
+<h2 id="工作目录切换命令"><a href="#工作目录切换命令" class="headerlink" title="工作目录切换命令"></a>工作目录切换命令</h2><ol>
+<li><p><code>pwd</code> 返回现在所处位置（Print Working Director）</p>
+</li>
+<li><p><code>cd</code> 切换工作目录 （change director）</p>
+<ul>
+<li><code>cd location</code> 打开对应的目录（文件夹）</li>
+<li><code>cd ..</code> 返回上一级目录</li>
+<li><code>cd ~</code> 可以快速返回当前用户的家目录里面。</li>
+<li>如果路径里面包含有空格/问号/星号/货币符/逻辑符/括号，可以使用 <code>\</code> 来进行转义，让它变成路径名称而不是特殊字符。或者直接用双引号把路径名称名称括起来，<code>cd &quot;特殊字符的路径&quot;</code> 。</li>
+</ul>
+</li>
+<li><p><code>ls</code> 显示当前工作目录下的内容（list files）</p>
+<ul>
+<li><code>ls -a</code> 可以显示出来所有的文件，包括隐藏的文件。</li>
+<li><code>ls -l</code> 查看文件属性，大小等详细信息。</li>
+<li><code>ls ./*</code> 这个符号 <code>*</code> 表示的是正则匹配，<code>file*</code> 就是匹配所有以<code>file</code> 开头的文件或者目录，如果只有 <code>*</code> 那就是匹配所有名称的文件或者目录。</li>
+</ul>
+</li>
+</ol>
+<h2 id="文本文件编辑命令"><a href="#文本文件编辑命令" class="headerlink" title="文本文件编辑命令"></a>文本文件编辑命令</h2><ol>
+<li><code>cat</code> 查看少量内容的文本文件。</li>
+</ol>
+<ul>
+<li><p><code>cat -n &lt;file&gt;</code>在查看文本文件的同时标注行号。</p>
+<ul>
+<li>如果文件名用 <code>-</code> 开头，使用 <code>./-</code> 来打开</li>
+<li>如果文件里面包含有空格/问号/星号/货币符/逻辑符/括号，可以使用 <code>\</code> 来进行转义（注意这里 <code>-</code> 是不可以使用<code>/</code> 来进行转义的，必须使用 <code>./-</code>  ），让它变成文件名而不是特殊字符。或者直接用双引号把文件名称括起来，<code>cat &quot;特殊的文件名称&quot;</code> 。</li>
+</ul>
+</li>
+<li><p><code>cat &gt; XXX</code> 创建一个名为 XXX 的新文件，并编辑其内容。</p>
+<ul>
+<li><code>cat XXX1 XXX2 &gt; XXX3</code> 将 XXX1 文件和 XXX2 文件的内容合并起来，覆盖 XXX3 文件。</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p><code>more</code> 查看大量内容的文本文件。</p>
+<ul>
+<li><code>more -n &lt;file&gt;</code> 再查看大量文本的同时标注行号。</li>
+</ul>
+</li>
+<li><p><code>head -n k &lt;file&gt;</code> 查看 file 文件前 k 行的内容。</p>
+</li>
+<li><p><code>tail -n k &lt;file&gt;</code> 查看 file 文件后 k 行的内容。</p>
+</li>
+<li><p><code>wc</code> 用来显示文本的一些信息。</p>
+<ul>
+<li><code>wc -l &lt;file&gt;</code> 返回文本的行数。</li>
+<li><code>wc -w &lt;file&gt;</code> 返回文本的词数。</li>
+<li><code>wc -c &lt;file&gt;</code> 返回文本的字节数。</li>
+</ul>
+</li>
+<li><p><code>stat &lt;file&gt;</code> 用来查看文件的具体存储信息和时间信息，会有三个参数，<strong>Access</strong> 访问时间，<strong>Modify</strong> 修改时间，<strong>Change</strong> 修改时间。</p>
+</li>
+</ol>
+<h2 id="文件目录管理命令"><a href="#文件目录管理命令" class="headerlink" title="文件目录管理命令"></a>文件目录管理命令</h2><ol>
+<li><p><code>touch &lt;file&gt;</code> 可以创建一个新的空白文档。</p>
+</li>
+<li><p><code>mkdir &lt;director&gt;</code> 可以创建一个新的文件夹。</p>
+<ul>
+<li><code>mkdir -p &lt;director1/director2/directro3&gt;</code>可以创造嵌套的文件夹。</li>
+</ul>
+</li>
+<li><p><code>cp &lt;file1/dire1&gt; &lt;file2/dire2&gt;</code> 复制 file1 或 dire1 到 dire2 目录或者到本地但是重命名为 file2。</p>
+</li>
+<li><p><code>mv &lt;file1/dire1&gt; &lt;file2/dire2&gt;</code> 移动 file1 或 dire1 到 dire2 目录或者到本地但是重命名为 file2。</p>
+</li>
+<li><p><code>rm &lt;file/dire&gt;</code> 命令用于删除文件或者目录。</p>
+<ul>
+<li><code>rm -f &lt;file/dire&gt;</code> 可以不询问是否删除，并执行删除过程。</li>
+<li><code>rm -r &lt;fire/dire&gt;</code> 用来删除目录，不适用 <code>-r</code> 没有办法删除。</li>
+</ul>
+</li>
+<li><p><code>file &lt;filename&gt;</code> 命令用来查看文件的类型。</p>
+<ul>
+<li><code>&lt;filename&gt;</code> 可以使用 <code>*</code> 来进行正则匹配。</li>
+</ul>
+</li>
+</ol>
+<h2 id="打包压缩与搜索命令"><a href="#打包压缩与搜索命令" class="headerlink" title="打包压缩与搜索命令"></a>打包压缩与搜索命令</h2><ol>
+<li><p><code>tar</code> 命令用来对文件进行打包，压缩或者解压操作。需要配合各种命令进行操作。</p>
+<ul>
+<li><code>-c</code> 创建压缩文件，后面需要写要创建的文件名称，一般后缀是 <code>.tar</code> 。</li>
+<li><code>-x</code> 解压缩文件，后面需要写解压后的文件名称。</li>
+<li><code>-t</code> 查看压缩包里都有什么文件。</li>
+<li><code>-z</code> 使用 Gzip 压缩或者解压，后缀需要是 <code>.tar.gz</code></li>
+<li><code>-j</code> 是用 bzip2 压缩或者解压，后缀需要是 <code>tar.bz2</code></li>
+<li><code>-v</code> 显示压缩或者解压的过程，强烈推荐使用。</li>
+<li><code>-f</code> 需要被压缩或者解压的文件名，需要被放在最后。</li>
+<li><code>-p</code> 保留原始的权限与属性。</li>
+<li><code>-P</code> 使用绝对路径来压缩。</li>
+<li><code>-C</code> 指定解压到的目录。</li>
+<li>这些命令可以组合操作，比如 <code>tar -czvf Xorex.tar.gz Xorex</code> 就是将 Xorex 文件夹使用 Gzip 算法压缩成为 Xorex.tar.gz 压缩文件，如果不使用压缩算法，那么就是单纯的打包文件，不进行压缩。</li>
+</ul>
+</li>
+<li><p><code>grep string/expression file</code> 用来对文件的内容进行搜索，非常强大，可以是需要匹配的字符串string或者正则表达式expression，file则是需要匹配的文件或者文件夹！</p>
+<ul>
+<li><code>-c</code> 显示找到的行数，也就是一共有多少行成功匹配到了关键字符串。</li>
+<li><code>-i</code> 匹配时忽略大小写。</li>
+<li><code>-n</code> 显示行号。</li>
+<li><code>-v</code> 反向选择。</li>
+</ul>
+</li>
+<li><p><code>find</code> 用来查找文件，如果不加任何参数的话，回将当前目录下所有能找到的文件全部列出来。</p>
+<ul>
+<li><code>-name</code>匹配名称。</li>
+<li><code>-perm</code> 匹配权限。</li>
+<li><code>-user</code> 匹配所有者。</li>
+<li><code>-group</code> 匹配所有组。</li>
+<li><code>-mtime -n +n</code> 匹配修改内容的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
+<li><code>-atime -n +n</code> 匹配访问内容的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
+<li><code>-ctime -n +n</code> 匹配修改文件的权限的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
+<li><code>-type b/d/c/p/l/f</code> 匹配文件类型（后面的字幕参数依次表示块设备、目录、字符设备、管道、链接文件、文本文件）</li>
+<li><code>-size</code> 匹配文件大小（+50kb 表示文件大于，- 表示小于）</li>
+</ul>
+</li>
+</ol>
+<h3 id="路径相关"><a href="#路径相关" class="headerlink" title="路径相关"></a>路径相关</h3><p>绝对路径使用 <code>/</code> 开头，表示根目录，而相对路径不用任何字符开头。</p>
+<p>其中 <code>./</code> 表示当前目录，而 <code>../</code> 表示上一级目录。</p>
+<p>使用 <code>pwd</code> (print work directory) 命令可以现实当前所在目录的绝对路径。</p>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>连接，将一个表面文件和另外一个目标文件关联，点击表面文件打开目标文件。</p>
+<p>硬链接：在当前目录下面添加一个目标文件的目录项（索引），从始至终只有一个文件：目标文件。</p>
+<p>软连接：真的建立了一个文件（又有文件节点），将自己文件路径名链接到了目标文件。</p>
+<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>change mode 改变模式，用来改变文件的权限。</p>
+<p>权限作用人 <code>[who]</code> 分为：u (user) 表示该文件的拥有者，g (group) 表示与该文件的拥有者属于同一个群体者，o (others) 表示其他以外的人，a (all) 表示这三者皆是。</p>
+<p>权限 <code>[mode]</code> 分为：r (read) 读取，w (write) 写入，x (executable) 执行。</p>
+<p>权限操作 <code>[operator]</code> 分为：+ 增加权限，- 取消权限， = 表示唯一设定权限（也就是清除所有权限之后再增加设定权限）</p>
+<ol>
+<li>对指定的用户组进行修改</li>
+</ol>
+<p>格式：<code>chmod [who][operator][mode] file</code> 。</p>
+<p>例：<code>chmod u=r waifu.jpg</code> 命令表示将 waifu.jpg 文件所有者的权限重新设定为只有读取权限。</p>
+<ol start="2">
+<li>对所有用户组进行修改</li>
+</ol>
+<p>格式：<code>chmod [WhoOperator][WhoOperator][WhoOperator] file</code> 或者 <code>chmod [sumOperatorNumber][sumOperatorNumber][sumOperatorNumber] file</code> 。</p>
+<p>上面每一个都表示某一个用户组的权限：第一位表示 user 第二位表示 group 第三位表示 others。</p>
+<p><code>[WhoOperator]</code> 使用三个权限符号表示，没有权限用 - 代表。r-x 表示读和执行权限。</p>
+<p><code>[sumOperatorNumber]</code> 表示将权限符号用数字替代，没有权限用 - 代表，r 4、w 2、x 1，然后相加就是代表的权限。如 7 表示同时拥有读写执行权限。</p>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis-02-整合Java</title>
+    <url>/2022/08/03/095a6a7e9903/</url>
+    <content><![CDATA[<h2 id="Maven-整合-Jedis"><a href="#Maven-整合-Jedis" class="headerlink" title="Maven 整合 Jedis"></a>Maven 整合 Jedis</h2><p>在 Maven 中引入 Jedis 就可以使用了：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DemoTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Jedis jedis;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeEach</span> <span class="comment">// 建立 Redis 链接</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getReids</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        jedis = <span class="keyword">new</span> Jedis(<span class="string">&quot;server.xorex.space&quot;</span>, <span class="number">6379</span>);</span><br><span class="line">        jedis.auth(<span class="string">&quot;tempestxorex&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span> <span class="comment">// 按照使用 Redis 命令名字来调用方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String result = jedis.set(<span class="string">&quot;tempest&quot;</span>, <span class="string">&quot;xorex&quot;</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line"></span><br><span class="line">        result = jedis.get(<span class="string">&quot;tempest&quot;</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterEach</span> <span class="comment">// 关闭 Redis 链接</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">closeRedis</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (jedis != <span class="keyword">null</span>) &#123;</span><br><span class="line">            jedis.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Redis 虽然是原子性线程安全的，但是 Jedis 在获取和修改 Redis 的时候的代码，是线程不安全的。也就是如果多个 Java 线程共享一个 jedis 链接实例，就会出现线程不安全问题。为了解决这个问题，可以建立多个 jedis 的连接池，为每个 Java 线程分配不同的 jedis 连接实例。</p>
+<p>创建连接池：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JedisConnectionPoolFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> JedisPool jedisPool;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置为静态的，一被加载就创建连接池</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        JedisPoolConfig config = <span class="keyword">new</span> JedisPoolConfig(); <span class="comment">// 获取连接池配置</span></span><br><span class="line">        config.setMaxTotal(<span class="number">8</span>); <span class="comment">// 设置最大连接数量</span></span><br><span class="line">        config.setMinIdle(<span class="number">8</span>); <span class="comment">// 设置最小连接数量</span></span><br><span class="line">        config.setMaxWait(Duration.ZERO); <span class="comment">// 设置最大等待时间</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过 JedisPoolConfig配置信息 host地址 端口 最大连接时间 密码 来创建连接池</span></span><br><span class="line">        jedisPool = <span class="keyword">new</span> JedisPool(config, <span class="string">&quot;server.xorex.space&quot;</span>, <span class="number">6379</span>, <span class="number">1000</span>, <span class="string">&quot;tempestxorex&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Jedis <span class="title">getJedis</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jedisPool.getResource(); <span class="comment">// 返回池子的 Jedis 连接</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用连接池：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DemoTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Jedis jedis;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeEach</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getReids</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//从连接池获取 jedis 连接</span></span><br><span class="line">        jedis = JedisConnectionPoolFactory.getJedis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterEach</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">closeRedis</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (jedis != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果存在连接池，close 的时候会将连接归还而不是关闭</span></span><br><span class="line">            jedis.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SpringBoot-整合-Jedis"><a href="#SpringBoot-整合-Jedis" class="headerlink" title="SpringBoot 整合 Jedis"></a>SpringBoot 整合 Jedis</h2><h3 id="前置操作"><a href="#前置操作" class="headerlink" title="前置操作"></a>前置操作</h3><p>这里是使用 Spring 全家桶中的 SpringData 系列（专注于数据处理）的 SpringDataRedis，它封装了第三方的 Redis Java 客户端，提供了统一的操作接口。</p>
+<p>使用依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--Redis依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--连接池依赖 lettuce 和 jedis 都用它--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-pool2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>引入完成之后，就是在 SpringBoot 的配置文件里面去配置 Redis 的信息。需要注意的是，SpringDataRedis 默认只下载了 lettuce 客户端，如果需要用 Jedis，那么就要引入 Jedis 的 Maven 了。版本号 SpringBoot 会仲裁。</p>
+ <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>完成配置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">xxxxxxxx</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">xxxxxxx</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">jedis:</span></span><br><span class="line">      <span class="attr">pool:</span></span><br><span class="line">        <span class="attr">max-active:</span> <span class="number">8</span></span><br><span class="line">        <span class="attr">max-idle:</span> <span class="number">8</span></span><br><span class="line">        <span class="attr">max-wait:</span> <span class="string">100ms</span></span><br><span class="line">        <span class="attr">min-idle:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>SpringDataRedis 中提供了 RedisTemplate 工具类，其中封装了各种对 Redis 的操作。并且将不同数据类型的操作 API 封装到了不同的类型中：</p>
+<table>
+<thead>
+<tr>
+<th><strong>API</strong></th>
+<th><strong>返回值类型</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>redisTemplate</strong>.opsForValue()</td>
+<td>ValueOperations</td>
+<td>操作String类型数据</td>
+</tr>
+<tr>
+<td><strong>redisTemplate</strong>.opsForHash()</td>
+<td>HashOperations</td>
+<td>操作Hash类型数据</td>
+</tr>
+<tr>
+<td><strong>redisTemplate</strong>.opsForList()</td>
+<td>ListOperations</td>
+<td>操作List类型数据</td>
+</tr>
+<tr>
+<td><strong>redisTemplate</strong>.opsForSet()</td>
+<td>SetOperations</td>
+<td>操作Set类型数据</td>
+</tr>
+<tr>
+<td><strong>redisTemplate</strong>.opsForZSet()</td>
+<td>ZSetOperations</td>
+<td>操作SortedSet类型数据</td>
+</tr>
+<tr>
+<td><strong>redisTemplate</strong></td>
+<td></td>
+<td>通用的命令</td>
+</tr>
+</tbody></table>
+<p>操作 Redis：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JedisTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span> <span class="comment">// 自动注入 RedisTemplate</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getJedis</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取 ValueOperations 来操作 String 类型数据</span></span><br><span class="line">        redisTemplate.opsForValue().set(<span class="string">&quot;testKey&quot;</span>, <span class="string">&quot;testValue&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="对象序列化存储问"><a href="#对象序列化存储问" class="headerlink" title="对象序列化存储问"></a>对象序列化存储问</h3><p>RedisTemplate 的两种序列化实践方案：</p>
+<p>方案一：</p>
+<ul>
+<li>自定义 RedisTemplate</li>
+<li>修改 RedisTemplate 的序列化器为 GenericJackson2JsonRedisSerializer    </li>
+</ul>
+<p>方案二：</p>
+<ul>
+<li>使用 StringRedisTemplate</li>
+<li>写入 Redis 时，手动把对象序列化为 JSON</li>
+<li>读取 Redis 时，手动把读取到的 JSON 反序列化为对象</li>
+</ul>
+<h4 id="方案一："><a href="#方案一：" class="headerlink" title="方案一："></a>方案一：</h4><p>需要注意的是， RedisTemplate 操作的时候，输入的 Key 和 Value 都是 Object 对象，那么就需要有专门的工具类将对象转换为 Redis 需要的 Key 和 Value 字符串。</p>
+<p>这个专门工具类的设置，是作用在 RedisTemplate 上面的，需要我们去修改他的参数。那么在 SpringBoot 中很好解决，只需要我们自定义一个 RedisTemplate，然后注入到 Spring 的 IOC 容器就可以了。这样我们 @AutoWired 拿到的就是我们自定义的 RedisTemplate 而不是默认创建的。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span> <span class="comment">// 向 IOC 容器中注入我们自己创建的 RedisTemplate</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Object&gt; <span class="title">redisTemplate</span><span class="params">(RedisConnectionFactory connectionFactory)</span> </span>&#123; <span class="comment">// 方法参数 connectionFactory 会从 IOC 容器中自己找</span></span><br><span class="line">        <span class="comment">// 创建 RedisTemplate 对象</span></span><br><span class="line">        RedisTemplate&lt;String, Object&gt; redisTemplate = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置连接工厂，使得 RedisTemplate 可以获取连接池中的 Redis 连接</span></span><br><span class="line">        redisTemplate.setConnectionFactory(connectionFactory);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 Key 的序列化</span></span><br><span class="line">        redisTemplate.setKeySerializer(RedisSerializer.string());</span><br><span class="line">        redisTemplate.setHashKeySerializer(RedisSerializer.string());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 Value 的序列化</span></span><br><span class="line">        redisTemplate.setValueSerializer(RedisSerializer.json());</span><br><span class="line">        redisTemplate.setHashValueSerializer(RedisSerializer.json());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> redisTemplate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样以后 @AutoWired 获取的 RedisTemplate 就是我们自己设置的了，中文编码也就不会出问题了。</p>
+<ul>
+<li>自动完成对象和 Json 字符串的序列化和反序列化：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    redisTemplate.opsForValue().set(<span class="string">&quot;user:100&quot;</span>,<span class="keyword">new</span> User(<span class="number">100</span>,<span class="string">&quot;Xorex&quot;</span>,<span class="number">20</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从 Redis 中取出 Json 字符串，然后序列化成一个对象</span></span><br><span class="line">    User user = (User) redisTemplate.opsForValue().get(<span class="string">&quot;user:100&quot;</span>);</span><br><span class="line">    <span class="comment">// 反序列化过程是，先创建对象，然后使用 setter 方法进行填充</span></span><br><span class="line">    System.out.println(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>自动反序列化的结果</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;@class&quot;</span>: <span class="string">&quot;space.xorex.boot.pojo.User&quot;</span>, <span class="comment">// 因为保存了 Class 信息，所以可以自动反序列化为对象</span></span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="number">101</span>,</span><br><span class="line">  <span class="attr">&quot;userName&quot;</span>: <span class="string">&quot;你好&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;age&quot;</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="方案二："><a href="#方案二：" class="headerlink" title="方案二："></a>方案二：</h4><p>因为自动反序列化的结果多了一个 @Class，比较占用内存，我们可以通过将 Value 也设置为 String 序列化，这样就没有 @Class 了，但是这样做的坏处就是 get() 获取的 Redis 数据没有办法自动反序列化为对象了，需要我们手动完成。</p>
+<p>Spring 默认提供了一个 StringRedisTemplate 类，它的 key 和 value 的序列化方式默认就是 String 方式。省去了我们自定义 RedisTemplate 的过程.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> JsonProcessingException </span>&#123;</span><br><span class="line">    <span class="comment">// jackson 提供的 json 字符串和对象互相转换的工具</span></span><br><span class="line">    ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line"></span><br><span class="line">    User user = <span class="keyword">new</span> User(<span class="number">101</span>,<span class="string">&quot;你好&quot;</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 user 的 json</span></span><br><span class="line">    String json = mapper.writeValueAsString(user);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 写入 key value</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;user:101&quot;</span>,json);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读取 key value</span></span><br><span class="line">    String value = stringRedisTemplate.opsForValue().get(<span class="string">&quot;user:101&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将读取的字符串结果转换为对象</span></span><br><span class="line">    User newUser = mapper.readValue(json, User.class);</span><br><span class="line">    </span><br><span class="line">    System.out.println(newUser);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这样的序列化结果：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;id&quot;</span>: <span class="number">101</span>,</span><br><span class="line">  <span class="attr">&quot;userName&quot;</span>: <span class="string">&quot;你好&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;age&quot;</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis-01-基础命令</title>
+    <url>/2022/08/03/c124465ae885/</url>
+    <content><![CDATA[<h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>Redis：Remote Dictionary server 远程词典（键值对形式）服务器。是一种 NoSQL 数据库。</p>
+<h3 id="和-SQL-比较"><a href="#和-SQL-比较" class="headerlink" title="和 SQL 比较"></a>和 SQL 比较</h3><p><img src="https://xorex.space/image/342.jpg" alt="342.jpg"></p>
+<h3 id="Redis-特点"><a href="#Redis-特点" class="headerlink" title="Redis 特点"></a>Redis 特点</h3><p><img src="https://xorex.space/image/343.jpg" alt="343.jpg"></p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>Redis 的 Key 都是字符串类型，Value 则支持五种基本类型和其他类型。</p>
+<p>基本类型：string（字符串），hash（哈希），list（列表），set（集合）、sorted set（有序集合)</p>
+<p>一个 Key 的 Value 只能有一个数据类型。</p>
+<h3 id="Redis-安装"><a href="#Redis-安装" class="headerlink" title="Redis 安装"></a>Redis 安装</h3><h4 id="1-安装-GCC-依赖"><a href="#1-安装-GCC-依赖" class="headerlink" title="1. 安装 GCC 依赖"></a>1. 安装 GCC 依赖</h4><p>Redis 使用 C 语言编写，所以需要安装其代码所依赖的 GCC 编译器。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y gcc tcl</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-下载-Redis-解压"><a href="#2-下载-Redis-解压" class="headerlink" title="2. 下载 Redis 解压"></a>2. 下载 Redis 解压</h4><p>我们将目录定位到 <code>usr/local/src</code> 中，并下载解压</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://download.redis.io/releases/redis-6.2.7.tar.gz</span><br><span class="line">tar -zxvf redis-6.2.7.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-编译-Redis"><a href="#3-编译-Redis" class="headerlink" title="3. 编译 Redis"></a>3. 编译 Redis</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd redis-6.2.7</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<p>编译完成之后，会在 <code>/usr/local/bin</code> 中出现编译结果，这个目录 <code>/usr/local/bin</code> 已经被添加到了默认的环境变量中，任意地方都可以运行里面的结果。</p>
+<p>redis-cli Redis 命令执行客户端启动脚本</p>
+<p>redis-server Redis 服务端启动脚本</p>
+<p>redis-sentinel Redis 哨兵启动脚本</p>
+<h2 id="二、Redis-控制"><a href="#二、Redis-控制" class="headerlink" title="二、Redis 控制"></a>二、Redis 控制</h2><h3 id="1-启动"><a href="#1-启动" class="headerlink" title="1. 启动"></a>1. 启动</h3><h4 id="前台启动"><a href="#前台启动" class="headerlink" title="前台启动"></a>前台启动</h4><p>在任意地方输入 redis-server 即可前台启动 Redis，此时无法退出，只能看着监控面板</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-server</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://xorex.space/image/344.jpg" alt="344.jpg"></p>
+<h4 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h4><p>如果要让 Redis以 <code>后台</code> 方式启动，则必须修改 Redis 配置文件，就在我们之前解压的 Redis 安装包下（ <code>/usr/local/src/redis-6.2.6</code> ），名字叫 Redis.conf：</p>
+<p><img src="https://xorex.space/image/345.jpg" alt="345.jpg"></p>
+<p>我们先将这个配置文件备份一份：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp redis.conf redis.conf.bck</span><br></pre></td></tr></table></figure>
+
+<p>然后修改 redis.conf 文件中的一些配置：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 允许访问的地址，默认是127.0.0.1，会导致只能在本地访问。修改为0.0.0.0则可以在任意IP访问，生产环境不要设置为0.0.0.0</span></span><br><span class="line"><span class="attr">bind</span> <span class="string">0.0.0.0</span></span><br><span class="line"><span class="comment"># 守护进程，修改为yes后即可后台运行</span></span><br><span class="line"><span class="attr">daemonize</span> <span class="string">yes </span></span><br><span class="line"><span class="comment"># 密码，设置后访问Redis必须输入密码</span></span><br><span class="line"><span class="attr">requirepass</span> <span class="string">123321</span></span><br></pre></td></tr></table></figure>
+
+<p>Redis 的其它常见配置：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 监听的端口</span></span><br><span class="line"><span class="attr">port</span> <span class="string">6379</span></span><br><span class="line"><span class="comment"># 工作目录，默认是当前目录，也就是运行redis-server时的命令，日志、持久化等文件会保存在这个目录</span></span><br><span class="line"><span class="attr">dir</span> <span class="string">.</span></span><br><span class="line"><span class="comment"># 数据库数量，设置为1，代表只使用1个库，默认有16个库，编号0~15</span></span><br><span class="line"><span class="attr">databases</span> <span class="string">1</span></span><br><span class="line"><span class="comment"># 设置redis能够使用的最大内存</span></span><br><span class="line"><span class="attr">maxmemory</span> <span class="string">512mb</span></span><br><span class="line"><span class="comment"># 日志文件，默认为空，不记录日志，可以指定日志文件名</span></span><br><span class="line"><span class="attr">logfile</span> <span class="string">&quot;redis.log&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>启动 Redis：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入redis安装目录,作为启动 redis 的工作目录 </span></span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src/redis-6.2.6</span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">redis-server redis.conf</span><br></pre></td></tr></table></figure>
+
+<p>停止服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 利用redis-cli来执行 shutdown 命令，即可停止 Redis 服务，</span></span><br><span class="line"><span class="comment"># 因为之前配置了密码，因此需要通过 -u 来指定密码</span></span><br><span class="line">redis-cli -u 123321 shutdown</span><br></pre></td></tr></table></figure>
+
+<h4 id="后台开机自启"><a href="#后台开机自启" class="headerlink" title="后台开机自启"></a>后台开机自启</h4><p>我们也可以通过配置来实现开机自启。</p>
+<p>首先，新建一个系统服务文件：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vi /etc/systemd/system/redis.service</span><br></pre></td></tr></table></figure>
+
+<p>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;redis-server</span><br><span class="line">After&#x3D;network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type&#x3D;forking</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;redis-server &#x2F;usr&#x2F;local&#x2F;src&#x2F;redis-6.2.7&#x2F;redis.conf</span><br><span class="line">PrivateTmp&#x3D;true</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>然后重载系统服务：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们可以用下面这组命令来操作redis了：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启动</span></span><br><span class="line">systemctl start redis</span><br><span class="line"><span class="comment"># 停止</span></span><br><span class="line">systemctl stop redis</span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line">systemctl restart redis</span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">systemctl status redis</span><br></pre></td></tr></table></figure>
+
+<p>执行下面的命令，可以让redis开机自启：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> redis</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-链接-Redis"><a href="#2-链接-Redis" class="headerlink" title="2. 链接 Redis"></a>2. 链接 Redis</h3><h4 id="命令行客户端"><a href="#命令行客户端" class="headerlink" title="命令行客户端"></a>命令行客户端</h4><p>Redis安装完成后就自带了命令行客户端：redis-cli，使用方式如下：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">redis-cli [options]</span><br></pre></td></tr></table></figure>
+
+<p>其中常见的options有：</p>
+<ul>
+<li><code>-h 127.0.0.1</code>：指定要连接的redis节点的IP地址，默认是127.0.0.1</li>
+<li><code>-p 6379</code>：指定要连接的redis节点的端口，默认是6379</li>
+<li><code>-a xxxxxx</code>：指定redis的访问密码 </li>
+</ul>
+<p>推荐先进行 redis 链接，不输入密码。链接成功之后</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auth [username] password</span><br></pre></td></tr></table></figure>
+
+<p>来验证账号密码（没有用户名可以不填）</p>
+<h4 id="图形化客户端"><a href="#图形化客户端" class="headerlink" title="图形化客户端"></a>图形化客户端</h4><p>在这里下载：<a href="https://github.com/lework/RedisDesktopManager-Windows/releases">https://github.com/lework/RedisDesktopManager-Windows/releases</a></p>
+<p>然后链接就可以使用了</p>
+<h2 id="三、Redis-命令"><a href="#三、Redis-命令" class="headerlink" title="三、Redis 命令"></a>三、Redis 命令</h2><p>推荐在官方的文档里面去学习 Redis 的命令：<a href="https://redis.io/commands/">https://redis.io/commands/</a></p>
+<p>也可以在 Redis 命令行中使用 <code>help [command]</code> 来查看命令用法.</p>
+<p><img src="https://xorex.space/image/346.jpg" alt="346.jpg"></p>
+<h3 id="1-通用命令"><a href="#1-通用命令" class="headerlink" title="1. 通用命令"></a>1. 通用命令</h3><p><img src="https://xorex.space/image/347.jpg" alt="347.jpg"></p>
+<p>Expire  <em>/<em>ɪkˈspaɪər</em>/</em> 到期死亡，设置的 key 有效期是以秒计算。</p>
+<p>TTL TimeToLive 生存时间，返回 key 有效期，-1 为永久有效，-2 表示不存在。</p>
+<h4 id="Key-的分类"><a href="#Key-的分类" class="headerlink" title="Key 的分类"></a>Key 的分类</h4><p>为了规范 Key 的命名，一般采用 <code>项目名:业务名:类型:id</code> 的形式命名 Key，然后将数据对象序列化为 Json 字符串作为存储值。</p>
+<table>
+<thead>
+<tr>
+<th><strong>KEY</strong></th>
+<th><strong>VALUE</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>xorex:blog:user:233</td>
+<td>{“id”:233, “name”: “Xorex”, “age”: 21}</td>
+</tr>
+<tr>
+<td>xorex:video:dance:123</td>
+<td>{“id”:123, “name”: “newLand”, “time”: 4539}</td>
+</tr>
+</tbody></table>
+<p>用这样的形式分类，会被 RDM 自动分层处理。</p>
+<p><img src="https://xorex.space/image/348.jpg" alt="348.jpg"></p>
+<h3 id="2-String"><a href="#2-String" class="headerlink" title="2. String"></a>2. String</h3><h4 id="类型信息"><a href="#类型信息" class="headerlink" title="类型信息"></a>类型信息</h4><p><img src="https://xorex.space/image/349.jpg" alt="349.jpg"></p>
+<p>虽说三种调用的时候都是字符串，但是存储的时候格式不同，int 和 float 会使用对应的编码来增大存储范围。</p>
+<h4 id="操作命令"><a href="#操作命令" class="headerlink" title="操作命令"></a>操作命令</h4><ul>
+<li>SET：添加或者修改已经存在的一个String类型的键值对</li>
+<li>GET：根据key获取String类型的value</li>
+<li>MSET：批量添加多个String类型的键值对（Multiple）</li>
+<li>MGET：根据多个key获取多个String类型的value（Multiple）</li>
+<li>INCR：让一个整型的key自增1（Increase）</li>
+<li>INCRBY:让一个整型的key自增并指定步长，例如：incrby num 2 让num值自增2（可以通过它实现负增长）</li>
+<li>INCRBYFLOAT：让一个浮点类型的数字自增并指定步长（浮点数没有默认自增长度）</li>
+<li>SETNX：添加一个String类型的键值对，前提是这个key不存在，否则不执行 （<strong>SET</strong> if <strong>N</strong>ot e<strong>X</strong>ists）</li>
+<li>SETEX：添加一个String类型的键值对，并且指定有效期 （Set+Expire）</li>
+</ul>
+<h3 id="3-Hash-类型"><a href="#3-Hash-类型" class="headerlink" title="3. Hash 类型"></a>3. Hash 类型</h3><h4 id="类型信息-1"><a href="#类型信息-1" class="headerlink" title="类型信息"></a>类型信息</h4><p>对 Json 类的 String 进行的改进，Json 部分使用 Hash 存储，可以单独定位修改里面的某个元素。</p>
+<p><img src="https://xorex.space/image/350.jpg" alt="350.jpg"></p>
+<h4 id="操作命令-1"><a href="#操作命令-1" class="headerlink" title="操作命令"></a>操作命令</h4><p>都是在一个 Key 下面，对不同的 field 进行 value 的修改。</p>
+<p>Hash的常见命令有：</p>
+<ul>
+<li>HSET key field value：添加或者修改hash类型key的field的值</li>
+<li>HGET key field：获取一个hash类型key的field的值</li>
+<li>HMSET：批量添加多个hash类型key的field的值</li>
+<li>HMGET：批量获取多个hash类型key的field的值</li>
+<li>HGETALL：获取一个hash类型的key中的所有的field和value</li>
+<li>HKEYS：获取一个hash类型的key中的所有的field</li>
+<li>HVALS：获取一个hash类型的key中的所有的value</li>
+<li>HINCRBY:让一个hash类型key的字段值自增并指定步长</li>
+<li>HSETNX：添加一个hash类型的key的field值，前提是这个field不存在，否则不执行</li>
+</ul>
+<h3 id="4-List-类型"><a href="#4-List-类型" class="headerlink" title="4. List 类型"></a>4. List 类型</h3><h4 id="类型信息-2"><a href="#类型信息-2" class="headerlink" title="类型信息"></a>类型信息</h4><p>List 是有序的双向链表结构，插入删除快，查询速度慢。只能从左边或者右边插入，不支持插入中间。所以说是有序的，能保留插入顺序的数据结构。</p>
+<h4 id="操作命令-2"><a href="#操作命令-2" class="headerlink" title="操作命令"></a>操作命令</h4><p>前缀 L 和 R 用来区分链表的 左边 和 右边，也就是 头 和 尾 。</p>
+<p>List 的操作都是针对一个 Key，一个 Key 里面存着一个 List。</p>
+<p>List的常见命令有：</p>
+<ul>
+<li>LPush key  element … ：向列表左侧插入一个或多个元素</li>
+<li>LPop key：移除并返回列表左侧的第一个元素，没有则返回nil</li>
+<li>RPush key  element … ：向列表右侧插入一个或多个元素</li>
+<li>RPop key：移除并返回列表右侧的第一个元素</li>
+<li>LRange key star end：返回一段角标范围内的所有元素</li>
+<li>BLPop 和 BRPop：与 LPOP 和RPOP 类似，只不过在没有元素时等待指定时间，而不是直接返回 nil（在等待过程中只是该操作进入阻塞状态，仍可以完成其他操作命令）</li>
+</ul>
+<h3 id="5-Set-类型"><a href="#5-Set-类型" class="headerlink" title="5. Set 类型"></a>5. Set 类型</h3><p>Redis 的 Set 结构与 Java 中的 HashSet 类似，满足以下特性：无序，元素不可重复，查找快，支持交集、并集、差集等功能。</p>
+<p>常见命令：</p>
+<ul>
+<li>SAdd key member … ：向set中添加一个或多个元素</li>
+<li>SRem key member … : 移除set中的指定元素</li>
+<li>SCard key： 返回set中元素的个数</li>
+<li>SIsNumber key member：判断一个元素是否存在于set中 isMember</li>
+<li>SMembers：获取set中的所有元素 members</li>
+<li>SInter key1 key2 … ：求 key1 与 key2 的交集 inter</li>
+<li>SDiff key1 key2 … ：求key1与key2的差集</li>
+<li>SUnion key1 key2 ..：求key1和key2的并集</li>
+</ul>
+<h3 id="6-SortedSet（ZSet）-类型"><a href="#6-SortedSet（ZSet）-类型" class="headerlink" title="6. SortedSet（ZSet） 类型"></a>6. SortedSet（ZSet） 类型</h3><p>一个经过排序的 Set 集合（SortedSet 又名 ZSet），底层是通过跳表实现排序，Hash 实现唯一性。而排序是根据 score 属性的值进行排序的。</p>
+<p>因为引入了排序功能，所以操作也多了关于位置和范围的操作：</p>
+<ul>
+<li>ZAdd key score member：添加一个或多个元素到sorted set ，如果已经存在则更新其score值</li>
+<li>ZRem key member：删除sorted set中的一个指定元素</li>
+<li>ZScore key member : 获取sorted set中的指定元素的score值</li>
+<li>ZRank key member：获取sorted set 中的指定元素的排名</li>
+<li>ZCard key：获取sorted set中的元素个数</li>
+<li>ZCount key min max：统计score值在给定范围内的所有元素的个数</li>
+<li>ZIncrBy key increment member：让sorted set中的指定元素自增，步长为指定的increment值</li>
+<li>ZRange key min max：按照score排序后，获取指定排名范围内的元素</li>
+<li>ZRangeByScore key min max：按照score排序后，获取指定score范围内的元素</li>
+<li>ZDiff、ZInter、ZUnion：求差集、交集、并集</li>
+</ul>
+]]></content>
+      <categories>
+        <category>开发知识</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python-08-线程、进程和协程</title>
     <url>/2022/06/15/8bf79f16d228/</url>
     <content><![CDATA[<blockquote>
@@ -71,7 +715,7 @@
 <p>当然，一个进程中可以开启很多线程来共享内存资源。</p>
 <h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><p>从 multiporcessing 中导入 Process 类。</p>
 <p>Process <code>__init__</code> 的参数和 Thread 是一样的。</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span>(<span class="params">name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        print(name, i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>: <span class="comment"># 想一想为什么要在 main 中执行</span></span><br><span class="line">    process1 = Process(target=count, name=<span class="string">&quot;Process 1&quot;</span>, args=(<span class="string">&quot;1&quot;</span>)) <span class="comment"># 创建新进程</span></span><br><span class="line">    process2 = Process(target=count, name=<span class="string">&quot;Process 2&quot;</span>, args=(<span class="string">&quot;2&quot;</span>))</span><br><span class="line"></span><br><span class="line">    process1.start() <span class="comment"># 启动进程</span></span><br><span class="line">    process2.start()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    process1.join() <span class="comment"># 等待两个进程执行完之后再运行</span></span><br><span class="line">    process2.join()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">&quot;Finish&quot;</span>)</span><br><span class="line"></span><br><span class="line">    process1.close() <span class="comment"># 释放进程资源</span></span><br><span class="line">    process2.close()</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span>(<span class="params">name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>): </span><br><span class="line">        print(name, i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>: <span class="comment"># 想一想为什么要在 main 中执行</span></span><br><span class="line">    process1 = Process(target=count, name=<span class="string">&quot;Process 1&quot;</span>, args=(<span class="string">&quot;1&quot;</span>)) <span class="comment"># 创建新进程</span></span><br><span class="line">    process2 = Process(target=count, name=<span class="string">&quot;Process 2&quot;</span>, args=(<span class="string">&quot;2&quot;</span>))</span><br><span class="line"></span><br><span class="line">    process1.start() <span class="comment"># 启动进程</span></span><br><span class="line">    process2.start()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    process1.join() <span class="comment"># 等待两个进程执行完之后再运行</span></span><br><span class="line">    process2.join()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">&quot;Finish&quot;</span>)</span><br><span class="line"></span><br><span class="line">    process1.close() <span class="comment"># 释放进程资源</span></span><br><span class="line">    process2.close()</span><br></pre></td></tr></table></figure>
 
 <h3 id="无限引用问题"><a href="#无限引用问题" class="headerlink" title="无限引用问题"></a>无限引用问题</h3><p>上面有一个问题，就是为什么 Process 的启动必须在 main 中。</p>
 <p>这是由于在开启一个新的进程的时候，需要资源是相互隔离的，所以要复制一份到新的进程中。</p>
@@ -110,8 +754,6 @@
 <h4 id="aiohttp"><a href="#aiohttp" class="headerlink" title="aiohttp"></a>aiohttp</h4><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> session.get(url, headers=Script.headers) <span class="keyword">as</span> response:</span><br><span class="line">        content = <span class="keyword">await</span> response.text(encoding=<span class="string">&#x27;gbk&#x27;</span>)</span><br><span class="line">        content = <span class="keyword">await</span> response.json()</span><br></pre></td></tr></table></figure>
 
 <h4 id="aiofiles"><a href="#aiofiles" class="headerlink" title="aiofiles"></a>aiofiles</h4><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">with</span> aiofiles.<span class="built_in">open</span>(fileName, mode=<span class="string">&#x27;w&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">await</span> f.write(text)</span><br></pre></td></tr></table></figure>
-
-
 
 ]]></content>
       <categories>
@@ -1942,7 +2584,7 @@
     <title>Cloud &amp; Bird</title>
     <url>/2021/12/04/ed40d524dbbc/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="7784e14fe46c8ce1d33c299903e8baddceb62424c400a496771176e2a226ba8f">8a972074cb8fb594adf191142c932486f63d9db6a4bbbbf65eb58b44e7f3a502760a7b258612f12ecdd307a3b70adf4bf69f59b8c7989e0098909e81107be6ae6531b2d419acb20880ea1ef38ad5d4adbc539cbcb1917681f1e266f18e9b83385afbad4035a8a35666acb3d44b698f04247e222af37e916ab7405d4b2fc81360ee7b43c9aaf937ac9aa92d7a0ef02c50b06c5abef4f5fdb014533994769d979de62dab43c6ecbbbe59fcea2f1b6e578cd7b1ba933977e05c96d5516cdb59454b35929823bd49c07636703118366db2ca40f238ecf09c81a0a7ad320800c981d6873f78de72a8c7eda925aa3966590f00a5422e59a9c9a7b39355bf99868eb81ea5c4a2504d01bab61275fdf11b5c2f5621fe204ceaf63ab6f53527b815023370a0762810bfd1fff052fb4c9e9c71e73256c9d6e285ead1ff6861c0b114c01e848f2a6820d116d081f89a74a23417171a4030938a5c7a8cc24d9bf7f4c101f7076e40a98842904ad68a85ae1c9fa895e3fce0995666886a1a8472864b2592da1b0149d8dde6db5ce9e3038224c52eb319e6487aa889c85674b5e4a569a1b57af4a7fd82e5a58eed672dee532a55c03d90f988c24994b95286a74486ecb9b8b9890eabcf11962881a91290c06ef1f182c55e6a4d1c3d0439a2c6ea371e0f67626db716950dba2ea7e26db08f61b8a764db3e462c76a8c6c17e22b89ddfe0797cdcf8f36b7103c1689bf63e1c8cb6aa01a927806779e08142fc6833d8b568fc95005cf8ba22ec7aafa65f8a1a457a779b7262dbd5055abb11d5814a65d4d03edc3102ad88ed96cc1ffa6cc5df1143dcd31f0a05e1ba1677915fe8b0e0d61279672a78b5fe5b5b3645837d6a7b836e70fba8b03517b27cb0ac8c81a605ebadd3277cc1a919f94f336faa14f1171d9350f38076690be0f24577cb39f535132d59fa1db4d14165b932607b49664f49f571efb9792ec4f4f0082fa423c7e20d2e4bc3b7a518c08189a96c175a8a7fe5d002f03d795dc95f18cab223dcf8a67485e5792d7e1907737fbc6f9afc756b5d4036ee6a91f43bce08050bd264cd7043f4e7023a698b283bf8beb7752a7f254952c7dd3d2f12e48b62d1fc540cc990499487e6b68f04db76958d4920caeeb1750fc0402b02fd063808fe6416ece8ce259fb1bda2c4f4c350405600379f4237a277e48171baec17ae99893fd165b47d849edb4d2ee903f57730791bcd2c7d3a1e2f6ee5efc734b9504ba1a7574cc685c8f3a7ae4ebdc79e6ac7e4bb0d5948494969a0a8c8164dad1abc1f5ea0d15ae27ad723a915cfb85c3139352ac8392481de84ed0fcb026edf606eec28723078c06dd94befec10030ac1ffe2cb65297cacf345b7abe17848a4d02a3ebe8a80a99435f50565e8c26d62c7de1a925910a8749c461327292a3f4a40fc5c9123d8d1a7ca9355bf05482be4dd4d014be420e095ef4f73655132cd8ed5ad5de2494ed0fe25d48389dad7dad2ebcceca03f113b579655381f3d1167319d73fb409b78b4005c201d28280aca32842e21902cb040b669bf4ef9e402a4a24f6422f5aac9525a5f01e24f812ad7a85944e2f1c04f5b7ba2facfbe089ae7e6f6d93984369b17458b397168be552171d1a3c026b1c1e8ce387746667c0341df09b8e98272c48d590501f2da7eb7dc52cb27d76de2d4b440abf843940015b2a35b7ea59e495cf304b767ddc7f934f925f8f4cae3c4676b4640e33d69e51637e8eb92103f7e780acbcf2152daff09fb56df0e369a9664417afba0eb2732e03f227e6a78da2bd4aaa2ab8e88980c90e4fffc2877e264c0db218dcf5f86966b8bada463c23b7b54fec91a0b98b802e8de1124df2e2073228b3dd567d6e4973c0aa9baf0e8f24ae32b4378a48167228d69cd331b610db073475d51f9f1ffc4a55a6f4a4a592a232f024d09545394600557c6e54a68239ab73bdf7d6b297b57edec27fc040ea978d137fba7e184642d240bed456338d453410795c0a52c14c7dfa30449dfd93c5c19a412d027d8991c179b7589c17dc6540bcb4398139f5851feb0773c5d07881552409162e4ebd16a475cf701c810f62bf05a7097c0599d94d7341866a98f404c2365b6e43df20a3ed235ac4e5f83b6a5d47a527d70a880f374126a0b233ced1cee4a3d95b5204e9dae6b597313cabc860466c2003fdcb65d2f155c7d7164749d79e568729dd80077537f57c8bc2dafc74ed64708a80b9ef5d64e5c1a30136593487b29ca3a0fece0f53f22f6ffb882d4e8a6fa805796d1d5a305403a487830ef2408b7756b643776d93ff481eebc3dd8ce7140dbffe4311d9055d41dafa9dc642f1bae0ea79d4d3fe3c6dcecc7ee7f16cea212630c74044953b4bcb4aeb3692743584b51558adece348fd9d6b59376da150e2c5023ee0775875b1ff15607a5dea9e4974fbd14b8f59e31a6dd51546c649e4d3e78911932934a17564091f76e77a051e529e8652e521bf231a59bac1771f40fde6378a841ca030f65c96955902ab6d6678b23b832e96edab39def47455ebb0fbb60eccca0a0f00924fbd5977aa6de1ac5c585084f3e610baba10484691052d0e6c57b5dfbc994fc42b741b07de4f20f6238e535a381050b81e1dba43c2392d228d315b17c798e6a44c8858e5c203864444ee079fb4c5425f13a5e496d33011fc07b157f6a1c277a298cf67546204cf392d37b0ec86a9cf8c1ec320f631898291d23612532d76f14599aea13aefa248ad1b0e92e169b19eb5bc9f174b527bb8654eea70636e5c5e205bbb0cf5665a52eb5a58874a939ab495cf7837cba975f9370bfa1eacb8fc0b579c7b821cd2d0efd22fb6872d4b8c44ee92bc57944d3c19090225fd83797b952a3f94969ccaa124bf7777bc24ddbdc19939b27fa19677c834e6d94e1aef7002f1833d1df77dca0bab46c7131dd75691461033b3419f72b4cde8d4e14a52429e7a89ccf1738fff225c500c460f73ab34331f3f0a28b6bcfcfc9aa31b65bc316e4f51853f23080879af0f1c17a0ba5ef3f10010b16ebb143300c673214ee9af40e258b9c895d074ba7e9a2e3bfb209ceaa7d1f1fe2e006e6ba31780514f83d6d8e818418be260175b33e58131219e8bf2df5c5422a86c91cae68a23f1d1c12cea1c2268527c759127ac949f2931547b51e9685116fa8e6b09f76c2d16b10b37491f8770ea3d116fa7223bf91baadd3098676c65eb7c517f24cccc485afd3c9cdf1ffb9b5e6fc97c939d6e461a1151b35b28237c19a031781daeea0b5b8de378e33f2523c0b88764d26ed3636ca917ebfb81a5115e4240d60b3d4606baa55fcc97f33d028d41e34208c620f5d5eafb3e0639f9cbbba4b96fe8756392d097abcae35106a25a28570aa71926d69c51e7bace1df86cb0ff831bf6f6fb76331a6d0d73e4860c55e061c317f6aa2ef3b95fc0ec040b124f4c15f2793b8730e7a73362300a50ba0bb5f2978ec120a2b011539c1132103b0fb1ba50afea968d1d18b346a5a4bc00fc2d74fe9bd1f2c6de8fd4e5c7476e74dda0e079eb8773801471967e2b4eac3de2ea468e621d68591db107d47e4d16593b88ab684eb45fb3b08125edb59471e18503f585993d5c31e3dc3b18efe3df1b8fc746fb1355cb3cd8ba58596ddf9054fef28252139e9fc6ac89d256255bd651b96299026c5462a522995196ab57638959074f7aabd8233e023b268b27fec4e6d6bcbf75197acee06c29aea76b7ac8e3b3fdf6a7104db5539723c8152fc1d04fe5d69ad443bc897cb967426f8ea32c6016df310b44146417cf4cc44194352b0f33a6d5bedfae732597baf8a4324ee500c5144f603221063b3074c8971d4a0d5d91ae8a49b270cfca22418ee97fbbf3eeff0aa49cf3351e5d77af49fa8f8e806495a2424260752d70a57b5b07f4cd855e63fff81fdfaf8f46edf3fec8a97f8feda6e625331c7e8a6ba2288d1ae7d819b0c6bf194a1dd0108a29d38f58b12db43379e9784a61d07e0beb7c8a5a1de573ac72716d706fbdc86341fcdd433de948294d788c5145092a2647e24ec8f74e546b8d0f6851c0e4461b4e09387e271c47699b9dd80dd2159f9c03286f7cc94f7f0302b6ec5efd6344acc1b15ea7d4fb2727edd0dcd6b5811c071f4575ca8af602bfebb38756541be5eeb0d5de491f408e55679c868fb6b905c1b48dc921de36c3dec427529a2286085f328007f1bde3347048b3f7700ec465d2976ba5ec44a7d3a301efd88264c8b9785e0b104c3de00a96340e2d80c271b5db91d54bae909b38d6deb57c46df545c51d7275d3d61520d3f82cd3dbca3aa641ea912910c278c43868e7c9f6b7cf483678289a16504627806728323f9e8f24daa83e83be0ee24d5fc35fc7ade9ed3a8b8081a97e03a5052ba9088ab0436e611fe9678a76fc497fbd0f301bc485bb272cb1633f6f210dedf84984d184ce64a48173feff5d8e237af5a9734193d686bcaf944046da63e5c2de04edfade959b7e7334ebceb03be21c38ecea03cc292a204d1b489979f39ad64e0163d4fa0cba77cad9012c7d24334cd2947795ffe3de8d4cbf8a9152272e6ccdcb537413bb199b4a2a4fe271245fe74bf4537924696e4238a6b8f6ab6f9c11c55fec419a61cb70404e60592ff396dcfce564b18cc61df1689da9dc0ba595a399e411bb69a53b54e2083b9bd94753527f506c24de54fc952309fd16557aaf1e6c3462d099036e282a802b1f887ca0daae24a0eb215cf4510de86743a7c7f8189edd858554ca713441933b01e14b0f08987221506b32d61775dce2851c248302b6d2398a23858e8e0451cff5e6b234c5ef5b7928cfc7a8794321e7775482b368c24ec1dc39eac7d1d118359235def2abd059e5fc64e87a0ab50fa59372d36581ec97cc3b8514e88fe2641639a2d665af81f74f6933e7775aa25bd9612fe894885145f1597dc2e05d0bdd52fad61987964c0e883cd58aa9245cdb6e025cf7d188252803a1f62bca370dc3113a16f2e00dbbcc4d962efb3da52560bbf5b2dd067a21fc2324a605f7c9a458e2af69a9e4fdfbf6f32093ba394ded78c95b8e176a69b24fe17bff2dcb292f6d01bcfebd99411b35612754cd5c4f3dbe8a687b5026d7b8449740c44a9ff6dd2aa70c4fcd2d72fa60e2e86276c1c9bcf63ffeb11436cb9abf23ceb907221f714d627249b6ac7b4e9112e2f00a2aac717b8888e02095ebd31ae4464325114fce807f18a4940f15415ca37d65ae9915c9802d2acb74981e648f8643933ec677aea829c90b7d188cd6ebe30d9cb263feeb7498cefbc75c19252c176ddb811a584c700d44816fa6af0363db054a6e3328e95388734cf6fa76fe9c1ddb1f77e752c0032797bb916b29a52db806b330180048588f76586c1ee87fc4f63b87ac88bfc3393a9801ed7357c0e3e076ca1263a258d8406784592dcac5d7ae07d7ab2d6d306d023cfd92fb0a6f98fe28856bcef92b49c792ced2159d11e7b73a6474b5aee8bdd574779d1121c500e3e8adb8abf90fc75be4ac17edd8d55ac759d22c32e1dfbb2371202e37911345d000d0545a321a09fc024092101dc43cd0e666779fe104cf07cd852c08531c7ce6bf524b3e98b8c1833dd0c40f6f56e1c65c92c54e87ae690e092b430e8a9031626e0f90fa65616d335f9a71167456c8d39c46ac4c9c9d677729a50d311c3392154cf5c926f6371256b994fbe5ea6d54da4e29d7f4c7047c4f556fc0b0802a6da2efae1eb1d8bb1582ee78d3a60b7846ac9d12cea6bdcec90ce881d753c9198f407758441408e42ef3bb6ce07da76887f94f73bea18cee61bbf411e1c35508b72ccdd21a11ce11462af08618b7b73829d940e10ad7285ad8029db42054bf9c039c9361da21dd4feba047b88ea561361ff10dcf908ea648ac75d152d59192d1be35e624093b952811740c310a80e4775e23d18589fbd5b82c9d6503c4f81b48150e2da4b8d84b56b0a21c8fe573d6f2f3c29ea318c7f3630a195f466f5acae9c582e272b764638677e9551904995e94744bac3612f9a70111a7219b8bd20ce98960617033bc42f0ce26f0307cb59ed908a0e1a35b1c803abf9022245a8341a79d96888c27d97315a23a5bbbabc493cbe7f8f3d056e9dccb7fdf66415c875abeea94c09a6be36cd3756a5af624ad9fcafe223b38081452ee000be83229c291a97ce79c2f8c71fb371129e37410a497b8169fbeb19e7f05e32441f338736c90d39d9de42ff176991bd1e88db6216a5bc35f544393010429a5ede9c8f37e06fa1891086ed2ce2fb69cfd5a5017d06c63aa61749f81a72265f230db31d31210ae62837f2755c2c9c1de8c6acbf983b5900556413bf5f0ebcff4bbc1959473cbc8afbf2666bd57f540e73c08cd0eb33655d066f2f4d7980225a94237d52029c9007ed33a2987e61b6570130866c654e6f105b035ecd146ea876417f86d3d1b5c6ae98b14654bde10488d9b508714c11ff562714c08ec392d6786ac525bfeb407292bd194eaa41febfa9a50e0f00fa91c9f50311be1ae0e9e50e4e59b3f2bd7a9d2ef5d0a9d8ab03360ff8d6dd8bb3a9f2a970218869a1179f8c32b5652267ea8670156305bf3df5f602428a173e63a7e0b403a90bd9684ba8bb0aedf9d98cabf2ea44c7daa141a710977ad360848656e2a0b6577e3764041c5f54f834fede1f549f69aaee8e4fc197fc0697d56c14318bf3366f9850c058022551d9bbe22429558ab5259c82d769b2067ba2a95554f397ac38c5086fe3a5cd8e331e923547fe14c6a2198c4448301fbd9b70f39da78260b5380c80ad9ac790e622d03449c93fa34ebc09070f9c0e4ecc11c4c383c1139b37769ae34b2b198db7c12bab343660425e3d1273ad28109da7afc81d6f7544b0bc1a4244ef407dce03e164e311f4884bc480b5d76b865ea1f0284385033896ea03d2002cb05598736f45c440a01557d9df000d71c119c090219f41e195b3753edf29e3033d190d8fc2f9b1d171f63717a695d461189faa05adc36bd2f6d59b52cd86ac6f9d4e883e40020f573395eb6eed10a9dc3f6663e17d4dd3d8c6a288db38190a67b4c127064cd7a31da7891e77f001133dbbe6139bcd9128eb2655e87e5168b222150815b99f0e257887d829a6d8e5e9bbbd3af1d14568eb0b60ac8603634909423afa09338a65e44f1a597742e2dd38de36ec8e186707d1a6dfde6860f4ad5b9a7d34bfde9314703ac60d6fbca63baed5956332606ccc3f16adfc08ff806ee4a26d0b8ab09a3b39da79f4b45aa62eb2c4dc8824cc2ddf69b51b6f977bf33dcb6bdb721a08a9619b6d89f7b08957f873235a4eeb87316060384a2423d0d0374ee8f28b2438ad0e8a886f76f772b52f3a914afa6cfc922c7e0659ae9887e6466e23dff37bce46f190befdfc5cb1929e1aae08a712acc16d695748a04405eae6fddfb56f6fd6d4f0b803aeda2a96c8306fe791c9ed90784844a59286103d8f19010b30d4d18139b0096aca2fafd646b274e92cae473e3252f42210a5c734e812a387ce8ca29517fa08a0edb7ea8ad7d4c0881eaa9d066952e667cceaa367b839884ee2cc082adbb3f073c3dd0281f4f9f20afba1a3f1adebeb98f0801a77d2019b9e588b1f6e8a422b4aa37c72e8b24908920b27f700941546d065e9dda7e4254a6f69b694c1eaef93e6af8221a4c952dddb0c68f3ba508e575307fb4ab47d0e5460953a6de68b0f7e2d31314e4ee36a0b1f50e139f36e40ff28433a2671ae0032a29e6b6820b21185b6cf2dc21a177183740c46c780976f2d23791542bdb15e195afbb883c4fd6dc8813e9bcf5c65b976743eb3c40ab557a6821551be32066969172b04491ca875cabb67529273b7b79049de565821899d747e96032444ce68986f275eae33f81cba69d119d04181ea92e42e2bef5cf40645391cc3705c6c0dc09c5f62e38cab7704f4be8c0eaf8c2ebae894b0c57b843b1555cdf7c6b6ada70c23b1c1f978ad663e7b8261162cf7bf0f496c1f6ddc22aab4b45347a1a1d1e5f3ba6076e7881b44d610dbcd1092319a97dcc106318550728e3e1f145b48ab40316cb37b7edc0ebd61e8105c449510eee5ff8f369224e8248abd331fb711431956e255d86df4e40fe54aa19751fdfc1c969285fe4cf38e7a66c4c1c147832d399076d902b463416ee00cfe41a1e038a64345a737f93fac79d2ef42c39986d3e808718f87de4d488135739883e69febf66cd0709795cf05c1bb18edfce6f433d2e744ac9af8136ffb293c85e3e8dfc0bb466ddf23aa9c8f5acf0ea8c48e9512e8cccd2a263e9feb8555164846d52d727c9ac382e3d0d182ad8f83f0981d91eee647372ed63276b372a1be010ddd13a4013450892ad1b16e6478794138fcd4370d960e5f39e9ad75f22745e43a36400ad8ff2434e7fd2b191f9b0d241926b24789ed9a177218df3f243e05430c14ed607ef29002ebfff11a6a8eca4987e8b494d08df9c6d3611edffe54cad18b2c431786b533ab9f73d89b6f632371be19fb30ef80fa21db34263c9eba5b005a88a4c84855a798eb67593b32ea54ebd0cb800809fb6dbd1bb51ea60006701eeb4652edfd655f62bbb9297f84f7f0c43a83cb4f1b8b704512858a7c53caa464103ff89d77d1e6bd0c43adcbd65b5f5df51cc73751d10db0384fc5883f730c941646751e2fa81776a0176ea8e48cae3eb5eeac3c0e59df8cbcb35b9d4669284fa435720e17de74e69f0bb7def2ee65eb3b21292e63f42d4b154fa6dd7addb250a596bdd0e681f0b8cebcb041ebe898b8c62575b2d742f3212b663f9572ba5fb9c621e3ca44d933c5c79e4d1af3d6c60f00658c953bd3db2485f1d143548b593042ebd122c1a8a33a0d4fde5bac3d75ccebb0f956df06f68da8352dddd07e5a3ede79e2439c35df0afeb5f47c709ede4387be128af780421531293c0a212adaf1866052720fdef1a613d0b322ba088ed4c5b3e2ea286d7d219a5c06ae7781f2f641d409f12155ccf4ca708ba4d6eeaa355223de4748ad94c480008a8df8537f63644a5b17eb0c447534a9555c706abf13eff2cb3260a61d8cf0a97ac836804c1f4e3b4c4bc6a6b0332fc4a1e37cfc4a852382e2573a1272d7509d5edd8342c131bfa5cf38874116df5cfac3d28f0ce054ecebf55988024ba5bcd963de80495c3de4040e291aaeb5b00510b60ff2610d4e2f922b7c04ed8f2ff393dbda1a54c30fc2ab604070009f2d541ffdab1345b0dc02c890bff97244a76df57fd388c58670659d5cd80ac21d6869a942261ac65856fd26be3dd11d51497447d7303f9bca4f77a5d32cc55b4b7591caa14b02d784e802454fbddfe9b745ce7ec7f81692e454105f0ca4a7fe0a4d0c64cfc6414196f015f6db0a9c69b8db182f00ca3b724978906fdca52fec57c992de8f064c943f1a673075a034f23b4b0e37e7446140512d614fb265fff356bb08e81daa22abd03c378ce8b0cdcd9bfd9ebff8aa93a9e7320804651e836bd273cc43ca7ba9623fc63c58691b3e65a4af7a72022d58a0b5a624d13cfe30ab2239f411280705ca013315f21ef84af71c68de2c8248ca7c4313d3903de160b4e5217716a0612c9f7b5293d2cc3a04773c425dcabc36b8435c507904842f852967360a250b1fb31010c7fff00f23ae10d6ad6b7f6e367dcf2fc780b37c48ecc178dd1da607f77f542d39bd2ae91fde547cbe5594d51e180a11985b48da22a31a0b4225270c04f69a20d788a5437944c61b941afb095e8cd03505f3dd9bc98b943971f45182d75e18071f34bc5594409e2faecd453729b5e7b9df9fca81ee02547c1cc0869e76aa1a21dc62c0d5d454700fc0c9163079aad14767d5b4160f0f6e82cba6c4ad618c4d20ec17e5aad8de6432c5144929b6ceb6ca52d76fde98c539ee1848878cb47699ecb2e23095f3273686a21fb02dfa0aaa22c50fbcf1c502f5d0c1aa7364abcfb1d29d42109f40fb1b3d7a95ebc81504d742f42cf8557d4c20c5adb318d1e11fa5e1a7453a5f6199e623f24f2b46b5b3cbd036abf5f47ab030e8eee0d31635cc99e322d5d9f29a3a2b3e119f2abf018bb4333f8a5e75cce4abc4c84d81b02f36c3edb73550b2462e14b61d876c4435c6ab9a83cb7bfaa97f1bd7d0e7d6cbeccc42b28d11afe6b110c1287fd2f8f6a9fa9b7f710a750862b6d7d239b581a45aafe3e9298cbf2de94a6feec48e7a3fadeadcfde00d0ca618ce53614cd90e8997b658262963f0f4569f131b7096312ebf62c199b492169b0f7c07d9a3680bb09a7431ed787fb525f4e985baa10b357c4e6492d236a517842abdc053df462cc39c767daea4c8458dccb00fe25d6c75579184253f38510dfa3dac222d4ea7e9bfc81a797b26b7c5297f450c1a5695e5e0c7f14e8f6488b1724523ba8cd8bdc87bd16dbae255a4bf18356ab317f2dad58c8225db8d405b4d0e313e6b5466fa47e6f4a3844f04a4e6acb8648fd66aefe954c79639289a23cf3c68d7cab25da83434401bb6e3911556b199b7ab80639ebe9a155c00cfca8b0b20b53f92eced3cc531f9a4640005cf925737d606f506e726b10a19c9e12ae786517565cd435ba04ce992a568bee3dfbbed156711908f7cb4cfa06e849bf9e9bdb978b3b342180c4bc7a2aa3dac5209348a173ef9d85cb1593696ceade419b9447358a484d06f237ddd7641241a398e979a33f34326b3d61206cf8be5ddd110918da30d9de9548e68908226b1b40d84a1884cbad59fe7ca28fcde6fb496231e5f471425493dce445470a0ed842bc2c36d57399a9360304f5b6e321caf9bdc69582042aa6e7f13803e5077b193d7c2ac5ff6560c8e4b2605447fc70ae74988d06345be461b79a82f637bfc45c9fd166aa5f62b0abd27094a6e9d8dff570adb4d8a5c3877761cbf6bfc866901c7bbef665b022b8477fb9b6a82dabc28b92ba4e584f10e48d3f7d2b0d9d0d83c0f4ab962dfd811711cb16e943c8a26537acf26fe5d08ba4d83f9289a67c4fa83a9879780903625b76d42a6b1050b04d3be1fe19d7dd6e96c476f918f3df184f24a93fdff752ba35ea484868e30aad2d515424d5bc12fb2b5b763eb561e63dd6e2b08ef74b189cb9af5ca4635ac87a9248ef053d8e9732df995bc9e494da3dac40201aa285d649e25717213c7bedb31c9d5984418adcc41396d9af90c517cffd35776f7655ef2191ed49d03387a86d162b91595902d6af7df1f59008de9212598e00ea6d061eb79554de585bcecd33a95e375e6eb8d90cd9baa74f9b6638008d23c12c49aeee168d771affb011ef2e706047e4b74b0cc672738e1176305700760ec7db3433f6475defe2b9dc635b7bc2613ed1af3b713cf43f000b7392202dfe7cee85fd79ca7595d4829419baf002198a76123bbbdce6ea11ee990341ec4bef1bc09898c99fd35829703c7c9dddcef00ba6c83c4cbf1d323fb2e9f19069f9b07fa759835c109b12d0729be20a66631863f164022f1ec38de363b10c46a85b5fcb2f7bbd4719d4e6b445be6ebe0e72822ed97c05250e8c702159410d308b306dc3aafdb985f578da3330459bb573693afe2806d70714e6113f98fc9e1151bebdbd361f2fa7bf98bb857f1a4ab79070fe0cdd75f6b66546884d851271d95b48d611a4513690d631bdb2ab8aee573b5e5db5616099fc778e879635022b219f18ad09faa660ac33c353f4164526ab2177c70aef5522a29c5d49462fdab4ff929904eb0cfc2e7c4b98db724c05057fd51a90529187d26332ac0bed6dabc356261fdf1a7b1e99147d3a95c3b2c29f3d6aa220330c54227c33165802ef396c96c83c0cd65c6cdfbcf027c8aba1af600894214132ddec672c023da705f7e63a6eec83362763737a7f2ad1e142b0357858963dc7970ee927c8d61aa6ae96557d43f916ed1ba63976d68358b58bd5d947651e8fcf59eaa8d665d32b07469e3f075f9cc48cdaa1ab8ce84d21a3d2c529bd4f7f96cbdc99e3ce1871956eb7808420584b9bddf26bb71bfd1f9ac94988a27de41488168ea6d2e65ded0259efa46db17ee10e0da0a65904f417f9e682f721fd1285885c63b9fb0c075000b5e1dee2baf694f5de16fe956a834da60504581c7cefc7b708d49bdd203f01a2669954600e9bac95473818e8acec2d2205f16ddaf9f81d8a4a976934d42b9a5eb939fac7fe5653852a4020ad98ef8333f2cc079834b48051603008345611f51fdc1acec48894a74fa6d3920ba031ea911ab8ec9c47d1d3b53dedafa77cfed74f2fb1cb99cdbc04a7e976a5b2bb3dc3b688010e476c598136ef0d6bd005078da287a09b77989785547b49fe408e7520fb6d73270f57dfdfa41fd8ded585486ada7d631f098ffea6619f7d1f7ccb40b4397a5f682d77ab35e404c4c1fdedd48c007c2a09465fb128f9e75336ec60c5fb054aafda25376b98cf0921f1dcd6c48b73c7366202bb4a2323143663c77cf7d33892ec6752e213cb6817df1b1263799795488c11cf4c9075ecbe5a123acd760dc4702d7b5dd86c1640fb92bbcec059a54960a48331af652925c160573f62d135007b062a556c8bcf4de20dcd81192d3a5d1420c75e3ec1c8de88cac232dab2ff6a986b284bdc68551b6a0a2e09bddd7de73e6a4b12d22c6dfe994ae9a35c51c8237ef33532f945d45a46a08ab5faa6cd7fd0b6c5df823248a7c25e45bff0ecb01945818989d577fb52df8835417a1de2c09f6e6436f9600c7bbbf2274f351c154744e4c9bcd6e0b9434d41bd23112f4283cc88ab633a4170e7f74832dd7e3a79dc39162f68133e76cabf34dee0e691c67c3fe710b2ec7a086d7ae0959ca0b48e49f80ded7ea6e151cb7d451d8b59874ebb1e547ba06d7173f8a8916593bccd98118ef540bb73b94d89b4a862dbc67426731b6effe44e4c103003e3f71747fa619d17d414d3a395af542a91e3dac535d94d442e4c055ed04545c97b1a30cee04eb45c8e08d3ee271debf32c2d61a1f853615c50ed9d3a3dcd25174be92c518e91f64d46b58fbb4402085a4c9f89f10472f925a10d549680255174f6d3cc8072450b3f72160e8a2757e645fadfffe6b2afa00144b2258345e7cba52693bff9e6b7ae650364a25d0b32f6c7d0bfd3207b024693f5bebb747d5e6dc68a395c46d441b2c32235815277f244205a87b13133496eea5bfcec00932fc464ca8979ca341f70eef217cff874b8c08fdd405140d148e7b1779829abc403409c0c6e37ec7f5ec1286513e3374592e468b4b21a5a858208e89140ac2eec69d5ae96af3163f6c545f0fd46849f89deab9a6d07dfe5e0cd31bd227eda96ddc8ea80239af5ed7672d6af0790328ca47118cc58fcd199f0ff8b08167bbbe35e8f3f2af14d6afaaf846a8c3f4180c277783b96680812d3818638567a6b936fe111fea8af7eb9e069fc31589383eedcc2d5acadf2d051b364230d8967dd7c4b91d5d0fcc1f18e2855c30ffc7060904f2215e6960864f0fe264e88b8df6bcfb71acea2a5fa487dbe1c3c418bb9b745a06e9b1c32e66d0627</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="cbaf9a25abad55f7ecb7e01307f004924ed63588ef42b3c066870508ed972839">8a972074cb8fb594adf191142c932486f63d9db6a4bbbbf65eb58b44e7f3a502760a7b258612f12ecdd307a3b70adf4bf69f59b8c7989e0098909e81107be6ae6531b2d419acb20880ea1ef38ad5d4adbc539cbcb1917681f1e266f18e9b83385afbad4035a8a35666acb3d44b698f04247e222af37e916ab7405d4b2fc81360ee7b43c9aaf937ac9aa92d7a0ef02c50b06c5abef4f5fdb014533994769d979de62dab43c6ecbbbe59fcea2f1b6e578cd7b1ba933977e05c96d5516cdb59454b35929823bd49c07636703118366db2ca40f238ecf09c81a0a7ad320800c981d6873f78de72a8c7eda925aa3966590f00a5422e59a9c9a7b39355bf99868eb81ea5c4a2504d01bab61275fdf11b5c2f5621fe204ceaf63ab6f53527b815023370a0762810bfd1fff052fb4c9e9c71e73256c9d6e285ead1ff6861c0b114c01e848f2a6820d116d081f89a74a23417171a4030938a5c7a8cc24d9bf7f4c101f7076e40a98842904ad68a85ae1c9fa895e3fce0995666886a1a8472864b2592da1b0149d8dde6db5ce9e3038224c52eb319e6487aa889c85674b5e4a569a1b57af4a7fd82e5a58eed672dee532a55c03d90f988c24994b95286a74486ecb9b8b9890eabcf11962881a91290c06ef1f182c55e6a4d1c3d0439a2c6ea371e0f67626db716950dba2ea7e26db08f61b8a764db3e462c76a8c6c17e22b89ddfe0797cdcf8f36b7103c1689bf63e1c8cb6aa01a927806779e08142fc6833d8b568fc95005cf8ba22ec7aafa65f8a1a457a779b7262dbd5055abb11d5814a65d4d03edc3102ad88ed96cc1ffa6cc5df1143dcd31f0a05e1ba1677915fe8b0e0d61279672a78b5fe5b5b3645837d6a7b836e70fba8b03517b27cb0ac8c81a605ebadd3277cc1a919f94f336faa14f1171d9350f38076690be0f24577cb39f535132d59fa1db4d14165b932607b49664f49f571efb9792ec4f4f0082fa423c7e20d2e4bc3b7a518c08189a96c175a8a7fe5d002f03d795dc95f18cab223dcf8a67485e5792d7e1907737fbc6f9afc756b5d4036ee6a91f43bce08050bd264cd7043f4e7023a698b283bf8beb7752a7f254952c7dd3d2f12e48b62d1fc540cc990499487e6b68f04db76958d4920caeeb1750fc0402b02fd063808fe6416ece8ce259fb1bda2c4f4c350405600379f4237a277e48171baec17ae99893fd165b47d849edb4d2ee903f57730791bcd2c7d3a1e2f6ee5efc734b9504ba1a7574cc685c8f3a7ae4ebdc79e6ac7e4bb0d5948494969a0a8c8164dad1abc1f5ea0d15ae27ad723a915cfb85c3139352ac8392481de84ed0fcb026edf606eec28723078c06dd94befec10030ac1ffe2cb65297cacf345b7abe17848a4d02a3ebe8a80a99435f50565e8c26d62c7de1a925910a8749c461327292a3f4a40fc5c9123d8d1a7ca9355bf05482be4dd4d014be420e095ef4f73655132cd8ed5ad5de2494ed0fe25d48389dad7dad2ebcceca03f113b579655381f3d1167319d73fb409b78b4005c201d28280aca32842e21902cb040b669bf4ef9e402a4a24f6422f5aac9525a5f01e24f812ad7a85944e2f1c04f5b7ba2facfbe089ae7e6f6d93984369b17458b397168be552171d1a3c026b1c1e8ce387746667c0341df09b8e98272c48d590501f2da7eb7dc52cb27d76de2d4b440abf843940015b2a35b7ea59e495cf304b767ddc7f934f925f8f4cae3c4676b4640e33d69e51637e8eb92103f7e780acbcf2152daff09fb56df0e369a9664417afba0eb2732e03f227e6a78da2bd4aaa2ab8e88980c90e4fffc2877e264c0db218dcf5f86966b8bada463c23b7b54fec91a0b98b802e8de1124df2e2073228b3dd567d6e4973c0aa9baf0e8f24ae32b4378a48167228d69cd331b610db073475d51f9f1ffc4a55a6f4a4a592a232f024d09545394600557c6e54a68239ab73bdf7d6b297b57edec27fc040ea978d137fba7e184642d240bed456338d453410795c0a52c14c7dfa30449dfd93c5c19a412d027d8991c179b7589c17dc6540bcb4398139f5851feb0773c5d07881552409162e4ebd16a475cf701c810f62bf05a7097c0599d94d7341866a98f404c2365b6e43df20a3ed235ac4e5f83b6a5d47a527d70a880f374126a0b233ced1cee4a3d95b5204e9dae6b597313cabc860466c2003fdcb65d2f155c7d7164749d79e568729dd80077537f57c8bc2dafc74ed64708a80b9ef5d64e5c1a30136593487b29ca3a0fece0f53f22f6ffb882d4e8a6fa805796d1d5a305403a487830ef2408b7756b643776d93ff481eebc3dd8ce7140dbffe4311d9055d41dafa9dc642f1bae0ea79d4d3fe3c6dcecc7ee7f16cea212630c74044953b4bcb4aeb3692743584b51558adece348fd9d6b59376da150e2c5023ee0775875b1ff15607a5dea9e4974fbd14b8f59e31a6dd51546c649e4d3e78911932934a17564091f76e77a051e529e8652e521bf231a59bac1771f40fde6378a841ca030f65c96955902ab6d6678b23b832e96edab39def47455ebb0fbb60eccca0a0f00924fbd5977aa6de1ac5c585084f3e610baba10484691052d0e6c57b5dfbc994fc42b741b07de4f20f6238e535a381050b81e1dba43c2392d228d315b17c798e6a44c8858e5c203864444ee079fb4c5425f13a5e496d33011fc07b157f6a1c277a298cf67546204cf392d37b0ec86a9cf8c1ec320f631898291d23612532d76f14599aea13aefa248ad1b0e92e169b19eb5bc9f174b527bb8654eea70636e5c5e205bbb0cf5665a52eb5a58874a939ab495cf7837cba975f9370bfa1eacb8fc0b579c7b821cd2d0efd22fb6872d4b8c44ee92bc57944d3c19090225fd83797b952a3f94969ccaa124bf7777bc24ddbdc19939b27fa19677c834e6d94e1aef7002f1833d1df77dca0bab46c7131dd75691461033b3419f72b4cde8d4e14a52429e7a89ccf1738fff225c500c460f73ab34331f3f0a28b6bcfcfc9aa31b65bc316e4f51853f23080879af0f1c17a0ba5ef3f10010b16ebb143300c673214ee9af40e258b9c895d074ba7e9a2e3bfb209ceaa7d1f1fe2e006e6ba31780514f83d6d8e818418be260175b33e58131219e8bf2df5c5422a86c91cae68a23f1d1c12cea1c2268527c759127ac949f2931547b51e9685116fa8e6b09f76c2d16b10b37491f8770ea3d116fa7223bf91baadd3098676c65eb7c517f24cccc485afd3c9cdf1ffb9b5e6fc97c939d6e461a1151b35b28237c19a031781daeea0b5b8de378e33f2523c0b88764d26ed3636ca917ebfb81a5115e4240d60b3d4606baa55fcc97f33d028d41e34208c620f5d5eafb3e0639f9cbbba4b96fe8756392d097abcae35106a25a28570aa71926d69c51e7bace1df86cb0ff831bf6f6fb76331a6d0d73e4860c55e061c317f6aa2ef3b95fc0ec040b124f4c15f2793b8730e7a73362300a50ba0bb5f2978ec120a2b011539c1132103b0fb1ba50afea968d1d18b346a5a4bc00fc2d74fe9bd1f2c6de8fd4e5c7476e74dda0e079eb8773801471967e2b4eac3de2ea468e621d68591db107d47e4d16593b88ab684eb45fb3b08125edb59471e18503f585993d5c31e3dc3b18efe3df1b8fc746fb1355cb3cd8ba58596ddf9054fef28252139e9fc6ac89d256255bd651b96299026c5462a522995196ab57638959074f7aabd8233e023b268b27fec4e6d6bcbf75197acee06c29aea76b7ac8e3b3fdf6a7104db5539723c8152fc1d04fe5d69ad443bc897cb967426f8ea32c6016df310b44146417cf4cc44194352b0f33a6d5bedfae732597baf8a4324ee500c5144f603221063b3074c8971d4a0d5d91ae8a49b270cfca22418ee97fbbf3eeff0aa49cf3351e5d77af49fa8f8e806495a2424260752d70a57b5b07f4cd855e63fff81fdfaf8f46edf3fec8a97f8feda6e625331c7e8a6ba2288d1ae7d819b0c6bf194a1dd0108a29d38f58b12db43379e9784a61d07e0beb7c8a5a1de573ac72716d706fbdc86341fcdd433de948294d788c5145092a2647e24ec8f74e546b8d0f6851c0e4461b4e09387e271c47699b9dd80dd2159f9c03286f7cc94f7f0302b6ec5efd6344acc1b15ea7d4fb2727edd0dcd6b5811c071f4575ca8af602bfebb38756541be5eeb0d5de491f408e55679c868fb6b905c1b48dc921de36c3dec427529a2286085f328007f1bde3347048b3f7700ec465d2976ba5ec44a7d3a301efd88264c8b9785e0b104c3de00a96340e2d80c271b5db91d54bae909b38d6deb57c46df545c51d7275d3d61520d3f82cd3dbca3aa641ea912910c278c43868e7c9f6b7cf483678289a16504627806728323f9e8f24daa83e83be0ee24d5fc35fc7ade9ed3a8b8081a97e03a5052ba9088ab0436e611fe9678a76fc497fbd0f301bc485bb272cb1633f6f210dedf84984d184ce64a48173feff5d8e237af5a9734193d686bcaf944046da63e5c2de04edfade959b7e7334ebceb03be21c38ecea03cc292a204d1b489979f39ad64e0163d4fa0cba77cad9012c7d24334cd2947795ffe3de8d4cbf8a9152272e6ccdcb537413bb199b4a2a4fe271245fe74bf4537924696e4238a6b8f6ab6f9c11c55fec419a61cb70404e60592ff396dcfce564b18cc61df1689da9dc0ba595a399e411bb69a53b54e2083b9bd94753527f506c24de54fc952309fd16557aaf1e6c3462d099036e282a802b1f887ca0daae24a0eb215cf4510de86743a7c7f8189edd858554ca713441933b01e14b0f08987221506b32d61775dce2851c248302b6d2398a23858e8e0451cff5e6b234c5ef5b7928cfc7a8794321e7775482b368c24ec1dc39eac7d1d118359235def2abd059e5fc64e87a0ab50fa59372d36581ec97cc3b8514e88fe2641639a2d665af81f74f6933e7775aa25bd9612fe894885145f1597dc2e05d0bdd52fad61987964c0e883cd58aa9245cdb6e025cf7d188252803a1f62bca370dc3113a16f2e00dbbcc4d962efb3da52560bbf5b2dd067a21fc2324a605f7c9a458e2af69a9e4fdfbf6f32093ba394ded78c95b8e176a69b24fe17bff2dcb292f6d01bcfebd99411b35612754cd5c4f3dbe8a687b5026d7b8449740c44a9ff6dd2aa70c4fcd2d72fa60e2e86276c1c9bcf63ffeb11436cb9abf23ceb907221f714d627249b6ac7b4e9112e2f00a2aac717b8888e02095ebd31ae4464325114fce807f18a4940f15415ca37d65ae9915c9802d2acb74981e648f8643933ec677aea829c90b7d188cd6ebe30d9cb263feeb7498cefbc75c19252c176ddb811a584c700d44816fa6af0363db054a6e3328e95388734cf6fa76fe9c1ddb1f77e752c0032797bb916b29a52db806b330180048588f76586c1ee87fc4f63b87ac88bfc3393a9801ed7357c0e3e076ca1263a258d8406784592dcac5d7ae07d7ab2d6d306d023cfd92fb0a6f98fe28856bcef92b49c792ced2159d11e7b73a6474b5aee8bdd574779d1121c500e3e8adb8abf90fc75be4ac17edd8d55ac759d22c32e1dfbb2371202e37911345d000d0545a321a09fc024092101dc43cd0e666779fe104cf07cd852c08531c7ce6bf524b3e98b8c1833dd0c40f6f56e1c65c92c54e87ae690e092b430e8a9031626e0f90fa65616d335f9a71167456c8d39c46ac4c9c9d677729a50d311c3392154cf5c926f6371256b994fbe5ea6d54da4e29d7f4c7047c4f556fc0b0802a6da2efae1eb1d8bb1582ee78d3a60b7846ac9d12cea6bdcec90ce881d753c9198f407758441408e42ef3bb6ce07da76887f94f73bea18cee61bbf411e1c35508b72ccdd21a11ce11462af08618b7b73829d940e10ad7285ad8029db42054bf9c039c9361da21dd4feba047b88ea561361ff10dcf908ea648ac75d152d59192d1be35e624093b952811740c310a80e4775e23d18589fbd5b82c9d6503c4f81b48150e2da4b8d84b56b0a21c8fe573d6f2f3c29ea318c7f3630a195f466f5acae9c582e272b764638677e9551904995e94744bac3612f9a70111a7219b8bd20ce98960617033bc42f0ce26f0307cb59ed908a0e1a35b1c803abf9022245a8341a79d96888c27d97315a23a5bbbabc493cbe7f8f3d056e9dccb7fdf66415c875abeea94c09a6be36cd3756a5af624ad9fcafe223b38081452ee000be83229c291a97ce79c2f8c71fb371129e37410a497b8169fbeb19e7f05e32441f338736c90d39d9de42ff176991bd1e88db6216a5bc35f544393010429a5ede9c8f37e06fa1891086ed2ce2fb69cfd5a5017d06c63aa61749f81a72265f230db31d31210ae62837f2755c2c9c1de8c6acbf983b5900556413bf5f0ebcff4bbc1959473cbc8afbf2666bd57f540e73c08cd0eb33655d066f2f4d7980225a94237d52029c9007ed33a2987e61b6570130866c654e6f105b035ecd146ea876417f86d3d1b5c6ae98b14654bde10488d9b508714c11ff562714c08ec392d6786ac525bfeb407292bd194eaa41febfa9a50e0f00fa91c9f50311be1ae0e9e50e4e59b3f2bd7a9d2ef5d0a9d8ab03360ff8d6dd8bb3a9f2a970218869a1179f8c32b5652267ea8670156305bf3df5f602428a173e63a7e0b403a90bd9684ba8bb0aedf9d98cabf2ea44c7daa141a710977ad360848656e2a0b6577e3764041c5f54f834fede1f549f69aaee8e4fc197fc0697d56c14318bf3366f9850c058022551d9bbe22429558ab5259c82d769b2067ba2a95554f397ac38c5086fe3a5cd8e331e923547fe14c6a2198c4448301fbd9b70f39da78260b5380c80ad9ac790e622d03449c93fa34ebc09070f9c0e4ecc11c4c383c1139b37769ae34b2b198db7c12bab343660425e3d1273ad28109da7afc81d6f7544b0bc1a4244ef407dce03e164e311f4884bc480b5d76b865ea1f0284385033896ea03d2002cb05598736f45c440a01557d9df000d71c119c090219f41e195b3753edf29e3033d190d8fc2f9b1d171f63717a695d461189faa05adc36bd2f6d59b52cd86ac6f9d4e883e40020f573395eb6eed10a9dc3f6663e17d4dd3d8c6a288db38190a67b4c127064cd7a31da7891e77f001133dbbe6139bcd9128eb2655e87e5168b222150815b99f0e257887d829a6d8e5e9bbbd3af1d14568eb0b60ac8603634909423afa09338a65e44f1a597742e2dd38de36ec8e186707d1a6dfde6860f4ad5b9a7d34bfde9314703ac60d6fbca63baed5956332606ccc3f16adfc08ff806ee4a26d0b8ab09a3b39da79f4b45aa62eb2c4dc8824cc2ddf69b51b6f977bf33dcb6bdb721a08a9619b6d89f7b08957f873235a4eeb87316060384a2423d0d0374ee8f28b2438ad0e8a886f76f772b52f3a914afa6cfc922c7e0659ae9887e6466e23dff37bce46f190befdfc5cb1929e1aae08a712acc16d695748a04405eae6fddfb56f6fd6d4f0b803aeda2a96c8306fe791c9ed90784844a59286103d8f19010b30d4d18139b0096aca2fafd646b274e92cae473e3252f42210a5c734e812a387ce8ca29517fa08a0edb7ea8ad7d4c0881eaa9d066952e667cceaa367b839884ee2cc082adbb3f073c3dd0281f4f9f20afba1a3f1adebeb98f0801a77d2019b9e588b1f6e8a422b4aa37c72e8b24908920b27f700941546d065e9dda7e4254a6f69b694c1eaef93e6af8221a4c952dddb0c68f3ba508e575307fb4ab47d0e5460953a6de68b0f7e2d31314e4ee36a0b1f50e139f36e40ff28433a2671ae0032a29e6b6820b21185b6cf2dc21a177183740c46c780976f2d23791542bdb15e195afbb883c4fd6dc8813e9bcf5c65b976743eb3c40ab557a6821551be32066969172b04491ca875cabb67529273b7b79049de565821899d747e96032444ce68986f275eae33f81cba69d119d04181ea92e42e2bef5cf40645391cc3705c6c0dc09c5f62e38cab7704f4be8c0eaf8c2ebae894b0c57b843b1555cdf7c6b6ada70c23b1c1f978ad663e7b8261162cf7bf0f496c1f6ddc22aab4b45347a1a1d1e5f3ba6076e7881b44d610dbcd1092319a97dcc106318550728e3e1f145b48ab40316cb37b7edc0ebd61e8105c449510eee5ff8f369224e8248abd331fb711431956e255d86df4e40fe54aa19751fdfc1c969285fe4cf38e7a66c4c1c147832d399076d902b463416ee00cfe41a1e038a64345a737f93fac79d2ef42c39986d3e808718f87de4d488135739883e69febf66cd0709795cf05c1bb18edfce6f433d2e744ac9af8136ffb293c85e3e8dfc0bb466ddf23aa9c8f5acf0ea8c48e9512e8cccd2a263e9feb8555164846d52d727c9ac382e3d0d182ad8f83f0981d91eee647372ed63276b372a1be010ddd13a4013450892ad1b16e6478794138fcd4370d960e5f39e9ad75f22745e43a36400ad8ff2434e7fd2b191f9b0d241926b24789ed9a177218df3f243e05430c14ed607ef29002ebfff11a6a8eca4987e8b494d08df9c6d3611edffe54cad18b2c431786b533ab9f73d89b6f632371be19fb30ef80fa21db34263c9eba5b005a88a4c84855a798eb67593b32ea54ebd0cb800809fb6dbd1bb51ea60006701eeb4652edfd655f62bbb9297f84f7f0c43a83cb4f1b8b704512858a7c53caa464103ff89d77d1e6bd0c43adcbd65b5f5df51cc73751d10db0384fc5883f730c941646751e2fa81776a0176ea8e48cae3eb5eeac3c0e59df8cbcb35b9d4669284fa435720e17de74e69f0bb7def2ee65eb3b21292e63f42d4b154fa6dd7addb250a596bdd0e681f0b8cebcb041ebe898b8c62575b2d742f3212b663f9572ba5fb9c621e3ca44d933c5c79e4d1af3d6c60f00658c953bd3db2485f1d143548b593042ebd122c1a8a33a0d4fde5bac3d75ccebb0f956df06f68da8352dddd07e5a3ede79e2439c35df0afeb5f47c709ede4387be128af780421531293c0a212adaf1866052720fdef1a613d0b322ba088ed4c5b3e2ea286d7d219a5c06ae7781f2f641d409f12155ccf4ca708ba4d6eeaa355223de4748ad94c480008a8df8537f63644a5b17eb0c447534a9555c706abf13eff2cb3260a61d8cf0a97ac836804c1f4e3b4c4bc6a6b0332fc4a1e37cfc4a852382e2573a1272d7509d5edd8342c131bfa5cf38874116df5cfac3d28f0ce054ecebf55988024ba5bcd963de80495c3de4040e291aaeb5b00510b60ff2610d4e2f922b7c04ed8f2ff393dbda1a54c30fc2ab604070009f2d541ffdab1345b0dc02c890bff97244a76df57fd388c58670659d5cd80ac21d6869a942261ac65856fd26be3dd11d51497447d7303f9bca4f77a5d32cc55b4b7591caa14b02d784e802454fbddfe9b745ce7ec7f81692e454105f0ca4a7fe0a4d0c64cfc6414196f015f6db0a9c69b8db182f00ca3b724978906fdca52fec57c992de8f064c943f1a673075a034f23b4b0e37e7446140512d614fb265fff356bb08e81daa22abd03c378ce8b0cdcd9bfd9ebff8aa93a9e7320804651e836bd273cc43ca7ba9623fc63c58691b3e65a4af7a72022d58a0b5a624d13cfe30ab2239f411280705ca013315f21ef84af71c68de2c8248ca7c4313d3903de160b4e5217716a0612c9f7b5293d2cc3a04773c425dcabc36b8435c507904842f852967360a250b1fb31010c7fff00f23ae10d6ad6b7f6e367dcf2fc780b37c48ecc178dd1da607f77f542d39bd2ae91fde547cbe5594d51e180a11985b48da22a31a0b4225270c04f69a20d788a5437944c61b941afb095e8cd03505f3dd9bc98b943971f45182d75e18071f34bc5594409e2faecd453729b5e7b9df9fca81ee02547c1cc0869e76aa1a21dc62c0d5d454700fc0c9163079aad14767d5b4160f0f6e82cba6c4ad618c4d20ec17e5aad8de6432c5144929b6ceb6ca52d76fde98c539ee1848878cb47699ecb2e23095f3273686a21fb02dfa0aaa22c50fbcf1c502f5d0c1aa7364abcfb1d29d42109f40fb1b3d7a95ebc81504d742f42cf8557d4c20c5adb318d1e11fa5e1a7453a5f6199e623f24f2b46b5b3cbd036abf5f47ab030e8eee0d31635cc99e322d5d9f29a3a2b3e119f2abf018bb4333f8a5e75cce4abc4c84d81b02f36c3edb73550b2462e14b61d876c4435c6ab9a83cb7bfaa97f1bd7d0e7d6cbeccc42b28d11afe6b110c1287fd2f8f6a9fa9b7f710a750862b6d7d239b581a45aafe3e9298cbf2de94a6feec48e7a3fadeadcfde00d0ca618ce53614cd90e8997b658262963f0f4569f131b7096312ebf62c199b492169b0f7c07d9a3680bb09a7431ed787fb525f4e985baa10b357c4e6492d236a517842abdc053df462cc39c767daea4c8458dccb00fe25d6c75579184253f38510dfa3dac222d4ea7e9bfc81a797b26b7c5297f450c1a5695e5e0c7f14e8f6488b1724523ba8cd8bdc87bd16dbae255a4bf18356ab317f2dad58c8225db8d405b4d0e313e6b5466fa47e6f4a3844f04a4e6acb8648fd66aefe954c79639289a23cf3c68d7cab25da83434401bb6e3911556b199b7ab80639ebe9a155c00cfca8b0b20b53f92eced3cc531f9a4640005cf925737d606f506e726b10a19c9e12ae786517565cd435ba04ce992a568bee3dfbbed156711908f7cb4cfa06e849bf9e9bdb978b3b342180c4bc7a2aa3dac5209348a173ef9d85cb1593696ceade419b9447358a484d06f237ddd7641241a398e979a33f34326b3d61206cf8be5ddd110918da30d9de9548e68908226b1b40d84a1884cbad59fe7ca28fcde6fb496231e5f471425493dce445470a0ed842bc2c36d57399a9360304f5b6e321caf9bdc69582042aa6e7f13803e5077b193d7c2ac5ff6560c8e4b2605447fc70ae74988d06345be461b79a82f637bfc45c9fd166aa5f62b0abd27094a6e9d8dff570adb4d8a5c3877761cbf6bfc866901c7bbef665b022b8477fb9b6a82dabc28b92ba4e584f10e48d3f7d2b0d9d0d83c0f4ab962dfd811711cb16e943c8a26537acf26fe5d08ba4d83f9289a67c4fa83a9879780903625b76d42a6b1050b04d3be1fe19d7dd6e96c476f918f3df184f24a93fdff752ba35ea484868e30aad2d515424d5bc12fb2b5b763eb561e63dd6e2b08ef74b189cb9af5ca4635ac87a9248ef053d8e9732df995bc9e494da3dac40201aa285d649e25717213c7bedb31c9d5984418adcc41396d9af90c517cffd35776f7655ef2191ed49d03387a86d162b91595902d6af7df1f59008de9212598e00ea6d061eb79554de585bcecd33a95e375e6eb8d90cd9baa74f9b6638008d23c12c49aeee168d771affb011ef2e706047e4b74b0cc672738e1176305700760ec7db3433f6475defe2b9dc635b7bc2613ed1af3b713cf43f000b7392202dfe7cee85fd79ca7595d4829419baf002198a76123bbbdce6ea11ee990341ec4bef1bc09898c99fd35829703c7c9dddcef00ba6c83c4cbf1d323fb2e9f19069f9b07fa759835c109b12d0729be20a66631863f164022f1ec38de363b10c46a85b5fcb2f7bbd4719d4e6b445be6ebe0e72822ed97c05250e8c702159410d308b306dc3aafdb985f578da3330459bb573693afe2806d70714e6113f98fc9e1151bebdbd361f2fa7bf98bb857f1a4ab79070fe0cdd75f6b66546884d851271d95b48d611a4513690d631bdb2ab8aee573b5e5db5616099fc778e879635022b219f18ad09faa660ac33c353f4164526ab2177c70aef5522a29c5d49462fdab4ff929904eb0cfc2e7c4b98db724c05057fd51a90529187d26332ac0bed6dabc356261fdf1a7b1e99147d3a95c3b2c29f3d6aa220330c54227c33165802ef396c96c83c0cd65c6cdfbcf027c8aba1af600894214132ddec672c023da705f7e63a6eec83362763737a7f2ad1e142b0357858963dc7970ee927c8d61aa6ae96557d43f916ed1ba63976d68358b58bd5d947651e8fcf59eaa8d665d32b07469e3f075f9cc48cdaa1ab8ce84d21a3d2c529bd4f7f96cbdc99e3ce1871956eb7808420584b9bddf26bb71bfd1f9ac94988a27de41488168ea6d2e65ded0259efa46db17ee10e0da0a65904f417f9e682f721fd1285885c63b9fb0c075000b5e1dee2baf694f5de16fe956a834da60504581c7cefc7b708d49bdd203f01a2669954600e9bac95473818e8acec2d2205f16ddaf9f81d8a4a976934d42b9a5eb939fac7fe5653852a4020ad98ef8333f2cc079834b48051603008345611f51fdc1acec48894a74fa6d3920ba031ea911ab8ec9c47d1d3b53dedafa77cfed74f2fb1cb99cdbc04a7e976a5b2bb3dc3b688010e476c598136ef0d6bd005078da287a09b77989785547b49fe408e7520fb6d73270f57dfdfa41fd8ded585486ada7d631f098ffea6619f7d1f7ccb40b4397a5f682d77ab35e404c4c1fdedd48c007c2a09465fb128f9e75336ec60c5fb054aafda25376b98cf0921f1dcd6c48b73c7366202bb4a2323143663c77cf7d33892ec6752e213cb6817df1b1263799795488c11cf4c9075ecbe5a123acd760dc4702d7b5dd86c1640fb92bbcec059a54960a48331af652925c160573f62d135007b062a556c8bcf4de20dcd81192d3a5d1420c75e3ec1c8de88cac232dab2ff6a986b284bdc68551b6a0a2e09bddd7de73e6a4b12d22c6dfe994ae9a35c51c8237ef33532f945d45a46a08ab5faa6cd7fd0b6c5df823248a7c25e45bff0ecb01945818989d577fb52df8835417a1de2c09f6e6436f9600c7bbbf2274f351c154744e4c9bcd6e0b9434d41bd23112f4283cc88ab633a4170e7f74832dd7e3a79dc39162f68133e76cabf34dee0e691c67c3fe710b2ec7a086d7ae0959ca0b48e49f80ded7ea6e151cb7d451d8b59874ebb1e547ba06d7173f8a8916593bccd98118ef540bb73b94d89b4a862dbc67426731b6effe44e4c103003e3f71747fa619d17d414d3a395af542a91e3dac535d94d442e4c055ed04545c97b1a30cee04eb45c8e08d3ee271debf32c2d61a1f853615c50ed9d3a3dcd25174be92c518e91f64d46b58fbb4402085a4c9f89f10472f925a10d549680255174f6d3cc8072450b3f72160e8a2757e645fadfffe6b2afa00144b2258345e7cba52693bff9e6b7ae650364a25d0b32f6c7d0bfd3207b024693f5bebb747d5e6dc68a395c46d441b2c32235815277f244205a87b13133496eea5bfcec00932fc464ca8979ca341f70eef217cff874b8c08fdd405140d148e7b1779829abc403409c0c6e37ec7f5ec1286513e3374592e468b4b21a5a858208e89140ac2eec69d5ae96af3163f6c545f0fd46849f89deab9a6d07dfe5e0cd31bd227eda96ddc8ea80239af5ed7672d6af0790328ca47118cc58fcd199f0ff8b08167bbbe35e8f3f2af14d6afaaf846a8c3f4180c277783b96680812d3818638567a6b936fe111fea8af7eb9e069fc31589383eedcc2d5acadf2d051b364230d8967dd7c4b91d5d0fcc1f18e2855c30ffc7060904f2215e6960864f0fe264e88b8df6bcfb71acea2a5fa487dbe2839a4eed4faa4083ac335bf5b96919127ea79c338390ff2e35d8d606ef74dce5d137bb9afa83d1778a7d0faafe2c0204e87ba6e901b42e0c1081a440e44fefa8b375d02ab5f8c71ea7b6bf59aa22139db32f52529268aa38e97f46ca6f82ebe4810ced35060c6960827c446715bf611517895d0a0a77664bd0b20160b3ae811613bd32492c01d745ba5b074644b6538919d5cdbf52729c0bf5f5764ab4cfdbb703e1ea18694a484740092185f6be1930cb862c4315cbbc4ee02741b5a80df87e3599f4ac9dc1f6d0762bb3e485aca6d2b7c712753539cfb5883ef76186d6be1510b963b64c3051ecf160628ca7ae88267e8b48106c1e2b00d309247fec653f2973e8037adf09e3c2f1971f96b2dcc18434071208991bb7b76d4a6eb661ced649245a232e38ecb501f6e519babd1acd876124f41a5941847c89def02e8d51c1679e2d3b0fdce4c3f2e0309c1f9e8fd225fd775a2df507ab90055fa081057660f4935025f96f52a5f78e64f85176e62be8930dac30dd69c842b6e825687c6eb4e57e504bacaac77bd16522011ddc3cf653be1872c88045dad775ad7fa69cdb06550e50838abf4efccfa9e0e93eeeb879f3cfe23ed4307fd4b535d056dcc4214082d6aa4d20c5412f7e66633f1d08def4b0058d68eced5725dd558ca32011d2c47b77eb5ad6ae9af931f9859dbccfc82c3b4e95c7260d86c230ce8be29c56fa9d901b969faff9687b11115392d96757823a80ef9b868517bd80cb58645f31f3b0f6ce3869eb4a4ee9f28229e0fc7cdf1b466664c32cd7b7c105ba18459d447157be8293e4041155bee245b41acb621a2a99e0a644dc26b87672056ef3a6136ed03a717aea952d505ebf7e7dd7c2d44b8c59bba8a404071a483aad28e85183c7a73e9f964871b197495ef6cb7fa4252aea4f17de209ded5b4df5ab15bf8a05d65488277563fc9a732711eb80ecc57a9b26571b8a1edbee4d921a31551d7a7b1f62ca7f0b4f7361e48ecdf3f09f4d678f8f57559cc9e6d4bee7131198c29bf1d45e4f70915384f2568c615da2f262a546b5a494f58a4336cf888e33a2c6628d367b49bcecc4badb3e2087da67b77ac38ec223d63ad57afe68a58de48f5e22dab5c075634ef2a674a1a8d6ece239d3d194aba64a62f4affa159fb5cc063d82b4176a572d3d01eb22771485188002b217e8bd54aaa540100e2e4972c23b2d9a5cf3d83cf3b916a80a913a9f690c261fc522f5fdec6401e0b735a31f88966bb1aa38d2464da6041ceb781ebf210e2de7c0b845f628a6dc6d2e72218437d66409f1c41c931ab2b6c2ceb80995063fd7760f818007b5c5dc9b3572f2dac562c3f4f73d2b2c9b36f13c09bdd3194d752a635cb512cbb48e71d94350914facb206b8122dcfd4d0c2de81052d6862a95f55d497977a410881a73a48fc89266a20646899864ea3f6ee97d3350986500bdcc94bc60b0b685ef4d61c50edb9b84d61cf6a54df8dfc14b6181d7ca72bd3866d05d5e62d6293caff22527de8d1e4a3fac6444de16eac89f7213120cb5717595c83b97981911fd9ec0757f396cb890c02ad53d275e7daa8e13530051330e163a57d1ba723a00a13afd32a33a507167c45c653278274df70490102053a5e6027c763bb57a3497cb858e030b020af021a541c95fdfa60bf2ba962df23e2ccc540fd44f12fafda0e2d558fad77b4f50ae713c2eb91f00f02eae9d256634d6b376a19031620d8d8c1d0b6e09bd1c7c49322cec9bd29b072a25054bf55e7fcbc2cb1dc6b3af00aba5430cda3ea8865e8589fbbd80b4015d7b5e55a3536257bef509c0d540a6b028ab4fd920b87071107e159348beb457a3c793c20a5ccaf0c3278e26913840e180c175d1ae561c109f71171e4def1e727f10b58565012bd99e81998f5e7707572f62cd4675d888f58fbd4e8220927eafa658409fdfaf3728165d9127154ea807057c61c03a2d2e546517c4af2ed5690e0972adc1caf4d17e3e81559ee31416f0f5a979d7bc1c788f334e395bf34ca0b98cd20699df2ed0ca4e2885d77ef598a92a987fcf7ab1b8caee8ff36483c54889ca8380e1967264c426bf395b147455346a20c9541983b6c022adfcce30e0a156198dae21fd58d38f29d78ef1bafddcdd8ab73ca786ba2d7628a4c01c1ff23f2b367438ea97e262e0493c0c5fc60b8db8a7b6faea19119325ae1d7042349203a7a2075e5267b7fe833ca31db06ddff4965ecde10f78fe00b168506f8500eaf11b957776eb496f9b8b5634592cd771131fcff123e3931a1ec24cf5f5e6584850efd5d68ab8576848c135f7425fe2b86664a31a0428725893134ecd68494d13694c12d9a437feb3f4271a49988167e426d0d61e2d2023eb090c6f1477cf8b92e96353ce0ae4d5b8a38ddb465480b78ac10b7f850589f44fb16af755d1db95c092e783b9a1a52d353a0cdff2c54ccc3608222c6a7768e0e26b671b4d61648a5fffbb8c36163e771cfeb13c86f351daed80eade8328d4d54bcc839b123f1794a1c0f57babf96bda31b8a8dbaed911cc6cdad23352de2cb6d5a41dc1c3c7121d97f49161fc46a943a1d7f89fde3c2775d535b6c2875c990603b0fc992e088477d81eb282cc4925c72e2d270df43e0fbe4515b91e12cc2e59b709908ad9ec08c0927079ae921ad383a02bbdcb8df63f85588512b8e35fdc0c502f81efd5f7b29041c63fc9c829eef5e7164a6e103025fbae57a82c7dc600112562f0486aa5d12496993f8ae2d4d7fcea6d5010b935334a62510e51d93e39de09f4a69fc18fa2752709264fe43dd025b90934170a91725a4c029719cedceccdba08e29f76ccf9f7e8bd2019021274e0b38ee917a7ae5a8d33a295532090f91ce16eb9ed250826ab7900c3e400e42153ef99cc28e7dd1f44fa7cc355769f1f2f6095d145f1c544d2ff00478980fd19d7fd985ea1019e3cc0bf327b8bf5</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -2791,13 +3433,20 @@
     <content><![CDATA[<h2 id="一些开发技巧"><a href="#一些开发技巧" class="headerlink" title="一些开发技巧"></a>一些开发技巧</h2><h3 id="Lombok-简化"><a href="#Lombok-简化" class="headerlink" title="Lombok 简化"></a>Lombok 简化</h3><p>引入 Lombok 依赖：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>Lombok 主要解决 Bean 的臃肿问题：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span> <span class="comment">//生成 getter setter toString equals hashCode 方法</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span> <span class="comment">//生成全参数构造器</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span> <span class="comment">//生成无参构造器</span></span><br><span class="line"><span class="meta">@ToString</span> <span class="comment">//生成 toString 方法</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span> <span class="comment">//生成 eauqls 和 hashCode 方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Uesr</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> Address address;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Uesr</span><span class="params">(String userName, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userName = userName;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Lombok 主要解决 Bean 的臃肿问题，需要注意的是 Lombok 无法生成多种参数的构造器：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Setter</span> <span class="comment">// 注解在类或字段，注解在类时为所有字段生成 setter 方法，注解在字段上时只为该字段生成 setter 方法。</span></span><br><span class="line"><span class="meta">@Getter</span> <span class="comment">// 使用方法同上，区别在于生成的是 getter 方法。</span></span><br><span class="line"><span class="meta">@ToString</span> <span class="comment">// 生成 toString 方法</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span> <span class="comment">// 生成 eauqls 和 hashCode 方法</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span> <span class="comment">// 生成无参构造器</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span> <span class="comment">// 生成全参数构造器</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span> <span class="comment">// 注解在类，为类中需要特殊处理的字段生成构造方法，比如 final 和被 @NonNull 注解的字段</span></span><br><span class="line"><span class="meta">@Data</span> <span class="comment">//生成 getter setter toString equals hashCode 方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Uesr</span> </span>&#123;</span><br><span class="line">    <span class="meta">@NonNull</span> <span class="comment">// 该注解用在属性或构造器上，Lombok会生成一个非空的声明，可用于校验参数，能帮助避免空指针</span></span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> Address address;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Uesr</span><span class="params">(String userName, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userName = userName;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>还可以注入日志：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span> <span class="comment">//引入日志</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ConfigurableApplicationContext run = SpringApplication.run(MainApplication.class, args);</span><br><span class="line">        log.info(<span class="string">&quot;启动完成！&quot;</span>); <span class="comment">//直接调用 log 就可以使用日志系统。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Dev-Tools"><a href="#Dev-Tools" class="headerlink" title="Dev-Tools"></a>Dev-Tools</h3><p>这个工具主要是解决热更新的问题（其实就是重启），引入依赖之后，按 ctrl+F9 来更新页面。</p>
+<p>Lombok 本质上就是一个实现了 “JSR 269 API” 的程序。在使用 javac 的过程中，它产生作用的具体流程如下：</p>
+<ol>
+<li>javac 对源代码进行分析，生成了一棵抽象语法树（AST）</li>
+<li>运行过程中调用实现了 “JSR 269 API” 的 Lombok 程序</li>
+<li>此时 Lombok 就对第一步骤得到的AST进行处理，找到 @Data 注解所在类对应的语法树（AST），然后修改该语法树（AST），增加 getter 和 setter 方法定义的相应树节点</li>
+<li>javac 使用修改后的抽象语法树（AST）生成字节码文件，即给 class 增加新的节点（代码块）</li>
+</ol>
+<h3 id="Dev-Tools"><a href="#Dev-Tools" class="headerlink" title="Dev-Tools"></a>Dev-Tools</h3><p>这个工具主要是解决热更新的问题（其实就是重启），引入依赖之后，按 Ctrl+F9 来更新页面。</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="Spring-init"><a href="#Spring-init" class="headerlink" title="Spring init"></a>Spring init</h3><p>在创建项目的时候选择 Spring 项目，然后勾选所需要的组件，IDEA 会自动加载所有的依赖，并创造出完整的目录结构。</p>
@@ -9850,204 +10499,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux 基础命令</title>
-    <url>/2020/11/16/3bb93ab9d35c/</url>
-    <content><![CDATA[<h2 id="Linux-简介"><a href="#Linux-简介" class="headerlink" title="Linux 简介"></a>Linux 简介</h2><ul>
-<li><p>最早的操作系统相关是 Unix 操作系统，诞生与 1970 年，是一个比较完善的分时操作系统。（分时操作系统是使一台计算机采用时间片轮转的方式同时为几个、几十个甚至几百个用户服务的一种操作系统，用来降低使用计算机的成本）</p>
-</li>
-<li><p>之后 C 语言诞生了，程序员们用这种高效的，可以移植性强的语言代替汇编语言重写了 Unix 系统，美国官方将 Unix，C 语言，ICP/IP 协议，当作标准开始推广。成功对后来的计算机发展产生了深远的影响。</p>
-</li>
-<li><p>有一天 Unix 突然宣布不开源了，因此有些程序员将 Unix 系统进行改编，于是就有了各种 Unix 的衍生版本，如：Sun Solaris、FreeBSD、IBM AIX、HP-UX 等等。</p>
-</li>
-<li><p>除此之外，还有一个编写 Unix 衍生版本的计划 GNU 被发起了，而 GNU 则是 GNU Not Unix 的递归缩写。自发起这个计划以来，GNU 开始大量的产生或收集各种系统所必备的组件，像是——函数库（libraries）、编译器（compilers）、调式工具（debugs）、文本编辑器（text editors）、网站服务器（web server），以及一个 Unix 的使用者接口（Unix shell）等等。但由于种种原因，GNU 一直没有开发操作系统的 kernel。正当 Richard Stallman 在为操作系统内核伤脑筋的时候，Linux 出现了。</p>
-</li>
-<li><p>Linus Torvalds 同学在上学时，觉得学校给用的 Unix 衍生操作系统 Minix 太难用了，于是就模仿 Unix 写了自己的操作系统 Linux，并且公开了 Linux 的源代码，允许所有程序员对 Linux 进行修改和完善，成功大火，所以其实可以说，Linux 是 Unix 的一个衍生系统（功能基本相同，但是系统开源）。而因为 Linux 因为借用了很多 GNU 的组件，所以它也被称为 GNU/Linux 系统。</p>
-</li>
-<li><p>根据国际公约，南极洲属于全人类的资产，任何国家都不能宣誓主权，于是 Linus 使用南极的特产——小企鹅，作为了 Linux 的 Logo，象征着 Linux 的开源精神。</p>
-</li>
-</ul>
-<h2 id="Linux的组成"><a href="#Linux的组成" class="headerlink" title="Linux的组成"></a>Linux的组成</h2><ul>
-<li><strong>内核层</strong> ：内核层是操作系统的核心，是直接依附在计算机的硬件系统上面，负责对计算机硬件资源和软件资源的调用。通过高效有序的控制，来最大化的发挥出来硬件的能力，为用户提供一个安全，可靠，高效的应用环境。</li>
-<li><strong>Shell(壳)层</strong> ： 壳是用来区别核的，而着个 shell 的目的就是链接用户和 Core 核，因此这个 shell 也叫 命令解释器，用来接受用户的命令，然后解释给计算机执行，shell 分为图形界面和命令行界面。</li>
-<li><strong>应用层</strong> ：应用层用来提供一个图形环境，用来支持操作系统中的各种应用，但是 Linux 不需要安装 GUI 就可以提供完整的功能。</li>
-</ul>
-<h2 id="常用系统工作命令"><a href="#常用系统工作命令" class="headerlink" title="常用系统工作命令"></a>常用系统工作命令</h2><ol>
-<li><code>date</code> 显示当前的时间。</li>
-<li><code>reboot</code> 重启计算机。</li>
-<li><code>poweroff</code> 关闭系统关闭电源</li>
-<li><code>halt</code> 只关闭系统不关电源。</li>
-<li><code>shutdown</code> 有条件的关闭系统关闭电源</li>
-<li><code>ps</code> 用来查看系统中的进程状态。</li>
-<li><code>top</code> 强化版本的任务管理器。</li>
-<li><code>pidof</code> 后面加某一进程的名称，然后返回这一进程的 PID 值。</li>
-<li><code>kill</code> 后面加后一进程的 PID 值，用来杀掉该进程。<ul>
-<li><code>killall</code> 后面加某一应用的名称，会杀掉所有该应用的进程。</li>
-</ul>
-</li>
-<li><code>echo</code> 后面加想要输出的内容，可以是变量，可以是字符串。</li>
-</ol>
-<h2 id="系统状态检测命令"><a href="#系统状态检测命令" class="headerlink" title="系统状态检测命令"></a>系统状态检测命令</h2><ol>
-<li><code>ifconfig</code> 可以获取网卡配置和网络状态信息，inet 后面是 IP 地址，ether 后面是 MAC 地址。</li>
-<li><code>uname -a</code> 可以查看当前系统的系统内核和版本什么的信息。</li>
-<li><code>free -h</code> 用来显示当前主机的内存使用的相关信息。</li>
-<li><code>who</code> 用来查看当前使用这台计算机的用户信息。</li>
-<li><code>last</code> 用来查看最近的所用用户登录记录（这是个可修改的文档）</li>
-<li><code>history</code> 可以展示你最近执行的进 1000 条命令。<ul>
-<li><code>history -c</code> 删除最近执行的命令记录。</li>
-</ul>
-</li>
-</ol>
-<h2 id="工作目录切换命令"><a href="#工作目录切换命令" class="headerlink" title="工作目录切换命令"></a>工作目录切换命令</h2><ol>
-<li><p><code>pwd</code> 返回现在所处位置（Print Working Director）</p>
-</li>
-<li><p><code>cd</code> 切换工作目录 （change director）</p>
-<ul>
-<li><code>cd location</code> 打开对应的目录（文件夹）</li>
-<li><code>cd ..</code> 返回上一级目录</li>
-<li><code>cd ~</code> 可以快速返回当前用户的家目录里面。</li>
-<li>如果路径里面包含有空格/问号/星号/货币符/逻辑符/括号，可以使用 <code>\</code> 来进行转义，让它变成路径名称而不是特殊字符。或者直接用双引号把路径名称名称括起来，<code>cd &quot;特殊字符的路径&quot;</code> 。</li>
-</ul>
-</li>
-<li><p><code>ls</code> 显示当前工作目录下的内容（list files）</p>
-<ul>
-<li><code>ls -a</code> 可以显示出来所有的文件，包括隐藏的文件。</li>
-<li><code>ls -l</code> 查看文件属性，大小等详细信息。</li>
-<li><code>ls ./*</code> 这个符号 <code>*</code> 表示的是正则匹配，<code>file*</code> 就是匹配所有以<code>file</code> 开头的文件或者目录，如果只有 <code>*</code> 那就是匹配所有名称的文件或者目录。</li>
-</ul>
-</li>
-</ol>
-<h2 id="文本文件编辑命令"><a href="#文本文件编辑命令" class="headerlink" title="文本文件编辑命令"></a>文本文件编辑命令</h2><ol>
-<li><code>cat</code> 查看少量内容的文本文件。</li>
-</ol>
-<ul>
-<li><p><code>cat -n &lt;file&gt;</code>在查看文本文件的同时标注行号。</p>
-<ul>
-<li>如果文件名用 <code>-</code> 开头，使用 <code>./-</code> 来打开</li>
-<li>如果文件里面包含有空格/问号/星号/货币符/逻辑符/括号，可以使用 <code>\</code> 来进行转义（注意这里 <code>-</code> 是不可以使用<code>/</code> 来进行转义的，必须使用 <code>./-</code>  ），让它变成文件名而不是特殊字符。或者直接用双引号把文件名称括起来，<code>cat &quot;特殊的文件名称&quot;</code> 。</li>
-</ul>
-</li>
-<li><p><code>cat &gt; XXX</code> 创建一个名为 XXX 的新文件，并编辑其内容。</p>
-<ul>
-<li><code>cat XXX1 XXX2 &gt; XXX3</code> 将 XXX1 文件和 XXX2 文件的内容合并起来，覆盖 XXX3 文件。</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li><p><code>more</code> 查看大量内容的文本文件。</p>
-<ul>
-<li><code>more -n &lt;file&gt;</code> 再查看大量文本的同时标注行号。</li>
-</ul>
-</li>
-<li><p><code>head -n k &lt;file&gt;</code> 查看 file 文件前 k 行的内容。</p>
-</li>
-<li><p><code>tail -n k &lt;file&gt;</code> 查看 file 文件后 k 行的内容。</p>
-</li>
-<li><p><code>wc</code> 用来显示文本的一些信息。</p>
-<ul>
-<li><code>wc -l &lt;file&gt;</code> 返回文本的行数。</li>
-<li><code>wc -w &lt;file&gt;</code> 返回文本的词数。</li>
-<li><code>wc -c &lt;file&gt;</code> 返回文本的字节数。</li>
-</ul>
-</li>
-<li><p><code>stat &lt;file&gt;</code> 用来查看文件的具体存储信息和时间信息，会有三个参数，<strong>Access</strong> 访问时间，<strong>Modify</strong> 修改时间，<strong>Change</strong> 修改时间。</p>
-</li>
-</ol>
-<h2 id="文件目录管理命令"><a href="#文件目录管理命令" class="headerlink" title="文件目录管理命令"></a>文件目录管理命令</h2><ol>
-<li><p><code>touch &lt;file&gt;</code> 可以创建一个新的空白文档。</p>
-</li>
-<li><p><code>mkdir &lt;director&gt;</code> 可以创建一个新的文件夹。</p>
-<ul>
-<li><code>mkdir -p &lt;director1/director2/directro3&gt;</code>可以创造嵌套的文件夹。</li>
-</ul>
-</li>
-<li><p><code>cp &lt;file1/dire1&gt; &lt;file2/dire2&gt;</code> 复制 file1 或 dire1 到 dire2 目录或者到本地但是重命名为 file2。</p>
-</li>
-<li><p><code>mv &lt;file1/dire1&gt; &lt;file2/dire2&gt;</code> 移动 file1 或 dire1 到 dire2 目录或者到本地但是重命名为 file2。</p>
-</li>
-<li><p><code>rm &lt;file/dire&gt;</code> 命令用于删除文件或者目录。</p>
-<ul>
-<li><code>rm -f &lt;file/dire&gt;</code> 可以不询问是否删除，并执行删除过程。</li>
-<li><code>rm -r &lt;fire/dire&gt;</code> 用来删除目录，不适用 <code>-r</code> 没有办法删除。</li>
-</ul>
-</li>
-<li><p><code>file &lt;filename&gt;</code> 命令用来查看文件的类型。</p>
-<ul>
-<li><code>&lt;filename&gt;</code> 可以使用 <code>*</code> 来进行正则匹配。</li>
-</ul>
-</li>
-</ol>
-<h2 id="打包压缩与搜索命令"><a href="#打包压缩与搜索命令" class="headerlink" title="打包压缩与搜索命令"></a>打包压缩与搜索命令</h2><ol>
-<li><p><code>tar</code> 命令用来对文件进行打包，压缩或者解压操作。需要配合各种命令进行操作。</p>
-<ul>
-<li><code>-c</code> 创建压缩文件，后面需要写要创建的文件名称，一般后缀是 <code>.tar</code> 。</li>
-<li><code>-x</code> 解压缩文件，后面需要写解压后的文件名称。</li>
-<li><code>-t</code> 查看压缩包里都有什么文件。</li>
-<li><code>-z</code> 使用 Gzip 压缩或者解压，后缀需要是 <code>.tar.gz</code></li>
-<li><code>-j</code> 是用 bzip2 压缩或者解压，后缀需要是 <code>tar.bz2</code></li>
-<li><code>-v</code> 显示压缩或者解压的过程，强烈推荐使用。</li>
-<li><code>-f</code> 需要被压缩或者解压的文件名，需要被放在最后。</li>
-<li><code>-p</code> 保留原始的权限与属性。</li>
-<li><code>-P</code> 使用绝对路径来压缩。</li>
-<li><code>-C</code> 指定解压到的目录。</li>
-<li>这些命令可以组合操作，比如 <code>tar -czvf Xorex.tar.gz Xorex</code> 就是将 Xorex 文件夹使用 Gzip 算法压缩成为 Xorex.tar.gz 压缩文件，如果不使用压缩算法，那么就是单纯的打包文件，不进行压缩。</li>
-</ul>
-</li>
-<li><p><code>grep string/expression file</code> 用来对文件的内容进行搜索，非常强大，可以是需要匹配的字符串string或者正则表达式expression，file则是需要匹配的文件或者文件夹！</p>
-<ul>
-<li><code>-c</code> 显示找到的行数，也就是一共有多少行成功匹配到了关键字符串。</li>
-<li><code>-i</code> 匹配时忽略大小写。</li>
-<li><code>-n</code> 显示行号。</li>
-<li><code>-v</code> 反向选择。</li>
-</ul>
-</li>
-<li><p><code>find</code> 用来查找文件，如果不加任何参数的话，回将当前目录下所有能找到的文件全部列出来。</p>
-<ul>
-<li><code>-name</code>匹配名称。</li>
-<li><code>-perm</code> 匹配权限。</li>
-<li><code>-user</code> 匹配所有者。</li>
-<li><code>-group</code> 匹配所有组。</li>
-<li><code>-mtime -n +n</code> 匹配修改内容的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
-<li><code>-atime -n +n</code> 匹配访问内容的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
-<li><code>-ctime -n +n</code> 匹配修改文件的权限的时间，-n 表示在 n 天以内，+n 表示 n 天以前。</li>
-<li><code>-type b/d/c/p/l/f</code> 匹配文件类型（后面的字幕参数依次表示块设备、目录、字符设备、管道、链接文件、文本文件）</li>
-<li><code>-size</code> 匹配文件大小（+50kb 表示文件大于，- 表示小于）</li>
-</ul>
-</li>
-</ol>
-<h3 id="路径相关"><a href="#路径相关" class="headerlink" title="路径相关"></a>路径相关</h3><p>绝对路径使用 <code>/</code> 开头，表示根目录，而相对路径不用任何字符开头。</p>
-<p>其中 <code>./</code> 表示当前目录，而 <code>../</code> 表示上一级目录。</p>
-<p>使用 <code>pwd</code> (print work directory) 命令可以现实当前所在目录的绝对路径。</p>
-<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>连接，将一个表面文件和另外一个目标文件关联，点击表面文件打开目标文件。</p>
-<p>硬链接：在当前目录下面添加一个目标文件的目录项（索引），从始至终只有一个文件——目标文件。</p>
-<p>软连接：真的建立了一个文件（又有文件节点），将自己文件路径名链接到了目标文件。</p>
-<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>change mode 改变模式，用来改变文件的权限。</p>
-<p>权限作用人 <code>[who]</code> 分为：u (user) 表示该文件的拥有者，g (group) 表示与该文件的拥有者属于同一个群体者，o (others) 表示其他以外的人，a (all) 表示这三者皆是。</p>
-<p>权限 <code>[mode]</code> 分为：r (read) 读取，w (write) 写入，x (executable) 执行。</p>
-<p>权限操作 <code>[operator]</code> 分为：+ 增加权限，- 取消权限， = 表示唯一设定权限（也就是清除所有权限之后再增加设定权限）</p>
-<ol>
-<li>对指定的用户组进行修改</li>
-</ol>
-<p>格式：<code>chmod [who][operator][mode] file</code> 。</p>
-<p>例：<code>chmod u=r waifu.jpg</code> 命令表示将 waifu.jpg 文件所有者的权限重新设定为只有读取权限。</p>
-<ol start="2">
-<li>对所有用户组进行修改</li>
-</ol>
-<p>格式：<code>chmod [WhoOperator][WhoOperator][WhoOperator] file</code> 或者 <code>chmod [sumOperatorNumber][sumOperatorNumber][sumOperatorNumber] file</code> 。</p>
-<p>上面每一个都表示某一个用户组的权限：第一位表示 user 第二位表示 group 第三位表示 others。</p>
-<p><code>[WhoOperator]</code> 使用三个权限符号表示，没有权限用 - 代表。r-x 表示读和执行权限。</p>
-<p><code>[sumOperatorNumber]</code> 表示将权限符号用数字替代，没有权限用 - 代表，r 4、w 2、x 1，然后相加就是代表的权限。如 7 表示同时拥有读写执行权限。</p>
-<h3 id="vi"><a href="#vi" class="headerlink" title="vi"></a>vi</h3><h4 id="文本插入命令"><a href="#文本插入命令" class="headerlink" title="文本插入命令"></a>文本插入命令</h4><p>［Esc］:w [回车］ 表示保存不退出<br>［Esc］:wq[回车］表示保存同时退出vi<br>［Esc］:q![回车] 表示不保存强行退出vi<br>［Esc］:wq  test.c [回车] 表示保存成文件名test.c，并退出</p>
-<h4 id="转义命令"><a href="#转义命令" class="headerlink" title="转义命令"></a>转义命令</h4><p>列出所有正在使用系统的用户、所用终端名和注册到系统的时间。</p>
-]]></content>
-      <categories>
-        <category>开发知识</category>
-      </categories>
-      <tags>
-        <tag>笔记</tag>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PHP 序列化和反序列化</title>
     <url>/2020/11/16/5d3d41825fd8/</url>
     <content><![CDATA[<h2 id="serialize"><a href="#serialize" class="headerlink" title="serialize()"></a>serialize()</h2><p>php支持将一个数组或者类的<strong>属性</strong>序列化为一个字符串，使用的函数就是 <code>serialize()</code> 函数，如果想要复原可以使用 <code>unserialize()</code> 函数来将一个序列化的字符串还原成原来的类或者数组的状态。</p>
@@ -10394,7 +10845,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#x6d;&#101;&#111;&#x6e;&#x65;&#64;&#114;&#117;&#110;&#x6f;&#x6f;&#x62;&#x2e;&#x63;&#111;&#109;">&#x73;&#x6f;&#x6d;&#101;&#111;&#x6e;&#x65;&#64;&#114;&#117;&#110;&#x6f;&#x6f;&#x62;&#x2e;&#x63;&#111;&#109;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#x6d;&#101;&#x6f;&#110;&#x65;&#64;&#x72;&#x75;&#110;&#x6f;&#111;&#98;&#x2e;&#99;&#x6f;&#x6d;">&#x73;&#x6f;&#x6d;&#101;&#x6f;&#110;&#x65;&#64;&#x72;&#x75;&#110;&#x6f;&#111;&#98;&#x2e;&#99;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
@@ -11257,8 +11708,8 @@
       </categories>
       <tags>
         <tag>笔记</tag>
-        <tag>MySQL</tag>
         <tag>数据库</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
