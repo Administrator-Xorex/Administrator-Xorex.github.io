@@ -25,7 +25,7 @@
   <entry>
     <title>Linux-02</title>
     <url>/2022/08/03/8f6d5138d550/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h2 id="网络方面"><a href="#网络方面" class="headerlink" title="网络方面"></a>网络方面</h2><h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
       <categories>
         <category>开发知识</category>
       </categories>
@@ -34,8 +34,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux-01-基础</title>
-    <url>/2022/08/03/1e7d798d8809/</url>
+    <title>Linux-01-基础概念</title>
+    <url>/2022/08/03/9be090c95d2b/</url>
     <content><![CDATA[<h2 id="Linux-简介"><a href="#Linux-简介" class="headerlink" title="Linux 简介"></a>Linux 简介</h2><ul>
 <li><p>最早的操作系统相关是 Unix 操作系统，诞生与 1970 年，是一个比较完善的分时操作系统。（分时操作系统是使一台计算机采用时间片轮转的方式同时为几个、几十个甚至几百个用户服务的一种操作系统，用来降低使用计算机的成本）</p>
 </li>
@@ -123,7 +123,7 @@
 <h2 id="文件编辑"><a href="#文件编辑" class="headerlink" title="文件编辑"></a>文件编辑</h2><h3 id="vim-编辑器"><a href="#vim-编辑器" class="headerlink" title="vim 编辑器"></a>vim 编辑器</h3><p>有三种模式，一般模式，编辑模式，指令模式。</p>
 <p>一般模式：一进来就处于的模式，用于整体的操作文本。比如复制粘贴剪贴删除：段、行、词。和光标再文本中的移动。</p>
 <p>编辑模式：按 i 进入编辑模式，可以输入内容。按 ESC 退出。</p>
-<p>指令模式：按 <code>: / ?</code> 任意一个进入命令模式，后面跟着对应命令，回车执行。按 ESC 退出。</p>
+<p>指令模式：按 <code>: /</code> 任意一个进入命令模式，后面跟着对应命令，回车执行。按 ESC 退出。</p>
 <h4 id="一般模式"><a href="#一般模式" class="headerlink" title="一般模式"></a>一般模式</h4><table>
 <thead>
 <tr>
@@ -151,7 +151,17 @@
 <td>p</td>
 <td>在光标处粘贴</td>
 </tr>
+<tr>
+<td>u</td>
+<td>撤销</td>
+</tr>
+<tr>
+<td>Ctrl r</td>
+<td>取消撤销</td>
+</tr>
 </tbody></table>
+<h4 id="编辑模式"><a href="#编辑模式" class="headerlink" title="编辑模式"></a>编辑模式</h4><p>使用 i insert 进入编辑模式。然后直接输入内容即可。使用 ESC 退出编辑模式。</p>
+<h4 id="指令模式"><a href="#指令模式" class="headerlink" title="指令模式"></a>指令模式</h4><p>使用  <code>: /</code> 进入命令模式，不同命令可以组合使用。</p>
 <table>
 <thead>
 <tr>
@@ -160,56 +170,36 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>u</td>
-<td>撤销</td>
+<td>:!</td>
+<td>强制执行命令</td>
 </tr>
 <tr>
-<td>Ctrl r</td>
-<td>取消撤销</td>
+<td>:w</td>
+<td>write 保存内容到硬盘上</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
+<td>:q</td>
+<td>quit 退出 vim</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
+<td>:w [filename]</td>
+<td>另存为 filename</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h4 id="编辑模式"><a href="#编辑模式" class="headerlink" title="编辑模式"></a>编辑模式</h4><table>
-<thead>
-<tr>
-<th>语法</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>p</td>
-<td>在光标处粘贴</td>
+<td>:r [filename]</td>
+<td>读取外部 file 并写入到当前光标后</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h4 id="指令模式"><a href="#指令模式" class="headerlink" title="指令模式"></a>指令模式</h4><table>
-<thead>
-<tr>
-<th>语法</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>p</td>
-<td>在光标处粘贴</td>
+<td>/[Regex]</td>
+<td>按照正则表达式匹配文本内容，n 下一个 N 上一个</td>
 </tr>
 <tr>
-<td></td>
-<td></td>
+<td>:set nu</td>
+<td>开启行号</td>
+</tr>
+<tr>
+<td>:noh</td>
+<td>No High 取消高亮</td>
 </tr>
 </tbody></table>
 <h2 id="常用系统工作命令"><a href="#常用系统工作命令" class="headerlink" title="常用系统工作命令"></a>常用系统工作命令</h2><ol>
@@ -8428,8 +8418,8 @@
       <tags>
         <tag>XML</tag>
         <tag>Java</tag>
-        <tag>思维导图</tag>
         <tag>JSON</tag>
+        <tag>思维导图</tag>
       </tags>
   </entry>
   <entry>
@@ -10845,7 +10835,7 @@
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_ADMIN’]</td>
-<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#x73;&#x6f;&#x6d;&#101;&#x6f;&#110;&#x65;&#64;&#x72;&#x75;&#110;&#x6f;&#111;&#98;&#x2e;&#99;&#x6f;&#x6d;">&#x73;&#x6f;&#x6d;&#101;&#x6f;&#110;&#x65;&#64;&#x72;&#x75;&#110;&#x6f;&#111;&#98;&#x2e;&#99;&#x6f;&#x6d;</a>)</td>
+<td align="left">该值指明了 Apache 服务器配置文件中的 SERVER_ADMIN 参数。如果脚本运行在一个虚拟主机上，则该值是那个虚拟主机的值。(如：<a href="mailto:&#115;&#x6f;&#109;&#101;&#x6f;&#110;&#101;&#x40;&#114;&#117;&#x6e;&#x6f;&#x6f;&#x62;&#46;&#99;&#x6f;&#x6d;">&#115;&#x6f;&#109;&#101;&#x6f;&#110;&#101;&#x40;&#114;&#117;&#x6e;&#x6f;&#x6f;&#x62;&#46;&#99;&#x6f;&#x6d;</a>)</td>
 </tr>
 <tr>
 <td align="left">$_SERVER[‘SERVER_PORT’]</td>
