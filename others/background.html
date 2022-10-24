@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html.body {
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --blue: skyblue;
+        }
+
+        .contain {
+            padding: 0;
+            margin: 0;
+            width: 1586px;
+            height: 2246px;
+            background-color: #fff;
+            position: relative;
+
+        }
+
+        .contain div:nth-child(1) {
+            position: absolute;
+            width: 40px;
+            height: 200px;
+            background-image: linear-gradient(to bottom, var(--blue), transparent);
+            top: 100px;
+            left: 0;
+            transform: rotate(30deg)
+        }
+
+        .contain div:nth-child(2) {
+            background-image: linear-gradient(to top, var(--blue), transparent);
+            position: absolute;
+            width: 40px;
+            height: 2246px;
+            top: 0;
+            left: 0;
+        }
+
+        .contain div:nth-child(3) {
+            position: absolute;
+            left: 40px;
+            bottom: 40px;
+            width: 0;
+            height: 0;
+            border-left: 100px solid var(--blue);
+            border-top: 100px solid transparent;
+        }
+
+        .contain div:nth-child(4) {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 65px;
+            width: 1200px;
+            background-color: var(--blue);
+        }
+
+        .contain div:nth-child(5) {
+            position: absolute;
+            left: 1200px;
+            bottom: 0px;
+            width: 0;
+            height: 0;
+            border-left: 40px solid var(--blue);
+            border-top: 40px solid transparent;
+        }
+
+        .contain div:nth-child(6) {
+            position: absolute;
+            bottom: 0;
+            left: 1200px;
+            height: 45px;
+            width: 386px;
+            background-image: linear-gradient(to right, rgba(142, 209, 236, 0.2), transparent);
+
+        }
+
+        .contain div:nth-child(7) {
+            background-image: linear-gradient(to bottom, var(--blue), transparent);
+            position: absolute;
+            width: 40px;
+            height: 1752px;
+            bottom: 0;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contain">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+
+</html>
